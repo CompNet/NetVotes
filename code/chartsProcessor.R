@@ -24,7 +24,7 @@ ProcessData <- function(in.dir, out.dir,title) {
   # -X-X-X-X-X-X- Code to Generate the Plot -X-X-X-X-X-X-
   
   #Call the function jpeg to save the data
-  jpeg(width = 890, height = 606, file=file.path(out.dir ,paste0(title,".peg")))
+  pdf(width=10,height=7,file=file.path(out.dir ,paste0(title,".pdf")))
   
   #Adjust the Margin of the plot for the names to appear. Default = c(5,4,4,2) + 0.1
   par(mar = c(10,4,4,2) + 0.1)

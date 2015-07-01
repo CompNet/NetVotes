@@ -37,5 +37,18 @@ loyalty.filename <- "loyalty.csv"
 # Name of the directory where all the tables are going to be read to be processed
 input.tables.dir <- file.path(".","csv_results")
 
+
 # Name of the directory where all the plots will be stored
-output.charts.dir <- file.path(".","plots")
+output.plots.dir <- file.path(output.dir,"plots")
+
+# Name of the directory where all the community detection algorithms results will be stored
+output.community.dir <- file.path(output.dir,"community_algorithms_results")
+
+# Name of the directory where all the detection algorithms csv files will be stored
+output.community.csv.dir <- file.path(output.dir,"community_algorithms_csv")
+
+# Name of the directory where all the generated graphs will be stored
+output.graphs.dir <- file.path(output.dir,"graphs")
+
+# Name of the directory where all the results related to agreement will be stored
+output.agreement.dir <- file.path(output.dir,"agreement")

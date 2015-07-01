@@ -251,18 +251,17 @@ AgreementPlot <- function(agreementMatrix) {
   tempo[lower.tri(tempo,diag=TRUE)] <- NA
   tempo <- round(tempo,2)
   
-  pdf(file=file.path(output.dir,"agreement_distribution.pdf"))
-
+  pdf(file=file.path(paste0(output.agreement.dir,"/",dir.title,"/",file.title,"_agreement_distribution.pdf")))
   barplot(table(tempo),ylim=c(0,30000), xpd=FALSE, xlab="Agreement",ylab="Frequency",col=1:20,main="Agreement Distribution")
   dev.off()
   
-  pdf(file=file.path(output.dir,"agreement_histogram.pdf"))
+  pdf(file=file.path(paste0(output.agreement.dir,"/",dir.title,"/",file.title,"_agreement_histogram.pdf")))
   hist(tempo, xlab="Agreement",ylab="Frequency",col=1:20,main="Agreement Distribution")
   dev.off()
 }
 
 RebelionPlot <- function(rebelion.indexes) {
-  pdf(file=file.path(output.dir,"rebelion_histogram.pdf"))
+  pdf(file=file.path(paste0(output.agreement.dir,"/",dir.title,"/",file.title,"_rebelion_histogram.pdf")))
   hist(rebelion.indexes, xlab="Rebelion",ylab="Frequency",col=1:20,main="Rebelion Index")
   dev.off()
 }
@@ -555,7 +554,27 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   V(gc)$fastgreedy_comp_neg_community <- membership(fast.cmp)
   V(gc)$walktrap_comp_neg_community <- membership(walk.cmp)
 
-  write.graph(graph = gc, file = file.path(output.dir,"complete_graph.graphml"),format = "graphml")
+  write.graph(graph = gc, file = file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_complete_graph.graphml")),format = "graphml")
+  
+  pdf(file=file.path(output.community.dir,paste0(dir.title,"/",file.title,"_infomap_distribution.pdf")))
+  barplot(sort(table(info.gp$membership),decreasing = TRUE), ylim=c(0,840), main = "InfoMap - Community Distribution",
+          col = rainbow(length(table(info.gp$membership))))
+  dev.off()
+  
+  pdf(file=file.path(output.community.dir,paste0(dir.title,"/",file.title,"_multilevel_distribution.pdf")))
+  barplot(sort(table(mult.gp$membership),decreasing = TRUE), ylim=c(0,840),main = "Multilevel - Community Distribution",
+          col = rainbow(length(table(mult.gp$membership))))
+  dev.off()
+  
+  pdf(file=file.path(output.community.dir,paste0(dir.title,"/",file.title,"_fastgreedy_distribution.pdf")))
+  barplot(sort(table(membership(fast.gp)),decreasing = TRUE), ylim=c(0,840), main = "FastGreedy - Community Distribution",
+          col = rainbow(length(table(membership(fast.gp)))))
+  dev.off()
+  
+  pdf(file=file.path(output.community.dir,paste0(dir.title,"/",file.title,"_walktrap_distribution.pdf")))
+  barplot(sort(table(membership(walk.gp)),decreasing = TRUE), ylim=c(0,840), main = "Walktrap - Community Distribution",
+          col = rainbow(length(table(membership(walk.gp)))))
+  dev.off()
   
   return(reply)
 }
@@ -583,27 +602,27 @@ Calculate <- function() {
 
   agreementMatrix <- calculateAgreement(more.filtered.table)
   graph <- generateGraphG(agreementMatrix)
-  fileName <- file.path(output.dir,"graph.g")
+  fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_graph.g"))
   WriteGFile(nrow(agreementMatrix),graph,fileName)
 
   AgreementPlot(agreementMatrix)
   RebelionPlot(rebelion.indexes)
 
-  fileName <- file.path(output.dir, "edges_Gephi.csv")
+  fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_edges_Gephi.csv"))
   generateEdgesGephi(graph,fileName)
   
-  fileName <- file.path(output.dir, "nodes_Gephi.csv")
+  fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_nodes_Gephi.csv"))
   generateNodesGephi(corresp.table,fileName)
 
   net.measures <- CalculateNetworkMeasures(agreementMatrix)
-  nome.file <- file.path(output.dir,"net_measures.csv")
+  nome.file <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_net_measures.csv"))
   write.csv(net.measures,file=nome.file)    
 
   clustering.data <- CalculateClusterization(agreementMatrix,more.filtered.table,rebelion.indexes)
   
-  nome.file <- file.path(output.csv.dir,paste0(file.title,"_cluster_information.csv"))
+  nome.file <- file.path(output.community.csv.dir,paste0(dir.title,"/",file.title,"_cluster_information.csv"))
   write.csv(clustering.data$cluster.information,file=nome.file)    
-  nome.file <- file.path(output.dir,"cluster_comparison.csv")
+  nome.file <- file.path(output.community.dir,paste0(dir.title,"/",file.title,"_cluster_comparison.csv"))
   write.csv(clustering.data$cluster.comparison,file=nome.file)  	
 }
 
@@ -629,7 +648,8 @@ for(i in 1:length(sub.dirs)) {
   for(j in 1:length(sub.sub.dirs)) {
     rooty <- paste0(adapt,"/")
     try({
-    source(file.path(rooty,sub.sub.dirs[j]))    
+    source(file.path(rooty,sub.sub.dirs[j]))
+    dir.title <- sub.dirs[i]
     print(paste0("Processing Directory: ",sub.dirs[i]))
     print(paste0("Configuration File: ",sub.sub.dirs[j]))
     Calculate()
