@@ -6,51 +6,53 @@ print("Initializating the Code")
 ################# Functions #################
 
 # Verifies that the user entered correctly the variables in file ".\input_files" 
-VerifyInputVariables <- function(var, varname, data_var, file, default=NULL){
+verif_input_var <- function(var,varname,default=NULL,data_var,file){
   lvls <- levels(factor(data_var))
   if(!is.null(default))
     lvls <- c(lvls,default)
   if(	sum(var %in% lvls) != length(var))
-    stop(paste0("\nIn file ",file," , incorrect variable ", varname," = ( ",toString(var)," ) . \n\nHere are the different possibilities : ",toString(lvls)))
+    stop(paste0("\nIn file ",file," , incorrect variable ",varname," = ( ",toString(var)," ) . \n\nHere are the different possibilities : ",toString(lvls)))
+  
 }
 
 #Check if the inputs are correct
 CheckInputs <- function(){  
-  VerifyInputVariables(MP.political_groups, "MP.political_groups", MPs$political_group                   , file, default="all")
-  VerifyInputVariables(MP.countries       , "MP.countries"       , MPs$country                           , file, default="all")
-  VerifyInputVariables(MP.mp_ids          , "MP.mp_ids"          , MPs$id                                , file, default="all")
-  VerifyInputVariables(MP.group_by        , "MP.group_by"        , factor(c("political_group","country")), file, default="DontGroup")
-  VerifyInputVariables(DOCS.policies      , "DOCS.policies"      , docs$Policy.area                      , file, default="all")
+  verif_input_var(MP.political_groups,"MP.political_groups",default="all"      ,MPs$political_group                            ,file)
+  verif_input_var(MP.countries       ,"MP.countries"       ,default="all"      ,MPs$country                     ,file)
+  verif_input_var(MP.mp_ids          ,"MP.mp_ids"          ,default="all"      ,MPs$id                               ,file)
+  verif_input_var(MP.group_by        ,"MP.group_by"        ,default="DontGroup",factor(c("political_group","country")),file)## dirty : better place in config.R all the names of the possible aggregateion variables
+  verif_input_var(DOCS.policies      ,"DOCS.policies"      ,default="all"      ,docs$Policy.area                      ,file)
+  
   
   if(length(DOCS.time_limits) != 2)
-    stop(paste0("In file : ",file," :invalid variable DOCS.time_limits : DOCS.time_limits = ( ", toString(DOCS.time_limits), " )\nPlease specify exactly 2 dates"))
-  if(is.na(as.Date(DOCS.time_limits[1], format="%d/%m/%Y")))
-    stop(paste0("In file : ", file, " :invalid variable DOCS.time_limits : DOCS.time_limits = ( ", toString(DOCS.time_limits), " )\nThe first date must be of this format : 'dd/mm/YYYY'"))
-  if(is.na(as.Date(DOCS.time_limits[2], format="%d/%m/%Y")))
-    stop(paste0("In file : ", file, " :invalid variable DOCS.time_limits : DOCS.time_limits = ( ", toString(DOCS.time_limits), " )\nThe second date must be of this format : 'dd/mm/YYYY'"))
+    stop(paste0("In file : ",file," :invalid variable DOCS.time_limits : DOCS.time_limits = ( ",toString(DOCS.time_limits)," )\nPlease specify exactly 2 dates"))
+  if(is.na(as.Date(DOCS.time_limits[1],format="%d/%m/%Y")))
+    stop(paste0("In file : ",file," :invalid variable DOCS.time_limits : DOCS.time_limits = ( ",toString(DOCS.time_limits)," )\nThe first date must be of this format : 'dd/mm/YYYY'"))
+  if(is.na(as.Date(DOCS.time_limits[2],format="%d/%m/%Y")))
+    stop(paste0("In file : ",file," :invalid variable DOCS.time_limits : DOCS.time_limits = ( ",toString(DOCS.time_limits)," )\nThe second date must be of this format : 'dd/mm/YYYY'"))
+  
   
   choices <- c("DontGroup","majority_vote_in_each_group","min_each_vote_possibility_between_groups","avg_agreement_between_MPs_of_each_group")
   if(!MP.group_by.mode %in% choices)
-    stop(paste0("In file : ",file,", variable MP.group_by.mode must be one of these: ", toString(choices)))
+    stop(paste0("In file : ",file,", variable MP.group_by.mode must be one of these: ",toString(choices)))
   
-  choices <- c("%agree-%disagree", "+1_or_-1")
+  
+  choices <- c("%agree-%disagree","+1_or_-1")
   if(!OUTPUTFILES.Gfile.weigth %in% choices)
-    stop(paste0("In file : ", file, ", variable OUTPUTFILES.Gfile.weigth must be one of these: ", toString(choices)))
+    stop(paste0("In file : ",file,", variable OUTPUTFILES.Gfile.weigth must be one of these: ",toString(choices)))
   
   
   if (alpha<0 | alpha>1)
-    stop(paste0("In file : ",file," alpha must be in the interval [0;1]. Please modify it in file ", file))
+    stop(paste0("In file : ",file," alpha must be in the interval [0;1]. Please modify it in file ",file ))
   
   dontGroup <- 0
-  
-  if("DontGroup" %in% MP.group_by) {
+  if("DontGroup" %in% MP.group_by){
     dontGroup <- 1
     MP.group_by <- "DontGroup"
     MP.group_by.mode <- "DontGroup"
   }
-  
   if(MP.group_by.mode == "DontGroup" & dontGroup==0)	
-    stop(paste0("In file : ", file, ", as MP.group_by is not 'DontGroup', please select a MP.group_by.mode which is not 'DontGroup'.")) 
+    stop(paste0("In file : ",file,", as MP.group_by is not 'DontGroup', please select a MP.group_by.mode which is not 'DontGroup'.")) 
 }
 
 FilterUsingConfigurations <- function() {
@@ -59,44 +61,35 @@ FilterUsingConfigurations <- function() {
   
   # Adding columns for DAY,MONTH and YEAR from the column "Date"
   dates <- as.Date(docs$Date,format="%d/%m/%Y")
-  if(as.integer(format(dates,format="%Y"))[1]<100) {
+  if(as.integer(format(dates,format="%Y"))[1]<100)
     docs$YEAR  <- as.integer(format(dates,format="%Y"))+2000
-  }
-  
   docs$MONTH <- as.integer(format(dates,format="%m"))
   docs$DAY   <- as.integer(format(dates,format="%d"))
   docs$Date  <- as.Date(paste(docs$DAY,docs$MONTH,docs$YEAR,sep="/"),format="%d/%m/%Y")
   
   # Selection of the Documents chosen by the user
-  if("all" %in% DOCS.policies) 
-    DOCS.policies  <- levels(factor(docs$Policy.area))
-  
+  if("all" %in% DOCS.policies) DOCS.policies  <- levels(factor(docs$Policy.area))
   DOCS.time_limits <- as.Date(DOCS.time_limits,format="%d/%m/%Y") # convertion from string to Date
   selected_Documents <- docs[which( docs$Date>=DOCS.time_limits[1] & docs$Date<=DOCS.time_limits[2] & docs$Policy.area %in% DOCS.policies),]
     
   # Filtering concerning MPs
   
-  # Selection of the MPs chosen by the user  
-  if("all" %in% MP.political_groups) 
-    MP.political_groups <- levels(factor(MPs$political_group))
+  # Selection of the MPs chosen by the user
   
-  if("all" %in% MP.countries) 
-    MP.countries <- levels(factor(MPs$country))
-  
-  if("all" %in% MP.mp_ids)
-    MP.mp_ids <- levels(factor(MPs$id))
-  
+  if("all" %in% MP.political_groups) MP.political_groups    <- levels(factor(MPs$political_group))
+  if("all" %in% MP.countries       ) MP.countries           <- levels(factor(MPs$country))
+  if("all" %in% MP.mp_ids          ) MP.mp_ids              <- levels(factor(MPs$id))
   selected_MPs <- MPs[which(MPs$political_group %in% MP.political_groups & MPs$country %in% MP.countries & MPs$id %in% MP.mp_ids),]
   
   # Generate a filtered table using the parameters passed by the user
   filtered.table <- big.table[which(big.table$mp_id %in% selected_MPs$id),selected_Documents$doc_id]
   
-  if(! is.null(dim(filtered.table))) {
-    if(!(dim(filtered.table)[1]>1 && dim(filtered.table)[2]>1)) {
+  if(! is.null(dim(filtered.table))){
+    if(!(dim(filtered.table)[1]>1 && dim(filtered.table)[2]>1)){
       warning(paste0("In file ",file," , the data is too much filtered (less than 2 MPs or less than 2 documents). Please change the filtering settings in ",file,"\n(No graph generated)"))
       too.much.filtered <- TRUE
     }
-  } else {
+  }else{
     warning(paste0("In file ",file," , the data is too much filtered (less than 2 MPs or less than 2 documents). Please change the filtering settings in ",file,"\n(No graph generated)"))
     too.much.filtered <- TRUE
   }
@@ -104,23 +97,20 @@ FilterUsingConfigurations <- function() {
   return(filtered.table)
 }
 
-# Filtering of the documents using the parameters passed through the configuration file
 FilterUsingConfigurationsLoyalty <- function() {
+  
+  # Filtering of the documents using the parameters passed through the configuration file
   
   # Adding columns for DAY,MONTH and YEAR from the column "Date"
   dates <- as.Date(docs$Date,format="%d/%m/%Y")
-  if(as.integer(format(dates,format="%Y"))[1]<100) {
+  if(as.integer(format(dates,format="%Y"))[1]<100)
     docs$YEAR  <- as.integer(format(dates,format="%Y"))+2000
-  }
-  
   docs$MONTH <- as.integer(format(dates,format="%m"))
   docs$DAY   <- as.integer(format(dates,format="%d"))
   docs$Date  <- as.Date(paste(docs$DAY,docs$MONTH,docs$YEAR,sep="/"),format="%d/%m/%Y")
   
   # Selection of the Documents chosen by the user
-  if("all" %in% DOCS.policies)
-    DOCS.policies  <- levels(factor(docs$Policy.area))
-  
+  if("all" %in% DOCS.policies) DOCS.policies  <- levels(factor(docs$Policy.area))
   DOCS.time_limits <- as.Date(DOCS.time_limits,format="%d/%m/%Y") # convertion from string to Date
   selected_Documents <- docs[which( docs$Date>=DOCS.time_limits[1] & docs$Date<=DOCS.time_limits[2] & docs$Policy.area %in% DOCS.policies),]
   
@@ -129,26 +119,20 @@ FilterUsingConfigurationsLoyalty <- function() {
   
   # Selection of the MPs chosen by the user
   
-  if("all" %in% MP.political_groups) 
-    MP.political_groups <- levels(factor(MPs$political_group))
-  
-  if("all" %in% MP.countries) 
-    MP.countries <- levels(factor(MPs$country))
-  
-  if("all" %in% MP.mp_ids)
-    MP.mp_ids <- levels(factor(MPs$id))
-  
+  if("all" %in% MP.political_groups) MP.political_groups    <- levels(factor(MPs$political_group))
+  if("all" %in% MP.countries       ) MP.countries           <- levels(factor(MPs$country))
+  if("all" %in% MP.mp_ids          ) MP.mp_ids              <- levels(factor(MPs$id))
   selected_MPs <- MPs[which(MPs$political_group %in% MP.political_groups & MPs$country %in% MP.countries & MPs$id %in% MP.mp_ids),]   
   
   # Generate a filtered table using the parameters passed by the user
   filtered.table <- loyalty.table[which(loyalty.table$mp_id %in% selected_MPs$id),selected_Documents$doc_id]
   
   if(! is.null(dim(filtered.table))){
-    if(!(dim(filtered.table)[1]>1 && dim(filtered.table)[2]>1)) {
+    if(!(dim(filtered.table)[1]>1 && dim(filtered.table)[2]>1)){
       warning(paste0("In file ",file," , the data is too much filtered (less than 2 MPs or less than 2 documents). Please change the filtering settings in ",file,"\n(No graph generated)"))
       too.much.filtered <- TRUE
     }
-  } else {
+  }else{
     warning(paste0("In file ",file," , the data is too much filtered (less than 2 MPs or less than 2 documents). Please change the filtering settings in ",file,"\n(No graph generated)"))
     too.much.filtered <- TRUE
   }
@@ -156,38 +140,54 @@ FilterUsingConfigurationsLoyalty <- function() {
   return(filtered.table)
 }
 
-generateGraphG <- function(agreementValues) {
+generateGraph <- function(vetor, agreementValues){
+  pass <- upper.tri(agreementValues)                     
+  for(i in 1:nrow(agreementValues)){
+    for(j in 1:ncol(agreementValues)){
+      if(pass[i, j] == TRUE){
+          edge <- c(i,j,(2*(agreementValues[i,j]>0)-1),agreementValues[i,j])
+          vetor <- rbind(vetor,edge)     
+      }
+    }
+  }
+  
+  vetor <- vetor[-1,]
+  colnames(vetor) <- NULL
+  rownames(vetor) <- NULL
+  colnames(vetor) <- c("Source", "Target", "Signal", "Weight")
+  return(vetor)
+}
+
+generateGraphG <- function(agreementValues){
   number <- ((nrow(agreementValues)*nrow(agreementValues))-nrow(agreementValues))/2
-  g <- matrix(0,nrow=number,ncol=3)
+  retorno <- matrix(0,nrow=number,ncol=3)
   count <- 1
   pass <- upper.tri(agreementValues)                     
-  for(i in 1:nrow(agreementValues)) {
-    for(j in 1:ncol(agreementValues)) {
-      if(pass[i, j] == TRUE) {
+  for(i in 1:nrow(agreementValues)){
+    for(j in 1:ncol(agreementValues)){
+      if(pass[i, j] == TRUE){
         if(agreementValues[i, j]>=top || agreementValues[i,j]<=floor) {
-          #The indices receives -1 because the nodes number must range from 0 to n-1
-          g[count,1] <- i - 1
-          g[count,2] <- j - 1
-          g[count,3] <- round(agreementValues[i,j],6)
+          retorno[count,1] <- i
+          retorno[count,2] <- j
+          retorno[count,3] <- round(agreementValues[i,j],6)
           count <- count+1
         }
       }
     }
   }
   
-  colnames(g) <- c("Source", "Target", "Weight")
+  colnames(retorno) <- c("Source", "Target", "Weight")
   
-  return(g)
+  return(retorno)
 }
 
-# Function created to write a file to be imported in Gephi
-WriteGFile <- function(nrow,d,filename) {
+
+WriteGFile <- function(nrow,d,filename){
   write.table(data.frame(a=nrow,b=nrow(d)),file=file.path(filename), row.names = FALSE,sep=" ",col.names =FALSE,eol="\n")
   write.table(d[,c(1,2,3)],file=file.path(filename), row.names = FALSE,sep="\t",col.names =FALSE,eol="\n",append=TRUE)
 }
 
-# Function to generate the agreement between each MeP
-CalculateAgreement <- function(vetor) {
+calculateAgreement <- function(vetor) {
   temp <- matrix(0,nrow=nrow(vetor),ncol=nrow(vetor))
   rownames(temp) <- rownames(vetor)
   agreement <- 0
@@ -196,24 +196,24 @@ CalculateAgreement <- function(vetor) {
   col.size = ncol(vetor)
   
   if(selected.table==2) {
-    for(i in 1:(nrow(vetor)-1)) {
-       for(j in (i+1):nrow(vetor)) {
-          agr <- paste(vetor[i,],vetor[j,],sep="")      # Compare Two-by-Two
-          points <- sapply(agr,function(s) table2[[s]]) # Apply the Function to substitue the values
-          agreement <- sum(unlist(points))              # Sum the values
-          agreement <- agreement/col.size               # Normalize by the number of documents
-          temp[i, j] <- agreement                       # Put the value in the adjacency matrix
-          temp[j, i] <- agreement                       # Put the value in the adjacency matrix
+    for(i in 1:(nrow(vetor)-1)){
+       for(j in (i+1):nrow(vetor)){
+          agr <- paste(vetor[i,],vetor[j,],sep="")      #Compare Two-by-Two
+          points <- sapply(agr,function(s) table2[[s]])    #Apply the Function to substitue the values
+          agreement <- sum(unlist(points))              #Sum the values
+          agreement <- agreement/col.size               #Normalize by the number of documents
+          temp[i, j] <- agreement                       #Put the value in the adjacency matrix
+          temp[j, i] <- agreement                       #Put the value in the adjacency matrix
       }
     }
-  } else {
-    for(i in 1:(nrow(vetor)-1)) {
-      for(j in (i+1):nrow(vetor)) {
-        agr <- paste(vetor[i,],vetor[j,],sep="")      # Compare Two-by-Two
-        points <- sapply(agr,function(s) table1[[s]]) # Apply the Function to substitue the values
-        agreement <- sum(unlist(points))              # Sum the values
-        agreement <- agreement/col.size               # Normalize by the number of documents
-        temp[i, j] <- agreement                       # Put the value in the adjacency matrix
+  }else {
+    for(i in 1:(nrow(vetor)-1)){
+      for(j in (i+1):nrow(vetor)){
+        agr <- paste(vetor[i,],vetor[j,],sep="")      #Compare Two-by-Two
+        points <- sapply(agr,function(s) table1[[s]])    #Apply the Function to substitue the values
+        agreement <- sum(unlist(points))              #Sum the values
+        agreement <- agreement/col.size               #Normalize by the number of documents
+        temp[i, j] <- agreement                       #Put the value in the adjacency matrix
         temp[j, i] <- agreement                       #Put the value in the adjacency matrix
       }
     }
@@ -223,35 +223,66 @@ CalculateAgreement <- function(vetor) {
   
 }
 
+
+calculateLoyalty <- function(vetor) {
+  temp <- matrix(0,nrow=nrow(vetor),ncol=nrow(vetor))
+  rownames(temp) <- rownames(vetor)
+  agreement <- 0
+  agr <- 0
+  points <- vector(length=ncol(vetor))
+  col.size = ncol(vetor)
+  
+ for(i in 1:(nrow(vetor)-1)){
+      for(j in (i+1):nrow(vetor)){
+        points <- vetor[i,]*vetor[j,]        
+        agreement <- sum(points)
+        agreement <- agreement/col.size               #Normalize by the number of documents
+        temp[i, j] <- agreement                       #Put the value in the adjacency matrix
+        temp[j, i] <- agreement                       #Put the value in the adjacency matrix
+      }
+    }
+  return(temp)
+  
+}
+
+
 AgreementPlot <- function(agreementMatrix) {
-  temp <- agreementMatrix
-  temp[lower.tri(temp,diag=TRUE)] <- NA
-  temp <- round(temp,2)
+  tempo <- agreementMatrix
+  tempo[lower.tri(tempo,diag=TRUE)] <- NA
+  tempo <- round(tempo,2)
   
   pdf(file=file.path(paste0(output.agreement.dir,"/",dir.title,"/",file.title,"_agreement_distribution.pdf")))
-  barplot(table(temp),ylim=c(0,30000), xpd=FALSE, xlab="Agreement",ylab="Frequency",col=1:20,main="Agreement Distribution")
+  barplot(table(tempo),ylim=c(0,30000), xpd=FALSE, xlab="Agreement",ylab="Frequency",col=1:20,main="Agreement Distribution")
   dev.off()
   
   pdf(file=file.path(paste0(output.agreement.dir,"/",dir.title,"/",file.title,"_agreement_histogram.pdf")))
-  hist(temp, xlab="Agreement",ylab="Frequency",col=1:20,main="Agreement Distribution")
+  hist(tempo, xlab="Agreement",ylab="Frequency",col=1:20,main="Agreement Distribution")
   dev.off()
 }
 
-# Plot the Rebelion indices
 RebelionPlot <- function(rebelion.indexes) {
   pdf(file=file.path(paste0(output.agreement.dir,"/",dir.title,"/",file.title,"_rebelion_histogram.pdf")))
   hist(rebelion.indexes, xlab="Rebelion",ylab="Frequency",col=1:20,main="Rebelion Index")
   dev.off()
 }
 
-# Creates an Edge List for Gephi
-GenerateEdgesGephi <- function(edges,filename,directed=FALSE) {
-  tab <- as.data.frame(edges)
-  write.table(tab,file.path(filename), row.names = FALSE,sep=",",dec=".")  
+# Writes a .g file
+createGFile <- function(numberNodes,d,filename){
+  write.table(data.frame(a=numberNodes,b=nrow(d)),file=file.path(filename), row.names = FALSE,sep=" ",col.names =FALSE,eol="\n")
+  
+  if(OUTPUTFILES.Gfile.weigth != "+1_or_-1"){
+    write.table(d[,c(1,2,3)],file=file.path(filename), row.names = FALSE,sep="\t",col.names =FALSE,eol="\n",append=TRUE)
+  }else{
+    write.table(d[,c(1,2,4)],file=file.path(filename), row.names = FALSE,sep="\t",col.names =FALSE,eol="\n",append=TRUE)
+  }
 }
 
-# Creates an Node List for Gephi
-GenerateNodesGephi <- function(nodes.table,filename) {
+generateEdgesGephi <- function(edges,filename,directed=FALSE) {
+  tab <- as.data.frame(edges)
+  write.table(tab,file.path(filename), row.names = FALSE,sep=",",dec=".")  # dirty  
+}
+
+generateNodesGephi <- function(nodes.table,filename) {
   write.csv(nodes.table,file=filename, row.names = FALSE)		
 }
 
@@ -269,12 +300,11 @@ ConvertMatrix <- function(matrix) {
   return(reply)
 }
 
-# Calculate the rebelion indices for each MeP regarding it Party
 CalculateRebelionIndex <- function(matrix) {
   converted.matrix <- ConvertMatrix(matrix)
-  reply <- rowSums(converted.matrix,na.rm = TRUE) # Sum the values of each row and store in a vector ignoring NA values
-  number_documents <- apply(converted.matrix, 1, function(x) length(which(!is.na(x)))) # Check how many documents are valid for the normalization
-  reply <- reply / number_documents # Find the percentage of rebelion for each candidate (only for valid documents)
+  reply <- rowSums(converted.matrix,na.rm = TRUE) #Sum the values of each row and store in a vector ignoring NA values
+  number_documents <- apply(converted.matrix, 1, function(x) length(which(!is.na(x)))) #check how many documents are valid for the normalization
+  reply <- reply / number_documents #Find the percentage of rebelion for each candidate (only for valid documents)
   reply[which(is.nan(reply))] <- 0
   return(reply)
 }
@@ -290,14 +320,13 @@ RemoveMePs <- function(matrix) {
   rownames(reply) <- rownames(matrix)
   reply <- reply[which(rowSums(reply,na.rm=TRUE)!=0),]
   
-  ret <- mapply(function(s) back.values[[s]],reply)
-  ret <- matrix(ret,ncol=ncol(matrix))
-  rownames(ret) <- rownames(reply)
-  colnames(ret) <- colnames(matrix)
-  return(ret)
+  rabs <- mapply(function(s) back.values[[s]],reply)
+  rabs <- matrix(rabs,ncol=ncol(matrix))
+  rownames(rabs) <- rownames(reply)
+  colnames(rabs) <- colnames(matrix)
+  return(rabs)
 }
 
-# Function created to calculate the CC Imbalance
 CalculateCCImbalance <- function(adjacency.matrix, cluster) {
   
   sum.intern <- 0 
@@ -385,7 +414,6 @@ CalculateNetworkMeasures <- function(adjacency.matrix) {
   return(network.measures)
 }
 
-# Function created to remove MePs that have not expression to be calculated, i.e., did not vote
 RemoveMePsLoyal <- function(matrix) {
   go.values <- list("Absent"=1,"Rebel"=2,"Loyal"=3,"Didn't vote"=4,"Documented Absence"=5,"NA"=0,"Independent"=6)
   back.values <- list("1"="Absent","2"="Rebel","3"="Loyal","4"="Didn't vote","5"="Documented Absence","6"="Independent","0"="NA")
@@ -405,7 +433,6 @@ RemoveMePsLoyal <- function(matrix) {
   return(rabs)
 }
 
-# Clusterization Measures
 CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelion.indexes) {
   
   gc <- graph.adjacency(adjacency.matrix, mode = c("upper"), weighted = TRUE, diag = FALSE, add.rownames = TRUE)
@@ -545,7 +572,7 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   dev.off()
   
   pdf(file=file.path(output.community.dir,paste0(dir.title,"/",file.title,"_walktrap_distribution.pdf")))
-  barplot(sort(table(membership(walk.gp)),decreasing = TRUE), ylim=c(0,840), main = "Walktrap - Community Distribution", 
+  barplot(sort(table(membership(walk.gp)),decreasing = TRUE), ylim=c(0,840), main = "Walktrap - Community Distribution",
           col = rainbow(length(table(membership(walk.gp)))))
   dev.off()
   
@@ -553,8 +580,7 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
 }
 
 
-# Used to be the Main function, now it is encapsulated in a function in order to be
-# generalized and appliable for different configurations
+
 Calculate <- function() {
   vetor <- 0
   too.much.filtered <- FALSE
@@ -574,7 +600,7 @@ Calculate <- function() {
   
   rebelion.indexes <- CalculateRebelionIndex(more.filtered.loyalty)
 
-  agreementMatrix <- CalculateAgreement(more.filtered.table)
+  agreementMatrix <- calculateAgreement(more.filtered.table)
   graph <- generateGraphG(agreementMatrix)
   fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_graph.g"))
   WriteGFile(nrow(agreementMatrix),graph,fileName)
@@ -583,10 +609,10 @@ Calculate <- function() {
   RebelionPlot(rebelion.indexes)
 
   fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_edges_Gephi.csv"))
-  GenerateEdgesGephi(graph,fileName)
+  generateEdgesGephi(graph,fileName)
   
   fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_nodes_Gephi.csv"))
-  GenerateNodesGephi(corresp.table,fileName)
+  generateNodesGephi(corresp.table,fileName)
 
   net.measures <- CalculateNetworkMeasures(agreementMatrix)
   nome.file <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_net_measures.csv"))
@@ -622,13 +648,14 @@ for(i in 1:length(sub.dirs)) {
   for(j in 1:length(sub.sub.dirs)) {
     rooty <- paste0(adapt,"/")
     try({
-      source(file.path(rooty,sub.sub.dirs[j]))
-      dir.title <- sub.dirs[i]
-      print(paste0("Processing Directory: ",sub.dirs[i]))
-      print(paste0("Configuration File: ",sub.sub.dirs[j]))
-      Calculate()
-      print("Process Complete")
-    })
+    source(file.path(rooty,sub.sub.dirs[j]))
+    dir.title <- sub.dirs[i]
+    print(paste0("Processing Directory: ",sub.dirs[i]))
+    print(paste0("Configuration File: ",sub.sub.dirs[j]))
+    Calculate()
+    print("Process Complete")
+    }
+    )
   }
 }
 
