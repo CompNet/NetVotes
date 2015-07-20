@@ -7,5 +7,10 @@
 ##Install
 1. Download the source from github
 
-##Running
-1. 
+##Running the main program
+1. Open R
+2. Set the current directory as the working directory
+3. Run main.R by sourcing it
+
+##Generating the plots
+The plots are stored in the output folder called "plots". To generate then you just need to open the chartsProcessor.R file and source it
