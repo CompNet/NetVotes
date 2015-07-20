@@ -10,7 +10,7 @@ VerifyInputVariables <- function(var, varname, data_var, file, default=NULL){
   lvls <- levels(factor(data_var))
   if(!is.null(default))
     lvls <- c(lvls,default)
-  if(	sum(var %in% lvls) != length(var))
+  if(  sum(var %in% lvls) != length(var))
     stop(paste0("\nIn file ",file," , incorrect variable ", varname," = ( ",toString(var)," ) . \n\nHere are the different possibilities : ",toString(lvls)))
 }
 
@@ -54,7 +54,7 @@ CheckInputs <- function(){
 }
 
 FilterUsingConfigurations <- function() {
- 
+  
   # Filtering of the documents using the parameters passed through the configuration file
   
   # Adding columns for DAY,MONTH and YEAR from the column "Date"
@@ -73,7 +73,7 @@ FilterUsingConfigurations <- function() {
   
   DOCS.time_limits <- as.Date(DOCS.time_limits,format="%d/%m/%Y") # convertion from string to Date
   selected_Documents <- docs[which( docs$Date>=DOCS.time_limits[1] & docs$Date<=DOCS.time_limits[2] & docs$Policy.area %in% DOCS.policies),]
-    
+  
   # Filtering concerning MPs
   
   # Selection of the MPs chosen by the user  
@@ -164,6 +164,8 @@ generateGraphG <- function(agreementValues) {
   for(i in 1:nrow(agreementValues)) {
     for(j in 1:ncol(agreementValues)) {
       if(pass[i, j] == TRUE) {
+        #  The parameters top and floor are used as threshold values
+        #  The threshold is necessary when you want to remove insignificant edges
         if(agreementValues[i, j]>=top || agreementValues[i,j]<=floor) {
           #The indices receives -1 because the nodes number must range from 0 to n-1
           g[count,1] <- i - 1
@@ -197,13 +199,13 @@ CalculateAgreement <- function(vetor) {
   
   if(selected.table==2) {
     for(i in 1:(nrow(vetor)-1)) {
-       for(j in (i+1):nrow(vetor)) {
-          agr <- paste(vetor[i,],vetor[j,],sep="")      # Compare Two-by-Two
-          points <- sapply(agr,function(s) table2[[s]]) # Apply the Function to substitue the values
-          agreement <- sum(unlist(points))              # Sum the values
-          agreement <- agreement/col.size               # Normalize by the number of documents
-          temp[i, j] <- agreement                       # Put the value in the adjacency matrix
-          temp[j, i] <- agreement                       # Put the value in the adjacency matrix
+      for(j in (i+1):nrow(vetor)) {
+        agr <- paste(vetor[i,],vetor[j,],sep="")      # Compare Two-by-Two
+        points <- sapply(agr,function(s) table2[[s]]) # Apply the Function to substitue the values
+        agreement <- sum(unlist(points))              # Sum the values
+        agreement <- agreement/col.size               # Normalize by the number of documents
+        temp[i, j] <- agreement                       # Put the value in the adjacency matrix
+        temp[j, i] <- agreement                       # Put the value in the adjacency matrix
       }
     }
   } else {
@@ -283,7 +285,7 @@ RemoveMePs <- function(matrix) {
   go.values <- list("Absent"=1,"Abstain"=2,"Against"=3,"Didn't vote"=4,"For"=5,"NA"=0)
   back.values <- list("1"="Absent","2"="Abstain","3"="Against","4"="Didn't vote","5"="For","0"="NA")
   reply <- mapply(function(s) go.values[[s]],matrix)
-
+  
   reply[sapply(reply, is.null)] <- NA
   reply <- unlist(reply)
   reply <- matrix(reply,ncol=ncol(matrix))
@@ -339,7 +341,7 @@ CalculateCCImbalance <- function(adjacency.matrix, cluster) {
   return(imbalance)
 }
 
- 
+
 CalculateNetworkMeasures <- function(adjacency.matrix) {
   temp <- adjacency.matrix
   pos.matrix <- adjacency.matrix
@@ -359,7 +361,7 @@ CalculateNetworkMeasures <- function(adjacency.matrix) {
   
   total.qtd.edges <- pos.qtd.edges + neg.qtd.edges
   total.wght.edges <- pos.wght.edges + abs(neg.wght.edges)
-    
+  
   pos.pctg.edges <- pos.qtd.edges/total.qtd.edges
   pos.pctg.weight <- pos.wght.edges/total.wght.edges
   
@@ -405,6 +407,44 @@ RemoveMePsLoyal <- function(matrix) {
   return(rabs)
 }
 
+#  Function to read the ILS
+ILSMembership <- function(file.title) {
+  
+  file.name <- paste0(ils.input.dir,"/",file.title)
+  file.name <- paste0(file.name,"/cc-result.txt")
+  # open file (read mode)
+  con <- file(file.name, "r")
+  lines <- readLines(con)
+  close(con)
+  
+  # process the file content
+  i <- 4
+  line <- lines[i]
+  res <- list()
+  while(line!="")
+  {  # process current line
+    #print(line)
+    line2 <- strsplit(x=line, "[ ", fixed=TRUE)[[1]][2]
+    line3 <- strsplit(x=line2, " ]", fixed=TRUE)[[1]][1]
+    nodes <- as.integer(strsplit(x=line3, " ", fixed=TRUE)[[1]]) + 1 # plus one because C++ starts counting from 0
+    res[[length(res)+1]] <- nodes
+    
+    # read next line
+    i <- i + 1
+    line <- lines[i]      
+  }
+  
+  # build the membership vector
+  mx <- max(unlist(res))
+  membership <- rep(NA,mx)
+  for(i in 1:length(res))
+  {  nodes <- res[[i]]
+     membership[nodes] <- i 
+  }
+  
+  return(membership)
+}
+
 # Clusterization Measures
 CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelion.indexes) {
   
@@ -423,7 +463,7 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   complementary.negative.adjacency.matrix[which(negative.adjacency.matrix >= 0)] <- 1
   complementary.negative.adjacency.matrix[which(negative.adjacency.matrix < 0)] <- 0
   gcm <- graph.adjacency(complementary.negative.adjacency.matrix, mode = c("upper"), weighted = TRUE, diag = FALSE, add.rownames = TRUE)
-
+  
   info.gp <- infomap.community(gp)  
   mult.gp <- multilevel.community(gp)
   fast.gp <- fastgreedy.community(gp)
@@ -445,7 +485,7 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   imb.fast.negative.complementary.graph <- CalculateCCImbalance(adjacency.matrix,membership(fast.cmp))
   imb.walk.negative.complementary.graph <- CalculateCCImbalance(adjacency.matrix,membership(walk.cmp))
   
-  imbalance <- matrix(0,nrow=8,ncol=7)
+  imbalance <- matrix(0,nrow=9,ncol=7)
   imbalance[1,1] <- length(communities(info.gp))
   imbalance[2,1] <- length(communities(info.cmp))
   imbalance[3,1] <- length(communities(mult.gp))
@@ -466,48 +506,80 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   
   colnames(imbalance) <- c("Clusters", "Total_Imb", "Total_Imb_Pctg", "Pos_Imb", "Pos_Imb_Pctg", "Neg_Imb", "Neg_Imb_Pctg")
   rownames(imbalance) <- c("Positive Graph InfoMap", "Complementary Negative Graph InfoMap",
-                       "Positive Graph MultiLevel", "Complementary Negative Graph MultiLevel",
-                       "Positive Graph FastGreedy", "Complementary Negative Graph FastGreedy",
-                       "Positive Graph WalkTrap", "Complementary Negative Graph WalkTrap")
-
+                           "Positive Graph MultiLevel", "Complementary Negative Graph MultiLevel",
+                           "Positive Graph FastGreedy", "Complementary Negative Graph FastGreedy",
+                           "Positive Graph WalkTrap", "Complementary Negative Graph WalkTrap","Parallel ILS")
+  
+  try({
+    ils <- ILSMembership(file.title)
+    
+    ils.imb <-  CalculateCCImbalance(adjacency.matrix,ils)
+    imbalance[9,1] <- max(ils)
+    imbalance[9,2:7] <- unlist(ils.imb)
+    
+    vi.ils.info <- compare.communities(info.gp,ils, method = c("vi"))
+    nmi.ils.info <- compare.communities(info.gp,ils, method = c("nmi"))
+    
+    vi.ils.mult <- compare.communities(mult.gp,ils, method = c("vi"))
+    nmi.ils.mult <- compare.communities(mult.gp,ils, method = c("nmi"))
+    
+    vi.ils.fast <- compare.communities(fast.gp,ils, method = c("vi"))
+    nmi.ils.fast <- compare.communities(fast.gp,ils, method = c("nmi"))
+    
+    vi.ils.walk <- compare.communities(walk.gp,ils, method = c("vi"))
+    nmi.ils.walk <- compare.communities(walk.gp,ils, method = c("nmi"))
+    
+    comparison <- matrix(0,ncol=2,nrow=4)
+    comparison[1,] <- c(vi.ils.info,nmi.ils.info)
+    comparison[2,] <- c(vi.ils.mult,nmi.ils.mult)
+    comparison[3,] <- c(vi.ils.fast,nmi.ils.fast)
+    comparison[4,] <- c(vi.ils.walk,nmi.ils.walk)
+    
+    colnames(comparison) <- c("VI", "NMI")
+    rownames(comparison) <- c("InfoMap", "MultiLevel", "FastGreedy", "WalkTrap")
+    
+    nome.file <- file.path(output.community.dir,paste0(dir.title,"/",file.title,"ils_cluster_comparison.csv"))
+    write.csv(comparison,file=nome.file)
+  })
+  
   vi.info <- compare.communities(info.gp,info.cmp, method = c("vi"))
   vi.mult <- compare.communities(mult.gp,mult.cmp, method = c("vi"))
   vi.fast <- compare.communities(fast.gp,fast.cmp, method = c("vi"))
   vi.walk <- compare.communities(walk.gp,walk.cmp, method = c("vi"))
-
+  
   nmi.info <- compare.communities(info.gp,info.cmp, method = c("nmi"))
   nmi.mult <- compare.communities(mult.gp,mult.cmp, method = c("nmi"))
   nmi.fast <- compare.communities(fast.gp,fast.cmp, method = c("nmi"))
   nmi.walk <- compare.communities(walk.gp,walk.cmp, method = c("nmi"))
-
+  
   spjn.info <- compare.communities(info.gp,info.cmp, method = c("split.join"))
   spjn.mult <- compare.communities(mult.gp,mult.cmp, method = c("split.join"))
   spjn.fast <- compare.communities(fast.gp,fast.cmp, method = c("split.join"))
   spjn.walk <- compare.communities(walk.gp,walk.cmp, method = c("split.join"))
-
+  
   rand.info <- compare.communities(info.gp,info.cmp, method = c("rand"))
   rand.mult <- compare.communities(mult.gp,mult.cmp, method = c("rand"))
   rand.fast <- compare.communities(fast.gp,fast.cmp, method = c("rand"))
   rand.walk <- compare.communities(walk.gp,walk.cmp, method = c("rand"))
-
+  
   adrand.info <- compare.communities(info.gp,info.cmp, method = c("adjusted.rand"))
   adrand.mult <- compare.communities(mult.gp,mult.cmp, method = c("adjusted.rand"))
   adrand.fast <- compare.communities(fast.gp,fast.cmp, method = c("adjusted.rand"))
   adrand.walk <- compare.communities(walk.gp,walk.cmp, method = c("adjusted.rand"))
-
+  
   comparison <- matrix(0,ncol=5,nrow=4)
   comparison[1,] <- c(vi.info,nmi.info,spjn.info,rand.info,adrand.info)
   comparison[2,] <- c(vi.mult,nmi.mult,spjn.mult,rand.mult,adrand.mult)
   comparison[3,] <- c(vi.fast,nmi.fast,spjn.fast,rand.fast,adrand.fast)
   comparison[4,] <- c(vi.walk,nmi.walk,spjn.walk,rand.walk,adrand.walk)
-
+  
   colnames(comparison) <- c("VI", "NMI", "Split Join", "Random", "Adjusted Random")
   rownames(comparison) <- c("InfoMap (Positve and Complementary Negative)", "MultiLevel (Positve and Complementary Negative)",
                             "FastGreedy (Positve and Complementary Negative)", "WalkTrap (Positve and Complementary Negative)")
-                         
-
+  
+  
   reply <- list("cluster.information" = imbalance, "cluster.comparison" = comparison)
-
+  
   a <- rownames(more.filtered.table)
   names <- as.character(MPs[a,2]) #Get the names of each selected MeP
   countries <- as.character(MPs[a,3]) #Get the country of each selected MeP
@@ -516,7 +588,7 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   V(gc)$country <- countries
   V(gc)$political_group <- political_groups
   V(gc)$rebelion_index <- rebelion.indexes
-
+  
   V(gc)$infomap_positive_community <- info.gp$membership
   V(gc)$multilevel_positive_community <- mult.gp$membership
   V(gc)$fastgreedy_positive_community <- membership(fast.gp)
@@ -526,7 +598,7 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   V(gc)$multilevel_comp_neg_community <- mult.cmp$membership
   V(gc)$fastgreedy_comp_neg_community <- membership(fast.cmp)
   V(gc)$walktrap_comp_neg_community <- membership(walk.cmp)
-
+  
   write.graph(graph = gc, file = file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_complete_graph.graphml")),format = "graphml")
   
   pdf(file=file.path(output.community.dir,paste0(dir.title,"/",file.title,"_infomap_distribution.pdf")))
@@ -549,6 +621,15 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
           col = rainbow(length(table(membership(walk.gp)))))
   dev.off()
   
+  try({
+    ils_members <- ILSMembership(file.title)
+    V(gc)$ils_community <- ils_members
+    pdf(file=file.path(output.community.dir,paste0(dir.title,"/",file.title,"_ils_distribution.pdf")))
+    barplot(sort(table(ils_members),decreasing = TRUE), ylim=c(0,840), main = "Parallel ILS - Community Distribution",
+            col = rainbow(length(table(ils_members))))
+    dev.off()
+  })
+  
   return(reply)
 }
 
@@ -561,37 +642,37 @@ Calculate <- function() {
   CheckInputs()
   tabela.filtrada <- FilterUsingConfigurations()
   tabela.matrizada <- as.matrix(tabela.filtrada)
-
+  
   corresp.table <- data.frame(id=(0:(nrow(tabela.filtrada)-1)), name=rownames(tabela.filtrada))
   corresp.table <- cbind(corresp.table, MPs[as.character(corresp.table[,"name"]),c("names","country","political_group")])
   rownames(corresp.table) <- corresp.table$id
-
+  
   loyalty.table <- FilterUsingConfigurationsLoyalty()
   loyalty.matrix<- as.matrix(loyalty.table)
-
+  
   more.filtered.table <- RemoveMePs(tabela.matrizada)
   more.filtered.loyalty <- RemoveMePsLoyal(loyalty.matrix)
   
   rebelion.indexes <- CalculateRebelionIndex(more.filtered.loyalty)
-
+  
   agreementMatrix <- CalculateAgreement(more.filtered.table)
   graph <- generateGraphG(agreementMatrix)
   fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_graph.g"))
   WriteGFile(nrow(agreementMatrix),graph,fileName)
-
+  
   AgreementPlot(agreementMatrix)
   RebelionPlot(rebelion.indexes)
-
+  
   fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_edges_Gephi.csv"))
   GenerateEdgesGephi(graph,fileName)
   
   fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_nodes_Gephi.csv"))
   GenerateNodesGephi(corresp.table,fileName)
-
+  
   net.measures <- CalculateNetworkMeasures(agreementMatrix)
   nome.file <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_net_measures.csv"))
   write.csv(net.measures,file=nome.file)    
-
+  
   clustering.data <- CalculateClusterization(agreementMatrix,more.filtered.table,rebelion.indexes)
   
   nome.file <- file.path(output.community.csv.dir,paste0(dir.title,"/",file.title,"_cluster_information.csv"))
@@ -631,4 +712,3 @@ for(i in 1:length(sub.dirs)) {
     })
   }
 }
-

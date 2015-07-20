@@ -15,7 +15,7 @@ ProcessData <- function(in.dir, out.dir,title) {
   #Gather the percentage of imbalance for each year and algorithm
   imbalance.list <- matrix(0,ncol=length(temp),nrow=length(eval(parse(text=temp[1]))$Total_Imb_Pctg))
   rownames(imbalance.list) <- c("Pos Infomap", "Comp Neg Infomap", "Pos Multilevel", "Comp Neg Multilevel", 
-                              "Pos FastGreedy", "Comp Neg FastGreedy", "Pos WalkTrap", "Comp Neg WalkTrap")
+                                "Pos FastGreedy", "Comp Neg FastGreedy", "Pos WalkTrap", "Comp Neg WalkTrap","Parallel ILS")
   colnames(imbalance.list) <- c("2009","2010","2011","2012","2013","term")
   for (i in 1:length(temp)) {
     imbalance.list[,i] <- eval(parse(text=temp[i]))$Total_Imb_Pctg
@@ -49,11 +49,11 @@ ProcessData <- function(in.dir, out.dir,title) {
   
 }
 
-sub.dirs <- list.files(input.tables.dir)
+sub.dirs <- list.files(output.community.csv.dir)
 for(i in 1:length(sub.dirs)) {
   try({
-    input.dir <- paste0(input.tables.dir,"/",sub.dirs[i])
-    output.dir <- paste0(output.charts.dir,"/",sub.dirs[i])
+    input.dir <- paste0(output.community.csv.dir,"/",sub.dirs[i])
+    output.dir <- paste0(output.plots.dir,"/",sub.dirs[i])
     ProcessData(input.dir,output.dir,sub.dirs[i])
   })
 }

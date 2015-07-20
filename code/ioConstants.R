@@ -3,7 +3,7 @@ data.dir <- file.path(".","votewatch_data","votes_by_documents")
 
 # Name of the colums (in the .csv files) that concern the MPs. 
 # The first one must be the column containing the complete name of the MP 
-columns.names.MPs <- c("Name","Member.State","Group") 			
+columns.names.MPs <- c("Name","Member.State","Group")   		
 
 # Name of the colums (in the .csv files) that concern the votes (For,Against,Abstain...)
 columns.names.votes <- c("Vote") 
@@ -37,6 +37,8 @@ loyalty.filename <- "loyalty.csv"
 # Name of the directory where all the tables are going to be read to be processed
 input.tables.dir <- file.path(".","csv_results")
 
+# Name of the directorey where all the parallel ILS results are stored
+ils.input.dir   <- file.path(".","parallel_ils_results")
 
 # Name of the directory where all the plots will be stored
 output.plots.dir <- file.path(output.dir,"plots")
