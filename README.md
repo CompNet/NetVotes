@@ -13,4 +13,4 @@
 3. Run main.R by sourcing it
 
 ##Generating the plots
-The plots are stored in the output folder called "plots". To generate then you just need to open the chartsProcessor.R file and source it
+The plots are stored in the output folder called "plots". To generate then you just need to open the chartsProcessor.R file and source it.
