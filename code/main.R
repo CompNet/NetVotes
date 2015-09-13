@@ -538,7 +538,7 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
     colnames(comparison) <- c("VI", "NMI")
     rownames(comparison) <- c("InfoMap", "MultiLevel", "FastGreedy", "WalkTrap")
     
-    nome.file <- file.path(output.community.dir,paste0(dir.title,"/",file.title,"ils_cluster_comparison.csv"))
+    nome.file <- file.path(output.community.dir,paste0(dir.title,"/",file.title,"_ils_cluster_comparison.csv"))
     write.csv(comparison,file=nome.file)
   })
   
@@ -573,7 +573,7 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   comparison[3,] <- c(vi.fast,nmi.fast,spjn.fast,rand.fast,adrand.fast)
   comparison[4,] <- c(vi.walk,nmi.walk,spjn.walk,rand.walk,adrand.walk)
   
-  colnames(comparison) <- c("VI", "NMI", "Split Join", "Random", "Adjusted Random")
+  colnames(comparison) <- c("VI", "NMI", "Split Join", "Rand Index", "Adjusted Rand Index")
   rownames(comparison) <- c("InfoMap (Positve and Complementary Negative)", "MultiLevel (Positve and Complementary Negative)",
                             "FastGreedy (Positve and Complementary Negative)", "WalkTrap (Positve and Complementary Negative)")
   
