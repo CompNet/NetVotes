@@ -14,6 +14,7 @@ NetVotes is free software: you can redistribute it and/or modify it under the te
 
 # Description
 This set of R scripts was designed for two purposes:
+
 1. Extract so-called *vote networks* from raw data describing the voting activity of a population.
 2. Perform various analyses on these data, in particular: estimate good partitions of the network, according to different measures.
 
@@ -46,6 +47,7 @@ Here are the folders composing the project:
 
 # Use
 In order to extract the networks from the raw data, compute certain statistics, apply the community detection methods, process their performance and generate various plots:
+
 1. Open the `R` console.
 2. Set the current directory as the working directory, using `setwd("<my directory>")`.
 3. Run the main script `code/main.R`.
@@ -65,9 +67,9 @@ The script will produce the following files in the folder `output_files`:
   * `xxxx_net_measures.csv`: table containing some stats on the network (number of links, etc.).
   * `xxxx_nodes_Gephi.csv`: list of nodes (i.e. MEPs), with details.
 
-Note the ILS related files are generated provided the ILS results have been placed in the `parallel_ils_results` folder.
+Note the ILS-related files are generated provided the ILS results have been placed in the `parallel_ils_results` folder.
 
-In order to generate the plots from the paper, you need to run the `code/chartsProcessor.R` script. The files are stored in the `output_files/plots` folder.
+In order to generate the plots from the paper, you additionally need to run the `code/chartsProcessor.R` script. The files are stored in the `output_files/plots` folder.
 
 
 # References
