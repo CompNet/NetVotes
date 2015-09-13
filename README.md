@@ -1,4 +1,4 @@
-# NetVotes v.1
+NetVotes v.1
 =======
 *Extraction and analysis of vote-based networks*
 
@@ -12,7 +12,7 @@ NetVotes is free software: you can redistribute it and/or modify it under the te
 
 -----------------------------------------------------------------------
 
-## Description
+# Description
 This set of R scripts was designed for two purposes:
 1. Extract so-called *vote networks* from raw data describing the voting activity of a population.
 2. Perform various analyses on these data, in particular: estimate good partitions of the network, according to different measures.
@@ -20,14 +20,14 @@ This set of R scripts was designed for two purposes:
 Our tool was applied to data representing the activity of the members of the European Parliament (MEPs) during the 7th term (from June 2009 to June 2014), as described in [MFLM'15]. The raw data describing this activity comes from the [VoteWatch](http://www.votewatch.eu/) website.
 
 
-## Installation
+# Installation
 1. Install the [`R` language](https://www.r-project.org/) and the [`igraph`](http://igraph.org/r/) package.
 2. Download this project from GitHub.
 
 This project contains the raw data for the 7th term MEPs activity, so it can be used as is. You can alternatively apply the scripts to other data, provided they follow the same structure and format. 
 
 
-## Organization
+# Organization
 Here are the folders composing the project:
 * Folder `code`: contains the source code.
 * Folder `input_files`: contains a collection of configuration files designed for the VoteWatch data. Each folder inside `input_files` correspond to a topic. Each topic folder contains one configuration file for each year of the considered term, and one for the whole term.
@@ -44,7 +44,7 @@ Here are the folders composing the project:
     * `qtd_docs.csv`: list of the topics with the corresponding number of documents.
 
 
-## Use
+# Use
 In order to extract the networks from the raw data, compute certain statistics, apply the community detection methods, process their performance and generate various plots:
 1. Open the `R` console.
 2. Set the current directory as the working directory, using `setwd("<my directory>")`.
@@ -70,6 +70,6 @@ Note the ILS related files are generated provided the ILS results have been plac
 In order to generate the plots from the paper, you need to run the `code/chartsProcessor.R` script. The files are stored in the `output_files/plots` folder.
 
 
-## References
+# References
 * **[MFLM'15]** Mendonça, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015.
 http://arxiv.org/abs/1507.04215
