@@ -37,7 +37,7 @@ loyalty.filename <- "loyalty.csv"
 # Name of the directory where all the tables are going to be read to be processed
 input.tables.dir <- file.path(".","csv_results")
 
-# Name of the directorey where all the parallel ILS results are stored
+# Name of the directory where all the parallel ILS results are stored
 ils.input.dir   <- file.path(".","parallel_ils_results")
 
 # Name of the directory where all the plots will be stored
