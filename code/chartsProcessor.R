@@ -51,9 +51,9 @@ ProcessData <- function(in.dir, out.dir,title) {
 
 sub.dirs <- list.files(output.community.csv.dir)
 for(i in 1:length(sub.dirs)) {
-  try({
+#  try({
     input.dir <- paste0(output.community.csv.dir,"/",sub.dirs[i])
     output.dir <- paste0(output.plots.dir,"/",sub.dirs[i])
     ProcessData(input.dir,output.dir,sub.dirs[i])
-  })
+#  })
 }
