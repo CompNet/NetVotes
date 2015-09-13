@@ -16,7 +16,11 @@ ProcessData <- function(in.dir, out.dir,title) {
 	imbalance.list <- matrix(0,ncol=length(temp),nrow=length(eval(parse(text=temp[1]))$Total_Imb_Pctg))
 	rownames(imbalance.list) <- c("Pos Infomap", "Comp Neg Infomap", "Pos Multilevel", "Comp Neg Multilevel", 
 			"Pos FastGreedy", "Comp Neg FastGreedy", "Pos WalkTrap", "Comp Neg WalkTrap","Parallel ILS")
-	colnames(imbalance.list) <- c("2009","2010","2011","2012","2013","term")
+# edit by VL 13/09/2015
+#	lgd <- c("2009","2010","2011","2012","2013","Term")
+	lgd <- substr(temp, start=nchar(title)+2, stop=nchar(title)+5)
+# end of edit
+	colnames(imbalance.list) <- lgd
 	for (i in 1:length(temp)) {
 		imbalance.list[,i] <- eval(parse(text=temp[i]))$Total_Imb_Pctg
 	}
@@ -30,15 +34,15 @@ ProcessData <- function(in.dir, out.dir,title) {
 	par(mar = c(10,4,4,2) + 0.1)
 	
 	#Plot the data
-	xx <- barplot(t(imbalance.list), beside=T,col=rainbow(6), las=3,ylim=c(0,80),cex.names=1)  
+	xx <- barplot(t(imbalance.list), beside=T,col=rainbow(length(lgd)), las=3,ylim=c(0,80),cex.names=1)  
 	
 	mtext(side=3,title,line=1,cex=2)
 	mtext(side=3,"Whole term",line=-1,cex=1.5)
 	
 	#Add the Legend at the top right
 	legend("topright", 
-			legend = c("2009","2010","2011","2012","2013","Term"), 
-			fill = rainbow(6), ncol = 2,
+			legend = lgd, 
+			fill = rainbow(length(lgd)), ncol = 2,
 			cex = 1)
 	
 	#Add the number of clusters above each bar
