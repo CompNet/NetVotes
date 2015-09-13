@@ -1,3 +1,4 @@
+!!!!!!!!!!!!!!!!!!!!!!COMPLETER LES DOSSIERS DE SORTIE COMME DANS MASTER
 NetVotes v.2
 =======
 *Extraction and analysis of vote-based networks*
