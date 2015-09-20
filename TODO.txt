@@ -1,0 +1,16 @@
+- rename folders
+
+- store parameters as vectors (instead of a collection of similar files)
+  + including agreement matrices
+
+- separate 
+  - signed nets functions
+  - CC-related functions
+  - functions computing voted-related stats (rebellion, agreement, etc.)
+  - functions for net extraction (filtering, graph creation, matrix conversion...)
+  - a folder for plot functions? or each in the related processing package?
+
+- are the years handled jan-to-jan or june-to-june?
+
+- DL an original data file from VoteWatch and compare with those of the project
+  - did israel make a manual preprocessing on these files?
