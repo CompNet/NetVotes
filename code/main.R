@@ -599,6 +599,12 @@ CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelio
   V(gc)$fastgreedy_comp_neg_community <- membership(fast.cmp)
   V(gc)$walktrap_comp_neg_community <- membership(walk.cmp)
   
+  #write the membership vector to a file
+  cat(info.gp$membership, file = file.path(output.community.dir,paste0(dir.title,"/",file.title,"_infomap_community.txt")), sep=",")
+  cat(mult.gp$membership, file = file.path(output.community.dir,paste0(dir.title,"/",file.title,"_multilevel_community.txt")), sep=",")
+  cat(membership(fast.gp), file = file.path(output.community.dir,paste0(dir.title,"/",file.title,"_fastgreedy_community.txt")), sep=",")
+  cat(membership(walk.gp), file = file.path(output.community.dir,paste0(dir.title,"/",file.title,"_walktrap_community.txt")), sep=",")
+  
   write.graph(graph = gc, file = file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_complete_graph.graphml")),format = "graphml")
   
   pdf(file=file.path(output.community.dir,paste0(dir.title,"/",file.title,"_infomap_distribution.pdf")))
@@ -656,6 +662,8 @@ Calculate <- function() {
   rebelion.indexes <- CalculateRebelionIndex(more.filtered.loyalty)
   
   agreementMatrix <- CalculateAgreement(more.filtered.table)
+  fileNameMat <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_mymatrix.txt"))
+  write.table(agreementMatrix, file=fileNameMat, row.names=FALSE, col.names=FALSE)
   graph <- generateGraphG(agreementMatrix)
   fileName <- file.path(output.graphs.dir,paste0(dir.title,"/",file.title,"_graph.g"))
   WriteGFile(nrow(agreementMatrix),graph,fileName)
