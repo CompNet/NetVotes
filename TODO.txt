@@ -1,7 +1,5 @@
-- rename folders
-
 - store parameters as vectors (instead of a collection of similar files)
-  + including agreement matrices
+  + including agreement matrices (the basic scores)
 
 - separate 
   - signed nets functions
