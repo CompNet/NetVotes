@@ -10,61 +10,84 @@
 # - Compare the resulting partitions, also with the pILS results if available.
 # - Incidentally generate plots related to certain of these steps
 # 
-# The parameters located at the beginning of the script allow to control it,
-# and to restrict the focus to certain topics/years, or control certain points
-# of the network extraction.
+# The parameters located at the beginning of the script (section "Init parameters", right below)
+# allow to control it, and to restrict the focus to certain topics/years, or control certain 
+# points of the network extraction.
 # 
 # 07/2015 Israel Mendonça (v1)
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
 
-# Verifies that the user entered correctly the variables in file ".\input_files" 
-VerifyInputVariables <- function(var, varname, data_var, file, default=NULL){
-	lvls <- levels(factor(data_var))
-	if(!is.null(default))
-		lvls <- c(lvls,default)
-	if(  sum(var %in% lvls) != length(var))
-		stop(paste0("\nIn file ",file," , incorrect variable ", varname," = ( ",toString(var)," ) . \n\nHere are the different possibilities : ",toString(lvls)))
-}
 
-#Check if the inputs are correct
-CheckInputs <- function(){  
-	VerifyInputVariables(MP.political_groups, "MP.political_groups", MPs$political_group                   , file, default="all")
-	VerifyInputVariables(MP.countries       , "MP.countries"       , MPs$country                           , file, default="all")
-	VerifyInputVariables(MP.mp_ids          , "MP.mp_ids"          , MPs$id                                , file, default="all")
-	VerifyInputVariables(MP.group_by        , "MP.group_by"        , factor(c("political_group","country")), file, default="DontGroup")
-	VerifyInputVariables(DOCS.policies      , "DOCS.policies"      , docs$Policy.area                      , file, default="all")
-	
-	if(length(DOCS.time_limits) != 2)
-		stop(paste0("In file : ",file," :invalid variable DOCS.time_limits : DOCS.time_limits = ( ", toString(DOCS.time_limits), " )\nPlease specify exactly 2 dates"))
-	if(is.na(as.Date(DOCS.time_limits[1], format="%d/%m/%Y")))
-		stop(paste0("In file : ", file, " :invalid variable DOCS.time_limits : DOCS.time_limits = ( ", toString(DOCS.time_limits), " )\nThe first date must be of this format : 'dd/mm/YYYY'"))
-	if(is.na(as.Date(DOCS.time_limits[2], format="%d/%m/%Y")))
-		stop(paste0("In file : ", file, " :invalid variable DOCS.time_limits : DOCS.time_limits = ( ", toString(DOCS.time_limits), " )\nThe second date must be of this format : 'dd/mm/YYYY'"))
-	
-	choices <- c("DontGroup","majority_vote_in_each_group","min_each_vote_possibility_between_groups","avg_agreement_between_MPs_of_each_group")
-	if(!MP.group_by.mode %in% choices)
-		stop(paste0("In file : ",file,", variable MP.group_by.mode must be one of these: ", toString(choices)))
-	
-	choices <- c("%agree-%disagree", "+1_or_-1")
-	if(!OUTPUTFILES.Gfile.weigth %in% choices)
-		stop(paste0("In file : ", file, ", variable OUTPUTFILES.Gfile.weigth must be one of these: ", toString(choices)))
-	
-	
-	if (alpha<0 | alpha>1)
-		stop(paste0("In file : ",file," alpha must be in the interval [0;1]. Please modify it in file ", file))
-	
-	dontGroup <- 0
-	
-	if("DontGroup" %in% MP.group_by) {
-		dontGroup <- 1
-		MP.group_by <- "DontGroup"
-		MP.group_by.mode <- "DontGroup"
-	}
-	
-	if(MP.group_by.mode == "DontGroup" & dontGroup==0)	
-		stop(paste0("In file : ", file, ", as MP.group_by is not 'DontGroup', please select a MP.group_by.mode which is not 'DontGroup'.")) 
-}
+
+####################################################
+# Init parameters
+####################################################
+# Names of the political groups to consider, NA for all
+MP.political_groups <- c(NA)
+# Names of the countries to consider, NA for all
+MP.countries        <- c(NA)
+# Ids of the MEPs to consider, NA for all
+MP.mp_ids           <- c(NA)
+# Group (TODO what?) according to some criterion, possible values: "country" , "group" , "none" 
+MP.group_by         <- c("DontGroup") # possibilities : 
+# Type of grouping (TODO ?), possible values: 
+# "None"
+# "majority_vote_in_each_group"
+# "min_each_vote_possibility_between_groups"
+# "avg_agreement_between_MPs_of_each_group"
+MP.group_by.mode    <- c("avg_agreement_between_MPs_of_each_group")
+# Consisdered time range (format: dd/mm/yyyy), NA for no limit
+DOCS.time_limits    <- c(NA,NA)
+# Considered policies, NA for all
+DOCS.policies       <- c(NA)
+
+# TODO don't know what this is
+table               <- c("2")
+# TODO minimum weight threshold (absolute value) used when building the signed graphs. Must be in [O;1]
+alpha <- 0
+
+# TODO probably whether to nominal or numeric values in the exported graph files
+OUTPUTFILES.Gfile.weigth <- "%agree-%disagree" # possibilities : "+1_or_-1" , "%agree-%disagree"
+# Whether or not to export the graphs using the .g fromat 
+OUTPUTFILES.Gfile            <- TRUE
+# Whether or not to export histograms (#TODO of what) 
+OUTPUTFILES.Histo            <- TRUE
+# Whether or not to export the graphs using the Gephi fromat 
+OUTPUTFILES.GephiLinkTable   <- TRUE
+# Whether or not to export somthing (TODO what?) 
+OUTPUTFILES.Corresp          <- TRUE
+# Whether or not to export the graphs using the .gexf fromat 
+OUTPUTFILES.GEXF             <- FALSE
+# Whether or not to export some rankings (TODO which ones?) 
+OUTPUTFILES.RANKING          <- TRUE
+
+# TODO additional parameters
+# Name of the files containing the score tables, when processing the agreement
+
+
+####################################################
+# Clean/Check parameters
+####################################################
+#TODO load the lists of possible values then check them?
+
+
+
+
+####################################################
+# Process the data TODO
+####################################################
+# Load the raw data
+# Preprocess/filter the resulting tables
+# Process the voting agreement index and other statistics
+# Extract the collection of networks
+# Process various network statistics
+# Apply the community detection algorithms
+# Compare the resulting partitions, also with the pILS results if available.
+# Incidentally generate plots related to certain of these steps
+
+
+
 
 # Used to be the Main function, now it is encapsulated in a function in order to be
 # generalized and appliable for different configurations

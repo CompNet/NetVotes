@@ -5,6 +5,9 @@
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
 
+# TODO first: load the agreement table (the basic scores)
+# these tables must have named cols and rows, with name matching the expected situations (for, against, etc.)
+
 ConvertMatrix <- function(matrix) {
 	
 	loyalty.values <- list("Absent"=NA,"Rebel"=1,"Loyal"=0,"Didn't vote"=NA,"Documented Absence"=NA,"NA"=NA,"Independent"=NA)
