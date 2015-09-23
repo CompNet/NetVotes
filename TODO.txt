@@ -9,6 +9,7 @@
   - a folder for plot functions? or each in the related processing package?
 
 - are the years handled jan-to-jan or june-to-june?
+  >> answer: israel did jan-to-jan
 
 - DL an original data file from VoteWatch and compare with those of the project
   - did israel make a manual preprocessing on these files?
