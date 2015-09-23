@@ -1,3 +1,10 @@
+#############################################################################################
+# 
+# 
+# 07/2015 Israel Mendonça (v1)
+# 09/2015 Vincent Labatut (v2)
+#############################################################################################
+
 # Function created to remove MePs that have not expression to be calculated, i.e., did not vote
 RemoveMePsLoyal <- function(matrix) {
 	go.values <- list("Absent"=1,"Rebel"=2,"Loyal"=3,"Didn't vote"=4,"Documented Absence"=5,"NA"=0,"Independent"=6)

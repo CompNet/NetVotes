@@ -1,3 +1,10 @@
+#############################################################################################
+# 
+# 
+# 07/2015 Israel Mendonça (v1)
+# 09/2015 Vincent Labatut (v2)
+#############################################################################################
+
 # Function created to write a file to be imported in Gephi
 WriteGFile <- function(nrow,d,filename) {
 	write.table(data.frame(a=nrow,b=nrow(d)),file=file.path(filename), row.names = FALSE,sep=" ",col.names =FALSE,eol="\n")

@@ -1,3 +1,10 @@
+#############################################################################################
+# 
+# 
+# 07/2015 Israel Mendonça (v1)
+# 09/2015 Vincent Labatut (v2)
+#############################################################################################
+
 # Clusterization Measures
 CalculateClusterization <- function(adjacency.matrix,more.filtered.table,rebelion.indexes) {
 	

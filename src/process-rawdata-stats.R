@@ -1,3 +1,10 @@
+#############################################################################################
+# 
+# 
+# 07/2015 Israel Mendonça (v1)
+# 09/2015 Vincent Labatut (v2)
+#############################################################################################
+
 # Calculate the rebelion indices for each MeP regarding it Party
 CalculateRebelionIndex <- function(matrix) {
 	converted.matrix <- ConvertMatrix(matrix)

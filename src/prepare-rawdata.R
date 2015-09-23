@@ -1,3 +1,10 @@
+#############################################################################################
+# 
+# 
+# 07/2015 Israel Mendonça (v1)
+# 09/2015 Vincent Labatut (v2)
+#############################################################################################
+
 #Pre-Processing of all the files
 #Function to read all the files from the folder and return a list containing all the MPS
 createMPsList <- function(data.dir,votes.files,columns.names.MPs){

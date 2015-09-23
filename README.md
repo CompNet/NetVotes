@@ -25,19 +25,18 @@ Our tool was applied to data representing the activity of the members of the Eur
 
 # Organization
 Here are the folders composing the project:
-* Folder `code`: contains the source code.
-* Folder `input_files`: contains a collection of configuration files designed for the VoteWatch data. Each folder inside `input_files` correspond to a topic. Each topic folder contains one configuration file for each year of the considered term, and one for the whole term.
-* Folder `output_files`: contains the file produced by our scripts. See the *Use* section for more details.
-* Folder `parallel_ils_results`: contains the raw results of the ILS tool. This is an external algorithm able to estimate the optimal partition of the network nodes in terms of structural balance. It was applied to all the networks extracted by our scripts (from the VoteWatch data), and the produced files were placed here for postprocessing. Each subfolder corresponds to one of the topic-year pair. 
-* Folder `votewatch_data`: the raw data extracted from the VoteWatch website.
-  * `VoteWatch Europe European Parliament, Council of the EU.csv`: list of the documents voted during the considered term, with some details such as the date and topic.
-  * `votes_by_document`: this folder contains a collection of CSV files, each one describing the outcome of the vote session relatively to one specific document.
-  * `intermediate_files`: this folder contains several CSV files:
-    * `allvotes.csv`: concatenation of all vote outcomes for all documents and all MEPS. Can be considered as a compact representation of the data contained in the folder `votes_by_document`.
-    * `loyalty.csv`: same thing than `allvotes.csv`, but for the loyalty (i.e. whether or not the MEP voted like the majority of the MEPs in his political group).
-    * `MPs.csv`: list of the MEPs having voted at least once in the considered term, with their details.
-    * `policies.csv`: list of the topics considered during the term.
-    * `qtd_docs.csv`: list of the topics with the corresponding number of documents.
+* Folder `src`: contains the source code (R scripts).
+* Folder `in`: contains the files used by our scripts, i.e. the inputs.
+  * Folder `pils`: results of the correlation clustering method (or any other graph partitioning method), for each considered parameter set (year, policy, etc). 
+  * Folder `raw`: the raw data extracted from the VoteWatch website.
+    * Folder `aggregated`: this folder contains several CSV files build from the original data:
+      * `all-votes.csv`: concatenation of all vote outcomes for all documents and all MEPS. Can be considered as a compact representation of the data contained in the folder `votes_by_document`.
+      * `mep-details.csv`: list of the MEPs having voted at least once in the considered term, with their details.
+      * `mep-loyalty.csv`: same thing than `allvotes.csv`, but for the loyalty (i.e. whether or not the MEP voted like the majority of the MEPs in his political group).
+      * `policy-freq.csv`: list of the topics considered during the term, with the corresponding number of documents.
+      * `vote-details.csv`: list of the voted texts with their details.
+    * `original`: this folder contains a collection of CSV files, each one describing the outcome of the vote session relatively to one specific document.
+* Folder `out`: contains the file produced by our scripts. See the *Use* section for more details.
 
 
 # Installation
@@ -79,10 +78,12 @@ In order to generate the plots from the paper, you additionally need to run the 
 
 
 # Extension
-
+You may want to apply the scripts to other raw data: this is possible, provided the they take the same form. For other VoteWatch data (e.g. a different term), this should not be a problem.
+For different data, you may have to adapt the functions used to load the tabular data, in particular the ones using column names to identify the relevant information (see `src/`prepare-rawdata.R` and `src/filter-rawdata.R`). 
 
 
 # Dependencies
+* [`igraph`](http://igraph.org/r/) package: used to build and handle graphs.
 
 
 # References

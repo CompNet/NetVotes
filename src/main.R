@@ -1,3 +1,23 @@
+#############################################################################################
+# Main script.
+# This script launches the whole process:
+# - Load the raw data
+# - Preprocess/filter the resulting tables
+# - Process the voting agreement index and other statistics
+# - Extract the collection of networks
+# - Process various network statistics
+# - Apply the community detection algorithms
+# - Compare the resulting partitions, also with the pILS results if available.
+# - Incidentally generate plots related to certain of these steps
+# 
+# The parameters located at the beginning of the script allow to control it,
+# and to restrict the focus to certain topics/years, or control certain points
+# of the network extraction.
+# 
+# 07/2015 Israel Mendonça (v1)
+# 09/2015 Vincent Labatut (v2)
+#############################################################################################
+
 # Verifies that the user entered correctly the variables in file ".\input_files" 
 VerifyInputVariables <- function(var, varname, data_var, file, default=NULL){
 	lvls <- levels(factor(data_var))

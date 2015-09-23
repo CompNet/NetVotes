@@ -1,5 +1,42 @@
-# Folder where all the .csv files are situated
-data.dir <- file.path(".","votewatch_data","votes_by_documents")
+#############################################################################################
+# This script allows defining all the file constants used by the other scripts and functions.
+# This include both file names and folder names.
+# 
+# 07/2015 Israel Mendonça (v1)
+# 09/2015 Vincent Labatut (v2)
+#############################################################################################
+
+######## Folders
+# general input folder
+in.folder <- "in"
+	# outputs of the CC method (processed independently)
+	cc.folder <- file.path(in.folder,"pils")
+	# raw data (i.e. tables)
+	raw.folder <- file.path(in.folder,"raw")
+		# aggregated files
+		agg.folder <- file.path(raw.folder,"aggregated")
+		# original files
+		original.folder <- file.path(raw.folder,"original")
+# general ouput folder
+out.folder <- "out"
+	#TODO
+		
+		
+######## files
+# input files
+	all.votes.file <- file.path(agg.folder,"all-votes.csv")
+	mep.details.file <- file.path(agg.folder,"mep-details.csv")
+	mep.loyalty.file <- file.path(agg.folder,"mep-loyalty.csv")
+	policy.freq.file <- file.path(agg.folder,"policy-freq.csv")
+	vote.details.file <- file.path(agg.folder,"vote-details.csv")
+# output files
+
+		
+
+
+
+
+
 
 # Name of the colums (in the .csv files) that concern the MPs. 
 # The first one must be the column containing the complete name of the MP 
@@ -13,32 +50,6 @@ columns.names.loyalty <- c("Loyal...Rebel.to.political.group")
 
 # File listing all the vote sessions (ie. "documents") 
 docs.filename <- "VoteWatch Europe European Parliament, Council of the EU.csv"	
-
-# Folder where all the files are situated
-data.dir2 <- file.path(".","votewatch_data")
-
-# Folder where all the votation files are situated
-input.dir <- file.path(".","input_files")
-
-# Folder to store the output files
-output.dir <- file.path(".","output_files")
-
-# Folder to store the intermediate files (allvotes and allMPS)
-generation.dir <- file.path(".","votewatch_data","intermediate_files")
-
-# Name of the file containing all the MPs info
-MPs.filename <- "MPs.csv"
-
-# Name of the file containing all the votes by MPs and by vote session
-allvotes.filename <- "allvotes.csv"
-
-loyalty.filename <- "loyalty.csv"
-
-# Name of the directory where all the tables are going to be read to be processed
-input.tables.dir <- file.path(".","csv_results")
-
-# Name of the directory where all the parallel ILS results are stored
-ils.input.dir   <- file.path(".","parallel_ils_results")
 
 # Name of the directory where all the plots will be stored
 output.plots.dir <- file.path(output.dir,"plots")

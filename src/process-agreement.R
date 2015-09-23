@@ -1,3 +1,10 @@
+#############################################################################################
+# 
+# 
+# 07/2015 Israel Mendonça (v1)
+# 09/2015 Vincent Labatut (v2)
+#############################################################################################
+
 ConvertMatrix <- function(matrix) {
 	
 	loyalty.values <- list("Absent"=NA,"Rebel"=1,"Loyal"=0,"Didn't vote"=NA,"Documented Absence"=NA,"NA"=NA,"Independent"=NA)
