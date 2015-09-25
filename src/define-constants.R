@@ -8,27 +8,27 @@
 
 ######## Folders
 # general input folder
-in.folder <- "in"
+IN.FOLDER <- "in"
 	# outputs of the CC method (processed independently)
-	cc.folder <- file.path(in.folder,"pils")
+	CC.FOLDER <- file.path(IN.FOLDER,"pils")
 	# raw data (i.e. tables)
-	raw.folder <- file.path(in.folder,"raw")
+	RAW.FOLDER <- file.path(IN.FOLDER,"raw")
 		# aggregated files
-		agg.folder <- file.path(raw.folder,"aggregated")
+		AGG.FOLDER <- file.path(RAW.FOLDER,"aggregated")
 		# original files
-		original.folder <- file.path(raw.folder,"original")
+		ORIG.FOLDER <- file.path(RAW.FOLDER,"original")
 # general ouput folder
-out.folder <- "out"
+OUT.FOLDER <- "out"
 	#TODO
 		
 		
 ######## files
 # input files
-	all.votes.file <- file.path(agg.folder,"all-votes.csv")
-	mep.details.file <- file.path(agg.folder,"mep-details.csv")
-	mep.loyalty.file <- file.path(agg.folder,"mep-loyalty.csv")
-	policy.freq.file <- file.path(agg.folder,"policy-freq.csv")
-	vote.details.file <- file.path(agg.folder,"vote-details.csv")
+	ALL.VOTES.FILE		<- file.path(AGG.FOLDER,"all-votes.csv")
+	MEP.DETAILS.FILE	<- file.path(AGG.FOLDER,"mep-details.csv")
+	MEP.loyalty.FILE	<- file.path(AGG.FOLDER,"mep-loyalty.csv")
+	POLICY.FREQ.FILE	<- file.path(AGG.FOLDER,"policy-freq.csv")
+	DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
 # output files
 
 		
