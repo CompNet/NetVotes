@@ -36,12 +36,14 @@
 # returns: a table containing the MEPs and their details.
 #############################################################################################
 extract.mep.details <- function()
-{	# if the file already exists, just load it
-#	if(file.exists(MEP.DETAILS.FILE))
-#		result <- read.csv(MEP.DETAILS.FILE)
-#	
-#	# otherwise, build the table and record it
-#	else
+{	cat("Retrieving the MEPs' details\n",sep="")
+	
+	# if the file already exists, just load it
+	if(file.exists(MEP.DETAILS.FILE))
+		result <- read.csv(MEP.DETAILS.FILE,check.names=FALSE)
+	
+	# otherwise, build the table and record it
+	else
 	{	# init the table
 		result <- NULL
 		
@@ -51,11 +53,11 @@ extract.mep.details <- function()
 		# process each one of them
 		f <- 1
 		for(file in file.list)
-		{	cat("Processing file ", file, "(",f,"/",length(file.list),")\n",sep="")
+		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
 			path <- file.path(ORIG.FOLDER,file)
 			data <- as.matrix(read.csv(path,check.names=FALSE))
-			tmp <- colnames(data)
+			#tmp <- colnames(data)
 			f <- f + 1
 			
 			# init the table
@@ -131,27 +133,48 @@ split.name <- function(name)
 # Concatenate the votes data contained in the individual document, in order to get
 # a single, more convenient matrix.
 #
+# mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
 # returns: the complete vote matrix.
 #############################################################################################
-concatenate.votes <- function()
-{	# if the file already exists, just load it
+concatenate.votes <- function(mep.details)
+{	cat("Concatenating all the MEPs' votes\n",sep="")
+	
+	# if the file already exists, just load it
 	if(file.exists(ALL.VOTES.FILE))
-		result <- read.csv(ALL.VOTES.FILE)
+		result <- read.csv(ALL.VOTES.FILE,check.names=FALSE)
 	
 	# otherwise, build the table and record it
 	else
-	{	# get the list of document-wise vote files
+	{	# init the table
+		result <- cbind(NULL,mep.details[,COL.MEPID])
+		colnames(result)[1] <- COL.MEPID
+		
+		# get the list of document-wise vote files
 		file.list <- list.files(ORIG.FOLDER, no..=TRUE)
+		filename.list <- as.integer(sapply(file.list, function(n) substring(n,1,nchar(n)-4)))
+		idx <- match(sort(filename.list),filename.list)
+		file.list <- file.list[idx]
 		
 		# process each one of them
+		f <- 1
 		for(file in file.list)
-		{	# read the file
+		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
+			# read the file
 			path <- file.path(ORIG.FOLDER,file)
-			data <- read.csv(path)
+			data <- as.matrix(read.csv(path,check.names=FALSE))
+			f <- f + 1
 			
-			# add to the table
+			# add a new column to the table
+			result <- cbind(result, rep(NA,nrow(mep.details)))
+			colnames(result)[ncol(result)] <- substring(file,1,nchar(file)-4)
 			
+			# complete this new column
+			idx <- match(data[,COL.NAME],mep.details[,COL.NAME])
+			result[idx,ncol(result)] <- data[,COL.VOTE]
 		}
+		
+		# record the table
+		write.csv(result,file=ALL.VOTES.FILE,row.names=FALSE)
 	}
 	
 	return(result)
