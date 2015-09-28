@@ -10,6 +10,31 @@
 
 
 #############################################################################################
+# Folder names
+#############################################################################################
+# VoteWatch data
+VW.FOLDER <- file.path(IN.FOLDER,"votewatch")
+	# outputs of the CC method (processed independently)
+	CC.FOLDER <- file.path(VW.FOLDER,"pils")
+	# raw data (i.e. tables)
+	RAW.FOLDER <- file.path(VW.FOLDER,"raw")
+		# aggregated files
+		AGG.FOLDER <- file.path(RAW.FOLDER,"aggregated")
+		# original files
+		ORIG.FOLDER <- file.path(RAW.FOLDER,"original")
+
+
+#############################################################################################
+# File names
+#############################################################################################
+ALL.VOTES.FILE		<- file.path(AGG.FOLDER,"all-votes.csv")
+MEP.DETAILS.FILE	<- file.path(AGG.FOLDER,"mep-details.csv")
+MEP.loyalty.FILE	<- file.path(AGG.FOLDER,"mep-loyalty.csv")
+POLICY.FREQ.FILE	<- file.path(AGG.FOLDER,"policy-freq.csv")
+DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
+
+
+#############################################################################################
 # Column names
 #############################################################################################
 # individual votes
@@ -28,6 +53,7 @@
 	COL.MEPID		<- "MEP Id"
 	COL.LASTNAME	<- "Lastname"
 	COL.FIRSTNAME	<- "Firstname"
+
 	
 #############################################################################################
 # Parses the collection of files describing the individual votes of each document,
