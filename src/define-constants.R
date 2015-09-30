@@ -11,7 +11,9 @@
 IN.FOLDER <- "in"
 # general ouput folder
 OUT.FOLDER <- "out"
-		
+# folder containing configuration files
+CFG.FOLDER <- "config"
+
 		
 ######## files
 # TODO
