@@ -4,6 +4,15 @@
 # given with this project already contain the files resulting of this preprocessing. So, this
 # script does not need to be executed before the main one.
 # 
+# Possible vote values:
+# - For: the MEP voted in favor of the text.
+# - Abstain: the MEP was neither in favor or not in favor of the text.
+# - Against: the MEP was not in favor of the text.
+# - Didn't vote: the MEP was present but decided not to vote (or couldn't vote).
+# - Absent: the MEP was not present, and did not justify his absence.
+# - Documented Absence: the MEP was not present and justified his absence.
+# - NA: the MEP was not holding a mandate when voting the considered text.
+# 
 # 07/2015 Israel Mendonça (v1)
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
@@ -29,7 +38,7 @@ VW.FOLDER <- file.path(IN.FOLDER,"votewatch")
 #############################################################################################
 ALL.VOTES.FILE		<- file.path(AGG.FOLDER,"all-votes.csv")
 MEP.DETAILS.FILE	<- file.path(AGG.FOLDER,"mep-details.csv")
-MEP.loyalty.FILE	<- file.path(AGG.FOLDER,"mep-loyalty.csv")
+MEP.LOYALTY.FILE	<- file.path(AGG.FOLDER,"mep-loyalty.csv")
 POLICY.FREQ.FILE	<- file.path(AGG.FOLDER,"policy-freq.csv")
 DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
 
@@ -53,8 +62,52 @@ DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
 	COL.MEPID		<- "MEP Id"
 	COL.LASTNAME	<- "Lastname"
 	COL.FIRSTNAME	<- "Firstname"
-
+	COL.DOMID		<- "Domain Id"
+	COL.DOCFREQ		<- "Domain Frequency"
 	
+	
+#############################################################################################
+# Just loads the file containing the document details.
+#
+# returns: a table containing the document details.
+#############################################################################################
+load.doc.details <- function()
+{	result <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
+	return(result)
+}
+
+
+#############################################################################################
+# Extracts the list of policy domains and their frequency in terms of voted documents.
+#
+# doc.details: table describing the voted documents.
+# returns: a table containing the policy domains and their frequencies.
+#############################################################################################
+extract.policies <- function(doc.details)
+{	cat("Retrieving the policy domains\n",sep="")
+	
+	# if the file already exists, just load it
+	if(file.exists(POLICY.FREQ.FILE))
+		result <- as.matrix(read.csv(POLICY.FREQ.FILE,check.names=FALSE))
+	
+	# otherwise, build the table and record it
+	else
+	{	# count the domains
+		counts <- table(doc.details[,COL.POLICY])
+		
+		# build the table
+		domains <- names(counts)
+		result <- cbind(1:length(domains),domains,counts[domains])
+		colnames(result) <- c(COL.DOMID,COL.POLICY,COL.DOCFREQ)
+		
+		# record the table
+		write.csv(result,file=POLICY.FREQ.FILE,row.names=FALSE)
+	}
+	
+	return(result)
+}
+
+
 #############################################################################################
 # Parses the collection of files describing the individual votes of each document,
 # and extract the MEPs' details.
@@ -66,7 +119,7 @@ extract.mep.details <- function()
 	
 	# if the file already exists, just load it
 	if(file.exists(MEP.DETAILS.FILE))
-		result <- read.csv(MEP.DETAILS.FILE,check.names=FALSE)
+		result <- as.matrix(read.csv(MEP.DETAILS.FILE,check.names=FALSE))
 	
 	# otherwise, build the table and record it
 	else
@@ -156,7 +209,7 @@ split.name <- function(name)
 
 
 #############################################################################################
-# Concatenate the votes data contained in the individual document, in order to get
+# Concatenate the votes data contained in the individual documents, in order to get
 # a single, more convenient matrix.
 #
 # mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
@@ -167,7 +220,7 @@ concatenate.votes <- function(mep.details)
 	
 	# if the file already exists, just load it
 	if(file.exists(ALL.VOTES.FILE))
-		result <- read.csv(ALL.VOTES.FILE,check.names=FALSE)
+		result <- as.matrix(read.csv(ALL.VOTES.FILE,check.names=FALSE))
 	
 	# otherwise, build the table and record it
 	else
@@ -207,153 +260,65 @@ concatenate.votes <- function(mep.details)
 }
 
 
+#############################################################################################
+# Concatenate the loyalty data contained in the individual documents, in order to get
+# a single, more convenient matrix.
+#
+# mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
+# returns: the complete loyalty matrix.
+#############################################################################################
+concatenate.loyalties <- function(mep.details)
+{	cat("Concatenating all the MEPs' loyalty values\n",sep="")
+	
+	# if the file already exists, just load it
+	if(file.exists(MEP.LOYALTY.FILE))
+		result <- as.matrix(read.csv(MEP.LOYALTY.FILE,check.names=FALSE))
+	
+	# otherwise, build the table and record it
+	else
+	{	# init the table
+		result <- cbind(NULL,mep.details[,COL.MEPID])
+		colnames(result)[1] <- COL.MEPID
+		
+		# get the list of document-wise vote files
+		file.list <- list.files(ORIG.FOLDER, no..=TRUE)
+		filename.list <- as.integer(sapply(file.list, function(n) substring(n,1,nchar(n)-4)))
+		idx <- match(sort(filename.list),filename.list)
+		file.list <- file.list[idx]
+		
+		# process each one of them
+		f <- 1
+		for(file in file.list)
+		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
+			# read the file
+			path <- file.path(ORIG.FOLDER,file)
+			data <- as.matrix(read.csv(path,check.names=FALSE))
+			f <- f + 1
+			
+			# add a new column to the table
+			result <- cbind(result, rep(NA,nrow(mep.details)))
+			colnames(result)[ncol(result)] <- substring(file,1,nchar(file)-4)
+			
+			# complete this new column
+			idx <- match(data[,COL.NAME],mep.details[,COL.NAME])
+			result[idx,ncol(result)] <- data[,COL.LOYALTY]
+		}
+		
+		# record the table
+		write.csv(result,file=MEP.LOYALTY.FILE,row.names=FALSE)
+	}
+	
+	return(result)
+}
 
 
-##############################################################################################
-##Pre-Processing of all the files
-##Function to read all the files from the folder and return a list containing all the MPS
-#createMPsList <- function(data.dir,votes.files,columns.names.MPs){
-#  
-#  temp <- read.csv(file.path(data.dir,votes.files[1]))
-#  MPs <- temp[ columns.names.MPs ]
-#  names(MPs) <- c("names","country","political_group")
-#  warning <- ""
-#  
-#  for( i in  2:length(votes.files) ){
-#    file_name <- file.path(data.dir,votes.files[i])
-#    temp <- read.csv(file_name)
-#    MPs.temp <- temp[ columns.names.MPs ]
-#    names(MPs.temp) <- c("names","country","political_group")
-#    
-#    MPs <- merge(MPs,MPs.temp,by.x="names",by.y="names",all=TRUE)
-#    
-#    new.MPs <- which(is.na( MPs[,2] )) 				 
-#    if(length(new.MPs)) MPs[new.MPs, c(2,3) ] <- MPs[new.MPs, c(4,5)]	 
-#    MPs <- MPs[1:3]									
-#    
-#    names(MPs) <- names(MPs) <- c("names","country","political_group")
-#    
-#  }
-#  MPs <- cbind(paste0("m_",rownames(MPs)),MPs)
-#  names(MPs) <- c("id","names","country","political_group")
-#  
-#  write.csv(MPs, file=file.path(generation.dir,MPs.filename),row.names = FALSE)
-#  
-#  print(warning)
-#  
-#  return(MPs)
-#}
-#
-##Read all the votes documents and return a data frame containing (all the MPs X Votes in Documents)
-#create.allvotes.table <- function(data.dir,votes.files,columns.names.MPs,columns.names.votes,MPs){
-#  
-#  big.table <- data.frame(MP=MPs)
-#  big.table$ind <- 1:nrow(big.table)
-#  names(big.table) <- c("mp_id","names","country","political_group","ind")
-#  
-#  for( i in  1:length(votes.files) ){
-#    
-#    smaller.big.table <- big.table[c("ind","names")]
-#    
-#    file_name <- file.path(data.dir,votes.files[i])
-#    temp <- read.csv(file_name)[c(columns.names.votes,columns.names.MPs[1])]
-#    names(temp) <- c(columns.names.votes,"names")
-#    
-#    merged <- merge(temp,smaller.big.table,by.x="names",by.y="names")
-#    
-#    ncol <- ncol(big.table)
-#    big.table[as.integer(merged$ind),ncol+1] <- merged[columns.names.votes]
-#    names(big.table)[ncol+1] <- votes.files[i]
-#  }
-#  
-#  write.csv(big.table, file=file.path(generation.dir,allvotes.filename),row.names = FALSE)
-#  
-#  return(big.table)
-#}
-#
-#CreateLoyaltyTable <- function(data.dir,votes.files,columns.names.MPs,columns.names.loyalty,MPs) {
-#  
-#  loyalty.table <- data.frame(MP=MPs)
-#  loyalty.table$ind <- 1:nrow(loyalty.table)
-#  names(loyalty.table) <- c("mp_id","names","country","political_group","ind")
-#  print(columns.names.loyalty)
-#  
-#  for( i in  1:length(votes.files) ){
-#    
-#    smaller.loyalty.table <- loyalty.table[c("ind","names")]
-#    
-#    file_name <- file.path(data.dir,votes.files[i])
-#    temp <- read.csv(file_name)[c(columns.names.loyalty,columns.names.MPs[1])]
-#    names(temp) <- c(columns.names.loyalty,"names")
-#    
-#    merged <- merge(temp,smaller.loyalty.table,by.x="names",by.y="names")
-#    
-#    ncol <- ncol(loyalty.table)
-#    loyalty.table[as.integer(merged$ind),ncol+1] <- merged[columns.names.loyalty]
-#    names(loyalty.table)[ncol+1] <- votes.files[i]
-#  }
-#  write.csv(loyalty.table, file=file.path(generation.dir,loyalty.filename),row.names = FALSE)
-#  
-#  return(loyalty.table)
-#  
-#}
-#
-#
-#if(length(columns.names.MPs)!=3)
-#  stop(paste0("In file config_Files&Directories.R , variable columns.names.MPs must indicate exactly 3 colum names. Please modify it regarding the .csv files contained in directory ",data.dir))
-#
-#if(length(columns.names.votes)!=1)		
-#  stop(paste0("In file config_Files&Directories.R , variable columns.names.vote must indicate exactly 3 colum names. Please modify it regarding the .csv files contained in directory ",data.dir))
-#
-##Generate a list of files containing all the vote documents
-#votes.files <- list.files(data.dir)
-#
-##Create a folder "generation.dir" if doesn't exist
-#dir.create(generation.dir, showWarnings = FALSE) 
-#
-##Store all the MPs in a variable
-#if (!MPs.filename %in% list.files(generation.dir)){ 					
-#  # If the file was not created before, creates the file with all the MPs
-#  MPs <- createMPsList(data.dir,votes.files,columns.names.MPs) 		
-#}else{
-#  #If the file already exists, read it
-#  filename <- file.path(generation.dir,MPs.filename)
-#  MPs <- read.csv(filename)
-#}
-## Renaming the colums of the table "MPs"
-#names(MPs) <- c("id","names","country","political_group") 		
-## Edits the row names of MPs with the MPs ids
-#rownames(MPs) <- MPs$id 								
-#
-##File listing the names of all the vote sessions
-#filename <- file.path(data.dir2,docs.filename)
-#docs <- read.csv(filename)
-#
-## TODO: change because it's a bit dirty
-#set <- unlist(strsplit(votes.files,"\\."))[2*(1:length(votes.files))-1]	#dirty
-#votes.files <- votes.files[order(as.integer(set))] 						#dirty
-#docs$doc_id <- votes.files 												#dirty
-#
-#
-##Create the Big Table, the one containing all the votes and MPs
-## Check if the file has been created already
-#if (!allvotes.filename %in% list.files(generation.dir)){
-#  # Creates the file and puts the result in the variable "big.table"  
-#  big.table <- create.allvotes.table(data.dir,votes.files,columns.names.MPs,columns.names.votes,MPs) 	
-#}else{
-#  # Reads the file and puts the result in the variable "big.table"  			
-#  filename <- file.path(generation.dir,allvotes.filename)
-#  big.table <- read.csv(filename,check.names=FALSE)
-#}
-#rownames(big.table) <- big.table$mp_id 	# edits the row names of big.table with the MPs ids
-#
-## Check if the file has been created already
-#if (!loyalty.filename %in% list.files(generation.dir)){
-#  # Creates the file and puts the result in the variable "big.table"  
-#  loyalty.table <- CreateLoyaltyTable(data.dir,votes.files,columns.names.MPs,columns.names.loyalty,MPs)   
-#}else{
-#  # Reads the file and puts the result in the variable "big.table"  			
-#  filename <- file.path(generation.dir,loyalty.filename)
-#  loyalty.table <- read.csv(filename,check.names=FALSE)
-#}
-#rownames(loyalty.table) <- loyalty.table$mp_id   # edits the row names of big.table with the MPs ids
+#############################################################################################
+# Load all the tables
+#############################################################################################
+# document-related
+doc.details <- load.doc.details()
+policies <- extract.policies(doc.details)
+# MEP-related
+mep.details <- extract.mep.details()
+all.votes <- concatenate.votes(mep.details)
+loyalty.values <- concatenate.loyalties(mep.details)
