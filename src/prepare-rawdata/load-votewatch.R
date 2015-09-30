@@ -39,7 +39,7 @@ VW.FOLDER <- file.path(IN.FOLDER,"votewatch")
 ALL.VOTES.FILE		<- file.path(AGG.FOLDER,"all-votes.csv")
 MEP.DETAILS.FILE	<- file.path(AGG.FOLDER,"mep-details.csv")
 MEP.LOYALTY.FILE	<- file.path(AGG.FOLDER,"mep-loyalty.csv")
-POLICY.FREQ.FILE	<- file.path(AGG.FOLDER,"policy-freq.csv")
+DOMAIN.FREQ.FILE	<- file.path(AGG.FOLDER,"domain-freq.csv")
 DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
 
 
@@ -57,7 +57,7 @@ DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
 	COL.DOCNAME		<- "Name of document"
 	COL.RESULT		<- "Result of vote"
 	COL.INSTITUTION	<- "Parliament or council"
-	COL.POLICY		<- "Policy area"
+	COL.DOMAIN		<- "Policy area"
 # created tables
 	COL.MEPID		<- "MEP Id"
 	COL.LASTNAME	<- "Lastname"
@@ -83,25 +83,25 @@ load.doc.details <- function()
 # doc.details: table describing the voted documents.
 # returns: a table containing the policy domains and their frequencies.
 #############################################################################################
-extract.policies <- function(doc.details)
+extract.domains <- function(doc.details)
 {	cat("Retrieving the policy domains\n",sep="")
 	
 	# if the file already exists, just load it
-	if(file.exists(POLICY.FREQ.FILE))
-		result <- as.matrix(read.csv(POLICY.FREQ.FILE,check.names=FALSE))
+	if(file.exists(DOMAIN.FREQ.FILE))
+		result <- as.matrix(read.csv(DOMAIN.FREQ.FILE,check.names=FALSE))
 	
 	# otherwise, build the table and record it
 	else
 	{	# count the domains
-		counts <- table(doc.details[,COL.POLICY])
+		counts <- table(doc.details[,COL.DOMAIN])
 		
 		# build the table
 		domains <- names(counts)
 		result <- cbind(1:length(domains),domains,counts[domains])
-		colnames(result) <- c(COL.DOMID,COL.POLICY,COL.DOCFREQ)
+		colnames(result) <- c(COL.DOMID,COL.DOMAIN,COL.DOCFREQ)
 		
 		# record the table
-		write.csv(result,file=POLICY.FREQ.FILE,row.names=FALSE)
+		write.csv(result,file=DOMAIN.FREQ.FILE,row.names=FALSE)
 	}
 	
 	return(result)
@@ -313,12 +313,21 @@ concatenate.loyalties <- function(mep.details)
 
 
 #############################################################################################
-# Load all the tables
+# Load all the tables and returns them as a list.
+#
+# returns: a list containing all the loaded tables.
 #############################################################################################
-# document-related
-doc.details <- load.doc.details()
-policies <- extract.policies(doc.details)
-# MEP-related
-mep.details <- extract.mep.details()
-all.votes <- concatenate.votes(mep.details)
-loyalty.values <- concatenate.loyalties(mep.details)
+load.raw.data <- function()
+{	result <- list()
+	
+	# document-related
+	result$doc.details <- load.doc.details()
+	result$domain.details <- extract.domains(doc.details)
+	
+	# MEP-related
+	result$mep.details <- extract.mep.details()
+	result$all.votes <- concatenate.votes(mep.details)
+	result$loyalty.values <- concatenate.loyalties(mep.details)
+	
+	return(result)
+}

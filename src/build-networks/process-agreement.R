@@ -7,6 +7,7 @@
 
 # TODO first: load the agreement table (the basic scores)
 # these tables must have named cols and rows, with name matching the expected situations (for, against, etc.)
+#### >> no, there're actually list, it's more compact and easier to read
 
 ConvertMatrix <- function(matrix) {
 	
