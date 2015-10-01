@@ -15,12 +15,18 @@ OUT.FOLDER <- "out"
 CFG.FOLDER <- "config"
 
 		
-######## files
+######## Files
 # TODO
 
 		
-
-
+######## Vote values
+VOTE.FOR <- "For"
+VOTE.ABST <- "Abstention"
+VOTE.AGST <- "Against"
+VOTE.NONE <- "NoVote"
+VOTE.ABSENT <- "Absent"
+VOTE.DOCABSENT <- "DocAbsent"
+				
 
 
 
