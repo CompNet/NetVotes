@@ -12,7 +12,8 @@
 
 #############################################################################################
 # Takes the table containing the document details, as well as two dates, and returns the ids
-# of the documents matching the period between the dates (included).
+# of the documents matching the period between the dates (included). If one of the dates (or
+# both of them) is NA, it is replaced by an extreme date supposed to include all data.
 #
 # doc.details: table containing the details of the voted documents.
 # start.date: starting date.
@@ -36,7 +37,8 @@ filter.by.date <- function(doc.details, start.date=NA, end.date=NA)
 	dates <- as.Date(doc.details[,COL.DATE],"%d/%m/%Y")
 	
 	# retain only the dates located between start and end (included)
-	result <- which(dates>=start.date & dates<=end.Date)
+	idx <- which(dates>=start.date & dates<=end.Date)
+	result <- doc.details[idx,COL.DOCID]
 	
 	return(result)
 }
@@ -45,7 +47,7 @@ filter.by.date <- function(doc.details, start.date=NA, end.date=NA)
 #############################################################################################
 # Takes the table containing the document details, as well as a vector of policy domains, 
 # and returns the ids of the documents matching one of the domains. If the domain vector is
-# NA, or empty, then all topics are considered.
+# NA, or empty, then all domains are considered.
 #
 # doc.details: table containing the details of the voted documents.
 # domain.details: table containing the domain names.
@@ -63,15 +65,39 @@ filter.by.domain <- function(doc.details, domain.details, domains=c())
 	doms <- doc.details[,COL.DOMAIN]
 	
 	# retain only the domains matching one of those specified in the specified vector
-	idx <- match(doms, domains)
-	idx <- idx[idx!=1]
-	result <- which(idx!=-1)
-#TODO en fait il faut pas renvoyer les indexs par défaut, mais ceux contenus dans doc.details.	
+	idx <- which(doms %in% domains)
+	result <- doc.details[idx,COL.DOCID]
+		
 	return(result)
 }
 
 
-
+#############################################################################################
+# Takes the table containing the document details, as well as a vector of policy domains, 
+# a starting and an ending dates, and returns the ids of the documents matching the at the same
+# time the period between the dates (included) and one of the domains. 
+# 
+# If one of the dates (or both of them) is NA, it is replaced by an extreme date supposed to 
+# include all data. Same thing for the domain vector, if it is NA or empty, then all domains 
+# are considered.
+#
+# doc.details: table containing the details of the voted documents.
+# start.date: starting date.
+# end.date: ending date.
+# domain.details: table containing the domain names.
+# domains: a vector of domains, or NA to use all keep domains.
+# returns: a vector of document ids, corresponding to the document matching the criteria.
+#############################################################################################
+filter.by.date.and.domain <- function(doc.details, start.date, end.date, domain.details, domains)
+{	# filter by date
+	ids1 <- filter.by.date(doc.details, start.date, end.date)
+	# filter by domain
+	ids2 <- filter.by.domain(doc.details, domain.details, domains)
+	
+	# keep only the documents appearing in both vectors
+	result <- intersect(ids1,ids2)
+	return(result)
+}
 
 
 

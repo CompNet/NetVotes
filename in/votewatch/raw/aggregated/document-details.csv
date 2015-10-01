@@ -1,4 +1,4 @@
-Id;Date;Name of document;Result of vote;Parliament or council;Policy area
+Doc Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1;24/10/2013;Draft amending budget No 6/2013 - Motion for resolution : vote: resolution (as a whole);+;EP;Budget
 2;24/10/2013;General Union environment action programme to 2020 - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Environment & public health
 3;24/10/2013;Dangers arising from exposure to ionising radiation  - Draft legislative resolution : vote: legislative resolution - consultation;+;EP;Environment & public health
@@ -29,7 +29,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 28;10/10/2013;Portable batteries and accumulators containing cadmium - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Environment & public health
 29;10/10/2013;Motions for resolutions - Caste-based discrimination - Motion for resolution : Paragraph 10;+;EP;Foreign & security policy
 30;10/10/2013;Annual report on the activities of the Committee on Petitions 2012 - Motion for resolution : vote: resolution (as a whole);+;EP;Petitions
-31;10/10/2013;Recent cases of violence and persecution against Christians- notably in Maaloula (Syria) and Peshawar (Pakistan) and the case of Pastor Saeed Abedini (Iran)«?∂ˇ - Motion for resolution : After paragraph 21-amendment 1;+;EP;Foreign & security policy
+31;10/10/2013;Recent cases of violence and persecution against Christians- notably in Maaloula (Syria) and Peshawar (Pakistan) and the case of Pastor Saeed Abedini (Iran)ÔøΩ?ÔøΩÔøΩ - Motion for resolution : After paragraph 21-amendment 1;+;EP;Foreign & security policy
 32;10/10/2013;Recent violence in Iraq - Motion for resolution : vote: resolution (as a whole);+;EP;Foreign & security policy
 33;09/10/2013;Recreational craft and personal watercraft - Draft legislative resolution : vote: Commission proposal - ordinary legislative procedure- first reading;+;EP;Internal market & consumer protection
 34;09/10/2013;Recognition of professional qualifications and administrative cooperation through the Internal Market Information System - Draft legislative resolution : vote: Commission proposal - ordinary legislative procedure- first reading;+;EP;Internal market & consumer protection
@@ -59,7 +59,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 58;12/09/2013;European Banking Authority and prudential supervision of credit institutions - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Economic & monetary affairs
 59;11/09/2013;Endangered European languages and linguistic diversity - Motion for resolution : Single vote;+;EP;Culture & education
 60;11/09/2013;Mobilisation of the EU Solidarity Fund: flooding in Slovenia- Croatia and Austria in autumn 2012 - Motion for resolution : Single vote;+;EP;Budget
-61;11/09/2013;Draft amending budget No 4/2013 «ΩÉ?™É?? Staff of the European GNSS Agency «ΩÉ?™É?? Staff of the Education- Audiovisual and Culture Executive Agency (EACEA) «ΩÉ?™É?? Staff of the Court of Justice of the European Union - Motion for resolution : Single vote;+;EP;Budget
+61;11/09/2013;Draft amending budget No 4/2013 «ΩÔøΩ?ÔøΩÔøΩ?? Staff of the European GNSS Agency «ΩÔøΩ?ÔøΩÔøΩ?? Staff of the Education- Audiovisual and Culture Executive Agency (EACEA) «ΩÔøΩ?ÔøΩÔøΩ?? Staff of the Court of Justice of the European Union - Motion for resolution : Single vote;+;EP;Budget
 62;11/09/2013;Draft amending budget No 3/2013 - Surplus resulting from the implementation of the budget year 2012 - Motion for resolution : Single vote;+;EP;Budget
 63;11/09/2013;Draft amending budget No 2/2013 - Increase in forecasts concerning other revenue stemming from fines and penalties - Increase in payment appropriations - Motion for resolution : Single vote;+;EP;Budget
 64;11/09/2013;Draft amending budget No 5/2013 - Mobilisation of the Solidarity Fund following flooding in Slovenia- Croatia and Austria in 2012 - Motion for resolution : Single vote;+;EP;Budget
@@ -102,7 +102,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 101;03/07/2013;Implementing enhanced cooperation in the area of financial transaction tax - Draft legislative resolution : vote: legislative resolution - consultation;+;EP;Economic & monetary affairs
 102;03/07/2013;Review of the Irish Presidency- including the MFF agreement (Greens/EFA) - Motion for resolution : vote: resolution (as a whole);-;EP;Constitutional and inter-institutional affairs
 103;03/07/2013;Reforming the structure of the EU banking sector - Motion for resolution : vote: resolution (as a whole);+;EP;Economic & monetary affairs
-104;03/07/2013;Protection of the EU's financial interests - fight against fraud«?∂ˇ - Motion for resolution : Paragraph 5/1;+;EP;Budgetary control
+104;03/07/2013;Protection of the EU's financial interests - fight against fraudÔøΩ?ÔøΩÔøΩ - Motion for resolution : Paragraph 5/1;+;EP;Budgetary control
 105;03/07/2013;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2013/000 TA 2013 - technical assistance at the initiative of the Commission - Motion for resolution : vote: resolution (as a whole);+;EP;Budget
 106;03/07/2013;Wheeled vehicules (Amendment of Council Decision 2000/125/EC ('parallel agreement') - Draft legislative resolution : vote: consent - consent;+;EP;International trade
 107;03/07/2013;Wheeled vehicules (Amendment of Decision 97/836/EC ('revised 1958 Agreement')) - Draft legislative resolution : vote: consent - consent;+;EP;International trade
@@ -154,14 +154,14 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 153;11/06/2013;Electronic toll service and vignette system on light private vehicles - Motion for resolution : vote: resolution (as a whole);+;EP;Transport & tourism
 154;23/05/2013;Labour conditions and health and safety standards following the recent factory fires and building collapse in Bangladesh - Motion for resolution : vote: resolution (as a whole);+;EP;Foreign & security policy
 155;23/05/2013;Rwanda: case of Victoire Ingabire - Joint motion for resolution : vote: resolution (as a whole);+;EP;Foreign & security policy
-156;23/05/2013;Guant«ü∂≠namo: hunger strike by prisoners - Motion for resolution : Postpone final vote;+;EP;Foreign & security policy
+156;23/05/2013;Guant«üÔøΩÔøΩnamo: hunger strike by prisoners - Motion for resolution : Postpone final vote;+;EP;Foreign & security policy
 157;23/05/2013;Reinstatement of Myanmar/Burma's access to generalised tariff preferences - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;International trade
 158;23/05/2013;Financial responsibility linked to investor-state dispute settlement tribunals established by international agreements to which the EU is party - Draft legislative resolution : Article 9- Paragraph 2-amendment 51D - ordinary legislative procedure- first reading;-;EP;International trade
 159;23/05/2013;Non-commercial movement of pet animals - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Environment & public health
 160;23/05/2013;Animal health requirements governing trade in dogs- cats and ferrets - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Environment & public health
 161;23/05/2013;Motions for resolutions - Future legislative proposals on EMU - Motion for resolution : vote: resolution (as a whole);+;EP;Economic & monetary affairs
 162;23/05/2013;Community Customs Code as regards the date of its application - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Internal market & consumer protection
-163;23/05/2013;Asset recovery to Arab Spring countries in transition«?∂ˇ - Joint motion for resolution : After recital 13-amendment 1;-;EP;Foreign & security policy
+163;23/05/2013;Asset recovery to Arab Spring countries in transitionÔøΩ?ÔøΩÔøΩ - Joint motion for resolution : After recital 13-amendment 1;-;EP;Foreign & security policy
 164;23/05/2013;2012 progress report on the former Yugoslav Republic of Macedonia - Joint motion for resolution : vote: resolution (as a whole);+;EP;Foreign & security policy
 165;23/05/2013;EU trade and investment agreement negotiations with the US - Motion for resolution : vote: resolution (as a whole);+;EP;International trade
 166;23/05/2013;Myanmar/Burma's access to generalised tariff preferences - Motion for resolution : After paragraph 16-amendment 6;-;EP;International trade
@@ -179,14 +179,14 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 178;21/05/2013;Women's rights in the Balkan accession countries - Motion for resolution : Paragraph 5/1;+;EP;Gender equality
 179;21/05/2013;EU Charter: standard settings for media freedom across the EU - Motion for resolution : vote: resolution (as a whole);+;EP;Civil liberties, justice & home affairs
 180;21/05/2013;Adequate- safe and sustainable pensions - Motion for resolution : vote: resolution (text as a whole);+;EP;Employment & social affairs
-181;21/05/2013;Fight against tax fraud- tax evasion and tax havens«?∂ˇ - Motion for resolution : Paragraph 6;+;EP;Economic & monetary affairs
+181;21/05/2013;Fight against tax fraud- tax evasion and tax havensÔøΩ?ÔøΩÔøΩ - Motion for resolution : Paragraph 6;+;EP;Economic & monetary affairs
 182;21/05/2013;Annual tax report: how to free the EU potential for economic growth - Motion for resolution : Paragraph 20;+;EP;Economic & monetary affairs
 183;18/04/2013;Ship recycling - Draft legislative resolution : vote: amended proposal - ordinary legislative procedure- first reading;+;EP;Environment & public health
 184;18/04/2013;2012 progress report on Turkey - Motion for a resolution : Paragraph 47-amendment 14;-;EP;Foreign & security policy
 185;18/04/2013;European integration process of Kosovo - Motion for a resolution : Paragraph 3;+;EP;Foreign & security policy
 186;18/04/2013;Motions for resolutions - Completing the scoreboard for the Macroeconomic Imbalance Procedure - Motion for a resolution : After paragraph 6-amendment 3;-;EP;Economic & monetary affairs
 187;18/04/2013;Vietnam- in particular freedom of expression - Joint Motion for a resolution : vote: resolution (as a whole);+;EP;Foreign & security policy
-188;18/04/2013;Human rights situation in Kazakhstan«?∂ˇ - Joint Motion for a resolution : vote: resolution (as a whole);+;EP;Foreign & security policy
+188;18/04/2013;Human rights situation in KazakhstanÔøΩ?ÔøΩÔøΩ - Joint Motion for a resolution : vote: resolution (as a whole);+;EP;Foreign & security policy
 189;17/04/2013;2011 discharge: Section III- Commission - Proposal for a decision : vote: decision (as a whole);+;EP;Budgetary control
 190;17/04/2013;2011 discharge: EU general budget- European Parliament - Proposal for a decision : vote: decision (as a whole);+;EP;Budgetary control
 191;17/04/2013;2011 discharge: European Economic and Social Committee - Proposal for a decision : vote: decision (as a whole);+;EP;Budgetary control
@@ -205,7 +205,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 204;17/04/2013;Financial assistance for Member States whose currency is not the euro - Motion for a resolution : vote: resolution (as a whole);+;EP;Economic & monetary affairs
 205;17/04/2013;Common system of value added tax as regards the treatment of vouchers - Draft legislative resolution : vote: legislative resolution - consultation;+;EP;Economic & monetary affairs
 206;17/04/2013;European Central Bank annual report (2011) - Motion for a resolution : vote: resolution (as a whole);+;EP;Economic & monetary affairs
-207;16/04/2013;Certain technical and control measures in the Skagerrak«?∂ˇ - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Fisheries
+207;16/04/2013;Certain technical and control measures in the SkagerrakÔøΩ?ÔøΩÔøΩ - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Fisheries
 208;16/04/2013;Access to the activity of credit institutions and the prudential supervision of credit institutions and investment firms - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Economic & monetary affairs
 209;16/04/2013;Prudential requirements for credit institutions and investment firms - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Economic & monetary affairs
 210;16/04/2013;Clarifying provisions on the timing of auctions of greenhouse gas allowances - Draft legislative resolution : Proposal to reject the Commission proposal-amendment 20 - ordinary legislative procedure- first reading;+;EP;Environment & public health
@@ -318,7 +318,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 317;12/12/2012;New general budget of the European Union for the financial year 2013 - all sections - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
 318;12/12/2012;European Globalisation Adjustment Fund: application EGF/2011/026 IT/Emilia-Romagna Motorcycles - Motion for a resolution : single vote;+;EP;Budget
 319;12/12/2012;European Globalisation Adjustment Fund: application EGF/2012/005 SE/Saab - Motion for a resolution : single vote;+;EP;Budget
-320;12/12/2012;European Globalisation Adjustment Fund: application EGF/2011/018 ES/Pa«ü∂s Vasco Productos met«ü∂≠licos - Motion for a resolution : single vote;+;EP;Budget
+320;12/12/2012;European Globalisation Adjustment Fund: application EGF/2011/018 ES/Pa«üÔøΩÔøΩs Vasco Productos met«üÔøΩÔøΩlicos - Motion for a resolution : single vote;+;EP;Budget
 321;12/12/2012;Draft amending budget No 6/2012 - Revenue from own resources and other resources - Increase in payment appropriations in headings 1a- 1b- 2- 3a and 4 of the Multiannual Financial Framework - Reduction in the level of commitment appropriations entered in the budget - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
 322;12/12/2012;European Globalisation Adjustment Fund: application EGF/2011/013 DK/Flextronics - Motion for a resolution : single vote;+;EP;Budget
 323;11/12/2012;Macro-financial assistance for Georgia - Draft legislative resolution : Proposal to reject the Council position-amendment 2 - ordinary legislative procedure- second reading;-;EP;International trade
@@ -356,7 +356,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 355;21/11/2012;Industrial- energy and other aspects of shale gas and oil - Motion for a resolution : vote: resolution (as a whole);+;EP;Industry, research & energy
 356;21/11/2012;Draft Amending Budget No 5/2012: Solidarity Fund response to earthquakes in Emilia-Romagna (Italy) and modification of the budget line for the preparatory action for the European Year of Volunteering 2011 - Motion for a resolution : single vote;+;EP;Budget
 357;21/11/2012;Mobilisation of the EU Solidarity Fund - Motion for a resolution : single vote;+;EP;Budget
-358;21/11/2012;Implementation of the agreements concluded by the EU following negotiations in the framework of Article«?∂ˇXXVIII of GATT«?∂ˇ1994 - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;International trade
+358;21/11/2012;Implementation of the agreements concluded by the EU following negotiations in the framework of ArticleÔøΩ?ÔøΩÔøΩXXVIII of GATTÔøΩ?ÔøΩÔøΩ1994 - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;International trade
 359;21/11/2012;Tariff-rate quotas applying to exports of wood from Russia to the EU - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;International trade
 360;21/11/2012;Migration from the Schengen Information System (SIS 1+) to the second generation Schengen Information System (SIS II) (including the United Kingdom and Ireland) - Draft legislative resolution : single vote - consultation;+;EP;Civil liberties, justice & home affairs
 361;21/11/2012;Migration from the Schengen Information System (SIS 1+) to the second generation Schengen Information System (SIS II) (without the United Kingdom and Ireland) - Draft legislative resolution : single vote - consultation;+;EP;Civil liberties, justice & home affairs
@@ -382,7 +382,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 381;25/10/2012;Protection against dumped imports from countries not members of the European Community - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;International trade
 382;25/10/2012;EU report on policy coherence for development (2011) - Motion for a resolution : vote: resolution (as a whole);+;EP;Development
 383;23/10/2012;European Globalisation Adjustment Fund: application EGF/2011/019 ES/Galicia Metal - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
-384;23/10/2012;European Globalisation Adjustment Fund: application EGF/2011/009 NL/Gelderland«?∂ˇ - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
+384;23/10/2012;European Globalisation Adjustment Fund: application EGF/2011/009 NL/GelderlandÔøΩ?ÔøΩÔøΩ - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
 385;23/10/2012;European Globalisation Adjustment Fund: application EGF/2011/021 NL/Zalco - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
 386;23/10/2012;European Globalisation Adjustment Fund: application EGF/2010/015 FR/Peugeot - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
 387;23/10/2012;European Globalisation Adjustment Fund: application EGF/2012/003 DK/VESTAS - Denmark - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
@@ -397,7 +397,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 396;23/10/2012;SMEs: competitiveness and business opportunities - Motion for a resolution : Paragraph 51/3;+;EP;Industry, research & energy
 397;23/10/2012;Protocol to the Euro-Mediterranean Agreement establishing an association between the EC and Israel on Conformity Assessment and Acceptance of Industrial Products (CAA) - Draft legislative resolution : vote: legislative resolution - consent;+;EP;International trade
 398;23/10/2012;European Globalisation Adjustment Fund: application EGF/2012/001 IE/Talk Talk - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
-399;23/10/2012;European Globalisation Adjustment Fund: application EGF/2011/015/SE/AstraZeneca«?∂ˇ - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
+399;23/10/2012;European Globalisation Adjustment Fund: application EGF/2011/015/SE/AstraZenecaÔøΩ?ÔøΩÔøΩ - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
 400;23/10/2012;Draft general budget of the European Union - 2013 financial year - Motion for a resolution : Am 351-amendment 351;+;EP;Budget
 401;23/10/2012;General budget of the European Union for the financial year 2013 - all sections - Motion for a resolution : vote: resolution (as a whole);+;EP;Budget
 402;23/10/2012;Multiannual financial framework for the years 2014-2020 - Interim report : vote: resolution (as a whole)   - consent;+;EP;Budget
@@ -411,7 +411,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 410;13/09/2012;Exclusion of certain countries from trade preferences - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;International trade
 411;13/09/2012;Intergovernmental agreements between Member States and third countries in the field of energy - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Industry, research & energy
 412;13/09/2012;Agricultural product quality schemes - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;Agriculture
-413;13/09/2012;Implementation of the bilateral safeguard clause and the stabilisation mechanism for bananas of the Trade Agreement between the EU and Colombia and Peru - Draft legislative resolution : Amendments by the committee responsible «ΩÉ?™É?? separate vote-amendment 28 - ordinary legislative procedure- first reading;+;EP;International trade
+413;13/09/2012;Implementation of the bilateral safeguard clause and the stabilisation mechanism for bananas of the Trade Agreement between the EU and Colombia and Peru - Draft legislative resolution : Amendments by the committee responsible «ΩÔøΩ?ÔøΩÔøΩ?? separate vote-amendment 28 - ordinary legislative procedure- first reading;+;EP;International trade
 414;13/09/2012;Forwarding to and handling by the European Parliament of classified information held by the Council on matters other than those in the area of the Common Foreign and Security Policy - Proposal for a decision : single vote;+;EP;Constitutional and inter-institutional affairs
 415;12/09/2012;Minimum standards on the rights- support and protection of victims of crime - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Civil liberties, justice & home affairs
 416;12/09/2012;Administration of certain Community tariff quotas for high-quality beef- and for pigmeat- poultrymeat- wheat and meslin- and brans- sharps and other residues - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;International trade
@@ -543,7 +543,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 542;10/05/2012;Discharge 2010: EU general budget- Committee of the Regions - Decision on the discharge  - Motion for a resolution : vote: decision (as a whole);+;EP;Budgetary control
 543;10/05/2012;Discharge 2010: EU general budget- European Ombudsman - Decision on the discharge  - Proposal for a decision : vote: decision (as a whole);+;EP;Budgetary control
 544;10/05/2012;Discharge 2010: EU general budget- European Data Protection Supervisor - Decision on the discharge  - Proposal for a decision : vote: decision (as a whole);+;EP;Budgetary control
-545;10/05/2012;Discharge 2010: performance- financial management and control of EU agencies - Motion for resolution - Motion for a resolution : «?∂ı 3-amendment 14D;-;EP;Budgetary control
+545;10/05/2012;Discharge 2010: performance- financial management and control of EU agencies - Motion for resolution - Motion for a resolution : ÔøΩ?ÔøΩÔøΩ 3-amendment 14D;-;EP;Budgetary control
 546;20/04/2012;Our life insurance- our natural capital: an EU biodiversity strategy to 2020 - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
 547;20/04/2012;Review of the 6th Environment Action Programme and the setting of priorities for the 7th Environment Action Programme - Motion for a resolution : Paragraph 32/1;+;EP;Environment & public health
 548;20/04/2012;Situation in Mali - Joint motion for a resolution : Paragraph 17;+;EP;Foreign & security policy
@@ -584,10 +584,10 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 583;15/03/2012;Competitive low carbon economy in 2050 - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
 584;14/03/2012;Addressing the EU diabetes epidemic - Joint motion for a resolution : Paragraph 4/1;+;EP;Environment & public health
 585;14/03/2012;Enlargement report for Iceland - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
-586;14/03/2012;Enlargement report for Bosnia and Herzegovina«?∂ˇ - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
+586;14/03/2012;Enlargement report for Bosnia and HerzegovinaÔøΩ?ÔøΩÔøΩ - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 587;14/03/2012;Enlargement report for the former Yugoslav Republic of Macedonia - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 588;14/03/2012;General guidelines for the 2013 budget: Section III - Commission - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
-589;14/03/2012;Child labour in cocoa sector«?∂ˇ - Motion for a resolution : Paragraph 9-amendment 5;+;EP;International trade
+589;14/03/2012;Child labour in cocoa sectorÔøΩ?ÔøΩÔøΩ - Motion for a resolution : Paragraph 9-amendment 5;+;EP;International trade
 590;14/03/2012;Autonomous tariff quota for imports of high-quality beef - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;International trade
 591;14/03/2012;Common commercial policy - Draft legislative resolution : vote: legislative resolution - ordinary legislative procedure- first reading;+;EP;International trade
 592;14/03/2012;European Fisheries Fund - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Fisheries
@@ -603,7 +603,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 602;16/02/2012;Recent political developments in Hungary - Motion for a resolution : Paragraph 3;+;EP;Civil liberties, justice & home affairs
 603;16/02/2012;Agreement between the EU and Morocco concerning reciprocal liberalisation measures on agricultural products and fishery products - Greens/ALE- GUE/NGL - Joint motion for a resolution : vote: resolution (text as a whole);-;EP;International trade
 604;16/02/2012;Agreement between the EU and Morocco concerning reciprocal liberalisation measures on agricultural products and fishery products - S&D- PPE- ALDE- ECR  - Joint motion for a resolution : Am 4-amendment 4;-;EP;International trade
-605;16/02/2012;Agreement between the EU and Morocco concerning reciprocal liberalisation measures on agricultural products and fishery products - report Bov«ü∂∏  - Draft legislative resolution : vote: resolution (text as a whole)   - consent;+;EP;International trade
+605;16/02/2012;Agreement between the EU and Morocco concerning reciprocal liberalisation measures on agricultural products and fishery products - report Bov«üÔøΩÔøΩ  - Draft legislative resolution : vote: resolution (text as a whole)   - consent;+;EP;International trade
 606;16/02/2012;19th session of the UN Human Rights Council - Motion for a resolution : Am  4-amendment 4;-;EP;Foreign & security policy
 607;16/02/2012;Death penalty in Japan - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 608;15/02/2012;Motions for resolutions - Feasibility of introducing stability bonds - Motion for a resolution : vote: resolution (text as a whole);+;EP;Economic & monetary affairs
@@ -652,7 +652,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 651;13/12/2011;Revision of the multiannual financial framework to address additional financing needs of the ITER project - Proposal for a European Parliament Resolution : single vote;+;EP;Budget
 652;13/12/2011;Draft amending budget No 7/2011 - Mobilisation of the EU Solidarity Fund - Spain and Italy - Motion for a resolution : single vote;+;EP;Budget
 653;13/12/2011;Mobilisation of the EU Solidarity Fund: Spain (earthquake in Lorca) and Italy (Veneto flooding) - Motion for a resolution : single vote;+;EP;Budget
-654;13/12/2011;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2011/002 Trentino-Alto Adige/S«ü∂¨dtirol - Construction of buildings / Italy - Motion for a resolution : single vote;+;EP;Budget
+654;13/12/2011;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2011/002 Trentino-Alto Adige/S«üÔøΩÔøΩdtirol - Construction of buildings / Italy - Motion for a resolution : single vote;+;EP;Budget
 655;13/12/2011;Right to information in criminal proceedings - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Civil liberties, justice & home affairs
 656;13/12/2011;Financial management for Member States experiencing or threatened with serious difficulties with respect to financial stability - Draft legislative resolution : vote: legislative resolution (text as a whole)   - ordinary legislative procedure- first reading;+;EP;Agriculture
 657;01/12/2011;EU global response to HIV/AIDS - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
@@ -672,7 +672,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 671;01/12/2011;2012 budgetary procedure: joint text - Draft legislative resolution : vote: legislative resolution (text as a whole);+;EP;Budget
 672;01/12/2011;Mobilisation of the flexibility instrument - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
 673;01/12/2011;Repayable assistance and financial engineering - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Regional development
-674;01/12/2011;Amendment of Decision«?∂ˇ2007/659/EC as regards its period of application and the annual quota benefiting from a reduced rate of excise duty - Draft legislative resolution : single vote - consultation;+;EP;Regional development
+674;01/12/2011;Amendment of DecisionÔøΩ?ÔøΩÔøΩ2007/659/EC as regards its period of application and the annual quota benefiting from a reduced rate of excise duty - Draft legislative resolution : single vote - consultation;+;EP;Regional development
 675;01/12/2011;Financial management for certain Members States experiencing or threatened with serious difficulties with respect to their financial stability (ERDF and ESF) - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Regional development
 676;01/12/2011;Modernisation of customs - Motion for a resolution : Paragraph 42;+;EP;Internal market & consumer protection
 677;01/12/2011;Tackling early school leaving - Motion for a resolution : single vote;+;EP;Culture & education
@@ -690,7 +690,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 689;16/11/2011;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2010/020 IE/Construction 43 from Ireland - Motion for a resolution : single vote;+;EP;Budget
 690;16/11/2011;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2011/001 AT/Lower and Upper Austria/Austria - Motion for a resolution : single vote;+;EP;Budget
 691;16/11/2011;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2011/004 EL/ALDI Hellas/Greece - Motion for a resolution : single vote;+;EP;Budget
-692;16/11/2011;European Heritage Label - Draft legislative resolution : Amendments by the committee responsible «ΩÉ?™É?? block vot-amendment 1 - ordinary legislative procedure- second reading;-;EP;Culture & education
+692;16/11/2011;European Heritage Label - Draft legislative resolution : Amendments by the committee responsible «ΩÔøΩ?ÔøΩÔøΩ?? block vot-amendment 1 - ordinary legislative procedure- second reading;-;EP;Culture & education
 693;16/11/2011;Motions for resolutions - Climate change conference in Durban - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
 694;16/11/2011;Single European railway area - Draft legislative resolution : vote: amended proposal   - ordinary legislative procedure- first reading;+;EP;Transport & tourism
 695;16/11/2011;European cinema in the digital era - Motion for a resolution : vote: resolution (text as a whole);+;EP;Culture & education
@@ -722,7 +722,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 721;25/10/2011;Situation of single mothers - Motion for a resolution : Recital M;+;EP;Gender equality
 722;25/10/2011;Organised crime in the European Union  - Motion for a resolution : vote: resolution (text as a whole);+;EP;Civil liberties, justice & home affairs
 723;25/10/2011;Mobility and inclusion of people with disabilities - Motion for a resolution : Paragraph 53/1;-;EP;Employment & social affairs
-724;25/10/2011;Draft amending budget No 5/2011 - Section IX «ΩÉ?™É?? European Data Protection Supervisor. Section X «ΩÉ?™É?? European External Action Servic - Motion for a resolution : single vote;+;EP;Budget
+724;25/10/2011;Draft amending budget No 5/2011 - Section IX «ΩÔøΩ?ÔøΩÔøΩ?? European Data Protection Supervisor. Section X «ΩÔøΩ?ÔøΩÔøΩ?? European External Action Servic - Motion for a resolution : single vote;+;EP;Budget
 725;25/10/2011;Application of emission stages to narrow-track tractors - Draft legislative resolution : vote: legislative resolution (text as a whole)   - ordinary legislative procedure- first reading;+;EP;Environment & public health
 726;25/10/2011;Alternative dispute resolution in civil- commercial and family matters - Motion for a resolution : single vote;+;EP;Legal affairs
 727;25/10/2011;Tyres for motor vehicles and their trailers - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Legal affairs
@@ -739,7 +739,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 738;28/09/2011;Sexual orientation and gender identity at the UN Human Rights Council - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 739;28/09/2011;Draft amending budget No 4/2011: own resources and migration and refugee flows - Motion for a resolution : single vote;+;EP;Budget
 740;28/09/2011;Mobilisation of the European Globalisation Adjustment Fund (application EGF/2010/017 DK/Midtjylland Machinery from Denmark) - Motion for a resolution : single vote;+;EP;Budget
-741;28/09/2011;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2011/003 DE/Arnsberg and D«ü∂¨sseldorf - automotive industry in Germany - Motion for a resolution : single vote;+;EP;Budget
+741;28/09/2011;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2011/003 DE/Arnsberg and D«üÔøΩÔøΩsseldorf - automotive industry in Germany - Motion for a resolution : single vote;+;EP;Budget
 742;28/09/2011;Mobilisation of the European Globalisation Adjustment Fund: application EGF/2010/026 PT/Rohde - Portugal - Motion for a resolution : single vote;+;EP;Budget
 743;28/09/2011;Surveillance of budgetary positions and surveillance and coordination of economic policies - Draft legislative resolution : vote: amended proposal;+;EP;Economic & monetary affairs
 744;28/09/2011;Budgetary surveillance in euro area - Draft legislative resolution : vote: amended proposal   - ordinary legislative procedure- first reading;+;EP;Economic & monetary affairs
@@ -761,7 +761,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 760;14/09/2011;Mobilisation of Globalisation Adjustment Fund: application EGF/2010/027 NL/North Brabant Division 18/Netherlands - Motion for a resolution : single vote;+;EP;Budget
 761;14/09/2011;Mobilisation of Globalisation Adjustment Fund: application EGF/2010/029 NL/South Holland and Utrecht Division 18/Netherlands - Motion for a resolution : single vote;+;EP;Budget
 762;14/09/2011;Mobilisation of Globalisation Adjustment Fund: technical assistance at the initiative of the Commission - Motion for a resolution : single vote;+;EP;Budget
-763;14/09/2011;Mobilisation of Globalisation Adjustment Fund: AT/Steiermark and Nieder«ü∂Ùsterreich from Austria - Motion for a resolution : single vote;+;EP;Budget
+763;14/09/2011;Mobilisation of Globalisation Adjustment Fund: AT/Steiermark and Nieder«üÔøΩÔøΩsterreich from Austria - Motion for a resolution : single vote;+;EP;Budget
 764;14/09/2011;Mobilisation of Globalisation Adjustment Fund: AT/AT&S from Austria - Motion for a resolution : single vote;+;EP;Budget
 765;14/09/2011;Motions for resolutions - EU homelessness strategy - Motion for a resolution : vote: resolution (text as a whole);+;EP;Employment & social affairs
 766;14/09/2011;Motions for resolutions - A comprehensive approach to non-CO2 climate-relevant anthropogenic emissions - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
@@ -826,7 +826,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 825;23/06/2011;Spent fuel and radioactive waste - Draft legislative resolution : vote: amended proposal   - consultation;+;EP;Industry, research & energy
 826;23/06/2011;2012 draft budget trilogue - Motion for a resolution : After paragraph 13-amendment 9;-;EP;Budget
 827;23/06/2011;The CAP towards 2020: Meeting the food- natural resources and territorial challenges of the future - Motion for a resolution : After paragraph 3-amendment 31=35/1;-;EP;Agriculture
-828;09/06/2011;Guant«ü∂≠namo: imminent death penalty decision - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
+828;09/06/2011;Guant«üÔøΩÔøΩnamo: imminent death penalty decision - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 829;09/06/2011;EU-Russia summit - Joint motion for a resolution : Paragraph 11-amendment 1;-;EP;Foreign & security policy
 830;09/06/2011;Ukraine: the cases of Yulia Tymoshenko and other members of the former government - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 831;09/06/2011;Madagascar - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
@@ -891,7 +891,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 890;10/05/2011;ECA special report in the context of the 2009 Commission discharge  - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budgetary control
 891;10/05/2011;2009 discharge: EU general budget- Section III - Commission - Proposal for a European Parliament Decision : vote: resolution (text as a whole);+;EP;Budgetary control
 892;10/05/2011;2009 discharge: European Foundation for the Improvement of Living and Working Conditions - Proposal for a European Parliament Decision : single vote;+;EP;Budgetary control
-893;10/05/2011;2009 discharge: EU general budget «ΩÉ?™É?? Council  - Proposal for a European Parliament Decision : vote: resolution (text as a whole);+;EP;Budgetary control
+893;10/05/2011;2009 discharge: EU general budget «ΩÔøΩ?ÔøΩÔøΩ?? Council  - Proposal for a European Parliament Decision : vote: resolution (text as a whole);+;EP;Budgetary control
 894;10/05/2011;2009 discharge: EU general budget - Court of Auditors - Proposal for a European Parliament Decision : vote: resolution (text as a whole);+;EP;Budgetary control
 895;10/05/2011;2009 discharge: EU general budget- Economic and Social Committee - Proposal for a European Parliament Decision : vote: resolution (text as a whole);+;EP;Budgetary control
 896;10/05/2011;2009 discharge: EU general budget - Committee of the Regions - Proposal for a European Parliament Decision : vote: resolution (text as a whole);+;EP;Budgetary control
@@ -904,7 +904,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 903;10/05/2011;Further macro-financial assistance for Georgia - Draft legislative resolution : vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;International trade
 904;07/04/2011;Vaccination against bluetongue - Draft legislative resolution : vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Agriculture
 905;07/04/2011;Lessons to be drawn for nuclear safety in Europe following the nuclear accident in Japan - Joint motion for a resolution : vote: resolution (text as a whole);-;EP;Industry, research & energy
-906;07/04/2011;Fourth United Nations Conference on the Least Developed Countries«?∂ˇ - Joint motion for a resolution : After paragraph 4-amendment 8;-;EP;Development
+906;07/04/2011;Fourth United Nations Conference on the Least Developed CountriesÔøΩ?ÔøΩÔøΩ - Joint motion for a resolution : After paragraph 4-amendment 8;-;EP;Development
 907;07/04/2011;2010 progress report on Iceland - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 908;07/04/2011;2010 progress report on the former Yugoslav Republic of Macedonia - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 909;07/04/2011;Review of the European Neighbourhood Policy - Eastern Dimension - Motion for a resolution : Paragraph 10-amendment 1;-;EP;Foreign & security policy
@@ -914,7 +914,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 913;06/04/2011;Estimates of revenue and expenditure for 2012 - Section I - Parliament - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
 914;06/04/2011;Community financial measures for the implementation of the common fisheries policy and in the area of the Law of the Sea - Draft legislative resolution : vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Fisheries
 915;06/04/2011;Draft amending budget No 1/2011 - Section III - Commission - Motion for a resolution : single vote;+;EP;Budget
-916;06/04/2011;Protection of Communities' financial interests «ΩÉ?™É?? fight against fraud - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budgetary control
+916;06/04/2011;Protection of Communities' financial interests «ΩÔøΩ?ÔøΩÔøΩ?? fight against fraud - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budgetary control
 917;06/04/2011;Fisheries - transitional technical measures - Draft legislative resolution : vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Fisheries
 918;06/04/2011;Authorisation and refusal of authorisation of certain health claims made on foods and referring to children's development and health - Motion for a resolution : vote: resolution (text as a whole);-;EP;Environment & public health
 919;06/04/2011;Granting and withdrawing international protection - Draft legislative resolution : vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Civil liberties, justice & home affairs
@@ -977,7 +977,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 976;20/01/2011;Brazil: extradition of Cesare Battisti - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 977;20/01/2011;An EU Strategy for the Black Sea - Motion for a resolution : Paragraph 25/1;+;EP;Foreign & security policy
 978;20/01/2011;Iran- in particular the case of Nasrin Sotoudeh - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
-979;19/01/2011;European initiative on Alzheimer«ΩÉ?™É?Ωs disease and other dementias - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
+979;19/01/2011;European initiative on Alzheimer«ΩÔøΩ?ÔøΩÔøΩ?ÔøΩs disease and other dementias - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
 980;19/01/2011;Stabilisation and Association Agreement between the EC and Serbia - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 981;19/01/2011;Motions for resolutions - Interim Partnership Agreement between the EC and the Pacific States - Motion for a resolution : vote: resolution (text as a whole);+;EP;International trade
 982;19/01/2011;EU-Cameroon forest law agreement - Draft legislative resolution : single vote - consent;+;EP;International trade
@@ -986,7 +986,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 985;18/01/2011;Agriculture as a strategic sector in the context of food security - Motion for a resolution : Paragraph 14/1;+;EP;Agriculture
 986;16/12/2010;A new strategy for Afghanistan - Motion for a resolution : Paragraph 2/1;+;EP;Foreign & security policy
 987;16/12/2010;Human rights in the world 2009 and EU policy on the matter - Motion for a resolution : After paragraph 1-amendment 10;-;EP;Foreign & security policy
-988;16/12/2010;Control by Member States of the Commission«ΩÉ?™É?Ωs exercise of implementing powers - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Constitutional and inter-institutional affairs
+988;16/12/2010;Control by Member States of the Commission«ΩÔøΩ?ÔøΩÔøΩ?ÔøΩs exercise of implementing powers - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Constitutional and inter-institutional affairs
 989;16/12/2010;European Heritage Label - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Culture & education
 990;16/12/2010;Motions for resolutions - Establishing a permanent crisis mechanism to safeguard the financial stability of the euro area - Motion for a resolution : vote: resolution (text as a whole);+;EP;Economic & monetary affairs
 991;16/12/2010;Motions for resolutions - Welfare of laying hens - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Agriculture
@@ -994,7 +994,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 993;16/12/2010;Eritrean refugees held hostage in Sinai- PPE - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 994;15/12/2010;Future of the Africa/EU strategic partnership on the eve of 3rd Africa/EU summit - Joint motion for a resolution : Paragraph 34;+;EP;Foreign & security policy
 995;15/12/2010;Presentation of the Commission work programme for 2011 - Joint motion for a resolution : Paragraph 11;+;EP;Constitutional and inter-institutional affairs
-996;15/12/2010;Citizens«ΩÉ?™É?Ω initiative - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Constitutional and inter-institutional affairs
+996;15/12/2010;Citizens«ΩÔøΩ?ÔøΩÔøΩ?ÔøΩ initiative - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Constitutional and inter-institutional affairs
 997;15/12/2010;Repeal of directives regarding metrology - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Internal market & consumer protection
 998;15/12/2010;Credit rating agencies - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Economic & monetary affairs
 999;15/12/2010;Law applicable to divorce and legal separation - Draft legislative resolution : single vote - consultation;+;EP;Legal affairs
@@ -1004,16 +1004,16 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1003;15/12/2010;Mobilisation of the Flexibility Instrument for the Lifelong Learning Programme- for the Competitiveness and Innovation Programme and for Palestine - Motion for a resolution : single vote;+;EP;Budget
 1004;15/12/2010;Fundamental rights in the European Union (2009) - Effective implementation after the entry into force of the Treaty of Lisbon - Motion for a resolution : vote: resolution (text as a whole);+;EP;Civil liberties, justice & home affairs
 1005;15/12/2010;Energy Efficiency Action Plan - Motion for a resolution : vote: resolution (text as a whole);+;EP;Industry, research & energy
-1006;14/12/2010;Single application procedure for residence and work - Draft legislative resolution : Amendments by thecommittee responsible«ΩÉ?™É?? separate votes-amendment 16 - ordinary legislative procedure- first reading;-;EP;Civil liberties, justice & home affairs
+1006;14/12/2010;Single application procedure for residence and work - Draft legislative resolution : Amendments by thecommittee responsible«ΩÔøΩ?ÔøΩÔøΩ?? separate votes-amendment 16 - ordinary legislative procedure- first reading;-;EP;Civil liberties, justice & home affairs
 1007;14/12/2010;Creation of an immigration liaison officers network - Motion for a resolution : single vote;+;EP;Civil liberties, justice & home affairs
 1008;14/12/2010;Good governance and EU regional policy - Motion for a resolution : single vote;+;EP;Regional development
 1009;14/12/2010;EU rapid response capability - Proposal for a recommendation to the Council : single vote;+;EP;Development
 1010;14/12/2010;Extension of the scope of Directive 2003/109/EC to beneficiaries of international protection - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Civil liberties, justice & home affairs
 1011;14/12/2010;Mobiliation of the European Globalisation Adjustment Fund: Lear from Spain - Motion for a resolution : single vote;+;EP;Budget
-1012;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: H.Cegielski-Pozna«?É?? from Poland - Motion for a resolution : single vote;+;EP;Budget
+1012;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: H.Cegielski-PoznaÔøΩ?ÔøΩ?? from Poland - Motion for a resolution : single vote;+;EP;Budget
 1013;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: Comunidad Valenciana - natural stone from Spain - Motion for a resolution : single vote;+;EP;Budget
 1014;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: Comunidad Valenciana - Textiles/Spain - Motion for a resolution : single vote;+;EP;Budget
-1015;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: Arag«ü∂¸n - Retail trade from Spain - Motion for a resolution : single vote;+;EP;Budget
+1015;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: Arag«üÔøΩÔøΩn - Retail trade from Spain - Motion for a resolution : single vote;+;EP;Budget
 1016;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: Wielkopolskie Automotive from Poland - Motion for a resolution : single vote;+;EP;Budget
 1017;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: Heidelberger Druckmaschinen AG/Germany - Motion for a resolution : single vote;+;EP;Budget
 1018;14/12/2010;Mobilisation of the European Globalisation Adjustment Fund: SI/Mura- Slovenia - Motion for a resolution : single vote;+;EP;Budget
@@ -1032,9 +1032,9 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1031;25/11/2010;Ukraine - Joint motion for a resolution : After paragraph 13-amendment 1;+;EP;Foreign & security policy
 1032;25/11/2010;International Trade Policy in the context of Climate Change imperatives - Motion for a resolution : vote: resolution (text as a whole);+;EP;International trade
 1033;25/11/2010;Corporate social responsibility in international trade agreements - Motion for a resolution : vote: resolution (text as a whole);+;EP;International trade
-1034;25/11/2010;Tibet «ΩÉ?™É?? plans to make Chinese the main language of instruction - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
-1035;25/11/2010;Burma «ΩÉ?™É?? conduct of elections and the release of opposition leader Aung San Suu Kyi - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
-1036;25/11/2010;Iraq «ΩÉ?™É?? in particular the death penalty (including the case of Tariq Aziz) and attacks against Christian communities - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
+1034;25/11/2010;Tibet «ΩÔøΩ?ÔøΩÔøΩ?? plans to make Chinese the main language of instruction - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
+1035;25/11/2010;Burma «ΩÔøΩ?ÔøΩÔøΩ?? conduct of elections and the release of opposition leader Aung San Suu Kyi - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
+1036;25/11/2010;Iraq «ΩÔøΩ?ÔøΩÔøΩ?? in particular the death penalty (including the case of Tariq Aziz) and attacks against Christian communities - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 1037;24/11/2010;Draft amending budget No 8/2010: Section III - Commission - European Solidarity Fund: floods in Ireland - completion of ESF - Objective 1 (2000 to 2006) - Motion for a resolution : single vote;+;EP;Budget
 1038;24/11/2010;Information on medicinal products (Community procedures for the authorisation and supervision of medicinal products) - Motion for a resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Environment & public health
 1039;24/11/2010;Information on medicinal products (Community code relating to medicinal products) - Motion for a resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Environment & public health
@@ -1055,7 +1055,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1054;23/11/2010;Mobilisation of the European Globalisation Adjustment Fund: Limburg Division 18/Netherlands - Motion for a resolution : single vote;+;EP;Budget
 1055;23/11/2010;Mobilisation of the European Globalisation Adjustment Fund: Gelderland and Overijssel Division 18/Netherlands - Motion for a resolution : single vote;+;EP;Budget
 1056;23/11/2010;Mobilisation of the European Globalisation Adjustment Fund: Noord Brabant and Zuid Holland - Division 18/Netherlands - Motion for a resolution : single vote;+;EP;Budget
-1057;23/11/2010;Mobilisation of the EU Solidarity Fund: Ireland «ΩÉ?™É?? floods in November 2009 - Motion for a resolution : single vote;+;EP;Budget
+1057;23/11/2010;Mobilisation of the EU Solidarity Fund: Ireland «ΩÔøΩ?ÔøΩÔøΩ?? floods in November 2009 - Motion for a resolution : single vote;+;EP;Budget
 1058;11/11/2010;Mobilisation of the European Globalisation Adjustment Fund: Ireland - SR Technics - Motion for a resolution : single vote;+;EP;Budget
 1059;11/11/2010;Alternative investment fund managers - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Economic & monetary affairs
 1060;11/11/2010;Amendment of Regulation (EC) No 539/2001 listing the third countries whose nationals must be in possession of visas when crossing the external borders of Member States and those whose nationals are exempt from that requirement - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Civil liberties, justice & home affairs
@@ -1086,7 +1086,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1085;19/10/2010;Mobilisation of the European Globalisation Adjustment Fund: Nordjylland/Denmark - Motion for a resolution : single vote;+;EP;Budget
 1086;19/10/2010;Mobilisation of the European Globalisation Adjustment Fund : NXP Semiconductors/Netherlands - Motion for a resolution : single vote;+;EP;Budget
 1087;19/10/2010;Mobilisation of the European Globalisation Adjustment Fund: Qimonda/Portugal - Motion for a resolution : single vote;+;EP;Budget
-1088;19/10/2010;Mobilisation of the European Globalisation Adjustment Fund: Catalu«ü∂Òa automoci«ü∂¸n/Spain - Motion for a resolution : single vote;+;EP;Budget
+1088;19/10/2010;Mobilisation of the European Globalisation Adjustment Fund: Catalu«üÔøΩÔøΩa automoci«üÔøΩÔøΩn/Spain - Motion for a resolution : single vote;+;EP;Budget
 1089;19/10/2010;Scheme of control and enforcement applicable in the area covered by the Convention on future multilateral cooperation in the North-East Atlantic fisheries - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Fisheries
 1090;07/10/2010;Mobilisation of the European Globalisation Adjustment Fund: Denmark/Danfoss Group - Report : single vote;+;EP;Budget
 1091;07/10/2010;2008 discharge: European Police College - Proposal for a decision  : Vote: decision (text as a whole);+;EP;Budgetary control
@@ -1098,7 +1098,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1097;07/10/2010;Motions for resolutions - EU action on oil exploration and extraction in Europe - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
 1098;07/10/2010;Motions for resolutions - Conference on Biological Diversity - Nagoya 2010 - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
 1099;07/10/2010;Health care systems in Sub-Saharan Africa and Global Health - Motion for a resolution : vote: resolution (text as a whole);+;EP;Development
-1100;22/09/2010;Draft amending budget no 7/2010: guarantee provided by the European Union in accordance with the provisions of Article 122 of the TFEU «ΩÉ?™É?? financial assistance to Member States - Motion for a resolution : single vote;+;EP;Budget
+1100;22/09/2010;Draft amending budget no 7/2010: guarantee provided by the European Union in accordance with the provisions of Article 122 of the TFEU «ΩÔøΩ?ÔøΩÔøΩ?? financial assistance to Member States - Motion for a resolution : single vote;+;EP;Budget
 1101;22/09/2010;Pharmacovigilance of medicinal products (amendment of Regulation (EC) No 726/2004) - Draft legislative resolution : Vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Environment & public health
 1102;22/09/2010;Pharmacovigilance (amendment of Directive 2001/83/EC) - Draft legislative resolution : Vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Environment & public health
 1103;22/09/2010;Refund of value added tax - Draft legislative resolution : single vote - consultation;+;EP;Economic & monetary affairs
@@ -1137,7 +1137,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1136;08/07/2010;Motions for resolutions concerning debates on cases of breaches of human rights- democracy and the rule of law-Venezuela- in particular the case of Maria Lourdes Afiuni - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 1137;08/07/2010;Motions for resolutions concerning debates on cases of breaches of human rights- democracy and the rule of law -North Korea - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 1138;07/07/2010;Remuneration of directors of listed companies and remuneration policies in the financial services sector - Motion for a resolution : single vote;+;EP;Economic & monetary affairs
-1139;07/07/2010;Novel foods - Recommendation for second reading: draft legislative resolution : Amendments by the committee responsible «ΩÉ?™É?? separate votes-amendment 11 - ordinary legislative procedure- second reading;+;EP;Environment & public health
+1139;07/07/2010;Novel foods - Recommendation for second reading: draft legislative resolution : Amendments by the committee responsible «ΩÔøΩ?ÔøΩÔøΩ?? separate votes-amendment 11 - ordinary legislative procedure- second reading;+;EP;Environment & public health
 1140;07/07/2010;Industrial emissions (integrated pollution prevention and control) (recast) - Recommendation for second reading: draft legislative resolution : Text as a whole block 1 -compromise  -amendment 77 - ordinary legislative procedure- second reading;+;EP;Environment & public health
 1141;07/07/2010;Obligations of operators who place timber and timber products on the market - Recommendation for second reading: draft legislative resolution : Text as a whole block 1 -compromise  -amendment 94 - ordinary legislative procedure- second reading;+;EP;Environment & public health
 1142;07/07/2010;Powers of the European Banking Authority- the European Insurance and Occupational Pensions Authority and the European Securities and Markets Authority - Draft legislative resolution : Postpone final vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Economic & monetary affairs
@@ -1151,7 +1151,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1150;07/07/2010;Iceland's application for membership of the European Union - Motion for a resolution : Paragraph 26;+;EP;Foreign & security policy
 1151;06/07/2010;Quality of statistical data in the context of the excessive deficit procedure - Draft legislative resolution : single vote - consultation;+;EP;Economic & monetary affairs
 1152;06/07/2010;Contribution of EU regional policy towards fighting the financial and economic crisis- with a special reference to Objective 2 - Motion for a resolution : single vote;+;EP;Regional development
-1153;06/07/2010;Rights of passengers in bus and coach transport - Recommendation for second reading-Draft legislative resolution : Amendments by the committee responsible «ΩÉ?™É?? separate vote-amendment 15 - ordinary legislative procedure- second reading;+;EP;Transport & tourism
+1153;06/07/2010;Rights of passengers in bus and coach transport - Recommendation for second reading-Draft legislative resolution : Amendments by the committee responsible «ΩÔøΩ?ÔøΩÔøΩ?? separate vote-amendment 15 - ordinary legislative procedure- second reading;+;EP;Transport & tourism
 1154;06/07/2010;Reporting formalities for ships arriving in or departing from ports - Draft legislative resolution :   Vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Transport & tourism
 1155;06/07/2010;A sustainable future for transport - Motion for a resolution : Paragraph 41- after indent 4-amendment 4;-;EP;Transport & tourism
 1156;17/06/2010;Securities to be offered to the public and harmonisation of transparency requirements (amendment of Directives 2003/71/EC and 2004/109/EC) - Draft legislative resolution :   Vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Economic & monetary affairs
@@ -1167,7 +1167,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1166;17/06/2010;Executions in Libya - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 1167;16/06/2010;Joint Baltic Sea Research and Development Programme (BONUS-169) - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Industry, research & energy
 1168;16/06/2010;Structures for the management of the European satellite radio navigation programmes - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Industry, research & energy
-1169;16/06/2010;European Earth observation programme (GMES) (2011«ΩÉ?™É??2013) - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Industry, research & energy
+1169;16/06/2010;European Earth observation programme (GMES) (2011«ΩÔøΩ?ÔøΩÔøΩ??2013) - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Industry, research & energy
 1170;16/06/2010;Authorising enhanced cooperation procedure regarding the law applicable to divorce and legal separation - Draft resolution : single vote - consent;+;EP;Legal affairs
 1171;16/06/2010;Adoption by Estonia of the euro on 1 January 2011 - Draft legislative resolution : single vote - consultation;+;EP;Economic & monetary affairs
 1172;16/06/2010;Draft amending budget No 4/2010: Section III - Commission (2009 surplus) - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
@@ -1177,7 +1177,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1176;16/06/2010;Food information to consumers - Draft legislative resolution :   Vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Environment & public health
 1177;16/06/2010;Preparations for the European Council meeting (17 June 2010)-EU 2020 - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Constitutional and inter-institutional affairs
 1178;16/06/2010;Preparations for the European Council meeting (17 June 2010)-Economic governance - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Constitutional and inter-institutional affairs
-1179;15/06/2010;European rail network for competitive freight - Draft legislative resolution : Text as a wholeBlock 1 «ΩÉ?™É?? compromise amendment   -amendment 83 rev/1 - ordinary legislative procedure- second reading;+;EP;Transport & tourism
+1179;15/06/2010;European rail network for competitive freight - Draft legislative resolution : Text as a wholeBlock 1 «ΩÔøΩ?ÔøΩÔøΩ?? compromise amendment   -amendment 83 rev/1 - ordinary legislative procedure- second reading;+;EP;Transport & tourism
 1180;15/06/2010;EU financial contributions to the International Fund for Ireland (2007-2010) - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Regional development
 1181;15/06/2010;European Globalisation Adjustment Fund: ES/Region of Valencia - Motion for a resolution : single vote;+;EP;Budget
 1182;15/06/2010;Transparency in regional policy and its funding - Motion for a resolution : single vote;+;EP;Regional development
@@ -1189,7 +1189,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1188;15/06/2010;Internet governance: the next steps - Motion for a resolution : Paragraph 6/1;+;EP;Industry, research & energy
 1189;15/06/2010;Progress towards the achievement of the Millennium Development Goals: mid-term review in preparation of the UN high-level meeting in September 2010 - Motion for a resolution : single vote;+;EP;Development
 1190;20/05/2010;Delivering a single market to consumers and citizens - Motion for a resolution : single vote;+;EP;Internal market & consumer protection
-1191;20/05/2010;Community financial assistance with respect to the decommissioning of Units 1 to 4 of the Kozloduy Nuclear Power Plant in Bulgaria «ΩÉ?™è?Kozloduy Programme«ΩÉ?™ã®´ - Draft legislative resolution : vote: legislative resolution  - consultation;+;EP;Industry, research & energy
+1191;20/05/2010;Community financial assistance with respect to the decommissioning of Units 1 to 4 of the Kozloduy Nuclear Power Plant in Bulgaria «ΩÔøΩ?ÔøΩÔøΩ?Kozloduy Programme«ΩÔøΩ?ÔøΩÔøΩÔøΩÔøΩ - Draft legislative resolution : vote: legislative resolution  - consultation;+;EP;Industry, research & energy
 1192;20/05/2010;Implementation of the synergies of research and innovation earmarked funds in Regulation (EC) No 1080/2006 concerning the European Fund of Regional Development and the Seventh Framework Programme for Research and Development - Motion for a resolution : vote: resolution (text as a whole);+;EP;Regional development
 1193;20/05/2010;Long-term sustainability of public finances for a recovering economy - Motion for a resolution : vote: resolution (text as a whole);+;EP;Economic & monetary affairs
 1194;20/05/2010;Union for the Mediterranean - Motion for a resolution : Paragraph 4-amendment 3/1;-;EP;Foreign & security policy
@@ -1202,13 +1202,13 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1201;18/05/2010;European Refugee Fund for the period 2008 to 2013 (amendment of Decision No 573/2007/EC)  - Draft legislative resolution : single vote - ordinary legislative procedure- first reading;+;EP;Civil liberties, justice & home affairs
 1202;18/05/2010;Migration from the Schengen Information System (SIS 1+) to the second generation Schengen Information System (SIS II) (amendment of Regulation (EC) No 1104/2008) - Draft legislative resolution : single vote - consultation;+;EP;Civil liberties, justice & home affairs
 1203;18/05/2010;Migration from the Schengen Information System (SIS 1+) to the second generation Schengen Information System (SIS II) (amendment of Decision 2008/839/JHA) - Draft legislative resolution : single vote - consultation;+;EP;Civil liberties, justice & home affairs
-1204;18/05/2010;Equal treatment between men and women engaged in an activity in a self-employed capacity - Draft legislative resolution-Recommendation for second reading : Amendments by the committee responsible «ΩÉ?™É?? block vote  -amendment 1-17 - ordinary legislative procedure- second reading;+;EP;Gender equality
+1204;18/05/2010;Equal treatment between men and women engaged in an activity in a self-employed capacity - Draft legislative resolution-Recommendation for second reading : Amendments by the committee responsible «ΩÔøΩ?ÔøΩÔøΩ?? block vote  -amendment 1-17 - ordinary legislative procedure- second reading;+;EP;Gender equality
 1205;18/05/2010;Textile names and related labelling of textile products - Draft legislative resolution :   Vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Internal market & consumer protection
 1206;18/05/2010;Macro-financial assistance for Ukraine - Draft legislative resolution :   Vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;International trade
 1207;18/05/2010;Specific measures for agriculture in the outermost regions of the Union (amendment of Regulation (EC) No 247/2006)  - Draft legislative resolution :   Vote: legislative resolution   - ordinary legislative procedure- first reading;+;EP;Agriculture
 1208;18/05/2010;Simplification of the CAP - Motion for a resolution : Paragraph 12/1;+;EP;Agriculture
 1209;06/05/2010;Decision not to convene a Convention for the revision of the Treaties with regard to transitional measures concerning the composition of the European Parliament - Draft decision : vote: decision (as a whole) - consent;+;EP;Constitutional and inter-institutional affairs
-1210;06/05/2010;Revision of the Treaties «ΩÉ?™É?? Transitional measures concerning the composition of the European Parliament - Motion for a resolution : vote: resolution (text as a whole)   - consultation;+;EP;Constitutional and inter-institutional affairs
+1210;06/05/2010;Revision of the Treaties «ΩÔøΩ?ÔøΩÔøΩ?? Transitional measures concerning the composition of the European Parliament - Motion for a resolution : vote: resolution (text as a whole)   - consultation;+;EP;Constitutional and inter-institutional affairs
 1211;06/05/2010;Electric cars - Motion for a resolution : Paragraph 6-amendment 1rev;-;EP;Environment & public health
 1212;06/05/2010;Commission White Paper: Adapting to climate change: Towards a European framework for action - Motion for a resolution : Paragraph 52 amendment 2;+;EP;Environment & public health
 1213;06/05/2010;Protection of the Communities' financial interests - Fight against fraud - Annual Report 2008 - Motion for a resolution : Paragraph 28-amendment 1D;-;EP;Budgetary control
@@ -1242,7 +1242,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1241;05/05/2010;Aviation security charges - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Transport & tourism
 1242;05/05/2010;Community guidelines for the development of the trans-European transport network (recast) - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Transport & tourism
 1243;05/05/2010;General provisions on the European Regional Development Fund- the European Social Fund and the Cohesion Fund as regards simplification of certain requirements and as regards certain provisions relating to financial management - Draft legislative resolution : vote: legislative resolution  - ordinary legislative procedure- first reading;+;EP;Regional development
-1244;05/05/2010;Strategic goals and recommendations for the EU«ΩÉ?™É?Ωs maritime transport policy until 2018 - Motion for a resolution : After paragraph 24-amendment 1;-;EP;Transport & tourism
+1244;05/05/2010;Strategic goals and recommendations for the EU«ΩÔøΩ?ÔøΩÔøΩ?ÔøΩs maritime transport policy until 2018 - Motion for a resolution : After paragraph 24-amendment 1;-;EP;Transport & tourism
 1245;05/05/2010;Evaluation and assessment of the Animal Welfare Action Plan 2006-2010 - Motion for a resolution : Paragraph 9/3;+;EP;Agriculture
 1246;05/05/2010;EU agriculture and climate change - Motion for a resolution : Paragraph 7;+;EP;Agriculture
 1247;05/05/2010;2008 Discharge: EU general budget - Section III - Commission - Proposal for a decision  : Vote: decision (as a whole);+;EP;Budgetary control
@@ -1256,7 +1256,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1255;25/03/2010;Mobilisation of the European Globalisation Adjustment Fund: Lithuania/Manufacture of furniture - Motion for a resolution : single vote;+;EP;Budget
 1256;25/03/2010;Mobilisation of the European Globalisation Adjustment Fund: Lithuania/Manufacture of wearing apparel - Motion for a resolution : single vote;+;EP;Budget
 1257;25/03/2010;Motions for resolutions - Second European Roma Summit - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Civil liberties, justice & home affairs
-1258;25/03/2010;Priorities for the 2011 budget «ΩÉ?™É?? Section III «ΩÉ?™É?? Commission - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
+1258;25/03/2010;Priorities for the 2011 budget «ΩÔøΩ?ÔøΩÔøΩ?? Section III «ΩÔøΩ?ÔøΩÔøΩ?? Commission - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
 1259;25/03/2010;Agricultural product quality policy: what strategy to follow? - Motion for a resolution : Paragraph 16-amendment 2;-;EP;Agriculture
 1260;25/03/2010;The effects of the global financial and economic crisis on developing countries and on development cooperation - Motion for a resolution : Paragraph 7-amendment 7/2;+;EP;Development
 1261;11/03/2010;Cuba - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
@@ -1302,7 +1302,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1301;10/02/2010;Motion for a resolution - Trafficking in human beings - Motion for a resolution : Paragraph 13-amendment 2;+;EP;Civil liberties, justice & home affairs
 1302;10/02/2010;Outcome of the Copenhagen summit on climate change - Motion for a resolution : Paragraph 2-amendment 47;-;EP;Environment & public health
 1303;10/02/2010;Promoting Good Governance in Tax Matters - Motion for a resolution : vote: resolution (text as a whole);+;EP;Economic & monetary affairs
-1304;10/02/2010;Equality between women and men in the European Union «ΩÉ?™É?ù 2009 - Motion for a resolution : Paragraph 20;-;EP;Gender equality
+1304;10/02/2010;Equality between women and men in the European Union «ΩÔøΩ?ÔøΩÔøΩ?ÔøΩ 2009 - Motion for a resolution : Paragraph 20;-;EP;Gender equality
 1305;10/02/2010;Motion for a resolution - Key objectives for the Conference of the Parties to the CITES - Motion for a resolution : Paragraph 4-amendment 17;-;EP;Environment & public health
 1306;10/02/2010;2009 progress report on Croatia - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 1307;10/02/2010;2009 progress report on the Former Yugoslav Republic of Macedonia - Motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
@@ -1314,19 +1314,19 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1313;21/01/2010;Motions for resolutions - Human Rights violations in China- notably the case of Liu Xiaobo  - Joint motion for a resolution : Paragraph 1;+;EP;Foreign & security policy
 1314;21/01/2010;Motions for resolutions - Philippines - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
 1315;21/01/2010;Motions for resolutions - European Strategy for the Danube Region  - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Regional development
-1316;20/01/2010;Report: Danuta Maria H«ü∂¨bner- Temporary suspension of autonomous Common Customs Tariff duties on imports of certain industrial products into Madeira and the Azores - Draft legislative resolution : single vote  - consultation;+;EP;Regional development
+1316;20/01/2010;Report: Danuta Maria H«üÔøΩÔøΩbner- Temporary suspension of autonomous Common Customs Tariff duties on imports of certain industrial products into Madeira and the Azores - Draft legislative resolution : single vote  - consultation;+;EP;Regional development
 1317;20/01/2010;Report: Eva Joly-Second revision of the ACP-EC Partnership Agreement (Cotonou Agreement) - Motion for a resolution : Paragraph 14-amendment 1;+;EP;Development
-1318;17/12/2009;Report: Reimer B«ü∂Ùge- Mobilisation of the Flexibility Instrumentin accordance with point 27 of the Interinstitutional Agreement of 17 May 2006 between the European Parliament- the Council and the Commission on budgetary discipline and sound financial management - Motion for a resolution : single vote;+;EP;Budget
-1319;17/12/2009;Report: Reimer B«ü∂Ùge - Amendment to the multiannual financial framework 2007-2013: financing energy projects under the European Economic Recovery Plan - Motion for a resolution : single vote;+;EP;Budget
+1318;17/12/2009;Report: Reimer B«üÔøΩÔøΩge- Mobilisation of the Flexibility Instrumentin accordance with point 27 of the Interinstitutional Agreement of 17 May 2006 between the European Parliament- the Council and the Commission on budgetary discipline and sound financial management - Motion for a resolution : single vote;+;EP;Budget
+1319;17/12/2009;Report: Reimer B«üÔøΩÔøΩge - Amendment to the multiannual financial framework 2007-2013: financing energy projects under the European Economic Recovery Plan - Motion for a resolution : single vote;+;EP;Budget
 1320;17/12/2009;Draft general budget of the European Union for the financial year 2010 as modified by the Council  : 06 04 14 01-amendment 382/2;+;EP;Budget
-1321;17/12/2009;Report: L«ü∂≠szl«ü∂¸ Surj«ü∂≠n- Vladim«ü∂r Ma«?”?ka (A7-0083/2009) - Draft general budget of the European Union for the financial year 2010 as modified by the Council (all sections) - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
+1321;17/12/2009;Report: L«üÔøΩÔøΩszl«üÔøΩÔøΩ Surj«üÔøΩÔøΩn- Vladim«üÔøΩÔøΩr MaÔøΩ?ÔøΩ?ka (A7-0083/2009) - Draft general budget of the European Union for the financial year 2010 as modified by the Council (all sections) - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
 1322;17/12/2009;Motions for resolutions - Improvement needed in the legal framework for access to documents following the entry into force of the Lisbon Treaty  - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Civil liberties, justice & home affairs
 1323;17/12/2009;Motions for resolutions - Violence in the Democratic Republic of Congo - Joint motion for a resolution : Paragraph 9;+;EP;Foreign & security policy
 1324;17/12/2009;Uganda: anti-homosexual draft legislation  - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
-1325;16/12/2009;Report: Reimer B«ü∂Ùge - Mobilisation of the European Globalisation Adjustment Fund: Sweden - Volvo - Austria - Steiermark - Netherlands - Heijmans - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
+1325;16/12/2009;Report: Reimer B«üÔøΩÔøΩge - Mobilisation of the European Globalisation Adjustment Fund: Sweden - Volvo - Austria - Steiermark - Netherlands - Heijmans - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
 1326;16/12/2009;Report: Jutta Haug - Draft amending budget No 10/2009 of the European Union for the financial year 2009- Section III  - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
 1327;16/12/2009;Motions for resolutions - Prospects for the Doha Development Agenda following the Seventh WTO Ministerial Conference - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Development
-1328;15/12/2009;Report: Kinga G«ü∂Ùncz - European Microfinance Facility for Employment and Social Inclusion (Progress)Proposal for a decision of the European Parliament and of the Council - Draft legislative resolution : vote: legislative resolution (text as a whole)   - ordinary legislative procedure- first reading;+;EP;Employment & social affairs
+1328;15/12/2009;Report: Kinga G«üÔøΩÔøΩncz - European Microfinance Facility for Employment and Social Inclusion (Progress)Proposal for a decision of the European Parliament and of the Council - Draft legislative resolution : vote: legislative resolution (text as a whole)   - ordinary legislative procedure- first reading;+;EP;Employment & social affairs
 1329;14/12/2009;Azerbaijan: freedom of expression - Agenda setting : Agenda;-;EP;Foreign & security policy
 1330;26/11/2009;Report: Marco Scurria - European Year of Volunteering (2011)on the proposal for a Council decision on the European Year of Volunteering (2011) - Draft legislative resolution : single vote - consultation;+;EP;Culture & education
 1331;26/11/2009;Report: Herbert Reul - EC/Ukraine agreement for scientific and technological cooperation - Draft legislative resolution : single vote - consultation;+;EP;Industry, research & energy
@@ -1336,12 +1336,12 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1335;26/11/2009;Motion for a resolution - Smoke-free environments  - Motion for a resolution : vote: resolution (text as a whole);+;EP;Environment & public health
 1336;26/11/2009;Motions for resolutions - FAO World Summit on Food Security - Eradicating hunger from the face of the earth  - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Agriculture
 1337;26/11/2009;China: Minority rights and application of the death penalty - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Foreign & security policy
-1338;25/11/2009;Second report: S«ü∂˜ren Bo S«ü∂˜ndergaard - 2007 discharge: EU general budget - Council for the financial year 2007 [C6-0417/2008 «ΩÉ?™É?? 2008 - Proposal for a European Parliament Decision : single vote;+;EP;Budgetary control
-1339;25/11/2009;Report: Reimer B«ü∂Ùge (A7-0044/2009) - Mobilisation of the European Globalisation Adjustment Fund: Belgium - textile industry - Ireland - Dell  - Motions for a resolution : vote: resolution (text as a whole);+;EP;Budget
+1338;25/11/2009;Second report: S«üÔøΩÔøΩren Bo S«üÔøΩÔøΩndergaard - 2007 discharge: EU general budget - Council for the financial year 2007 [C6-0417/2008 «ΩÔøΩ?ÔøΩÔøΩ?? 2008 - Proposal for a European Parliament Decision : single vote;+;EP;Budgetary control
+1339;25/11/2009;Report: Reimer B«üÔøΩÔøΩge (A7-0044/2009) - Mobilisation of the European Globalisation Adjustment Fund: Belgium - textile industry - Ireland - Dell  - Motions for a resolution : vote: resolution (text as a whole);+;EP;Budget
 1340;25/11/2009;Report: David Martin - Adaptation of the European Parliament's Rules of Procedure to the Lisbon Treaty  - Motions for a resolution : After Article 38-amendment 72;-;EP;Constitutional and inter-institutional affairs
 1341;25/11/2009;Motion for a resolution - Preparation of the Copenhagen summit on climate change  - Motions for a resolution :   vote: resolution (text as a whole);+;EP;Environment & public health
 1342;25/11/2009;Motion for a resolution - Multi-annual programme 2010-2014 regarding the area of freedom- security and justice (Stockholm programme)  - Motions for a resolution :   vote: resolution (text as a whole);+;EP;Civil liberties, justice & home affairs
-1343;25/11/2009;Motions for resolutions - The state of play of the Euromed Free Trade Area  - Joint motion for a resolution : Paragraph 1-amendment «?∂ı/1;+;EP;International trade
+1343;25/11/2009;Motions for resolutions - The state of play of the Euromed Free Trade Area  - Joint motion for a resolution : Paragraph 1-amendment ÔøΩ?ÔøΩÔøΩ/1;+;EP;International trade
 1344;25/11/2009;Motions for resolutions - made in (origin marking)  - Joint motion for a resolution : vote: resolution (text as a whole);+;EP;Internal market & consumer protection
 1345;24/11/2009;Report: Catherine Trautmann - Electronic communication networks and services- 3rd reading on the joint text approved by the Conciliation Committee  - Draft legislative resolution  : single vote - ordinary legislative procedure- conciliation;+;EP;Internal market & consumer protection
 1346;24/11/2009;Report: Bart Staes- Statistics on pesticideson the joint text approved by the Conciliation Committee for a regulation of the European Parliament and of the Council concerning statistics on pesticides - Draft legislative resolution  : single vote - ordinary legislative procedure- conciliation;+;EP;Agriculture
@@ -1349,7 +1349,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1348;24/11/2009;Report: Timothy Kirkhope - Rules on the confidentiality of Europol information - Draft legislative resolution  : Proposal for a decision - consultation;-;EP;Civil liberties, justice & home affairs
 1349;24/11/2009;Report: Sophia in 't Veld- Implementing rules governing Europol's relations with partners- including the exchange of personal data and classified information - Draft legislative resolution  : Proposal for a decision - consultation;-;EP;Civil liberties, justice & home affairs
 1350;24/11/2009;Report: Jan Philipp Albrecht - List of third States and organisations for Europol agreements - Draft legislative resolution  : Proposal for a decision - consultation;-;EP;Civil liberties, justice & home affairs
-1351;24/11/2009;Report: Agust«ü∂n D«ü∂az de Mera Garc«ü∂a Consuegra- Implementing rules for Europol analysis work files - Draft legislative resolution  : Proposal for a decision - consultation;-;EP;Civil liberties, justice & home affairs
+1351;24/11/2009;Report: Agust«üÔøΩÔøΩn D«üÔøΩÔøΩaz de Mera Garc«üÔøΩÔøΩa Consuegra- Implementing rules for Europol analysis work files - Draft legislative resolution  : Proposal for a decision - consultation;-;EP;Civil liberties, justice & home affairs
 1352;24/11/2009;Report: Sonia Alfano - European Crime Prevention Network (EUCPN) - Draft legislative resolution  : initiative - consultation;-;EP;Civil liberties, justice & home affairs
 1353;24/11/2009;Report: Timothy Kirkhope- Accreditation of forensic laboratory activitieson the initiative of the Kingdom of Sweden and the Kingdom of Spain  - Draft legislative resolution  : initiative - consultation;-;EP;Civil liberties, justice & home affairs
 1354;24/11/2009;Report: Vital Moreira - Macro-financial assistance to Georgia - Draft legislative resolution  : single vote - consultation;+;EP;International trade
@@ -1360,17 +1360,17 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1359;24/11/2009;Report: Anna Rosbach - Amendment of Annexes II and III to the OSPAR Convention for the protection of the marine environment of the North-East Atlantic in relation to the storage of carbon dioxide streams in geological formations - Draft legislative resolution  : single vote - consultation;+;EP;Environment & public health
 1360;24/11/2009;Report: Lidia Joanna Geringer de Oedenberg - EC-Denmark Agreement on the service of judicial and extrajudicial documents in civil or commercial matters amending Decision 2006/326/EC to provide for a procedure for the implementation of Article 5(2) of the Agreement between the European Community and Denmark  - Draft legislative resolution  : single vote - consultation;+;EP;Legal affairs
 1361;24/11/2009;Report: Lidia Joanna Geringer de Oedenberg - EC-Denmark Agreement on jurisdiction and the recognition and enforcement of judgments in civil and commercial matters amending Decision 2006/325/EC to provide for a procedure for the implementation of Article 5(2) of the Agreement between the European Community and the Kingdom of Denmark - Draft legislative resolution  : single vote - consultation;+;EP;Legal affairs
-1362;24/11/2009;Report: Carmen Fraga Est«ü∂∏vez - Recovery plan for Greenland halibut - Draft legislative resolution  : single vote - consultation;+;EP;Fisheries
+1362;24/11/2009;Report: Carmen Fraga Est«üÔøΩÔøΩvez - Recovery plan for Greenland halibut - Draft legislative resolution  : single vote - consultation;+;EP;Fisheries
 1363;24/11/2009;Report: Dieter-Lebrecht Koch - Accession of the European Community to the Convention concerning International Carriage by Rail (COTIF) - Draft legislative resolution  : single vote - consultation;+;EP;Transport & tourism
 1364;24/11/2009;Report: Diana Wallis - Protocol on the Law Applicable to Maintenance Obligations - Draft legislative resolution  : single vote - consultation;+;EP;Legal affairs
-1365;24/11/2009;Report: J«ü∂¸zsef Sz«ü∂≠jer - Adaptation to the regulatory procedure with scrutiny - Part Five - Draft legislative resolution  : vote: resolution - ordinary legislative procedure- first reading;+;EP;Legal affairs
+1365;24/11/2009;Report: J«üÔøΩÔøΩzsef Sz«üÔøΩÔøΩjer - Adaptation to the regulatory procedure with scrutiny - Part Five - Draft legislative resolution  : vote: resolution - ordinary legislative procedure- first reading;+;EP;Legal affairs
 1366;24/11/2009;Report: Alexander Alvaro- Use of information technology for customs purposes on the initiative of the French Republic with a view to adopting a Council Decision on the use of information technology for customs purposes - Draft legislative resolution  : vote: legislative resolution - consultation;+;EP;Civil liberties, justice & home affairs
 1367;12/11/2009;Report: Tanja Fajon - Third country nationals subject to or exempt from a visa requirement when crossing external borderson the proposal for a Council regulation amending Regulation (EC) No 539/2001 listing the third countries whose nationals must be in possession of visas when crossing the external borders and those whose nationals are exempt from that requirement - Draft legislative resolution  : vote: legislative resolution (text as a whole) - consultation;+;EP;Civil liberties, justice & home affairs
 1368;12/11/2009;Motion for a resolution - draft Commission decision regarding the Progress annual plan work for 2010 and list of activities by policy section  - Motion for a resolution : vote: resolution (text as a whole);+;EP;Employment & social affairs
 1369;12/11/2009;Motions for resolutions - EU - Russia summit on 18 November 2009 in Stockholm  - Joint Motions for a resolution : After paragraph 12-amendment 9;+;EP;Foreign & security policy
 1370;12/11/2009;Report: Alain Lamassoure- Transitional procedural guidelines on budgetary matters in view of the entry into force of the Lisbon Treaty - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
 1371;22/10/2009;Draft general budget of the European Union - 2010 financial year- Draft amendments to and proposals for modification relating to the appropriations in Section III and Sections I- II- IV- V- VI- VII- VIII and IX  : 05 02 03-amendment 33;+;EP;Budget
-1372;22/10/2009;Report: L«ü∂≠szl«ü∂¸ Surj«ü∂≠n - Draft general budget 2010 (Section III)on the draft general budget of the European Union for the financial year 2010- Section III - Commission (C7-0127/2009 - 2009/2002(BUD)) and on the letter of amendment No 1/2010 (SEC(2009)1133) to the draft general budget of the European Union for the financial year 2010 - Motions for a resolution : vote: resolution (text as a whole);+;EP;Budget
+1372;22/10/2009;Report: L«üÔøΩÔøΩszl«üÔøΩÔøΩ Surj«üÔøΩÔøΩn - Draft general budget 2010 (Section III)on the draft general budget of the European Union for the financial year 2010- Section III - Commission (C7-0127/2009 - 2009/2002(BUD)) and on the letter of amendment No 1/2010 (SEC(2009)1133) to the draft general budget of the European Union for the financial year 2010 - Motions for a resolution : vote: resolution (text as a whole);+;EP;Budget
 1373;22/10/2009;Report: Claude Moraes - Adjustment of basic salaries and allowances applicable to Europol staffon the initiative of the Czech Republic with a view to adopting a Council Decision adjusting the basic salaries and allowances applicable to Europol staff - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Civil liberties, justice & home affairs
 1374;22/10/2009;Proposal for a Council regulation - Common organisation of agricultural markets and specific provisions for certain agricultural products (single CMO Regulation)amending Regulation (EC) No 1234/2007 establishing a common organisation of agricultural markets and on specific provisions for certain agricultural products  - Draft legislative resolution  : 0 - consultation;+;EP;Agriculture
 1375;22/10/2009;Motions for resolutions - Progress of SIS II and VIS to wind up the debate on the statement by the Commission - Motions for a resolution : vote: resolution (text as a whole);+;EP;Civil liberties, justice & home affairs
@@ -1382,7 +1382,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1381;21/10/2009;Freedom of Information in Italy and other member states: Joint resolution by EPP/ECR/EFD - Joint Motions for a resolution : vote: resolution (text as a whole);-;EP;Civil liberties, justice & home affairs
 1382;21/10/2009;Freedom of Information in Italy:  Joint motion for a resolution by S&D- ALDE- GUE/NGL and Greens groups - Joint Motions for a resolution : vote: resolution (text as a whole);-;EP;Civil liberties, justice & home affairs
 1383;20/10/2009;Report: Diana Wallis- Request for waiver of the immunity of Mr Marek Siwiec - Proposal for a European Parliament Decision : vote: resolution (text as a whole);+;EP;Legal affairs
-1384;20/10/2009;Report: Reimer B«ü∂Ùge- Mobilisation of the European Globalisation Adjustment Fund (Germany) Proposal for a decision of the European Parliament and of the Council on the mobilisation of the European Globalisation Adjustment Fund pursuant to point 28 of the Interinstitutional Agreement of 17 May 2006 between the European Parliament- the Council and the Commission on budgetary discipline and sound financial management - Motions for a resolution : Single vote;+;EP;Budget
+1384;20/10/2009;Report: Reimer B«üÔøΩÔøΩge- Mobilisation of the European Globalisation Adjustment Fund (Germany) Proposal for a decision of the European Parliament and of the Council on the mobilisation of the European Globalisation Adjustment Fund pursuant to point 28 of the Interinstitutional Agreement of 17 May 2006 between the European Parliament- the Council and the Commission on budgetary discipline and sound financial management - Motions for a resolution : Single vote;+;EP;Budget
 1385;20/10/2009;Report: Jutta Haug - Draft amending budget 9/2009: earthquake in Italy on the draft amending budget 9/2009 of the European Union for the 2009 financial year- earthquake in Italy- Section III - Commission  - Motions for a resolution : Single vote;+;EP;Budget
 1386;20/10/2009;Report: Simon Busuttil- Agreement between the EC and The Bahamas on the short-stay visa waiver on the proposal for a Council decision on the conclusion of the Agreement between the European Community and the Commonwealth of The Bahamas on the short-stay visa waiver - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Civil liberties, justice & home affairs
 1387;20/10/2009;Report: Simon Busuttil- Agreement between the EC and Antigua and Barbuda on the short-stay visa waiver on the proposal for a Council decision on the conclusion of the Agreement between the European Community and Antigua and Barbuda on the short-stay visa waiver - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Civil liberties, justice & home affairs
@@ -1398,12 +1398,12 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1397;20/10/2009;Report: Lidia Joanna Geringer de Oedenberg - Provision of audiovisual media services (codified version) on the proposal for a directive of the European Parliament and of the Council on the coordination of certain provisions laid down by law- regulation or administrative action in Member States concerning the provision of audiovisual media services (Audiovisual Media Services Directive) - Draft legislative resolution  : vote: resolution (text as a whole)  - ordinary legislative procedure- first reading;+;EP;Legal affairs
 1398;20/10/2009;Report: Lidia Joanna Geringer de Oedenberg - Appliances burning gaseous fuels on the proposal for a directive of the European Parliament and of the Council relating to appliances burning gaseous fuels (Codified version) - Draft legislative resolution  : vote: resolution (text as a whole)  - ordinary legislative procedure- first reading;+;EP;Legal affairs
 1399;20/10/2009;Report: Lidia Joanna Geringer de Oedenberg - Conservation of wild birds (codified version) on the proposal for a directive of the European Parliament and of the Council on the conservation of wild birds - Draft legislative resolution  : vote: resolution (text as a whole)  - ordinary legislative procedure- first reading;+;EP;Legal affairs
-1400;20/10/2009;Report: Danuta Maria H«ü∂¨bner - Reduced rates of excise duty in Madeira and the Azores on the proposal for a Council decision authorising Portugal to apply reduced rates of excise duty in the autonomous region of Madeira on locally produced and consumed rum and liqueurs and in the autonomous region of the Azores on locally produced and consumed liqueurs and eaux-de-vie - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Regional development
+1400;20/10/2009;Report: Danuta Maria H«üÔøΩÔøΩbner - Reduced rates of excise duty in Madeira and the Azores on the proposal for a Council decision authorising Portugal to apply reduced rates of excise duty in the autonomous region of Madeira on locally produced and consumed rum and liqueurs and in the autonomous region of the Azores on locally produced and consumed liqueurs and eaux-de-vie - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Regional development
 1401;20/10/2009;Report: Herbert Reul- International Renewable Energy Agency (IRENA) Statute on the proposal for a Council decision on the conclusion of the Statute of the International Renewable Energy Agency (IRENA) by the European Community and on the exercise of its rights and obligations - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Industry, research & energy
 1402;20/10/2009;Report: Paolo De Castro - Obsolete Council acts in the field of the common agricultural policy on the proposal for a Council regulation repealing certain obsolete Council acts in the field of the Common Agricultural Policy - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Agriculture
 1403;20/10/2009;Report: Paolo De Castro- Delegation of the tasks of laboratory testing on the Proposal for a Council directive amending Directive 2000/29/EC as regards the delegation of the tasks of laboratory testing - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Agriculture
 1404;19/10/2009;Freedom of information in Italy: proposal by the EPP group to change the name of the resolution into Freedom of Information Europe - Agenda setting : 0;-;EP;Civil liberties, justice & home affairs
-1405;08/10/2009;Report: Reimer B«ü∂Ùge - Mobilisation of the EU Solidarity Fund: Italy- the Abruzzo earthquake  - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
+1405;08/10/2009;Report: Reimer B«üÔøΩÔøΩge - Mobilisation of the EU Solidarity Fund: Italy- the Abruzzo earthquake  - Motion for a resolution : vote: resolution (text as a whole);+;EP;Budget
 1406;08/10/2009;Report: Renate Weber - Prevention and settlement of conflicts of exercise of jurisdiction in criminal proceedings  - Draft legislative resolution  : vote: resolution (text as a whole)  - consultation;+;EP;Civil liberties, justice & home affairs
 1407;08/10/2009;Motions for resolutions - G-20 Summit in Pittsburgh (24-25 September) - Joint Motions for a resolution : After paragraph 1-amendment 5;-;EP;Economic & monetary affairs
 1408;07/10/2009;Freedom of information in Italy - proposal for not holding a debate on this issue - Agenda setting : Motion for agenda changes;-;EP;Civil liberties, justice & home affairs
@@ -1421,7 +1421,7 @@ Id;Date;Name of document;Result of vote;Parliament or council;Policy area
 1420;15/09/2009;EC-China agreement: maritime transport operations - Accession of Bulgaria and Romania - Legislative resolution : Single vote - consultation;+;EP;Transport & tourism
 1421;15/09/2009;Mobilisation of the European Globalisation Adjustment Fund - Motions for a resolution : Single vote;+;EP;Budget
 1422;15/09/2009;Mobilisation of the European Union Solidarity Fund - Motions for a resolution : Single vote;+;EP;Budget
-1423;15/09/2009;Draft amending budget No 6/2009 on Draft amending budget No 6/2009 of the European Union for the financial year 2009- Section III «ΩÉ?™É?? Commission - Motions for a resolution : Single vote;+;EP;Budget
+1423;15/09/2009;Draft amending budget No 6/2009 on Draft amending budget No 6/2009 of the European Union for the financial year 2009- Section III «ΩÔøΩ?ÔøΩÔøΩ?? Commission - Motions for a resolution : Single vote;+;EP;Budget
 1424;15/09/2009;Draft amending budget No 7/2009 on Draft amending budget No 7/2009 of the European Union for the financial year 2009 (Klaus storm in France) - Motions for a resolution : Single vote;+;EP;Budget
 1425;15/09/2009;Draft amending budget No 8/2009 on Draft amending budget No 8/2009 of the European Union for the financial year 2009: Europol- Eurojust- OLAF - Motions for a resolution : Single vote;+;EP;Budget
 1426;14/09/2009;Election of the President of the European Commission after the Lisbon Treaty - Agenda setting : 0;-;EP;Internal regulations of the EP

@@ -53,6 +53,7 @@ DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
 	COL.VOTE	<- "Vote"
 	COL.GROUP	<- "Group"
 # document details
+	COL.DOCID		<- "Doc Id"
 	COL.DATE		<- "Date"
 	COL.DOCNAME		<- "Name of document"
 	COL.RESULT		<- "Result of vote"
@@ -331,3 +332,14 @@ load.raw.data <- function()
 	
 	return(result)
 }
+
+
+#############################################################################################
+# Test
+#############################################################################################
+l <- load.raw.data()
+doc.details <- l$doc.details
+domain.details <- l$domain.details
+mep.details <- l$mep.details
+all.votes <- l$all.votes
+loyalty.values <- l$loyalty.values
