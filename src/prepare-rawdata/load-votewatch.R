@@ -18,6 +18,7 @@
 #############################################################################################
 
 
+# TODO it might be necessary to normalize the domain names
 #############################################################################################
 # Folder names
 #############################################################################################
@@ -337,9 +338,9 @@ load.raw.data <- function()
 #############################################################################################
 # Test
 #############################################################################################
-l <- load.raw.data()
-doc.details <- l$doc.details
-domain.details <- l$domain.details
-mep.details <- l$mep.details
-all.votes <- l$all.votes
-loyalty.values <- l$loyalty.values
+#l <- load.raw.data()
+#doc.details <- l$doc.details
+#domain.details <- l$domain.details
+#mep.details <- l$mep.details
+#all.votes <- l$all.votes
+#loyalty.values <- l$loyalty.values

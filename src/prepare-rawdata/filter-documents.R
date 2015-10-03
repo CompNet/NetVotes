@@ -37,7 +37,7 @@ filter.by.date <- function(doc.details, start.date=NA, end.date=NA)
 	dates <- as.Date(doc.details[,COL.DATE],"%d/%m/%Y")
 	
 	# retain only the dates located between start and end (included)
-	idx <- which(dates>=start.date & dates<=end.Date)
+	idx <- which(dates>=start.date & dates<=end.date)
 	result <- doc.details[idx,COL.DOCID]
 	
 	return(result)
@@ -56,16 +56,17 @@ filter.by.date <- function(doc.details, start.date=NA, end.date=NA)
 #############################################################################################
 filter.by.domain <- function(doc.details, domain.details, domains=c())
 {	# possibly add all domains
-	if(length(domains)==1 & is.na(domains))
+	if(length(domains)==1 && is.na(domains))
 		domains <- c()
-	if(length(domains==0))
+	if(length(domains)==0)
 		domains <- domain.details[,COL.DOMAIN]
 	
 	# retrieve the document domains
 	doms <- doc.details[,COL.DOMAIN]
 	
 	# retain only the domains matching one of those specified in the specified vector
-	idx <- which(doms %in% domains)
+	idx <- match(doms,domains)
+	idx <- which(!is.na(idx))
 	result <- doc.details[idx,COL.DOCID]
 		
 	return(result)
@@ -98,3 +99,16 @@ filter.by.date.and.domain <- function(doc.details, start.date, end.date, domain.
 	result <- intersect(ids1,ids2)
 	return(result)
 }
+
+
+#############################################################################################
+# Test
+#############################################################################################
+#doc.ids <- filter.by.date(doc.details, start.date="07/10/2010", end.date="19/10/2010")
+#print(doc.ids)
+#doc.ids <- filter.by.domain(doc.details, domain.details, domains=c("Budget"))
+#print(doc.ids)
+#doc.ids <- filter.by.date.and.domain(doc.details, start.date="07/10/2010", end.date="19/10/2010", domain.details, domains=c("Budget"))
+#print(doc.ids)
+#doc.ids <- filter.by.date.and.domain(doc.details, start.date="07/10/2010", end.date="19/10/2010", domain.details, domains=c("Budget","Budgetary control"))
+#print(doc.ids)
