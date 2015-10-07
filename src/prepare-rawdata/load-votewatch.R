@@ -24,24 +24,18 @@
 #############################################################################################
 # VoteWatch data
 VW.FOLDER <- file.path(IN.FOLDER,"votewatch")
-	# outputs of the CC method (processed independently)
-	CC.FOLDER <- file.path(VW.FOLDER,"pils")
 	# raw data (i.e. tables)
 	RAW.FOLDER <- file.path(VW.FOLDER,"raw")
-		# aggregated files
-		AGG.FOLDER <- file.path(RAW.FOLDER,"aggregated")
-		# original files
-		ORIG.FOLDER <- file.path(RAW.FOLDER,"original")
 
 
 #############################################################################################
 # File names
 #############################################################################################
-ALL.VOTES.FILE		<- file.path(AGG.FOLDER,"all-votes.csv")
-MEP.DETAILS.FILE	<- file.path(AGG.FOLDER,"mep-details.csv")
-MEP.LOYALTY.FILE	<- file.path(AGG.FOLDER,"mep-loyalty.csv")
-DOMAIN.FREQ.FILE	<- file.path(AGG.FOLDER,"domain-freq.csv")
-DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
+DOC.DETAILS.FILE	<- file.path(VW.FOLDER,"list.csv")
+ALL.VOTES.FILE		<- file.path(OVERALL.FOLDER,"all-votes.csv")
+MEP.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"mep-details.csv")
+MEP.LOYALTY.FILE	<- file.path(OVERALL.FOLDER,"mep-loyalty.csv")
+DOMAIN.FREQ.FILE	<- file.path(OVERALL.FOLDER,"domain-freq.csv")
 
 
 #############################################################################################
@@ -163,14 +157,14 @@ extract.mep.details <- function()
 		result <- NULL
 		
 		# get the list of document-wise vote files
-		file.list <- list.files(ORIG.FOLDER, no..=TRUE)
+		file.list <- list.files(RAW.FOLDER, no..=TRUE)
 		
 		# process each one of them
 		f <- 1
 		for(file in file.list)
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
-			path <- file.path(ORIG.FOLDER,file)
+			path <- file.path(RAW.FOLDER,file)
 			data <- as.matrix(read.csv(path,check.names=FALSE))
 			#tmp <- colnames(data)
 			f <- f + 1
@@ -265,7 +259,7 @@ concatenate.votes <- function(mep.details)
 		colnames(result)[1] <- COL.MEPID
 		
 		# get the list of document-wise vote files
-		file.list <- list.files(ORIG.FOLDER, no..=TRUE)
+		file.list <- list.files(RAW.FOLDER, no..=TRUE)
 		filename.list <- as.integer(sapply(file.list, function(n) substring(n,1,nchar(n)-4)))
 		idx <- match(sort(filename.list),filename.list)
 		file.list <- file.list[idx]
@@ -275,7 +269,7 @@ concatenate.votes <- function(mep.details)
 		for(file in file.list)
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
-			path <- file.path(ORIG.FOLDER,file)
+			path <- file.path(RAW.FOLDER,file)
 			data <- as.matrix(read.csv(path,check.names=FALSE))
 			f <- f + 1
 			
@@ -317,7 +311,7 @@ concatenate.loyalties <- function(mep.details)
 		colnames(result)[1] <- COL.MEPID
 		
 		# get the list of document-wise vote files
-		file.list <- list.files(ORIG.FOLDER, no..=TRUE)
+		file.list <- list.files(RAW.FOLDER, no..=TRUE)
 		filename.list <- as.integer(sapply(file.list, function(n) substring(n,1,nchar(n)-4)))
 		idx <- match(sort(filename.list),filename.list)
 		file.list <- file.list[idx]
@@ -327,7 +321,7 @@ concatenate.loyalties <- function(mep.details)
 		for(file in file.list)
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
-			path <- file.path(ORIG.FOLDER,file)
+			path <- file.path(RAW.FOLDER,file)
 			data <- as.matrix(read.csv(path,check.names=FALSE))
 			f <- f + 1
 			

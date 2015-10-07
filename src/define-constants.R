@@ -10,11 +10,15 @@
 ######## Folders
 # general input folder
 IN.FOLDER <- "in"
-# general ouput folder
-OUT.FOLDER <- "out"
 # folder containing configuration files
 CFG.FOLDER <- "config"
-
+# general ouput folder
+OUT.FOLDER <- "out"
+	# output folder for everything not network-related
+	OVERALL.FOLDER <- file.path(OUT.FOLDER,"_overall")
+	# pils folder (tempary)
+	PILS.FOLDER <- file.path(OUT.FOLDER,"pils")
+	
 		
 ######## Files
 # TODO
