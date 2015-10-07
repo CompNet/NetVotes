@@ -6,6 +6,7 @@
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
 
+
 ######## Folders
 # general input folder
 IN.FOLDER <- "in"
@@ -18,7 +19,7 @@ CFG.FOLDER <- "config"
 ######## Files
 # TODO
 
-		
+
 ######## Vote values
 VOTE.FOR <- "For"
 VOTE.ABST <- "Abstention"
@@ -26,7 +27,80 @@ VOTE.AGST <- "Against"
 VOTE.NONE <- "NoVote"
 VOTE.ABSENT <- "Absent"
 VOTE.DOCABSENT <- "DocAbsent"
-				
+
+
+######## Normalized policty domains names
+DOMAIN.FULLNAMES <- c()
+# Constitutional Affairs
+DOM.AFCO <- "AFCO"
+DOMAIN.FULLNAMES[DOM.AFCO] <- "Constitutional Affairs"
+# Foreign Affairs
+DOM.AFET <- "AFET"
+DOMAIN.FULLNAMES[DOM.AFET] <- "Foreign Affairs"
+	# Human Rights (seems included in AFET)
+	#DOM.DROI <- "DROI"
+	#DOMAIN.FULLNAMES[DOM.DROI] <- "Human Rights"
+	# Security and Defence (seems included in AFET)
+	#DOM.SEDE <- "SEDE"
+	#DOMAIN.FULLNAMES[DOM.SEDE] <- "Security and Defence"
+# Agriculture and Rural Development
+DOM.AGRI <- "AGRI"
+DOMAIN.FULLNAMES[DOM.AGRI] <- "Agriculture and Rural Development"
+# Budgets
+DOM.BUDG <- "BUDG"
+DOMAIN.FULLNAMES[DOM.BUDG] <- "Budgets"
+# Budgetary Control
+DOM.CONT <- "CONT"
+DOMAIN.FULLNAMES[DOM.CONT] <- "Budgetary Control"
+# Culture and Education
+DOM.CULT <- "CULT"
+DOMAIN.FULLNAMES[DOM.CULT] <- "Culture and Education"
+# Development
+DOM.DEVE <- "DEVE"
+DOMAIN.FULLNAMES[DOM.DEVE] <- "Development"
+# Economic and Monetary Affairs
+DOM.ECON <- "ECON"
+DOMAIN.FULLNAMES[DOM.ECON] <- "Economic and Monetary Affairs"
+# Employment and Social Affairs
+DOM.EMPL <- "EMPL"
+DOMAIN.FULLNAMES[DOM.EMPL] <- "Employment and Social Affairs"
+# Environment, Public Health and Food Safety
+DOM.ENVI <- "ENVI"
+DOMAIN.FULLNAMES[DOM.ENVI] <- "Environment, Public Health and Food Safety"
+# Women's Rights and Gender Equality
+DOM.FEMM <- "FEMM"
+DOMAIN.FULLNAMES[DOM.FEMM] <- "Women's Rights and Gender Equality"
+# Internal Market and Consumer Protection
+DOM.IMCO <- "IMCO"
+DOMAIN.FULLNAMES[DOM.IMCO] <- "Internal Market and Consumer Protection"
+# International Trade
+DOM.INTA <- "INTA"
+DOMAIN.FULLNAMES[DOM.INTA] <- "International Trade"
+# Industry, Research and Energy
+DOM.ITRE <- "ITRE"
+DOMAIN.FULLNAMES[DOM.ITRE] <- "Industry, Research and Energy"
+# Legal Affairs
+DOM.JURI <- "JURI"
+DOMAIN.FULLNAMES[DOM.JURI] <- "Legal Affairs"
+# Civil Liberties, Justice and Home Affairs
+DOM.LIBE <- "LIBE"
+DOMAIN.FULLNAMES[DOM.LIBE] <- "Civil Liberties, Justice and Home Affairs"
+# Fisheries
+DOM.PECH <- "PECH"
+DOMAIN.FULLNAMES[DOM.PECH] <- "Fisheries"
+# Petitions
+DOM.PETI <- "PETI"
+DOMAIN.FULLNAMES[DOM.PETI] <- "Petitions"
+# Regional Development
+DOM.REGI <- "REGI"
+DOMAIN.FULLNAMES[DOM.REGI] <- "Regional Development"
+# Internal regulations of the EP
+DOM.RIPE <- "RIPE"
+DOMAIN.FULLNAMES[DOM.RIPE] <- "Internal regulations of the EP"
+# Transport and Tourism
+DOM.TRAN <- "TRAN"
+DOMAIN.FULLNAMES[DOM.TRAN] <- "Transport and Tourism"
+
 
 
 

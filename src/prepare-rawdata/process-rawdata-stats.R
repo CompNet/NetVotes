@@ -15,8 +15,9 @@
 # - same complementary stuff as above
 #
 # - move the domain distribution processing here, it has nothing to do in the load script.
-# - (maybe just keep a conversion table there, allowing to convert specific domain names to normalized ones).
-# - generate a histogram with the compartive frequencies of the domains for the whole term.
+#   (maybe just keep a conversion table there, allowing to convert specific domain names to normalized ones).
+#   also, output the file... in the output folder! same thing for the other created files. only keep the original and raw files in the input folder.
+# - generate a histogram with the comparative frequencies of the domains for the whole term.
 # - histogram: each bar is one year, displaying the proportion for each domain.
 
 

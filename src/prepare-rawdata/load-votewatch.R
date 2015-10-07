@@ -67,7 +67,40 @@ DOC.DETAILS.FILE	<- file.path(AGG.FOLDER,"document-details.csv")
 	COL.DOMID		<- "Domain Id"
 	COL.DOCFREQ		<- "Domain Frequency"
 	
-	
+
+#############################################################################################
+# Domain mapping
+#############################################################################################
+# how the votewatch domain translate in terms of official names
+DOMAIN.MAP <- c()
+DOMAIN.MAP[DOM.AFCO] <- "Constitutional and inter-institutional affairs"
+DOMAIN.MAP[DOM.AFET] <- "Foreign & security policy"
+DOMAIN.MAP[DOM.AGRI] <- "Agriculture"
+DOMAIN.MAP[DOM.BUDG] <- "Budget"
+DOMAIN.MAP[DOM.CONT] <- "Budgetary control"
+DOMAIN.MAP[DOM.CULT] <- "Culture & education"
+DOMAIN.MAP[DOM.DEVE] <- "Development"
+DOMAIN.MAP[DOM.FEMM] <- "Gender equality"
+DOMAIN.MAP[DOM.ECON] <- "Economic & monetary affairs"
+DOMAIN.MAP[DOM.EMPL] <- "Employment & social affairs"
+DOMAIN.MAP[DOM.ENVI] <- "Environment & public health"
+DOMAIN.MAP[DOM.IMCO] <- "Internal market & consumer protection"
+DOMAIN.MAP[DOM.INTA] <- "International trade"
+DOMAIN.MAP[DOM.ITRE] <- "Industry, research & energy"
+DOMAIN.MAP[DOM.JURI] <- "Legal affairs"
+DOMAIN.MAP[DOM.LIBE] <- "Civil liberties, justice & home affairs"
+DOMAIN.MAP[DOM.PECH] <- "Fisheries"
+DOMAIN.MAP[DOM.PETI] <- "Petitions"
+DOMAIN.MAP[DOM.REGI] <- "Regional development"
+DOMAIN.MAP[DOM.RIPE] <- "Internal regulations of the EP"
+DOMAIN.MAP[DOM.TRAN] <- "Transport & tourism"
+# opposite map
+DOMSYMB.MAP <- names(DOMAIN.FULLNAMES)
+names(DOMSYMB.MAP) <- DOMAIN.MAP
+# the list of policy domain symbols
+DOMAIN.VALUES <- sort(names(DOMAIN.FULLNAMES))
+		
+
 #############################################################################################
 # Just loads the file containing the document details.
 #
@@ -99,7 +132,8 @@ extract.domains <- function(doc.details)
 		
 		# build the table
 		domains <- names(counts)
-		result <- cbind(1:length(domains),domains,counts[domains])
+		symbols <- DOMSYMB.MAP[domains]
+		result <- cbind(symbols,domains,counts[domains])
 		colnames(result) <- c(COL.DOMID,COL.DOMAIN,COL.DOCFREQ)
 		
 		# record the table
