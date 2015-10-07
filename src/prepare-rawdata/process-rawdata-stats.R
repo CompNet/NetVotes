@@ -5,6 +5,24 @@
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
 
+
+#TODO
+# - histogram of votes: each bar corresponds to a document and breaks down to all types of votes
+# - also record the corresponding table
+# - same thing by year (1 bar = 1 year) and for the whole term (?)
+#
+# - histogram of rebellion: each bar displays the proportion of loyal/rebel for each *expressed* vote
+# - same complementary stuff as above
+#
+# - move the domain distribution processing here, it has nothing to do in the load script.
+# - (maybe just keep a conversion table there, allowing to convert specific domain names to normalized ones).
+# - generate a histogram with the compartive frequencies of the domains for the whole term.
+# - histogram: each bar is one year, displaying the proportion for each domain.
+
+
+
+
+
 # Calculate the rebelion indices for each MeP regarding it Party
 CalculateRebelionIndex <- function(matrix) {
 	converted.matrix <- ConvertMatrix(matrix)
