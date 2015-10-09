@@ -1,11 +1,126 @@
 #############################################################################################
-# Function used to generate a plot containing lines, possibly several distinct series.
-# Note: very old source code from the Ganetto project.
+# Function used to generate a histogram.
 # 
 # 10/2015 Vincent Labatut
 #############################################################################################
 library("plotrix")
 source("src/plot-tools/plot-lines.R")
+
+
+
+
+#############################################################################################
+# Plots the specified single series as a histogram. The y axis correspond to absolute values 
+# (by opposition to proportions) describing the series to be plot, and each x bar corresponds 
+# to one categorical or integer value.
+#
+# plot.file: path and name of the generated files.
+# x.values: vector of symbols or integer values.
+# y.values: vector of numerical values.
+# axes: info about the plot axes. It is an optional list containing two lists named x and y.
+#		The y list contains two optional fields range and title. Field range corresponds to the 
+#		forced range for the y axis. It is a vector containing two values corresponding
+#		to the min anx max. An NA symbol means the min and/or max is not specified. If the min
+#		or max is not specified, we use the min or max processed over all considered series. 
+#		Field title is the name of the y axis on the plot. The x list contains two fields title
+#		and values. The formder is similar to that of the y list. The latter is a vector
+#		containing all values of x to appear in the plot, in the specified order.
+# graph.title: general title of the plot (NA for no title at all).
+# format: vector of formats of the generated files (PDF and/or PNG).
+#############################################################################################
+plot.single.indiv.histo <- function(plot.file, x.values, y.values, axes=list(), graph.title, format=c("PDF","PNG"))
+{	
+	
+	
+}
+
+
+#############################################################################################
+# Plots the specified multiple series as a histogram. The y axis correspond to absolute values 
+# or proportions, depending on the corresponding parameter. Each bar corresponds to one categorical 
+# or integer value. One bar breaks down to several colors, each one representing one series.
+#
+# plot.file: path and name of the generated files.
+# x.values: vectors of symbols or integer values.
+# ly.values: list of vector of numerical values.
+# axes: info about the plot axes. It is an optional list containing two lists named x and y.
+#		The y list contains two optional fields range and title. Field range corresponds to the 
+#		forced range for the y axis. It is a vector containing two values corresponding
+#		to the min anx max. An NA symbol means the min and/or max is not specified. If the min
+#		or max is not specified, we use the min or max processed over all considered series. 
+#		Field title is the name of the y axis on the plot. The x list contains two fields title
+#		and values. The formder is similar to that of the y list. The latter is a vector
+#		containing all values of x to appear in the plot, in the specified order.
+# graph.title: general title of the plot (NA for no title at all).
+# format: vector of formats of the generated files (PDF and/or PNG).
+#############################################################################################
+plot.multiple.indiv.histo <- function(plot.file, x.values, ly.values, axes=list(), graph.title, format=c("PDF","PNG"))
+{	
+	
+	
+}
+
+
+#############################################################################################
+# Plots the specified single series as a histogram. The y axis correspond to absolute values 
+# (by opposition to proportions) describing the series to be plot, and each x bar corresponds 
+# to one categorical or integer value. The bars are grouped according to a second categorical
+# or integer variable, named z.
+#
+# plot.file: path and name of the generated files.
+# x.values: vector of symbols or integer values.
+# y.values: vector of numerical values.
+# z.values: vector of symbols or integer values.
+# axes: info about the plot axes. It is an optional list containing two lists named x, y and z.
+#		The y list contains two optional fields range and title. Field range corresponds to the 
+#		forced range for the y axis. It is a vector containing two values corresponding
+#		to the min anx max. An NA symbol means the min and/or max is not specified. If the min
+#		or max is not specified, we use the min or max processed over all considered series. 
+#		Field title is the name of the y axis on the plot. The x list contains two fields title
+#		and values. The formder is similar to that of the y list. The latter is a vector
+#		containing all values of x to appear in the plot, in the specified order. The z list 
+#  		contains only a values field, which is similar to that of the x list.
+# graph.title: general title of the plot (NA for no title at all).
+# format: vector of formats of the generated files (PDF and/or PNG).
+#############################################################################################
+plot.single.group.histo <- function(plot.file, x.values, y.values, axes=list(), graph.title, format=c("PDF","PNG"))
+{	
+	
+	
+}
+
+
+#############################################################################################
+# Plots the specified multiple series as a histogram. The y axis correspond to absolute values 
+# or proportions, depending on the corresponding parameter. Each bar corresponds to one categorical 
+# or integer value. One bar breaks down to several colors, each one representing one series.
+# The bars are grouped according to a second categorical or integer variable, named z.
+#
+# plot.file: path and name of the generated files.
+# x.values: vectors of symbols or integer values.
+# ly.values: list of vector of numerical values.
+# z.values: vector of symbols or integer values.
+# axes: info about the plot axes. It is an optional list containing two lists named x, y and z.
+#		The y list contains two optional fields range and title. Field range corresponds to the 
+#		forced range for the y axis. It is a vector containing two values corresponding
+#		to the min anx max. An NA symbol means the min and/or max is not specified. If the min
+#		or max is not specified, we use the min or max processed over all considered series. 
+#		Field title is the name of the y axis on the plot. The x list contains two fields title
+#		and values. The formder is similar to that of the y list. The latter is a vector
+#		containing all values of x to appear in the plot, in the specified order. The z list 
+#  		contains only a values field, which is similar to that of the x list.
+# graph.title: general title of the plot (NA for no title at all).
+# format: vector of formats of the generated files (PDF and/or PNG).
+#############################################################################################
+plot.multiple.group.histo <- function(plot.file, x.values, ly.values, axes=list(), graph.title, format=c("PDF","PNG"))
+{	
+	
+	
+}
+
+
+
+
 
 
 
@@ -19,7 +134,7 @@ source("src/plot-tools/plot-lines.R")
 # series:	data to plot, as a named list of series. Each series is itself a list containing 
 #			some fields named x, y and stdev, which are vectors. All of them must have the 
 #			same length, for a given series. Field stdev is optional, but x and y are not.
-# axes: info about the plot axes. It is an optional list containing two lists named x and y.
+# axes: info about the plot axes. It is an optional list containing two lists named y and x.
 #		Each list contains two optional fields range and title. Field range corresponds to the 
 #		forced range for the considered axis. It is a vector containing two values corresponding
 #		to the min and max. An NA symbol means the min and/or max is not specified. If the min
@@ -49,10 +164,10 @@ plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TR
 		x.old.values <- tmp$x.old.values
 		x.new.values <- tmp$x.new.values
 	}
-		
+	
 	# clean numerical y values
 	series <- clean.numerical.data(series)
-		
+	
 	# init axes ranges
 	axes <- init.x.range(axes, series)
 	axes <- init.y.range(axes, series, consider.stdev)
@@ -108,12 +223,12 @@ plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TR
 		for(i in 1:length(series))
 		{	serie <- series[[series.names[i]]]
 			lines(serie$x, serie$y,
-				type=type, pch=line.symbs[i], col=colors[i], lwd=lines.width, lty=line.types[i],
-				ann=FALSE, xaxt=xaxis)
+					type=type, pch=line.symbs[i], col=colors[i], lwd=lines.width, lty=line.types[i],
+					ann=FALSE, xaxt=xaxis)
 			if(!is.null(serie$stdev) && length(serie$stdev[!is.na(serie$stdev)]>0))
 			{	plotCI(serie$x, serie$y, uiw=serie$stdev, liw=serie$stdev,
-					err="y", add=TRUE,
-					pch=line.symbs[i], col=colors[i], lwd=lines.width)
+						err="y", add=TRUE,
+						pch=line.symbs[i], col=colors[i], lwd=lines.width)
 			}
 		}
 		# fix x axis for symbolic values
@@ -123,7 +238,7 @@ plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TR
 		# add legend
 		if(length(series.names)>1)
 			legend(x=legend.pos, legend=series.names, col=colors, pch=line.symbs,
-				lwd=lines.width,lty=line.types,bty="n",cex=0.8)
+					lwd=lines.width,lty=line.types,bty="n",cex=0.8)
 		# add titles
 		if(!is.na(plot.title))
 			title(main=plot.title)
@@ -196,13 +311,13 @@ clean.symbolic.data <- function(axes, series)
 		x.new.values <-  c(x.new.values,correspondance[[v]])
 	# reinit x range
 	axes$x$range <- c(NA,NA)
-		
+	
 	# build result list
 	result <- list(
-		series=series,
-		axes=axes,
-		x.old.values=x.old.values,
-		x.new.values=x.new.values
+			series=series,
+			axes=axes,
+			x.old.values=x.old.values,
+			x.new.values=x.new.values
 	)
 	return(result)
 }
@@ -295,7 +410,7 @@ init.y.range <- function(axes, series, consider.stdev)
 #############################################################################################
 determine.legend.position <- function(series, axes)
 {	result <- ""
-
+	
 	x <- c()
 	y <- c()
 	
@@ -335,18 +450,18 @@ determine.legend.position <- function(series, axes)
 #############################################################################################
 ## Tests
 #############################################################################################
-#plot.file <- "temp"
-#graph.title <- "Graph Title"
-#x1 <- 1:10
-#x2 <- 1:20
-#x3 <- 1:25
-#series <- list(
-#	"1st Series"=list(x=x1, y=(2*x1+1), stdev=c(runif(length(x1)))),
-#	"2nd Series"=list(x=x2, y=(x2/2+10), stdev=c(runif(length(x2)))),
-#	"3rd Series"=list(x=x3, y=(x3^2/4), stdev=c(runif(length(x3))))
-#)
-#axes <- list(
-#	x=list(range=c(NA,25), title="x axis"),
-#	y=list(range=c(NA,NA), title="y axis")
-#)
-#plot.lines(plot.file, series, axes, graph.title, with.lines=TRUE, consider.stdev=TRUE, format=c("PDF","PNG",NA))
+plot.file <- "temp"
+graph.title <- "Graph Title"
+x1 <- 1:10
+x2 <- 1:20
+x3 <- 1:25
+series <- list(
+		"1st Series"=list(x=x1, y=(2*x1+1), stdev=c(runif(length(x1)))),
+		"2nd Series"=list(x=x2, y=(x2/2+10), stdev=c(runif(length(x2)))),
+		"3rd Series"=list(x=x3, y=(x3^2/4), stdev=c(runif(length(x3))))
+)
+axes <- list(
+		x=list(range=c(NA,25), title="x axis"),
+		y=list(range=c(NA,NA), title="y axis")
+)
+plot.lines(plot.file, series, axes, graph.title, with.lines=TRUE, consider.stdev=TRUE, format=c("PDF","PNG",NA))
