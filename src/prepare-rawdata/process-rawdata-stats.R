@@ -7,19 +7,37 @@
 
 
 #TODO
-# - histogram of votes: each bar corresponds to a document and breaks down to all types of votes
-# - also record the corresponding table
-# - same thing by year (1 bar = 1 year) and for the whole term (?)
+# - histogram of votes: each bar corresponds to a document and vertically breaks down to all types of votes
+#   we can do proportions and absolute values.
+# - also record the corresponding tables
+# - same thing by year (1 bar = 1 year) and for the whole term (hist bars = each type of vote?)
+# - same for all the above, but with domains instead of types of votes
+# - same thing but with the domains instead of the years (proportion of types of votes by domain).
+# - could also do that by year *and* by domain.
 #
 # - histogram of rebellion: each bar displays the proportion of loyal/rebel for each *expressed* vote
 # - same complementary stuff as above
 #
 # - move the domain distribution processing here, it has nothing to do in the load script.
-#   (maybe just keep a conversion table there, allowing to convert specific domain names to normalized ones).
-#   also, output the file... in the output folder! same thing for the other created files. only keep the original and raw files in the input folder.
 # - generate a histogram with the comparative frequencies of the domains for the whole term.
 # - histogram: each bar is one year, displaying the proportion for each domain.
 
+# types of values :
+# - proportions/counts for categorical variables (eg. proportions of vote types)
+# - values for numerical variables (eg. average loyalty)
+# modalities:
+# - for the whole term
+#   - categorical: hist with 1 bar = 1 cat
+#   - numerical: irrelevent
+# - by year
+#	- categorical: stacked histos, 1 bar = 1 year
+#	- numerical: line plot, 1 value = 1 year
+# - by domain
+#	- categorical: stacked histos, 1 bar = 1 domain
+#	- numerical: scatter plot, 1 bar = 1 domain
+# - by year and domain
+#	- categorical: groups of stacked histos, 1 bar = 1 year, 1 group = 1 domain
+#	- numerical: line plot, 1 line = 1 domain
 
 
 

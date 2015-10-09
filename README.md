@@ -40,7 +40,10 @@ Here are the folders composing the project:
 
 
 # Installation
-1. Install the [`R` language](https://www.r-project.org/) and the [`igraph`](http://igraph.org/r/) package.
+1. Install the [`R` language](https://www.r-project.org/)
+2. Install the following R packages:
+   * [`igraph`](http://igraph.org/r/)
+   * [`plotrix`](https://cran.r-project.org/web/packages/plotrix/index.html) R packages
 2. Download this project from GitHub.
 
 This project contains the raw data for the 7th term MEPs activity, so it can be used as is. You can alternatively apply the scripts to other data, provided they follow the same structure and format. 
