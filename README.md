@@ -43,10 +43,13 @@ Here are the folders composing the project:
 1. Install the [`R` language](https://www.r-project.org/)
 2. Install the following R packages:
    * [`igraph`](http://igraph.org/r/)
-   * [`plotrix`](https://cran.r-project.org/web/packages/plotrix/index.html) R packages
-2. Download this project from GitHub.
+   * [`plotrix`](https://cran.r-project.org/web/packages/plotrix/index.html)
+   * [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html)
+3. Download this project from GitHub.
 
-This project contains the raw data for the 7th term MEPs activity, so it can be used as is. You can alternatively apply the scripts to other data, provided they follow the same structure and format. 
+In order to reproduce the process from the papers, you also need to retrieve the data from Figshare. Just download and unzip the archive so that its folders match the project root. You will then have both the input raw data and the outputs resulting from the process. Apply the scripts again should therefore lead to the same results.
+  
+%This project contains the raw data for the 7th term MEPs activity, so it can be used as is. You can alternatively apply the scripts to other data, provided they follow the same structure and format. 
 
 
 # Use

@@ -1,11 +1,10 @@
 #############################################################################################
-# Function used to generate a plot containing lines, possibly several distinct series.
+# Functions used to generate plots containing lines, possibly several distinct series.
 # Note: very old source code from the Ganetto project.
 # 
 # 10/2015 Vincent Labatut
 #############################################################################################
-library("plotrix")
-source("src/plot-tools/plot-lines.R")
+source("src/plot-tools/plot-common.R")
 
 
 
@@ -27,9 +26,9 @@ source("src/plot-tools/plot-lines.R")
 #		Field title is the name of the considered axis on the plot.
 # plot.title: general title of the plot (NA for no title at all).
 # with.lines:	whether to draw lines between points, or not.
-# format: vector of formats of the generated files (PDF and/or PNG).
+# format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TRUE, consider.stdev=TRUE, format=c("PDF","PNG"))
+plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TRUE, consider.stdev=TRUE, format=c("PDF","PNG", NA))
 {	# complete axes lists (if needed)
 	axes <- complete.axes(axes)
 	# complete format vector (if needed)
@@ -137,25 +136,6 @@ plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TR
 
 
 #############################################################################################
-# Adds missing values to a list reprenting plot axes.
-#
-# axes: same as in the plot.lines function.
-# returns: an updated axes list, with all necessary vectors and possibly NA values.
-#############################################################################################
-complete.axes <- function(axes)
-{	if(is.null(axes$x))
-		axes$x <- list()
-	if(is.null(axes$y))
-		axes$y <- list()
-	if(is.null(axes$x$range))
-		axes$x$range <- c(NA,NA)
-	if(is.null(axes$y$range))
-		axes$y$range <- c(NA,NA)
-	return(axes)
-}
-
-
-#############################################################################################
 # Performs the necessary transformations when dealing with an x axis containing symbolic values
 # i.e. non-numerical values). It converts them into integers, while keeping the original symbols
 # to allow later substitution.
@@ -165,12 +145,7 @@ complete.axes <- function(axes)
 # returns: a list containing updated variables.
 #############################################################################################
 clean.symbolic.data <- function(axes, series)
-{	# init
-	serie <- series[[1]]
-	values <- serie$x
-	values <- values[!is.na(values)]
-	
-	# replace by numeric values in the data
+{	# replace by numeric values in the data
 	correspondance <- list()
 	cmpt <- 1
 	for(s in 1:length(series))
@@ -205,28 +180,6 @@ clean.symbolic.data <- function(axes, series)
 		x.new.values=x.new.values
 	)
 	return(result)
-}
-
-
-#############################################################################################
-# Performs the necessary transformations for numerical y values. Basically: replacing all
-# NULL, NaN and INF symbols by NA symbols, to ease later processing.
-#
-# series: same as in the plot.lines function.
-# returns: a list containing updated variables.
-#############################################################################################
-clean.numerical.data <- function(series)
-{	for(s in 1:length(series))
-	{	serie <- series[[s]]
-		serie$y[is.null(serie$y)] <- NA
-		serie$y[is.nan(serie$y)] <- NA
-		serie$y[is.infinite(serie$y)] <- NA
-		serie$stdev[is.null(serie$stdev)] <- NA
-		serie$stdev[is.nan(serie$stdev)] <- NA
-		serie$stdev[is.infinite(serie$stdev)] <- NA
-		series[[s]] <- serie
-	}
-	return(series)
 }
 
 
@@ -336,7 +289,7 @@ determine.legend.position <- function(series, axes)
 ## Tests
 #############################################################################################
 #plot.file <- "temp"
-#graph.title <- "Graph Title"
+#plot.title <- "Graph Title"
 #x1 <- 1:10
 #x2 <- 1:20
 #x3 <- 1:25
@@ -349,4 +302,4 @@ determine.legend.position <- function(series, axes)
 #	x=list(range=c(NA,25), title="x axis"),
 #	y=list(range=c(NA,NA), title="y axis")
 #)
-#plot.lines(plot.file, series, axes, graph.title, with.lines=TRUE, consider.stdev=TRUE, format=c("PDF","PNG",NA))
+#plot.lines(plot.file, series, axes, plot.title, with.lines=TRUE, consider.stdev=TRUE, format=c("PDF","PNG",NA))
