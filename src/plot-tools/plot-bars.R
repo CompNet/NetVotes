@@ -59,7 +59,10 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, x.label, plot
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
 plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, x.label, y.label, plot.title, format=c("PDF","PNG",NA))
-{	# process each specified format
+{	# init the data frame
+	temp <- data.frame(cats=bar.names, counts=counts)
+	
+	# process each specified format
 	for(frmt in format)
 	{	# set plot file name
 		plot.filename <- paste(plot.file,".",frmt,sep="")
@@ -77,7 +80,6 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 		# (old version)
 			#barplot(count, main=plot.title, xlab=bars.label)
 		# create the plot
-		temp <- data.frame(cats=bar.names, counts=counts)
 		p <- ggplot(data=temp, aes(x=factor(cats),y=counts))
 		# change the theme
 		p <- p + theme_bw() + theme(
@@ -115,7 +117,7 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 #############################################################################################
 # Plots the specified multiple series as a stacked bar plot. Each bar corresponds to one categorical 
 # or integer value specified in the parameter bar.names, and its height depends on the specified
-# count. Each color corresponds to an other categorical or integer value specified in the color.names
+# values. Each color corresponds to an other categorical or integer value specified in the color.names
 # parameter. The value vectors are supposed to contain the symbols from color.names (not bar.names).
 #
 # plot.file: path and name of the generated files.
@@ -125,12 +127,13 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 #      	  Each vector corresponds to one stacked bar. If this parameter is a list of lists of 
 # 		  vectors instead of a single list of vectors, then the counts are processed for each vector 
 #		  in a sublist, and then averaged to get a single count vector.
+# proportions: whether to plot actual counts or proportions.
 # x.label: general title of the bars. 
 # colors.label: title of the color legend.
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, values, x.label, plot.title, format=c("PDF","PNG",NA))
+plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, values, proportions=TRUE, x.label, colors.label, plot.title, format=c("PDF","PNG",NA))
 {	counts <- list()
 	dispersion <- NA
 	
@@ -152,7 +155,7 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 	
 	# use the other function to perfom the actual plot
 	#print(counts)
-	plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, x.label, y.label="Count", colors.label, plot.title, format)
+	plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, proportions, x.label, y.label="Count", colors.label, plot.title, format)
 }
 
 
@@ -174,8 +177,45 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, counts, dispersion=NA, x.label, y.label, colors.label, plot.title, format=c("PDF","PNG",NA))
-{	# process each specified format
+plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, counts, dispersion=NA, proportions=TRUE, x.label, y.label, colors.label, plot.title, format=c("PDF","PNG",NA))
+{	# create the data frame
+	col.names <- c()
+	col.colors <- c()
+	col.counts <- c()
+	col.dispersion <- c()
+	col.cumul <- c()
+	for(s in 1:length(counts))
+	{	bar.name <- bar.names[s]
+		col.names <- c(col.names,rep(bar.name,length(counts[[s]])))
+		col.colors <- c(col.colors, color.names)
+		if(proportions)
+		{	tc <- counts[[s]] / sum(counts[[s]])
+			if(length(dispersion)>0 && !is.na(dispersion))
+				td <- dispersion[[s]] / sum(counts[[s]])
+		}
+		else
+		{	tc <- counts[[s]]
+			if(length(dispersion)>0 && !is.na(dispersion))
+				td <- dispersion[[s]]
+		}
+		col.counts <- c(col.counts, tc)
+		cs <- cumsum(tc)
+		col.cumul <- c(col.cumul, cs)
+		if(length(dispersion)>0 && !is.na(dispersion))
+			col.dispersion <- c(col.dispersion, cs + td)
+	}
+	#print(col.names);print(col.counts);print(col.colors)
+	col.label <- col.counts
+	if(proportions)
+		col.label <- round(col.label*100)
+	col.label[col.label==0] <- NA
+	temp <- data.frame(cats=col.names, counts=col.counts, clrs=col.colors, cumul=col.cumul, lbl=col.label)
+	if(length(dispersion)>0 && !is.na(dispersion))
+		temp[["upper"]] <- col.dispersion
+	#print(counts)
+	#print(temp)
+	
+	# process each specified format
 	for(frmt in format)
 	{	# set plot file name
 		plot.filename <- paste(plot.file,".",frmt,sep="")
@@ -189,29 +229,6 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 			}
 		}
 		
-		# create the data frame
-		col.names <- c()
-		col.colors <- c()
-		col.counts <- c()
-		col.dispersion <- c()
-		col.cumul <- c()
-		for(s in 1:length(counts))
-		{	bar.name <- bar.names[s]
-			col.names <- c(col.names,rep(bar.name,length(counts[[s]])))
-			col.colors <- c(col.colors, color.names)
-			col.counts <- c(col.counts, counts[[s]])
-			cs <- cumsum(counts[[s]])
-			col.cumul <- c(col.cumul, cs)
-			if(length(dispersion)>0 && !is.na(dispersion))
-				col.dispersion <- c(col.dispersion, cs + dispersion[[s]])
-		}
-		#print(col.names);print(col.counts);print(col.colors)
-		col.label <- col.counts
-		col.label[col.label==0] <- NA
-		temp <- data.frame(cats=col.names, counts=col.counts, clrs=col.colors, cumul=col.cumul, lbl=col.label)
-		if(length(dispersion)>0 && !is.na(dispersion))
-			temp[["upper"]] <- col.dispersion
-		#print(temp)
 		# init the plot
 		p <- ggplot(data=temp, aes(x=factor(cats),y=counts,fill=factor(clrs)))
 		# change the theme
@@ -226,6 +243,8 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 		# add the bars
 		p <- p + geom_bar(stat="identity", color="black")
 		p <- p + geom_text(aes(y=cumul, label=lbl), vjust=1.6, color="white", size=3.5)
+		if(proportions)
+			p <- p + scale_y_continuous(labels=percent)
 		# possiby add title and labels
 		if(!is.na(plot.title))
 			p <- p + ggtitle(plot.title)
@@ -248,31 +267,149 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 
 
 #############################################################################################
-# Plots the specified single series as a histogram. The y axis correspond to absolute values 
-# (by opposition to proportions) describing the series to be plot, and each x bar corresponds 
-# to one categorical or integer value. The bars are grouped according to a second categorical
-# or integer variable, named z.
+# Plots the specified multiple series as a groupped bar plot. Each group corresponds to one categorical 
+# or integer value specified in the parameter bar.names, and its height depends on the specified
+# values. Each bar in a group corresponds to an other categorical or integer value specified in the 
+# bar.names parameter. The value vectors are supposed to contain the symbols from bar.names (not group.names).
 #
 # plot.file: path and name of the generated files.
-# x.values: vector of symbols or integer values.
-# y.values: vector of numerical values.
-# z.values: vector of symbols or integer values.
-# axes: info about the plot axes. It is an optional list containing two lists named x, y and z.
-#		The y list contains two optional fields range and title. Field range corresponds to the 
-#		forced range for the y axis. It is a vector containing two values corresponding
-#		to the min anx max. An NA symbol means the min and/or max is not specified. If the min
-#		or max is not specified, we use the min or max processed over all considered series. 
-#		Field title is the name of the y axis on the plot. The x list contains two fields title
-#		and values. The formder is similar to that of the y list. The latter is a vector
-#		containing all values of x to appear in the plot, in the specified order. The z list 
-#  		contains only a values field, which is similar to that of the x list.
+# group.names: vector of symbols or integer values used to name the groups of bars.
+# bar.names: vector of symbols or integer values used to name the individual bars.
+# values: list of vectors of raw values, which need to be counted to determine the bar heights.
+#      	  Each vector corresponds to one group of bars. If this parameter is a list of lists of 
+# 		  vectors instead of a single list of vectors, then the counts are processed for each vector 
+#		  in a sublist, and then averaged to get a single count vector.
+# proportions: whether to plot actual counts or proportions.
+# x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.unif.grouped.bars <- function(plot.file, x.values, y.values, axes=list(), plot.title, format=c("PDF","PNG",NA))
-{	
+plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values, proportions, x.label, plot.title, format=c("PDF","PNG",NA))
+{	counts <- list()
+	dispersion <- NA
 	
+	# if values is a list of lists, we average the counts
+	if(is.list(values[[1]]))
+	{	dispersion <- list()
+		for(l in 1:length(values))
+		{	mcounts <- t(sapply(values[[l]], function(v) as.vector(table(factor(v, levels=bar.names), useNA="no"))))
+			#print(mcounts)
+			counts[[l]] <- apply(mcounts, 2, mean)
+			dispersion[[l]] <- apply(mcounts, 2, sd)
+		}
+	}
+	# otherwise, we directly count the values
+	else
+	{	counts <- lapply(values, function(v) as.vector(table(factor(v, levels=bar.names), useNA="no")))
+		dispersion <- NA
+	}
 	
+	# use the other function to perfom the actual plot
+	#print(counts)
+	plot.unif.grouped.count.bars(plot.file, group.names, bar.names, counts, dispersion, proportions, x.label, y.label="Count", plot.title, format)
+}
+
+
+#############################################################################################
+# Plots the specified multiple series as a stacked bar plot. Each bar corresponds to one categorical 
+# or integer value specified in the parameter bar.names, and its height depends on the specified
+# count. Each color corresponds to an other categorical or integer value specified in the color.names
+# parameter. Each vector in the values list correspond to a bar. The values composing a vector correspond
+# to the stacked colors. An optional dispersion parameter allows adding dispersion bars.
+#
+# plot.file: path and name of the generated files.
+# bar.names: vector of symbols or integer values used to name the individual bars.
+# color.names: vector of symbols or integer values used to name the stacked color forming the bars.
+# counts: list of vectors of counts used to to determine the bar heights.
+# dispersion: optional list of vectors of dispersion values (one for each count value).
+# x.label: general title of the bars. 
+# y.label: title of the bar heights. 
+# colors.label: title of the color legend 
+# plot.title: general title of the plot (NA for no title at all).
+# format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+#############################################################################################
+plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, counts, dispersion=NA, proportions=TRUE, x.label, y.label, plot.title, format=c("PDF","PNG",NA))
+{	# create the data frame
+	col.groups <- c()
+	col.bars <- c()
+	col.counts <- c()
+	col.dispersion <- c()
+	col.cumul <- c()
+	for(s in 1:length(counts))
+	{	group.name <- group.names[s]
+		col.groups <- c(col.groups,rep(group.name,length(counts[[s]])))
+		col.bars <- c(col.bars, bar.names)
+		if(proportions)
+		{	tc <- counts[[s]] / sum(counts[[s]])
+			if(length(dispersion)>0 && !is.na(dispersion))
+				td <- dispersion[[s]] / sum(counts[[s]])
+		}
+		else
+		{	tc <- counts[[s]]
+			if(length(dispersion)>0 && !is.na(dispersion))
+				td <- dispersion[[s]]
+		}
+		col.counts <- c(col.counts, tc)
+		if(length(dispersion)>0 && !is.na(dispersion))
+			col.dispersion <- c(col.dispersion, tc + td)
+	}
+	#print(col.groups);print(col.counts);print(col.bars)
+	col.label <- col.counts
+	if(proportions)
+		col.label <- round(col.label*100)
+	col.label[col.label==0] <- NA
+	temp <- data.frame(grps=col.groups, counts=col.counts, bars=col.bars, lbl=col.label)
+	if(length(dispersion)>0 && !is.na(dispersion))
+		temp[["upper"]] <- col.dispersion
+	print(counts)
+	print(temp)
+	
+	# process each specified format
+	for(frmt in format)
+	{	# set plot file name
+		plot.filename <- paste(plot.file,".",frmt,sep="")
+		# create the file
+		if(!is.na(frmt))
+		{	if(frmt=="PNG")
+			{	png(filename=plot.filename,width=800,height=800,units="px",pointsize=20,bg="white")
+			}
+			else if(frmt=="PDF")
+			{	pdf(file=plot.filename,bg="white")
+			}
+		}
+		
+		# init the plot
+		p <- ggplot(data=temp, aes(x=factor(grps),y=counts,fill=factor(bars)))
+		# change the theme
+		p <- p + theme_bw() + theme(
+			#axis.text.x=element_text(angle = 90, hjust = 1), 
+			panel.grid.major=element_line(colour = "grey90"),
+			panel.grid.minor=element_line(colour = "grey96"),
+			panel.background=element_blank(),
+			axis.ticks=element_blank(),
+			legend.position="none"
+		)
+		# add the bars
+		p <- p + geom_bar(stat="identity", color="black", position=position_dodge())
+		p <- p + geom_text(aes(y=counts, label=lbl), vjust=1.6, color="white", size=3.5, position=position_dodge(.9))
+		if(proportions)
+			p <- p + scale_y_continuous(labels=percent)
+		# possiby add title and labels
+		if(!is.na(plot.title))
+			p <- p + ggtitle(plot.title)
+		if(!is.na(x.label))
+			p <- p + xlab(x.label)
+		if(!is.na(y.label))
+			p <- p + ylab(y.label)
+		# possibly add dispersion bars
+		if(length(dispersion)>0 && !is.na(dispersion))
+			p <- p + geom_errorbar(mapping=aes(ymin=counts, ymax=upper), width=.2, position=position_dodge(.9))
+		print(p)
+		
+		# finalize plot file
+		if(!is.na(frmt))
+			dev.off()
+	}
 }
 
 
@@ -298,15 +435,139 @@ plot.unif.grouped.bars <- function(plot.file, x.values, y.values, axes=list(), p
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.stacked.grouped.bars <- function(plot.file, x.values, ly.values, axes=list(), plot.title, format=c("PDF","PNG",NA))
-{	
+plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, color.names, values, proportions=TRUE, x.label, plot.title, format=c("PDF","PNG",NA))
+{	counts <- list()
+	dispersion <- NA
 	
+	# if values is a list of lists, we average the counts
+	if(is.list(values[[1]][[1]]))
+	{	dispersion <- list()
+		for(l in 1:length(values))
+		{	l.values <- values[[l]]
+			l.counts <- list()
+			l.dispersion <- list()
+			for(s in 1:length(l.values))
+			{	mcounts <- t(sapply(l.values[[s]], function(v) as.vector(table(factor(v, levels=color.names), useNA="no"))))
+				#print(mcounts)
+				l.counts[[s]] <- apply(mcounts, 2, mean)
+				l.dispersion[[s]] <- apply(mcounts, 2, sd)
+			}
+			counts[[l]] <- l.counts
+			dispersion[[l]] <- l.dispersion
+		}
+	}
+	# otherwise, we directly count the values
+	else
+	{	for(l in 1:length(values))
+		{	l.values <- values[[l]]
+			l.counts <- lapply(l.values, function(v) as.vector(table(factor(v, levels=color.names), useNA="no")))
+			counts[[l]] <- l.counts
+		}
+		dispersion <- NA
+	}
 	
+	# use the other function to perfom the actual plot
+	#print(counts)
+	plot.stacked.grouped.count.bars(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions, x.label, y.label="Count", colors.label, plot.title, format)
 }
 
 
-
-
+plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions=TRUE, x.label, y.label="Count", colors.label, plot.title, format=c("PDF","PNG",NA))
+{	# create the data frame
+	col.groups <- c()
+	col.bars <- c()
+	col.colors <- c()
+	col.counts <- c()
+	col.dispersion <- c()
+	col.cumul <- c()
+	for(l in 1:length(counts))
+	{	l.counts <- counts[[l]]
+		if(length(dispersion)>0 && !is.na(dispersion))
+			l.dispersion <- dispersion[[l]]
+		group.name <- group.names[l]
+		for(s in 1:length(l.counts))
+		{	col.groups <- c(col.groups,rep(group.name,length(l.counts[[s]])))
+			bar.name <- bar.names[s]
+			col.bars <- c(col.bars,rep(bar.name,length(l.counts[[s]])))
+			col.colors <- c(col.colors, color.names)
+			if(proportions)
+			{	tc <- l.counts[[s]] / sum(l.counts[[s]])
+				if(length(dispersion)>0 && !is.na(dispersion))
+					td <- l.dispersion[[s]] / sum(l.counts[[s]])
+			}
+			else
+			{	tc <- l.counts[[s]]
+				if(length(dispersion)>0 && !is.na(dispersion))
+					td <- l.dispersion[[s]]
+			}
+			col.counts <- c(col.counts, tc)
+			cs <- cumsum(tc)
+			col.cumul <- c(col.cumul, cs)
+			if(length(dispersion)>0 && !is.na(dispersion))
+				col.dispersion <- c(col.dispersion, cs + td)
+		}
+	}
+	#print(col.names);print(col.counts);print(col.colors)
+	col.label <- col.counts
+	if(proportions)
+		col.label <- round(col.label*100)
+	col.label[col.label==0] <- NA
+	temp <- data.frame(grps=col.groups, bars=col.bars, counts=col.counts, clrs=col.colors, cumul=col.cumul, lbl=col.label)
+	if(length(dispersion)>0 && !is.na(dispersion))
+		temp[["upper"]] <- col.dispersion
+	#print(counts)
+	#print(temp)
+	
+	# process each specified format
+	for(frmt in format)
+	{	# set plot file name
+		plot.filename <- paste(plot.file,".",frmt,sep="")
+		# create the file
+		if(!is.na(frmt))
+		{	if(frmt=="PNG")
+			{	png(filename=plot.filename,width=800,height=800,units="px",pointsize=20,bg="white")
+			}
+			else if(frmt=="PDF")
+			{	pdf(file=plot.filename,bg="white")
+			}
+		}
+		
+		# init the plot
+		p <- ggplot(data=temp, aes(x=factor(bars),y=counts,fill=factor(clrs)))
+		# change the theme
+		p <- p + theme_bw() + theme(
+				#axis.text.x=element_text(angle = 90, hjust = 1), 
+				panel.grid.major=element_line(colour = "grey90"),
+				panel.grid.minor=element_line(colour = "grey96"),
+				panel.background=element_blank(),
+				axis.ticks=element_blank()
+		#legend.position="none"
+		)
+		# add the bars
+		p <- p + geom_bar(stat="identity", color="black", position = 'stack')
+		p <- p + facet_grid(~ grps)
+		p <- p + geom_text(aes(y=cumul, label=lbl), vjust=1.6, color="white", size=3.5)
+		if(proportions)
+			p <- p + scale_y_continuous(labels=percent)
+		# possiby add title and labels
+		if(!is.na(plot.title))
+			p <- p + ggtitle(plot.title)
+		if(!is.na(x.label))
+			p <- p + xlab(x.label)
+		if(!is.na(y.label))
+			p <- p + ylab(y.label)
+		if(!is.na(colors.label))
+			p <- p + scale_fill_discrete(name=colors.label)   
+		# possibly add dispersion bars
+		if(length(dispersion)>0 && !is.na(dispersion))
+			p <- p + geom_errorbar(mapping=aes(ymin=cumul, ymax=upper), width=.2)
+		print(p)
+		
+		# finalize plot file
+		if(!is.na(frmt))
+			dev.off()
+	}
+}
 
 
 
@@ -319,6 +580,7 @@ plot.stacked.grouped.bars <- function(plot.file, x.values, ly.values, axes=list(
 plot.file <- "temp"
 format <- c("PDF","PNG", NA)
 plot.title <- "Graph Title"
+proportions <- FALSE
 #############################################################################################
 ### test uniform individual plot from count
 #bar.names <- c("A", "B", "C", "D")
@@ -337,42 +599,103 @@ plot.title <- "Graph Title"
 #values[[2]] <- c("A", "A", "A", "C", "C", "A", "A", "D", "B", "B", "B", "A", "A", "D", "D")
 #plot.unif.indiv.raw.bars(plot.file, bar.names, values, x.label, plot.title, format)
 #############################################################################################
-## test stacked individual plot from count
-bar.names <- c("A", "B", "C", "D")
-color.names <- c("x", "y", "z")
-counts <- list(
-	c(10, 0, 4),
-	c(1, 10, 3),
-	c(1, 0, 4),
-	c(6, 2, 4)
-)
-#dispersion <- NA
-dispersion <- list(
-	c(0.8,0,2),
-	c(0.5,0.5,3),
-	c(0.2,0,0.75),
-	c(0.5,1,2)
-)
-x.label <- "Categories"
-y.label <- "Values"
-colors.label <- "Colors"
-#plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, x.label, y.label, colors.label, plot.title, format)
-# test stacked individual plot from raw data
+### test stacked individual plot from count
+#bar.names <- c("A", "B", "C", "D")
+#color.names <- c("x", "y", "z")
+#counts <- list(
+#	c(10, 0, 4),
+#	c(1, 10, 3),
+#	c(1, 0, 4),
+#	c(6, 2, 4)
+#)
+##dispersion <- NA
+#dispersion <- list(
+#	c(0.8,0,2),
+#	c(0.5,0.5,3),
+#	c(0.2,0,0.75),
+#	c(0.5,1,2)
+#)
+#x.label <- "Categories"
+#y.label <- "Values"
+#colors.label <- "Colors"
+##plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, proportions, x.label, y.label, colors.label, plot.title, format)
+## test stacked individual plot from raw data
+##values <- list()
+##values[[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
+##values[[2]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", NA, "y", "x", "y", "x")
+##values[[3]] <- c("y", "x", "x", "x", "y", "z", "y")
+##values[[4]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
+##plot.stacked.indiv.raw.bars(plot.file, bar.names, color.names, values, proportions, x.label, plot.title, format)
+##c("x","y","z")[round(runif(10,min=1,max=3))]
+### test stacked individual plot from multiple raw data
+#values <- list(); values[[1]] <- list(); values[[2]] <- list(); values[[3]] <- list(); values[[4]] <- list()
+#values[[1]][[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
+#values[[1]][[2]] <- c("x", "y", "x", "x", "y", "y", "y", "z", "z", "z", "x", "x","x","x")
+#values[[2]][[1]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", NA, "y", "x", "y", "x")
+#values[[2]][[2]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", "z", "z", "z", "z", "x", "y", "y", "y")
+#values[[3]][[1]] <- c("y", "x", "x", "x", "y", "z", "y", "y", "y", "y", "y")
+#values[[3]][[2]] <- c("y", "x", "x", "x", "y", "z", "y")
+#values[[4]][[1]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
+#values[[4]][[2]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y", "x", "x", "x")
+#plot.stacked.indiv.raw.bars(plot.file, bar.names, color.names, values, proportions, x.label, plot.title, format)
+#############################################################################################
+### test uniform grouped plot from count
+#group.names <- c("A", "B", "C", "D")
+#bar.names <- c("x", "y", "z")
+#counts <- list(
+#	c(10, 0, 4),
+#	c(1, 10, 3),
+#	c(1, 0, 4),
+#	c(6, 2, 4)
+#)
+##dispersion <- NA
+#dispersion <- list(
+#	c(0.8,0,2),
+#	c(0.5,0.5,3),
+#	c(0.2,0,0.75),
+#	c(0.5,1,2)
+#)
+#x.label <- "Categories"
+#y.label <- "Values"
+##plot.unif.grouped.count.bars(plot.file, group.names, bar.names, counts, dispersion, proportions, x.label, y.label, plot.title, format)
+#### test uniform grouped plot from raw data
 #values <- list()
 #values[[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
 #values[[2]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", NA, "y", "x", "y", "x")
 #values[[3]] <- c("y", "x", "x", "x", "y", "z", "y")
 #values[[4]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
-#plot.stacked.indiv.raw.bars(plot.file, bar.names, color.names, values, x.label, plot.title, format)
-#c("x","y","z")[round(runif(10,min=1,max=3))]
-## test stacked individual plot from multiple raw data
-values <- list(); values[[1]] <- list(); values[[2]] <- list(); values[[3]] <- list(); values[[4]] <- list()
-values[[1]][[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
-values[[1]][[2]] <- c("x", "y", "x", "x", "y", "y", "y", "z", "z", "z", "x", "x","x","x")
-values[[2]][[1]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", NA, "y", "x", "y", "x")
-values[[2]][[2]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", "z", "z", "z", "z", "x", "y", "y", "y")
-values[[3]][[1]] <- c("y", "x", "x", "x", "y", "z", "y", "y", "y", "y", "y")
-values[[3]][[2]] <- c("y", "x", "x", "x", "y", "z", "y")
-values[[4]][[1]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
-values[[4]][[2]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y", "x", "x", "x")
-plot.stacked.indiv.raw.bars(plot.file, bar.names, color.names, values, x.label, plot.title, format)
+##plot.unif.grouped.raw.bars(plot.file, group.names, bar.names, values, proportions, x.label, plot.title, format)
+### test uniform grouped plot from multiple raw data
+#values <- list(); values[[1]] <- list(); values[[2]] <- list(); values[[3]] <- list(); values[[4]] <- list()
+#values[[1]][[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
+#values[[1]][[2]] <- c("x", "y", "x", "x", "y", "y", "y", "z", "z", "z", "x", "x","x","x")
+#values[[2]][[1]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", NA, "y", "x", "y", "x")
+#values[[2]][[2]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", "z", "z", "z", "z", "x", "y", "y", "y")
+#values[[3]][[1]] <- c("y", "x", "x", "x", "y", "z", "y", "y", "y", "y", "y")
+#values[[3]][[2]] <- c("y", "x", "x", "x", "y", "z", "y")
+#values[[4]][[1]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
+#values[[4]][[2]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y", "x", "x", "x")
+#plot.unif.grouped.raw.bars(plot.file, group.names, bar.names, values, proportions, x.label, plot.title, format)
+#############################################################################################
+### test stacked grouped plot from count
+group.names <- c("A", "B", "C", "D")
+bar.names <- c("B1", "B2")
+color.names <- c("x", "y", "z")
+counts <- list()
+counts[[1]] <- list(c(10, 0, 4), c(1, 10, 3))
+counts[[2]] <- list(c(1, 0, 4), c(6, 2, 4))
+counts[[3]] <- list(c(6, 1, 3), c(7, 8, 9))
+counts[[4]] <- list(c(11, 1, 9), c(5, 4, 3))
+dispersion <- NA
+x.label <- "Categories"
+y.label <- "Values"
+colors.label <- "Colors"
+#plot.stacked.grouped.count.bars(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions, x.label, y.label, colors.label, plot.title, format)
+#### test stacked grouped plot from raw data
+counts <- list()
+counts[[1]] <- list(c("x","z","z","y","y","x","y","y","y","z","z","x","x","x","x","x"), c("z","z","x","x","x","x","z","y","z","y","z","z"))
+counts[[2]] <- list(c("z","z","y","y","y","y","z","y","z"), c("z","z","y","y","y","y","y","y","x","x","x"))
+counts[[3]] <- list(c("z","z","x","z","y","y","x","x","z","z","y","y","z"), c("z","z","x","y","y","y","z","y","z","y","z","x","x","x"))
+counts[[4]] <- list(c("z","y","y","y","z","z","x"), c("z","z","z","z","z","z","y","z","x","z","z","z","y","z","y","z"))
+plot.stacked.grouped.raw.bars(plot.file, group.names, bar.names, color.names, values, proportions, x.label, plot.title, format)
+	
