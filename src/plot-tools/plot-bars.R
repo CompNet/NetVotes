@@ -42,6 +42,7 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, x.label, plot
 }
 
 
+
 #############################################################################################
 # Plots the specified single series as a bar plot. Each bar corresponds to one categorical 
 # or integer value specified in the parameter bar.names, and its height depends on the specified
@@ -114,6 +115,7 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 }
 
 
+
 #############################################################################################
 # Plots the specified multiple series as a stacked bar plot. Each bar corresponds to one categorical 
 # or integer value specified in the parameter bar.names, and its height depends on the specified
@@ -122,7 +124,7 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 #
 # plot.file: path and name of the generated files.
 # bar.names: vector of symbols or integer values used to name the individual bars.
-# color.names: vector of symbols or integer values used to name the stacked color forming the bars.
+# color.names: vector of symbols or integer values used to name the stacked colors forming the bars.
 # values: list of vectors of raw values, which need to be counted to determine the bar heights.
 #      	  Each vector corresponds to one stacked bar. If this parameter is a list of lists of 
 # 		  vectors instead of a single list of vectors, then the counts are processed for each vector 
@@ -159,6 +161,7 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 }
 
 
+
 #############################################################################################
 # Plots the specified multiple series as a stacked bar plot. Each bar corresponds to one categorical 
 # or integer value specified in the parameter bar.names, and its height depends on the specified
@@ -168,7 +171,7 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 #
 # plot.file: path and name of the generated files.
 # bar.names: vector of symbols or integer values used to name the individual bars.
-# color.names: vector of symbols or integer values used to name the stacked color forming the bars.
+# color.names: vector of symbols or integer values used to name the stacked colors forming the bars.
 # counts: list of vectors of counts used to to determine the bar heights.
 # dispersion: optional list of vectors of dispersion values (one for each count value).
 # x.label: general title of the bars. 
@@ -266,6 +269,7 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 }
 
 
+
 #############################################################################################
 # Plots the specified multiple series as a groupped bar plot. Each group corresponds to one categorical 
 # or integer value specified in the parameter bar.names, and its height depends on the specified
@@ -310,6 +314,7 @@ plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values
 }
 
 
+
 #############################################################################################
 # Plots the specified multiple series as a stacked bar plot. Each bar corresponds to one categorical 
 # or integer value specified in the parameter bar.names, and its height depends on the specified
@@ -319,7 +324,7 @@ plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values
 #
 # plot.file: path and name of the generated files.
 # bar.names: vector of symbols or integer values used to name the individual bars.
-# color.names: vector of symbols or integer values used to name the stacked color forming the bars.
+# color.names: vector of symbols or integer values used to name the stacked colors forming the bars.
 # counts: list of vectors of counts used to to determine the bar heights.
 # dispersion: optional list of vectors of dispersion values (one for each count value).
 # x.label: general title of the bars. 
@@ -413,25 +418,25 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 }
 
 
+
 #############################################################################################
-# Plots the specified multiple series as a histogram. The y axis correspond to absolute values 
-# or proportions, depending on the corresponding parameter. Each bar corresponds to one categorical 
-# or integer value. One bar breaks down to several colors, each one representing one series.
-# The bars are grouped according to a second categorical or integer variable, named z.
+# Plots the specified multiple series as a stacked groupped bar plot. Each group corresponds to one 
+# categorical or integer value specified in the parameter bar.names, and its height depends on the specified
+# values. Each bar in a group corresponds to an other categorical or integer value specified in the 
+# bar.names parameter. Each color in a bar corresponds to yet another categorical or integer value
+# specified in the color.names parameter. The value vectors are supposed to contain the symbols from 
+# color.names.
 #
 # plot.file: path and name of the generated files.
-# x.values: vectors of symbols or integer values.
-# ly.values: list of vector of numerical values.
-# z.values: vector of symbols or integer values.
-# axes: info about the plot axes. It is an optional list containing two lists named x, y and z.
-#		The y list contains two optional fields range and title. Field range corresponds to the 
-#		forced range for the y axis. It is a vector containing two values corresponding
-#		to the min anx max. An NA symbol means the min and/or max is not specified. If the min
-#		or max is not specified, we use the min or max processed over all considered series. 
-#		Field title is the name of the y axis on the plot. The x list contains two fields title
-#		and values. The formder is similar to that of the y list. The latter is a vector
-#		containing all values of x to appear in the plot, in the specified order. The z list 
-#  		contains only a values field, which is similar to that of the x list.
+# group.names: vector of symbols or integer values used to name the groups of bars.
+# bar.names: vector of symbols or integer values used to name the individual bars.
+# color.names: vector of symbols or integer values used to name the stacked colors forming the bars.
+# values: list of list of vectors of raw values, which need to be counted to determine the bar heights.
+#      	  Each high level list corresponds to a group, each vector it contains is a bar in this group.
+# 		  If this parameter is a list of lists of lists of vectors instead, then the counts are processed 
+#		  for each vector in a sublist, and then averaged to get a single count vector.
+# proportions: whether to plot actual counts or proportions.
+# x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
@@ -439,7 +444,7 @@ plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, col
 {	counts <- list()
 	dispersion <- NA
 	
-	# if values is a list of lists, we average the counts
+	# if values is a list of lists of lists, we average the counts
 	if(is.list(values[[1]][[1]]))
 	{	dispersion <- list()
 		for(l in 1:length(values))
@@ -472,6 +477,28 @@ plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, col
 }
 
 
+
+#############################################################################################
+# Plots the specified multiple series as a stacked groupped bar plot. Each group corresponds to one 
+# categorical or integer value specified in the parameter bar.names, and its height depends on the specified
+# values. Each bar in a group corresponds to an other categorical or integer value specified in the 
+# bar.names parameter. Each color in a bar corresponds to yet another categorical or integer value
+# specified in the color.names parameter. The value vectors are supposed to contain the symbols from 
+# color.names.
+#
+# plot.file: path and name of the generated files.
+# group.names: vector of symbols or integer values used to name the groups of bars.
+# bar.names: vector of symbols or integer values used to name the individual bars.
+# color.names: vector of symbols or integer values used to name the stacked colors forming the bars.
+# counts: list of vectors of counts used to to determine the bar heights.
+# dispersion: optional list of vectors of dispersion values (one for each count value).
+# proportions: whether to plot actual counts or proportions.
+# x.label: general title of the bars. 
+# y.label: title of the bar heights. 
+# colors.label: title of the color legend 
+# plot.title: general title of the plot (NA for no title at all).
+# format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+#############################################################################################
 plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions=TRUE, x.label, y.label="Count", colors.label, plot.title, format=c("PDF","PNG",NA))
 {	# create the data frame
 	col.groups <- c()
@@ -571,16 +598,13 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 
 
 
-
-
-
 #############################################################################################
 ## Tests
 #############################################################################################
-plot.file <- "temp"
-format <- c("PDF","PNG", NA)
-plot.title <- "Graph Title"
-proportions <- FALSE
+#plot.file <- "temp"
+#format <- c("PDF","PNG", NA)
+#plot.title <- "Graph Title"
+#proportions <- FALSE
 #############################################################################################
 ### test uniform individual plot from count
 #bar.names <- c("A", "B", "C", "D")
@@ -678,24 +702,39 @@ proportions <- FALSE
 #plot.unif.grouped.raw.bars(plot.file, group.names, bar.names, values, proportions, x.label, plot.title, format)
 #############################################################################################
 ### test stacked grouped plot from count
-group.names <- c("A", "B", "C", "D")
-bar.names <- c("B1", "B2")
-color.names <- c("x", "y", "z")
-counts <- list()
-counts[[1]] <- list(c(10, 0, 4), c(1, 10, 3))
-counts[[2]] <- list(c(1, 0, 4), c(6, 2, 4))
-counts[[3]] <- list(c(6, 1, 3), c(7, 8, 9))
-counts[[4]] <- list(c(11, 1, 9), c(5, 4, 3))
-dispersion <- NA
-x.label <- "Categories"
-y.label <- "Values"
-colors.label <- "Colors"
-#plot.stacked.grouped.count.bars(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions, x.label, y.label, colors.label, plot.title, format)
-#### test stacked grouped plot from raw data
-counts <- list()
-counts[[1]] <- list(c("x","z","z","y","y","x","y","y","y","z","z","x","x","x","x","x"), c("z","z","x","x","x","x","z","y","z","y","z","z"))
-counts[[2]] <- list(c("z","z","y","y","y","y","z","y","z"), c("z","z","y","y","y","y","y","y","x","x","x"))
-counts[[3]] <- list(c("z","z","x","z","y","y","x","x","z","z","y","y","z"), c("z","z","x","y","y","y","z","y","z","y","z","x","x","x"))
-counts[[4]] <- list(c("z","y","y","y","z","z","x"), c("z","z","z","z","z","z","y","z","x","z","z","z","y","z","y","z"))
-plot.stacked.grouped.raw.bars(plot.file, group.names, bar.names, color.names, values, proportions, x.label, plot.title, format)
-	
+#group.names <- c("A", "B", "C", "D")
+#bar.names <- c("B1", "B2")
+#color.names <- c("x", "y", "z")
+#counts <- list()
+#counts[[1]] <- list(c(10, 0, 4), c(1, 10, 3))
+#counts[[2]] <- list(c(1, 0, 4), c(6, 2, 4))
+#counts[[3]] <- list(c(6, 1, 3), c(7, 8, 9))
+#counts[[4]] <- list(c(11, 1, 9), c(5, 4, 3))
+##dispersion <- NA
+#dispersion <- list()
+#dispersion[[1]] <- list(c(1, 1, 1), c(1, 1, 1))
+#dispersion[[2]] <- list(c(2, 2, 2), c(2, 2, 2))
+#dispersion[[3]] <- list(c(0.5, 0.5, 0.5), c(0.5, 0.5, 0.5))
+#dispersion[[4]] <- list(c(3, 3, 3), c(3, 3, 3))
+#x.label <- "Categories"
+#y.label <- "Values"
+#colors.label <- "Colors"
+##plot.stacked.grouped.count.bars(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions, x.label, y.label, colors.label, plot.title, format)
+##### test stacked grouped plot from raw data
+##values <- list()
+##values[[1]] <- list(c("x","z","z","y","y","x","y","y","y","z","z","x","x","x","x","x"), c("z","z","x","x","x","x","z","y","z","y","z","z"))
+##values[[2]] <- list(c("z","z","y","y","y","y","z","y","z"), c("z","z","y","y","y","y","y","y","x","x","x"))
+##values[[3]] <- list(c("z","z","x","z","y","y","x","x","z","z","y","y","z"), c("z","z","x","y","y","y","z","y","z","y","z","x","x","x"))
+##values[[4]] <- list(c("z","y","y","y","z","z","x"), c("z","z","z","z","z","z","y","z","x","z","z","z","y","z","y","z"))
+##plot.stacked.grouped.raw.bars(plot.file, group.names, bar.names, color.names, values, proportions, x.label, plot.title, format)
+#### test stacked grouped plot from multiple raw data
+#values <- list(); values[[1]] <- list(); values[[2]] <- list(); values[[3]] <- list(); values[[4]] <- list()
+#values[[1]][[1]] <- list(c("x", "x", "x", "x", "y"), c("y", "y", "z", "z", "z", NA, "x"))
+#values[[1]][[2]] <- list(c("x", "y", "x", "x", "y", "y", "y", "z", "z", "z"), c("x", "x","x","x"))
+#values[[2]][[1]] <- list(c("y", "x", "z", "x", "z", "z", "z"), c("y", "x", "z", NA, "y", "x", "y", "x"))
+#values[[2]][[2]] <- list(c("y", "x", "z", "x", "z"), c("z", "z", "y", "x", "z", "z", "z", "z", "z", "x", "y", "y", "y"))
+#values[[3]][[1]] <- list(c("y", "x", "x", "x"), c("y", "z", "y", "y", "y", "y", "y"))
+#values[[3]][[2]] <- list(c("y", "x", "x"), c("x", "y", "z", "y"))
+#values[[4]][[1]] <- list(c("x", "z", "z", "y", "z", "y"), c("z", "y", "z", "z", "z", "x", "x", "y", "y"))
+#values[[4]][[2]] <- list(c("x", "z", "z", "y"), c("z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y", "x", "x", "x"))
+#plot.stacked.grouped.raw.bars(plot.file, group.names, bar.names, color.names, values, proportions, x.label, plot.title, format)
