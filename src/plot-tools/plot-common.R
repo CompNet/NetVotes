@@ -64,6 +64,3 @@ clean.numerical.data.sec <- function(values)
 	values[is.infinite(values)] <- NA
 	return(values)
 }
-
-
-
