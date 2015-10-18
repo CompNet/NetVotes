@@ -16,12 +16,15 @@ source("src/plot-tools/plot-common.R")
 #
 # plot.file: path and name of the generated files.
 # bar.names: vector of symbols or integer values used to name the individual bars.
-# values: vector of raw values, which need to be counted to determine the bar heights.
+# values: vector of raw values, which need to be counted to determine the bar heights. If this 
+#		  parameter is a list of vectors instead of a single vector, then the counts are processed 
+#		  for each vector and then averaged.
+# proportions: whether to plot actual counts or proportions.
 # x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, x.label, plot.title, format=c("PDF","PNG",NA))
+plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, x.label, proportions=TRUE, plot.title, format=c("PDF","PNG",NA))
 {	counts <- c()
 	dispersion <- NA
 	
@@ -38,7 +41,9 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, x.label, plot
 	}
 	
 	# use the other function to perfom the actual plot
-	plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, x.label, y.label="Count", plot.title, format)
+	print(counts)
+	print(dispersion)
+	plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, x.label, y.label="Count", proportions, plot.title, format)
 }
 
 
@@ -50,19 +55,37 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, x.label, plot
 #
 # plot.file: path and name of the generated files.
 # bar.names: vector of symbols or integer values used to name the individual bars.
-# counts: vector of counts used to to determine the bar heights. If this parameter is a list of
-# 		  vectors instead of a single vector, then the counts are processed for each vector and
-#		  then averaged.
+# counts: vector of counts used to to determine the bar heights. 
 # dispersion: optional vector of dispersion values (one for each count value).
+# proportions: whether to plot actual counts or proportions.
 # x.label: general title of the bars. 
 # y.label: general title of the bar heights. 
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, x.label, y.label, plot.title, format=c("PDF","PNG",NA))
+plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, x.label, y.label, proportions=TRUE, plot.title, format=c("PDF","PNG",NA))
 {	# init the data frame
-	temp <- data.frame(cats=bar.names, counts=counts)
-	
+	col.names <- bar.names
+	col.counts <- c()
+	col.dispersion <- c()
+	if(proportions)
+	{	col.counts <- counts / sum(counts)
+		if(length(dispersion)>0 && !is.na(dispersion))
+			col.dispersion <- dispersion / sum(counts)
+	}
+	else
+	{	col.counts <- counts
+		if(length(dispersion)>0 && !is.na(dispersion))
+			col.dispersion <- dispersion
+	}
+	col.label <- col.counts
+	if(proportions)
+		col.label <- round(col.label*100)
+	col.label[col.label==0] <- NA
+	temp <- data.frame(cats=col.names, cnts=col.counts, lbl=col.label)
+	if(length(dispersion)>0 && !is.na(dispersion))
+		temp[["upper"]] <- col.counts + col.dispersion
+		
 	# process each specified format
 	for(frmt in format)
 	{	# set plot file name
@@ -77,11 +100,8 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 			}
 		}
 		
-		# do the actual plotting
-		# (old version)
-			#barplot(count, main=plot.title, xlab=bars.label)
 		# create the plot
-		p <- ggplot(data=temp, aes(x=factor(cats),y=counts))
+		p <- ggplot(data=temp, aes(x=factor(cats),y=cnts))
 		# change the theme
 		p <- p + theme_bw() + theme(
 			#axis.text.x=element_text(angle = 90, hjust = 1), 
@@ -93,7 +113,7 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 		)
 		# add the bars
 		p <- p + geom_bar(stat="identity", color="black", fill="red")
-		p <- p + geom_text(aes(y=counts, label=counts), vjust=1.6, color="white", size=3.5)
+		p <- p + geom_text(aes(y=cnts, label=lbl), vjust=1.6, color="white", size=3.5)
 		# possiby add title and labels
 		if(!is.na(plot.title))
 			p <- p + ggtitle(plot.title)
@@ -103,9 +123,7 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 			p <- p + ylab(y.label)
 		# possibly add dispersion bars
 		if(length(dispersion)>0 && !is.na(dispersion))
-		{	temp[["upper"]] <- counts + dispersion
-			p <- p + geom_errorbar(data=temp, mapping=aes(ymin=counts, ymax=upper), width=.2)
-		}
+			p <- p + geom_errorbar(data=temp, mapping=aes(ymin=cnts, ymax=upper), width=.2)
 		print(p)
 		
 		# finalize plot file
@@ -174,6 +192,7 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 # color.names: vector of symbols or integer values used to name the stacked colors forming the bars.
 # counts: list of vectors of counts used to to determine the bar heights.
 # dispersion: optional list of vectors of dispersion values (one for each count value).
+# proportions: whether to plot actual counts or proportions.
 # x.label: general title of the bars. 
 # y.label: title of the bar heights. 
 # colors.label: title of the color legend 
@@ -212,7 +231,7 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 	if(proportions)
 		col.label <- round(col.label*100)
 	col.label[col.label==0] <- NA
-	temp <- data.frame(cats=col.names, counts=col.counts, clrs=col.colors, cumul=col.cumul, lbl=col.label)
+	temp <- data.frame(cats=col.names, cnts=col.counts, clrs=col.colors, cumul=col.cumul, lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
 		temp[["upper"]] <- col.dispersion
 	#print(counts)
@@ -233,7 +252,7 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 		}
 		
 		# init the plot
-		p <- ggplot(data=temp, aes(x=factor(cats),y=counts,fill=factor(clrs)))
+		p <- ggplot(data=temp, aes(x=factor(cats),y=cnts,fill=factor(clrs)))
 		# change the theme
 		p <- p + theme_bw() + theme(
 				#axis.text.x=element_text(angle = 90, hjust = 1), 
@@ -327,6 +346,7 @@ plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values
 # color.names: vector of symbols or integer values used to name the stacked colors forming the bars.
 # counts: list of vectors of counts used to to determine the bar heights.
 # dispersion: optional list of vectors of dispersion values (one for each count value).
+# proportions: whether to plot actual counts or proportions.
 # x.label: general title of the bars. 
 # y.label: title of the bar heights. 
 # colors.label: title of the color legend 
@@ -606,22 +626,22 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 #plot.title <- "Graph Title"
 #proportions <- FALSE
 #############################################################################################
-### test uniform individual plot from count
+## test uniform individual plot from count
 #bar.names <- c("A", "B", "C", "D")
 #counts <- c(10, 20, 0, 4)
 ##dispersion <- NA
 #dispersion <- c(1,0,0.5,4)
 #x.label <- "Categories"
 #y.label <- "Values"
-##plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, x.label, y.label, plot.title, format)
+##plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, x.label, y.label, proportions, plot.title, format)
 ### test uniform individual plot from raw data
-##values <- c("A", "D", "D", "C", "C", "D", "D", "D", "B", "B", NA, "D", "D", "D", "D")
-##plot.unif.indiv.raw.bars(plot.file, bar.names, values, x.label, plot.title, format)
+#values <- c("A", "D", "D", "C", "C", "D", "D", "D", "B", "B", NA, "D", "D", "D", "D")
+#plot.unif.indiv.raw.bars(plot.file, bar.names, values, x.label, proportions, plot.title, format)
 ### test uniform individual plot from multiple raw data
-#values <- list()
-#values[[1]] <- c("A", "D", "D", "C", "C", "D", "D", "D", "B", "B", NA, "D", "D", "D", "D")
-#values[[2]] <- c("A", "A", "A", "C", "C", "A", "A", "D", "B", "B", "B", "A", "A", "D", "D")
-#plot.unif.indiv.raw.bars(plot.file, bar.names, values, x.label, plot.title, format)
+##values <- list()
+##values[[1]] <- c("A", "D", "D", "C", "C", "D", "D", "D", "B", "B", NA, "D", "D", "D", "D")
+##values[[2]] <- c("A", "A", "A", "C", "C", "A", "A", "D", "B", "B", "B", "A", "A", "D", "D")
+##plot.unif.indiv.raw.bars(plot.file, bar.names, values, x.label, proportions, plot.title, format)
 #############################################################################################
 ### test stacked individual plot from count
 #bar.names <- c("A", "B", "C", "D")
