@@ -15,4 +15,5 @@
   
   
   ----------------------------------------------------------
-  add y-axis range control to barplot scripts 
+  - add y-axis range control to barplot scripts 
+  - use ggplot also for the line graphs

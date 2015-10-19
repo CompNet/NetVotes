@@ -15,21 +15,17 @@ source("src/plot-tools/plot-common.R")
 # or discretized bin.
 #
 # plot.file: path and name of the generated files.
-# x.values: vector of symbols or integer values.
-# y.values: vector of numerical values.
-# axes: info about the plot axes. It is an optional list containing two lists named x and y.
-#		The y list contains two optional fields range and title. Field range corresponds to the 
-#		forced range for the y axis. It is a vector containing two values corresponding
-#		to the min anx max. An NA symbol means the min and/or max is not specified. If the min
-#		or max is not specified, we use the min or max processed over all considered series. 
-#		Field title is the name of the y axis on the plot. The x list contains two fields title
-#		and values. The formder is similar to that of the y list. The latter is a vector
-#		containing all values of x to appear in the plot, in the specified order.
+# values: vector of real values.
+# x.label: general title of the bars. 
+# proportions: whether to plot actual counts or proportions.
+# x.lim: limits for the x axis (optional).
+# y.max: limit for the y axis (optional).
+# break.nbr: number of bins in the histogram.
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG).
 #############################################################################################
 plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,NA), y.max=NA, break.nbr=NA, plot.title, format=c("PDF","PNG"))
-{	# possibly complete the x axe ranges
+{	# possibly complete the x axis ranges
 	if(is.na(x.lim[1]) & !is.na(x.lim[2]))
 		x.lim[1] <- min(values)
 	else if(!is.na(x.lim[1]) & is.na(x.lim[2]))
