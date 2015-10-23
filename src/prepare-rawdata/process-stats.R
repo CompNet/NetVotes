@@ -1,9 +1,51 @@
 #############################################################################################
-# 
+# Generates plots and data files for various statistics processed on the raw data.
+# Some of them concern the votes, other concern the rebellion index.
 # 
 # 07/2015 Israel Mendonça (v1)
 # 10/2015 Vincent Labatut (v2)
 #############################################################################################
+
+
+#############################################################################################
+# Counts the occurrences of policy domains among the voted documents.
+#
+# doc.details: table describing the voted documents.
+# returns: a table containing the policy domains and their frequencies.
+#############################################################################################
+extract.domains <- function(doc.details)
+{	cat("Retrieving the policy domains\n",sep="")
+	
+	# if the file already exists, just load it
+	if(file.exists(DOMAIN.FREQ.FILE))
+		result <- as.matrix(read.csv(DOMAIN.FREQ.FILE,check.names=FALSE))
+	
+	# otherwise, build the table and record it
+	else
+	{	# count the domains
+		counts <- table(doc.details[,COL.DOMID])
+		
+		# build the table
+		symbols <- names(counts)
+		domains <- DOMAIN.FULLNAMES[symbols]
+		result <- cbind(symbols,domains,counts[domains])
+		colnames(result) <- c(COL.DOMID,COL.DOMAIN,COL.FREQUENCY)
+		
+		# record the table
+		write.csv(result,file=DOMAIN.FREQ.FILE,row.names=FALSE)
+	}
+	
+	return(result)
+}
+
+
+process.stats <- function()
+{
+	domain.details <- extract.domains(doc.details)
+	
+}
+
+
 
 
 #TODO

@@ -18,7 +18,6 @@
 #############################################################################################
 
 
-# TODO it might be necessary to normalize the domain names
 #############################################################################################
 # Folder names
 #############################################################################################
@@ -29,109 +28,89 @@ VW.FOLDER <- file.path(IN.FOLDER,"votewatch")
 
 
 #############################################################################################
-# File names
+# Input file names
 #############################################################################################
-DOC.DETAILS.FILE	<- file.path(VW.FOLDER,"list.csv")
-ALL.VOTES.FILE		<- file.path(OVERALL.FOLDER,"all-votes.csv")
-MEP.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"mep-details.csv")
-MEP.LOYALTY.FILE	<- file.path(OVERALL.FOLDER,"mep-loyalty.csv")
-DOMAIN.FREQ.FILE	<- file.path(OVERALL.FOLDER,"domain-freq.csv")
+DOC.DETAILS.RAW.FILE	<- file.path(VW.FOLDER,"list.csv")
 
 
 #############################################################################################
 # Column names
 #############################################################################################
 # individual votes
-	COL.NAME	<- "Name"
-	COL.STATE	<- "Member State"
-	COL.LOYALTY <- "Loyal / Rebel to political group"
-	COL.VOTE	<- "Vote"
-	COL.GROUP	<- "Group"
+	VW.COL.NAME		<- "Name"
+	VW.COL.STATE	<- "Member State"
+	VW.COL.LOYALTY	<- "Loyal / Rebel to political group"
+	VW.COL.VOTE		<- "Vote"
+	VW.COL.GROUP	<- "Group"
 # document details
-	COL.DOCID		<- "Doc Id"
-	COL.DATE		<- "Date"
-	COL.DOCNAME		<- "Name of document"
-	COL.RESULT		<- "Result of vote"
-	COL.INSTITUTION	<- "Parliament or council"
-	COL.DOMAIN		<- "Policy area"
-# created tables
-	COL.MEPID		<- "MEP Id"
-	COL.LASTNAME	<- "Lastname"
-	COL.FIRSTNAME	<- "Firstname"
-	COL.DOMID		<- "Domain Id"
-	COL.DOCFREQ		<- "Domain Frequency"
+	VW.COL.DOCID		<- "Doc Id"
+	VW.COL.DATE			<- "Date"
+	VW.COL.DOCNAME		<- "Name of document"
+	VW.COL.RESULT		<- "Result of vote"
+	VW.COL.INSTITUTION	<- "Parliament or council"
+	VW.COL.DOMAIN		<- "Policy area"
 	
 
 #############################################################################################
 # Domain mapping
 #############################################################################################
-# how the votewatch domain translate in terms of official names
-DOMAIN.MAP <- c()
-DOMAIN.MAP[DOM.AFCO] <- "Constitutional and inter-institutional affairs"
-DOMAIN.MAP[DOM.AFET] <- "Foreign & security policy"
-DOMAIN.MAP[DOM.AGRI] <- "Agriculture"
-DOMAIN.MAP[DOM.BUDG] <- "Budget"
-DOMAIN.MAP[DOM.CONT] <- "Budgetary control"
-DOMAIN.MAP[DOM.CULT] <- "Culture & education"
-DOMAIN.MAP[DOM.DEVE] <- "Development"
-DOMAIN.MAP[DOM.FEMM] <- "Gender equality"
-DOMAIN.MAP[DOM.ECON] <- "Economic & monetary affairs"
-DOMAIN.MAP[DOM.EMPL] <- "Employment & social affairs"
-DOMAIN.MAP[DOM.ENVI] <- "Environment & public health"
-DOMAIN.MAP[DOM.IMCO] <- "Internal market & consumer protection"
-DOMAIN.MAP[DOM.INTA] <- "International trade"
-DOMAIN.MAP[DOM.ITRE] <- "Industry, research & energy"
-DOMAIN.MAP[DOM.JURI] <- "Legal affairs"
-DOMAIN.MAP[DOM.LIBE] <- "Civil liberties, justice & home affairs"
-DOMAIN.MAP[DOM.PECH] <- "Fisheries"
-DOMAIN.MAP[DOM.PETI] <- "Petitions"
-DOMAIN.MAP[DOM.REGI] <- "Regional development"
-DOMAIN.MAP[DOM.RIPE] <- "Internal regulations of the EP"
-DOMAIN.MAP[DOM.TRAN] <- "Transport & tourism"
-# opposite map
-DOMSYMB.MAP <- names(DOMAIN.FULLNAMES)
-names(DOMSYMB.MAP) <- DOMAIN.MAP
+# map used to convert official domain names into VoteWatch ones
+DOM.SYMB2CUSTOM <- c()
+DOM.SYMB2CUSTOM[DOM.AFCO] <- "Constitutional and inter-institutional affairs"
+DOM.SYMB2CUSTOM[DOM.AFET] <- "Foreign & security policy"
+DOM.SYMB2CUSTOM[DOM.AGRI] <- "Agriculture"
+DOM.SYMB2CUSTOM[DOM.BUDG] <- "Budget"
+DOM.SYMB2CUSTOM[DOM.CONT] <- "Budgetary control"
+DOM.SYMB2CUSTOM[DOM.CULT] <- "Culture & education"
+DOM.SYMB2CUSTOM[DOM.DEVE] <- "Development"
+DOM.SYMB2CUSTOM[DOM.FEMM] <- "Gender equality"
+DOM.SYMB2CUSTOM[DOM.ECON] <- "Economic & monetary affairs"
+DOM.SYMB2CUSTOM[DOM.EMPL] <- "Employment & social affairs"
+DOM.SYMB2CUSTOM[DOM.ENVI] <- "Environment & public health"
+DOM.SYMB2CUSTOM[DOM.IMCO] <- "Internal market & consumer protection"
+DOM.SYMB2CUSTOM[DOM.INTA] <- "International trade"
+DOM.SYMB2CUSTOM[DOM.ITRE] <- "Industry, research & energy"
+DOM.SYMB2CUSTOM[DOM.JURI] <- "Legal affairs"
+DOM.SYMB2CUSTOM[DOM.LIBE] <- "Civil liberties, justice & home affairs"
+DOM.SYMB2CUSTOM[DOM.PECH] <- "Fisheries"
+DOM.SYMB2CUSTOM[DOM.PETI] <- "Petitions"
+DOM.SYMB2CUSTOM[DOM.REGI] <- "Regional development"
+DOM.SYMB2CUSTOM[DOM.RIPE] <- "Internal regulations of the EP"
+DOM.SYMB2CUSTOM[DOM.TRAN] <- "Transport & tourism"
+# opposite map, used to convert VoteWatch domain names into official ones
+DOM.CUSTOM2SYMB <- names(DOMAIN.FULLNAMES)
+names(DOM.CUSTOM2SYMB) <- DOM.SYMB2CUSTOM
 # the list of policy domain symbols
 DOMAIN.VALUES <- sort(names(DOMAIN.FULLNAMES))
 		
 
 #############################################################################################
-# Just loads the file containing the document details.
+# Loads and cleans the file containing the document details.
 #
 # returns: a table containing the document details.
 #############################################################################################
-load.doc.details <- function()
-{	result <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
-	return(result)
-}
-
-
-#############################################################################################
-# Extracts the list of policy domains and their frequency in terms of voted documents.
-#
-# doc.details: table describing the voted documents.
-# returns: a table containing the policy domains and their frequencies.
-#############################################################################################
-extract.domains <- function(doc.details)
-{	cat("Retrieving the policy domains\n",sep="")
+clean.doc.details <- function()
+{	cat("Retrieving and cleaning the document details\n",sep="")
 	
 	# if the file already exists, just load it
 	if(file.exists(DOMAIN.FREQ.FILE))
-		result <- as.matrix(read.csv(DOMAIN.FREQ.FILE,check.names=FALSE))
+		result <- as.matrix(read.csv(DOC.DETAILS.FILE,check.names=FALSE))
 	
 	# otherwise, build the table and record it
 	else
-	{	# count the domains
-		counts <- table(doc.details[,COL.DOMAIN])
+	{	# load the original table
+		data <- as.matrix(read.csv2(DOC.DETAILS.RAW.FILE,check.names=FALSE))
 		
 		# build the table
-		domains <- names(counts)
-		symbols <- DOMSYMB.MAP[domains]
-		result <- cbind(symbols,domains,counts[domains])
-		colnames(result) <- c(COL.DOMID,COL.DOMAIN,COL.DOCFREQ)
+		result <- cbind(data[,c(VW.COL.DOCID,VW.COL.DATE,VW.COL.DOCNAME,VW.COL.RESULT)])
+		# clean the domain names
+		dom.ids <- DOM.CUSTOM2SYMB[data[,VW.COL.DOMAIN]]
+		result <- cbind(result,dom.ids)
+		# add the column names
+		colnames(result) <- c(COL.DOCID,COL.DATE,COL.TITLE,COL.RESULT,COL.DOMID)
 		
 		# record the table
-		write.csv(result,file=DOMAIN.FREQ.FILE,row.names=FALSE)
+		write.csv(result,file=DOC.DETAILS.FILE,row.names=FALSE)
 	}
 	
 	return(result)
@@ -171,21 +150,21 @@ extract.mep.details <- function()
 			
 			# init the table
 			if(length(result)==0)
-			{	result <- rbind(result, cbind(matrix(NA,nrow=nrow(data),ncol=2), data[,c(COL.NAME,COL.STATE,COL.GROUP)]))
-				colnames(result) <- c(COL.LASTNAME,COL.FIRSTNAME,COL.NAME,COL.STATE,COL.GROUP)
+			{	result <- rbind(result, cbind(matrix(NA,nrow=nrow(data),ncol=2), data[,c(VW.COL.NAME,VW.COL.STATE,VW.COL.GROUP)]))
+				colnames(result) <- c(COL.LASTNAME,COL.FIRSTNAME,COL.FULLNAME,COL.STATE,COL.GROUP)
 			}
 			# or add to the table
 			else
-			{	idx <- which(is.na(match(data[,COL.NAME], result[,COL.NAME])))
+			{	idx <- which(is.na(match(data[,VW.COL.NAME], result[,COL.FULLNAME])))
 				if(length(idx)==1)
-					result <- rbind(result, c(rep(NA,2), data[idx,c(COL.NAME,COL.STATE,COL.GROUP)]))
+					result <- rbind(result, c(rep(NA,2), data[idx,c(VW.COL.NAME,VW.COL.STATE,VW.COL.GROUP)]))
 				else
-					result <- rbind(result, cbind(matrix(NA,nrow=length(idx),ncol=2), data[idx,c(COL.NAME,COL.STATE,COL.GROUP)]))
+					result <- rbind(result, cbind(matrix(NA,nrow=length(idx),ncol=2), data[idx,c(VW.COL.NAME,VW.COL.STATE,VW.COL.GROUP)]))
 			}
 		}
 		
 		# split the names
-		names <- sapply(result[,COL.NAME], split.name)
+		names <- sapply(result[,VW.COL.NAME], split.name)
 		result[,COL.LASTNAME] <- names[1,]
 		result[,COL.FIRSTNAME] <- names[2,]
 		
@@ -278,8 +257,8 @@ concatenate.votes <- function(mep.details)
 			colnames(result)[ncol(result)] <- substring(file,1,nchar(file)-4)
 			
 			# complete this new column
-			idx <- match(data[,COL.NAME],mep.details[,COL.NAME])
-			result[idx,ncol(result)] <- data[,COL.VOTE]
+			idx <- match(data[,VW.COL.NAME],mep.details[,COL.FULLNAME])
+			result[idx,ncol(result)] <- data[,VW.COL.VOTE]
 		}
 		
 		# record the table
@@ -330,8 +309,8 @@ concatenate.loyalties <- function(mep.details)
 			colnames(result)[ncol(result)] <- substring(file,1,nchar(file)-4)
 			
 			# complete this new column
-			idx <- match(data[,COL.NAME],mep.details[,COL.NAME])
-			result[idx,ncol(result)] <- data[,COL.LOYALTY]
+			idx <- match(data[,VW.COL.NAME],mep.details[,COL.NAME])
+			result[idx,ncol(result)] <- data[,VW.COL.LOYALTY]
 		}
 		
 		# record the table
@@ -347,20 +326,24 @@ concatenate.loyalties <- function(mep.details)
 #
 # returns: a list containing all the loaded tables.
 #############################################################################################
-load.raw.data <- function()
-{	result <- list()
-	
-	# document-related
-	result$doc.details <- load.doc.details()
-	result$domain.details <- extract.domains(doc.details)
-	
-	# MEP-related
-	result$mep.details <- extract.mep.details()
-	result$all.votes <- concatenate.votes(mep.details)
-	result$loyalty.values <- concatenate.loyalties(mep.details)
-	
-	return(result)
-}
+#load.raw.data <- function()
+#{	result <- list()
+#	
+#	# document-related
+#	result$doc.details <- clean.doc.details()
+#	result$domain.details <- extract.domains(result$doc.details)
+#	
+#	# MEP-related
+#	result$mep.details <- extract.mep.details()
+#	result$all.votes <- concatenate.votes(result$mep.details)
+#	result$loyalty.values <- concatenate.loyalties(result$mep.details)
+#	
+#	return(result)
+#}
+doc.details <- clean.doc.details()
+mep.details <- extract.mep.details()
+all.votes <- concatenate.votes(mep.details)
+loyalty.values <- concatenate.loyalties(mep.details)
 
 
 #############################################################################################
@@ -368,7 +351,6 @@ load.raw.data <- function()
 #############################################################################################
 #l <- load.raw.data()
 #doc.details <- l$doc.details
-#domain.details <- l$domain.details
 #mep.details <- l$mep.details
 #all.votes <- l$all.votes
 #loyalty.values <- l$loyalty.values

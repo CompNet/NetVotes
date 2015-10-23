@@ -34,11 +34,11 @@ filter.by.date <- function(doc.details, start.date=NA, end.date=NA)
 		end.date <- as.Date(end.date,"%d/%m/%Y")
 	
 	# retrieve and convert the date strings
-	dates <- as.Date(doc.details[,COL.DATE],"%d/%m/%Y")
+	dates <- as.Date(doc.details[,VW.COL.DATE],"%d/%m/%Y")
 	
 	# retain only the dates located between start and end (included)
 	idx <- which(dates>=start.date & dates<=end.date)
-	result <- doc.details[idx,COL.DOCID]
+	result <- doc.details[idx,VW.COL.DOCID]
 	
 	return(result)
 }
@@ -59,15 +59,15 @@ filter.by.domain <- function(doc.details, domain.details, domains=c())
 	if(length(domains)==1 && is.na(domains))
 		domains <- c()
 	if(length(domains)==0)
-		domains <- domain.details[,COL.DOMAIN]
+		domains <- domain.details[,VW.COL.DOMAIN]
 	
 	# retrieve the document domains
-	doms <- doc.details[,COL.DOMAIN]
+	doms <- doc.details[,VW.COL.DOMAIN]
 	
 	# retain only the domains matching one of those specified in the specified vector
 	idx <- match(doms,domains)
 	idx <- which(!is.na(idx))
-	result <- doc.details[idx,COL.DOCID]
+	result <- doc.details[idx,VW.COL.DOCID]
 		
 	return(result)
 }

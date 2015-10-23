@@ -7,7 +7,9 @@
 #############################################################################################
 
 
-######## Folders
+#############################################################################################
+# Folders
+#############################################################################################
 # general input folder
 IN.FOLDER <- "in"
 # folder containing configuration files
@@ -20,11 +22,20 @@ OUT.FOLDER <- "out"
 	PILS.FOLDER <- file.path(OUT.FOLDER,"pils")
 	
 		
-######## Files
-# TODO
+#############################################################################################
+# Files
+#############################################################################################
+## created overall tables
+DOC.DETAILS.FILE		<- file.path(OVERALL.FOLDER,"doc-details.csv")
+ALL.VOTES.FILE			<- file.path(OVERALL.FOLDER,"all-votes.csv")
+MEP.DETAILS.FILE		<- file.path(OVERALL.FOLDER,"mep-details.csv")
+MEP.LOYALTY.FILE		<- file.path(OVERALL.FOLDER,"mep-loyalty.csv")
+DOMAIN.FREQ.FILE		<- file.path(OVERALL.FOLDER,"domain-freq.csv")
 
 
-######## Vote values
+#############################################################################################
+# Vote values
+#############################################################################################
 VOTE.FOR <- "For"
 VOTE.ABST <- "Abstention"
 VOTE.AGST <- "Against"
@@ -33,7 +44,9 @@ VOTE.ABSENT <- "Absent"
 VOTE.DOCABSENT <- "DocAbsent"
 
 
-######## Normalized policty domains names
+#############################################################################################
+# Normalized policy domain names
+#############################################################################################
 DOMAIN.FULLNAMES <- c()
 # Constitutional Affairs
 DOM.AFCO <- "AFCO"
@@ -106,6 +119,43 @@ DOM.TRAN <- "TRAN"
 DOMAIN.FULLNAMES[DOM.TRAN] <- "Transport and Tourism"
 
 
+#############################################################################################
+# Temporal constants
+#############################################################################################
+# TODO We might need to adapt that, these years seem quite arbitrary.
+# Maybe switch to a sliding window based on plenary sessions.
+DATE.T7 <- c()
+DATE.T7.Y1 <- c("01/07/2009","31/05/2010")
+DATE.T7[DATE.T7.Y1] <- "2009-10"
+DATE.T7.Y2 <- c("01/06/2010","31/05/2011")
+DATE.T7[DATE.T7.Y2] <- "2010-11"
+DATE.T7.Y3 <- c("01/06/2011","31/05/2012")
+DATE.T7[DATE.T7.Y3] <- "2011-12"
+DATE.T7.Y4 <- c("01/06/2012","31/05/2013")
+DATE.T7[DATE.T7.Y4] <- "2012-13"
+DATE.T7.Y5 <- c("01/06/2013","01/05/2014")
+DATE.T7[DATE.T7.Y5] <- "2013-14"
+DATE.T7.ALL <- c("01/07/2009","01/05/2014")
+DATE.T7[DATE.T7.ALL] <- "Term"
+
+
+#############################################################################################
+# Table column names
+#############################################################################################
+## raw data
+COL.DATE		<- "Date"
+COL.DOCID		<- "Doc Id"
+COL.DOMAIN		<- "Domain"
+COL.DOMID		<- "Domain Id"
+COL.FIRSTNAME	<- "Firstname"
+COL.FREQUENCY	<- "Frequency"
+COL.FULLNAME	<- "Full name"
+COL.GROUP		<- "Group"
+COL.LASTNAME	<- "Lastname"
+COL.MEPID		<- "MEP Id"
+COL.RESULT		<- "Vote result"
+COL.STATE		<- "State"
+COL.TITLE		<- "Title"
 
 
 #
