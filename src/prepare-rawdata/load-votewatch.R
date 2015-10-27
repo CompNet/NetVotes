@@ -98,14 +98,17 @@ clean.doc.details <- function()
 	
 	# otherwise, build the table and record it
 	else
-	{	# load the original table
+	{	# init the cleaned table
+		result <- NULL
+		
+		# load the original table
 		data <- as.matrix(read.csv2(DOC.DETAILS.RAW.FILE,check.names=FALSE))
 		
 		# build the table
-		result <- cbind(data[,c(VW.COL.DOCID,VW.COL.DATE,VW.COL.DOCNAME,VW.COL.RESULT)])
+		result <- cbind(result, as.integer(data[,VW.COL.DOCID]), data[,c(VW.COL.DATE,VW.COL.DOCNAME,VW.COL.RESULT)])
 		# clean the domain names
 		dom.ids <- DOM.CUSTOM2SYMB[data[,VW.COL.DOMAIN]]
-		result <- cbind(result,dom.ids)
+		result <- cbind(result, dom.ids)
 		# add the column names
 		colnames(result) <- c(COL.DOCID,COL.DATE,COL.TITLE,COL.RESULT,COL.DOMID)
 		
@@ -164,7 +167,7 @@ extract.mep.details <- function()
 		}
 		
 		# split the names
-		names <- sapply(result[,VW.COL.NAME], split.name)
+		names <- sapply(result[,COL.FULLNAME], split.name)
 		result[,COL.LASTNAME] <- names[1,]
 		result[,COL.FIRSTNAME] <- names[2,]
 		
@@ -234,7 +237,7 @@ concatenate.votes <- function(mep.details)
 	# otherwise, build the table and record it
 	else
 	{	# init the table
-		result <- cbind(NULL,mep.details[,COL.MEPID])
+		result <- cbind(NULL,as.integer(mep.details[,COL.MEPID]))
 		colnames(result)[1] <- COL.MEPID
 		
 		# get the list of document-wise vote files
@@ -286,7 +289,7 @@ concatenate.loyalties <- function(mep.details)
 	# otherwise, build the table and record it
 	else
 	{	# init the table
-		result <- cbind(NULL,mep.details[,COL.MEPID])
+		result <- cbind(NULL,as.integer(mep.details[,COL.MEPID]))
 		colnames(result)[1] <- COL.MEPID
 		
 		# get the list of document-wise vote files
@@ -309,7 +312,7 @@ concatenate.loyalties <- function(mep.details)
 			colnames(result)[ncol(result)] <- substring(file,1,nchar(file)-4)
 			
 			# complete this new column
-			idx <- match(data[,VW.COL.NAME],mep.details[,COL.NAME])
+			idx <- match(data[,VW.COL.NAME],mep.details[,COL.FULLNAME])
 			result[idx,ncol(result)] <- data[,VW.COL.LOYALTY]
 		}
 		
