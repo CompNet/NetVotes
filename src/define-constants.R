@@ -36,17 +36,27 @@ DOMAIN.FREQ.FILE		<- file.path(OVERALL.FOLDER,"domain-freq.csv")
 #############################################################################################
 # Vote values
 #############################################################################################
+VOTE.VALUES <- c()
 VOTE.FOR <- "For"
+VOTE.VALUES <- c(VOTE.VALUES, VOTE.FOR)
 VOTE.ABST <- "Abstention"
+VOTE.VALUES <- c(VOTE.VALUES, VOTE.ABST)
 VOTE.AGST <- "Against"
+VOTE.VALUES <- c(VOTE.VALUES, VOTE.AGST)
 VOTE.NONE <- "NoVote"
+VOTE.VALUES <- c(VOTE.VALUES, VOTE.NONE)
 VOTE.ABSENT <- "Absent"
+VOTE.VALUES <- c(VOTE.VALUES, VOTE.ABSENT)
 VOTE.DOCABSENT <- "DocAbsent"
+VOTE.VALUES <- c(VOTE.VALUES, VOTE.DOCABSENT)
 
 
 #############################################################################################
 # Normalized policy domain names
 #############################################################################################
+# all domains
+DOM.ALL <- "_All"
+# lists of domains
 DOMAIN.FULLNAMES <- c()
 # Constitutional Affairs
 DOM.AFCO <- "AFCO"
@@ -124,19 +134,33 @@ DOMAIN.FULLNAMES[DOM.TRAN] <- "Transport and Tourism"
 #############################################################################################
 # TODO We might need to adapt that, these years seem quite arbitrary.
 # Maybe switch to a sliding window based on plenary sessions.
-DATE.T7 <- c()
-DATE.T7.Y1 <- c("01/07/2009","31/05/2010")
-DATE.T7[DATE.T7.Y1] <- "2009-10"
-DATE.T7.Y2 <- c("01/06/2010","31/05/2011")
-DATE.T7[DATE.T7.Y2] <- "2010-11"
-DATE.T7.Y3 <- c("01/06/2011","31/05/2012")
-DATE.T7[DATE.T7.Y3] <- "2011-12"
-DATE.T7.Y4 <- c("01/06/2012","31/05/2013")
-DATE.T7[DATE.T7.Y4] <- "2012-13"
-DATE.T7.Y5 <- c("01/06/2013","01/05/2014")
-DATE.T7[DATE.T7.Y5] <- "2013-14"
-DATE.T7.ALL <- c("01/07/2009","01/05/2014")
-DATE.T7[DATE.T7.ALL] <- "Term"
+DATE.STR.T7 <- c()
+DATE.START.T7 <- list()
+DATE.END.T7 <- list()
+DATE.T7.Y1 <- "DATE.T7.Y1"
+DATE.START.T7[[DATE.T7.Y1]] 	<- as.Date("01/07/2009","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y1]] 	<- as.Date("31/05/2010","%d/%m/%Y")
+DATE.STR.T7[DATE.T7.Y1] <- "2009-10"
+DATE.T7.Y2 <- "DATE.T7.Y2"
+DATE.START.T7[[DATE.T7.Y2]] 	<- as.Date("01/06/2010","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y2]] 	<- as.Date("31/05/2011","%d/%m/%Y")
+DATE.STR.T7[DATE.T7.Y2] <- "2010-11"
+DATE.T7.Y3 <- "DATE.T7.Y3"
+DATE.START.T7[[DATE.T7.Y3]] 	<- as.Date("01/06/2011","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y3] ]	<- as.Date("31/05/2012","%d/%m/%Y")
+DATE.STR.T7[DATE.T7.Y3] <- "2011-12"
+DATE.T7.Y4 <- "DATE.T7.Y4"
+DATE.START.T7[[DATE.T7.Y4]] 	<- as.Date("01/06/2012","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y4]] 	<- as.Date("31/05/2013","%d/%m/%Y")
+DATE.STR.T7[DATE.T7.Y4] <- "2012-13"
+DATE.T7.Y5 <- "DATE.T7.Y5"
+DATE.START.T7[[DATE.T7.Y5]] 	<- as.Date("01/06/2013","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y5]] 	<- as.Date("01/05/2014","%d/%m/%Y")
+DATE.STR.T7[DATE.T7.Y5] <- "2013-14"
+DATE.T7.ALL <- "DATE.T7.ALL"
+DATE.START.T7[[DATE.T7.ALL]] 	<- as.Date("01/07/2009","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.ALL]] 	<- as.Date("01/05/2014","%d/%m/%Y")
+DATE.STR.T7[DATE.T7.ALL] <- "Term"
 
 
 #############################################################################################
