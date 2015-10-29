@@ -37,18 +37,23 @@ DOMAIN.FREQ.FILE		<- file.path(OVERALL.FOLDER,"domain-freq.csv")
 # Vote values
 #############################################################################################
 VOTE.VALUES <- c()
+VOTE.VALUES.SMPL <- c()
 VOTE.FOR <- "For"
 VOTE.VALUES <- c(VOTE.VALUES, VOTE.FOR)
+VOTE.VALUES.SMPL <- c(VOTE.VALUES.SMPL,VOTE.FOR)
 VOTE.ABST <- "Abstention"
 VOTE.VALUES <- c(VOTE.VALUES, VOTE.ABST)
 VOTE.AGST <- "Against"
 VOTE.VALUES <- c(VOTE.VALUES, VOTE.AGST)
+VOTE.VALUES.SMPL <- c(VOTE.VALUES.SMPL,VOTE.AGST)
 VOTE.NONE <- "NoVote"
 VOTE.VALUES <- c(VOTE.VALUES, VOTE.NONE)
 VOTE.ABSENT <- "Absent"
 VOTE.VALUES <- c(VOTE.VALUES, VOTE.ABSENT)
 VOTE.DOCABSENT <- "DocAbsent"
 VOTE.VALUES <- c(VOTE.VALUES, VOTE.DOCABSENT)
+VOTE.OTHER <- "Other"
+VOTE.VALUES.SMPL <- c(VOTE.VALUES.SMPL,VOTE.OTHER)
 
 
 #############################################################################################

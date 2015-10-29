@@ -82,7 +82,19 @@ DOM.CUSTOM2SYMB <- names(DOMAIN.FULLNAMES)
 names(DOM.CUSTOM2SYMB) <- DOM.SYMB2CUSTOM
 # the list of policy domain symbols
 DOMAIN.VALUES <- sort(names(DOMAIN.FULLNAMES))
-		
+
+
+#############################################################################################
+# Vote mapping
+#############################################################################################
+VOTE.CUSTOM2SYMB <- c()
+VOTE.CUSTOM2SYMB["For"] <- VOTE.FOR
+VOTE.CUSTOM2SYMB["Abstain"] <- VOTE.ABST
+VOTE.CUSTOM2SYMB["Against"] <- VOTE.AGST
+VOTE.CUSTOM2SYMB["Didn't vote"] <- VOTE.NONE
+VOTE.CUSTOM2SYMB["Absent"] <- VOTE.ABSENT
+VOTE.CUSTOM2SYMB["Documented Absence"] <- VOTE.DOCABSENT
+
 
 #############################################################################################
 # Loads and cleans the file containing the document details.
@@ -261,7 +273,7 @@ concatenate.votes <- function(mep.details)
 			
 			# complete this new column
 			idx <- match(data[,VW.COL.NAME],mep.details[,COL.FULLNAME])
-			result[idx,ncol(result)] <- data[,VW.COL.VOTE]
+			result[idx,ncol(result)] <- VOTE.CUSTOM2SYMB[data[,VW.COL.VOTE]]
 		}
 		
 		# record the table

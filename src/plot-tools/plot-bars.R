@@ -23,9 +23,11 @@ source("src/plot-tools/plot-common.R")
 # y.lim: limits for the y axis (optional).
 # x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
+# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+# returns: the counts processed in this function from the original values.
 #############################################################################################
-plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, plot.title, format=c("PDF","PNG",NA))
+plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	counts <- c()
 	dispersion <- NA
 	
@@ -40,11 +42,18 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=T
 	{	counts <- as.vector(table(factor(values, levels=bar.names), useNA="no"))
 		dispersion <- NA
 	}
+
+	# set up label for y axis
+	if(proportions)
+		y.label <- "Percent"
+	else
+		y.label <- "Count"
 	
 	# use the other function to perfom the actual plot
-	print(counts)
-	print(dispersion)
-	plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label="Count", plot.title, format)
+	#print(counts)
+	#print(dispersion)
+	plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, plot.title, x.rotate, format)
+	return(counts)
 }
 
 
@@ -64,14 +73,23 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=T
 # x.label: general title of the bars. 
 # y.label: general title of the bar heights. 
 # plot.title: general title of the plot (NA for no title at all).
+# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, plot.title, format=c("PDF","PNG",NA))
+plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	# possibly complete the y axis ranges
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
-		y.lim[1] <- min(counts)
+	{	if(proportions)
+			y.lim[1] <- min(counts) / sum(counts)
+		else
+			y.lim[1] <- min(counts)
+	}
 	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
-		y.lim[2] <- max(counts)
+	{	if(proportions)
+			y.lim[2] <- max(counts) / sum(counts)
+		else
+			y.lim[2] <- max(counts)
+	}
 	
 	# init the data frame
 	col.names <- bar.names
@@ -114,16 +132,18 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 			#p <- ggplot(data=temp, aes(x=sort(unique((cats))),y=cnts))
 			p <- ggplot(data=temp, aes(x=cats,y=cnts))
 		else
-			p <- ggplot(data=temp, aes(x=factor(cats),y=cnts))
+			p <- ggplot(data=temp, aes(x=factor(cats),y=cnts)) + scale_x_discrete(limits=bar.names)
 		# change the theme
 		p <- p + theme_bw() + theme(
-			#axis.text.x=element_text(angle = 90, hjust = 1), 
 			panel.grid.major=element_line(colour = "grey90"),
 			panel.grid.minor=element_line(colour = "grey96"),
 			panel.background=element_blank(),
 			axis.ticks=element_blank(), 
 			legend.position="none"
 		)
+		# possibly rotate the x axis labels
+		if(x.rotate)
+			p <- p + theme(axis.text.x=element_text(angle=90,hjust=1))
 		# add the bars
 		if(areas)
 		{	p <- p + geom_area(stat="identity", color="black", fill="red")
@@ -182,9 +202,11 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 # x.label: general title of the bars. 
 # colors.label: title of the color legend.
 # plot.title: general title of the plot (NA for no title at all).
+# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+# returns: the counts processed in this function from the original values.
 #############################################################################################
-plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, values, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, colors.label, plot.title, format=c("PDF","PNG",NA))
+plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, values, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, colors.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	counts <- list()
 	dispersion <- NA
 	
@@ -204,10 +226,17 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 		dispersion <- NA
 	}
 	
+	# set up label for y axis
+	if(proportions)
+		y.label <- "Percent"
+	else
+		y.label <- "Count"
+	
 	# use the other function to perfom the actual plot
 	#print(counts)
-	print(plot.title)
-	plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label="Count", colors.label, plot.title, format)
+	#print(plot.title)
+	plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, colors.label, plot.title, x.rotate, format)
+	return(counts)
 }
 
 
@@ -231,14 +260,23 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 # y.label: title of the bar heights. 
 # colors.label: title of the color legend 
 # plot.title: general title of the plot (NA for no title at all).
+# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, colors.label, plot.title, format=c("PDF","PNG",NA))
+plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, colors.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	# possibly complete the y axis ranges
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
-		y.lim[1] <- min(sapply(counts, min))
+	{	if(proportions)
+			y.lim[1] <- 0
+		else
+			y.lim[1] <- min(sapply(counts, sum)) 
+	}
 	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
-		y.lim[2] <- max(sapply(counts, max))
+	{	if(proportions)
+			y.lim[2] <- 1
+		else
+			y.lim[2] <- max(sapply(counts, sum))
+	}
 	
 	# create the data frame
 	col.names <- c()
@@ -295,16 +333,18 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 		if(areas)
 			p <- ggplot(data=temp, aes(x=cats,y=cnts,fill=clrs))
 		else
-			p <- ggplot(data=temp, aes(x=factor(cats),y=cnts,fill=factor(clrs)))
+			p <- ggplot(data=temp, aes(x=cats,y=cnts,fill=factor(clrs))) + scale_x_discrete(limits=bar.names)
 		# change the theme
 		p <- p + theme_bw() + theme(
-				#axis.text.x=element_text(angle = 90, hjust = 1), 
 				panel.grid.major=element_line(colour = "grey90"),
 				panel.grid.minor=element_line(colour = "grey96"),
 				panel.background=element_blank(),
 				axis.ticks=element_blank()
 				#legend.position="none"
 		)
+		# possibly rotate the x axis labels
+		if(x.rotate)
+			p <- p + theme(axis.text.x=element_text(angle=90,hjust=1))
 		# add the bars
 		if(areas)
 		{	p <- p + geom_area(stat="identity", color="black")
@@ -364,9 +404,11 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 # y.lim: limits for the y axis (optional).
 # x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
+# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+# returns: the counts processed in this function from the original values.
 #############################################################################################
-plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values, proportions, y.lim=c(NA,NA), x.label, plot.title, format=c("PDF","PNG",NA))
+plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values, proportions, y.lim=c(NA,NA), x.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	counts <- list()
 	dispersion <- NA
 	
@@ -386,9 +428,16 @@ plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values
 		dispersion <- NA
 	}
 	
+	# set up label for y axis
+	if(proportions)
+		y.label <- "Percent"
+	else
+		y.label <- "Count"
+	
 	# use the other function to perfom the actual plot
 	#print(counts)
-	plot.unif.grouped.count.bars(plot.file, group.names, bar.names, counts, dispersion, proportions, y.lim, x.label, y.label="Count", plot.title, format)
+	plot.unif.grouped.count.bars(plot.file, group.names, bar.names, counts, dispersion, proportions, y.lim, x.label, y.label, plot.title, x.rotate, format)
+	return(counts)
 }
 
 
@@ -411,14 +460,27 @@ plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values
 # y.label: title of the bar heights. 
 # colors.label: title of the color legend 
 # plot.title: general title of the plot (NA for no title at all).
+# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, counts, dispersion=NA, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label, plot.title, format=c("PDF","PNG",NA))
+plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, counts, dispersion=NA, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	# possibly complete the y axis ranges
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
-		y.lim[1] <- min(sapply(counts, min))
+	{	temp <- sapply(counts, min)
+		idx <- which.min(temp)
+		if(proportions)
+			y.lim[1] <- temp[idx] / sapply(counts, sum)[idx]
+		else
+			y.lim[1] <- temp[idx] 
+	}
 	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
-		y.lim[2] <- max(sapply(counts, max))
+	{	temp <- sapply(counts, max)
+		idx <- which.max(temp)
+		if(proportions)
+			y.lim[2] <- temp[idx] / sapply(counts, sum)[idx]
+		else
+			y.lim[2] <- temp[idx] 
+	}
 	
 	# create the data frame
 	col.groups <- c()
@@ -452,8 +514,8 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 	temp <- data.frame(grps=col.groups, counts=col.counts, bars=col.bars, lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
 		temp[["upper"]] <- col.dispersion
-	print(counts)
-	print(temp)
+	#print(counts)
+	#print(temp)
 	
 	# process each specified format
 	for(frmt in format)
@@ -471,15 +533,18 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		
 		# init the plot
 		p <- ggplot(data=temp, aes(x=factor(grps),y=counts,fill=factor(bars)))
+		p <- p + scale_x_discrete(limits=bar.names) #TODO not tested
 		# change the theme
 		p <- p + theme_bw() + theme(
-			#axis.text.x=element_text(angle = 90, hjust = 1), 
 			panel.grid.major=element_line(colour = "grey90"),
 			panel.grid.minor=element_line(colour = "grey96"),
 			panel.background=element_blank(),
 			axis.ticks=element_blank(),
 			legend.position="none"
 		)
+		# possibly rotate the x axis labels
+		if(x.rotate)
+			p <- p + theme(axis.text.x=element_text(angle=90,hjust=1))
 		# add the bars
 		p <- p + geom_bar(stat="identity", color="black", position=position_dodge())
 		p <- p + geom_text(aes(y=counts, label=lbl), vjust=1.6, color="white", size=3.5, position=position_dodge(.9))
@@ -534,9 +599,11 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 # y.lim: limits for the y axis (optional).
 # x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
+# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+# returns: the counts processed in this function from the original values.
 #############################################################################################
-plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, color.names, values, proportions=TRUE, y.lim=c(NA,NA), x.label, plot.title, format=c("PDF","PNG",NA))
+plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, color.names, values, proportions=TRUE, y.lim=c(NA,NA), x.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	counts <- list()
 	dispersion <- NA
 	
@@ -567,9 +634,16 @@ plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, col
 		dispersion <- NA
 	}
 	
+	# set up label for y axis
+	if(proportions)
+		y.label <- "Percent"
+	else
+		y.label <- "Count"
+	
 	# use the other function to perfom the actual plot
 	#print(counts)
-	plot.stacked.grouped.count.bars(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions, y.lim, x.label, y.label="Count", colors.label, plot.title, format)
+	plot.stacked.grouped.count.bars(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions, y.lim, x.label, y.label, colors.label, plot.title, x.rotate, format)
+	return(counts)
 }
 
 
@@ -586,7 +660,7 @@ plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, col
 # group.names: vector of symbols or integer values used to name the groups of bars.
 # bar.names: vector of symbols or integer values used to name the individual bars.
 # color.names: vector of symbols or integer values used to name the stacked colors forming the bars.
-# counts: list of vectors of counts used to to determine the bar heights.
+# counts: list of lists of vectors of counts used to to determine the bar heights.
 # dispersion: optional list of vectors of dispersion values (one for each count value).
 # proportions: whether to plot actual counts or proportions.
 # y.lim: limits for the y axis (optional).
@@ -594,14 +668,25 @@ plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, col
 # y.label: title of the bar heights. 
 # colors.label: title of the color legend 
 # plot.title: general title of the plot (NA for no title at all).
+# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
-plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label="Count", colors.label, plot.title, format=c("PDF","PNG",NA))
+plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label="Count", colors.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	# possibly complete the y axis ranges
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
-		y.lim[1] <- min(sapply(counts, function(l) min(sapply(l, min))))
+	{	if(proportions)
+			y.lim[1] <- 0 #TODO not tested
+		else
+			y.lim[1] <- min(sapply(counts, function(l) min(sapply(l, sum)))) #TODO not tested  
+	}
+	
+	
 	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
-		y.lim[2] <- max(sapply(counts, function(l) max(sapply(l, max))))
+	{	if(proportions)
+			y.lim[2] <- 1 #TODO not tested
+		else
+			y.lim[2] <- max(sapply(counts, function(l) max(sapply(l, sum)))) #TODO not tested
+	}
 	
 	# create the data frame
 	col.groups <- c()
@@ -664,15 +749,18 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 		
 		# init the plot
 		p <- ggplot(data=temp, aes(x=factor(bars),y=counts,fill=factor(clrs)))
+		p <- p + scale_x_discrete(limits=bar.names) #TODO not tested
 		# change the theme
 		p <- p + theme_bw() + theme(
-				#axis.text.x=element_text(angle = 90, hjust = 1), 
-				panel.grid.major=element_line(colour = "grey90"),
-				panel.grid.minor=element_line(colour = "grey96"),
-				panel.background=element_blank(),
-				axis.ticks=element_blank()
-		#legend.position="none"
+			panel.grid.major=element_line(colour = "grey90"),
+			panel.grid.minor=element_line(colour = "grey96"),
+			panel.background=element_blank(),
+			axis.ticks=element_blank()
+			#legend.position="none"
 		)
+		# possibly rotate the x axis labels
+		if(x.rotate)
+			p <- p + theme(axis.text.x=element_text(angle=90,hjust=1))
 		# add the bars
 		p <- p + geom_bar(stat="identity", color="black", position = 'stack')
 		p <- p + facet_grid(~ grps)
@@ -713,13 +801,14 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 #############################################################################################
 ## Tests
 #############################################################################################
-plot.file <- "temp"
-format <- c("PDF","PNG", NA)
-plot.title <- "Graph Title"
-proportions <- FALSE
-areas <- TRUE
-y.lim <- c(NA,NA)
-#y.lim <- c(-10,40)
+#plot.file <- "temp"
+#format <- c("PDF","PNG", NA)
+#plot.title <- "Graph Title"
+#proportions <- FALSE
+#areas <- TRUE
+#y.lim <- c(NA,NA)
+##y.lim <- c(-10,40)
+#x.rotate <- FALSE
 #############################################################################################
 ### test uniform individual plot from count
 ##bar.names <- c("A", "B", "C", "D")
@@ -729,18 +818,18 @@ y.lim <- c(NA,NA)
 #dispersion <- c(1,0,0.5,4)
 #x.label <- "Categories"
 #y.label <- "Values"
-#plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, plot.title, format)
+#plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, plot.title, x.rotate, format)
 ### test uniform individual plot from raw data
 ##values <- c("A", "D", "D", "C", "C", "D", "D", "D", "B", "B", NA, "D", "D", "D", "D")
 ##values <- c("1", "4", "4", "3", "3", "4", "4", "4", "2", "2", NA, "4", "4", "4", "4")
-##plot.unif.indiv.raw.bars(plot.file, bar.names, values, proportions, areas, y.lim, x.label, plot.title, format)
+##plot.unif.indiv.raw.bars(plot.file, bar.names, values, proportions, areas, y.lim, x.label, plot.title, x.rotate, format)
 ### test uniform individual plot from multiple raw data
 ##values <- list()
 ##values[[1]] <- c("A", "D", "D", "C", "C", "D", "D", "D", "B", "B", NA, "D", "D", "D", "D")
 ##values[[2]] <- c("A", "A", "A", "C", "C", "A", "A", "D", "B", "B", "B", "A", "A", "D", "D")
 ##values[[1]] <- c("1", "4", "4", "3", "3", "4", "4", "4", "2", "2", NA, "4", "4", "4", "4")
 ##values[[2]] <- c("1", "1", "1", "3", "3", "1", "1", "4", "2", "2", "2", "1", "1", "4", "4")
-##plot.unif.indiv.raw.bars(plot.file, bar.names, values, proportions, areas, y.lim, x.label, plot.title, format)
+##plot.unif.indiv.raw.bars(plot.file, bar.names, values, proportions, areas, y.lim, x.label, plot.title, x.rotate, format)
 #############################################################################################
 ### test stacked individual plot from count
 #bar.names <- c("A", "B", "C", "D")
@@ -762,14 +851,14 @@ y.lim <- c(NA,NA)
 #x.label <- "Categories"
 #y.label <- "Values"
 #colors.label <- "Colors"
-##plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, colors.label, plot.title, format)
+##plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, colors.label, plot.title, x.rotate, format)
 ### test stacked individual plot from raw data
 #values <- list()
 #values[[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
 #values[[2]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", NA, "y", "x", "y", "x")
 #values[[3]] <- c("y", "x", "x", "x", "y", "z", "y")
 #values[[4]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
-#plot.stacked.indiv.raw.bars(plot.file, bar.names, color.names, values, proportions, areas, y.lim, x.label, colors.label, plot.title, format)
+#plot.stacked.indiv.raw.bars(plot.file, bar.names, color.names, values, proportions, areas, y.lim, x.label, colors.label, plot.title, x.rotate, format)
 ###c("x","y","z")[round(runif(10,min=1,max=3))]
 ### test stacked individual plot from multiple raw data
 ##values <- list(); values[[1]] <- list(); values[[2]] <- list(); values[[3]] <- list(); values[[4]] <- list()
@@ -781,7 +870,7 @@ y.lim <- c(NA,NA)
 ##values[[3]][[2]] <- c("y", "x", "x", "x", "y", "z", "y")
 ##values[[4]][[1]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
 ##values[[4]][[2]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y", "x", "x", "x")
-##plot.stacked.indiv.raw.bars(plot.file, bar.names, color.names, values, proportions, areas, y.lim, x.label, colors.label, plot.title, format)
+##plot.stacked.indiv.raw.bars(plot.file, bar.names, color.names, values, proportions, areas, y.lim, x.label, colors.label, plot.title, x.rotate, format)
 #############################################################################################
 ### test uniform grouped plot from count
 #group.names <- c("A", "B", "C", "D")
@@ -801,14 +890,14 @@ y.lim <- c(NA,NA)
 #)
 #x.label <- "Categories"
 #y.label <- "Values"
-##plot.unif.grouped.count.bars(plot.file, group.names, bar.names, counts, dispersion, proportions, y.lim, x.label, y.label, plot.title, format)
+##plot.unif.grouped.count.bars(plot.file, group.names, bar.names, counts, dispersion, proportions, y.lim, x.label, y.label, plot.title, x.rotate, format)
 ##### test uniform grouped plot from raw data
 #values <- list()
 #values[[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
 #values[[2]] <- c("y", "x", "z", "x", "z", "z", "z", "y", "x", "z", NA, "y", "x", "y", "x")
 #values[[3]] <- c("y", "x", "x", "x", "y", "z", "y")
 #values[[4]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
-##plot.unif.grouped.raw.bars(plot.file, group.names, bar.names, values, proportions, y.lim, x.label, plot.title, format)
+##plot.unif.grouped.raw.bars(plot.file, group.names, bar.names, values, proportions, y.lim, x.label, plot.title, x.rotate, format)
 ### test uniform grouped plot from multiple raw data
 #values <- list(); values[[1]] <- list(); values[[2]] <- list(); values[[3]] <- list(); values[[4]] <- list()
 #values[[1]][[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
@@ -819,7 +908,7 @@ y.lim <- c(NA,NA)
 #values[[3]][[2]] <- c("y", "x", "x", "x", "y", "z", "y")
 #values[[4]][[1]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y")
 #values[[4]][[2]] <- c("x", "z", "z", "y", "z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y", "x", "x", "x")
-#plot.unif.grouped.raw.bars(plot.file, group.names, bar.names, values, proportions, y.lim, x.label, plot.title, format)
+#plot.unif.grouped.raw.bars(plot.file, group.names, bar.names, values, proportions, y.lim, x.label, plot.title, x.rotate, format)
 #############################################################################################
 ### test stacked grouped plot from count
 #group.names <- c("A", "B", "C", "D")
@@ -839,14 +928,14 @@ y.lim <- c(NA,NA)
 #x.label <- "Categories"
 #y.label <- "Values"
 #colors.label <- "Colors"
-##plot.stacked.grouped.count.bars(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions, y.lim, x.label, y.label, colors.label, plot.title, format)
+##plot.stacked.grouped.count.bars(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions, y.lim, x.label, y.label, colors.label, plot.title, x.rotate, format)
 ###### test stacked grouped plot from raw data
 ##values <- list()
 ##values[[1]] <- list(c("x","z","z","y","y","x","y","y","y","z","z","x","x","x","x","x"), c("z","z","x","x","x","x","z","y","z","y","z","z"))
 ##values[[2]] <- list(c("z","z","y","y","y","y","z","y","z"), c("z","z","y","y","y","y","y","y","x","x","x"))
 ##values[[3]] <- list(c("z","z","x","z","y","y","x","x","z","z","y","y","z"), c("z","z","x","y","y","y","z","y","z","y","z","x","x","x"))
 ##values[[4]] <- list(c("z","y","y","y","z","z","x"), c("z","z","z","z","z","z","y","z","x","z","z","z","y","z","y","z"))
-##plot.stacked.grouped.raw.bars(plot.file, group.names, bar.names, color.names, values, proportions, y.lim, x.label, plot.title, format)
+##plot.stacked.grouped.raw.bars(plot.file, group.names, bar.names, color.names, values, proportions, y.lim, x.label, plot.title, x.rotate, format)
 ##### test stacked grouped plot from multiple raw data
 #values <- list(); values[[1]] <- list(); values[[2]] <- list(); values[[3]] <- list(); values[[4]] <- list()
 #values[[1]][[1]] <- list(c("x", "x", "x", "x", "y"), c("y", "y", "z", "z", "z", NA, "x"))
@@ -857,4 +946,4 @@ y.lim <- c(NA,NA)
 #values[[3]][[2]] <- list(c("y", "x", "x"), c("x", "y", "z", "y"))
 #values[[4]][[1]] <- list(c("x", "z", "z", "y", "z", "y"), c("z", "y", "z", "z", "z", "x", "x", "y", "y"))
 #values[[4]][[2]] <- list(c("x", "z", "z", "y"), c("z", "y", "z", "y", "z", "z", NA, "x", "x", "y", "y", "x", "x", "x"))
-#plot.stacked.grouped.raw.bars(plot.file, group.names, bar.names, color.names, values, proportions, y.lim, x.label, plot.title, format)
+#plot.stacked.grouped.raw.bars(plot.file, group.names, bar.names, color.names, values, proportions, y.lim, x.label, plot.title, x.rotate, format)

@@ -34,11 +34,11 @@ filter.by.date <- function(doc.details, start.date=NA, end.date=NA)
 		end.date <- as.Date(end.date,"%d/%m/%Y")
 	
 	# retrieve and convert the date strings
-	dates <- as.Date(doc.details[,VW.COL.DATE],"%d/%m/%Y")
+	dates <- as.Date(doc.details[,COL.DATE],"%d/%m/%Y")
 	
 	# retain only the dates located between start and end (included)
 	idx <- which(dates>=start.date & dates<=end.date)
-	result <- doc.details[idx,VW.COL.DOCID]
+	result <- doc.details[idx,COL.DOCID]
 	
 	return(result)
 }
@@ -50,24 +50,23 @@ filter.by.date <- function(doc.details, start.date=NA, end.date=NA)
 # NA, or empty, then all domains are considered.
 #
 # doc.details: table containing the details of the voted documents.
-# domain.details: table containing the domain names.
 # domains: a vector of domains, or NA to use all keep domains.
 # returns: a vector of document ids, corresponding to the document matching the domains.
 #############################################################################################
-filter.by.domain <- function(doc.details, domain.details, domains=c())
+filter.by.domain <- function(doc.details, domains=c())
 {	# possibly add all domains
 	if(length(domains)==1 && is.na(domains))
 		domains <- c()
 	if(length(domains)==0)
-		domains <- domain.details[,VW.COL.DOMAIN]
+		domains <- sort(unique(doc.details[,COL.DOMID]))
 	
 	# retrieve the document domains
-	doms <- doc.details[,VW.COL.DOMAIN]
+	doms <- doc.details[,COL.DOMID]
 	
 	# retain only the domains matching one of those specified in the specified vector
 	idx <- match(doms,domains)
 	idx <- which(!is.na(idx))
-	result <- doc.details[idx,VW.COL.DOCID]
+	result <- doc.details[idx,COL.DOCID]
 		
 	return(result)
 }
@@ -85,15 +84,14 @@ filter.by.domain <- function(doc.details, domain.details, domains=c())
 # doc.details: table containing the details of the voted documents.
 # start.date: starting date.
 # end.date: ending date.
-# domain.details: table containing the domain names.
 # domains: a vector of domains, or NA to use all keep domains.
 # returns: a vector of document ids, corresponding to the document matching the criteria.
 #############################################################################################
-filter.by.date.and.domain <- function(doc.details, start.date, end.date, domain.details, domains)
+filter.by.date.and.domain <- function(doc.details, start.date, end.date, domains)
 {	# filter by date
 	ids1 <- filter.by.date(doc.details, start.date, end.date)
 	# filter by domain
-	ids2 <- filter.by.domain(doc.details, domain.details, domains)
+	ids2 <- filter.by.domain(doc.details, domains)
 	
 	# keep only the documents appearing in both vectors
 	result <- intersect(ids1,ids2)
@@ -106,9 +104,9 @@ filter.by.date.and.domain <- function(doc.details, start.date, end.date, domain.
 #############################################################################################
 #doc.ids <- filter.by.date(doc.details, start.date="07/10/2010", end.date="19/10/2010")
 #print(doc.ids)
-#doc.ids <- filter.by.domain(doc.details, domain.details, domains=c("Budget"))
+#doc.ids <- filter.by.domain(doc.details, domains=c("BUDG"))
 #print(doc.ids)
-#doc.ids <- filter.by.date.and.domain(doc.details, start.date="07/10/2010", end.date="19/10/2010", domain.details, domains=c("Budget"))
+#doc.ids <- filter.by.date.and.domain(doc.details, start.date="07/10/2010", end.date="19/10/2010", domains=c("BUDG"))
 #print(doc.ids)
-#doc.ids <- filter.by.date.and.domain(doc.details, start.date="07/10/2010", end.date="19/10/2010", domain.details, domains=c("Budget","Budgetary control"))
+#doc.ids <- filter.by.date.and.domain(doc.details, start.date="07/10/2010", end.date="19/10/2010", domains=c("BUDG","CONT"))
 #print(doc.ids)
