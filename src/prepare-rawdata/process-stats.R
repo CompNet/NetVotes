@@ -17,26 +17,92 @@ source("src/plot-tools/plot-bars.R")
 process.domain.frequencies <- function(doc.details)
 {	cat("Processing the frequencies of documents by policy domain\n",sep="")
 	
-	# if the file already exists, just load it
-	if(file.exists(DOMAIN.FREQ.FILE))
-		result <- as.matrix(read.csv(DOMAIN.FREQ.FILE,check.names=FALSE))
+	# set folder up
+	folder <- paste(OVERALL.FOLDER,"/domains/",sep="")
+	dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 	
-	# otherwise, build the table and record it
-	else
-	{	# count the domains
-		counts <- table(doc.details[,COL.DOMID])
+	# overall domain distribution
+		# absolute counts as bars
+		title <- paste("Numbers of documents by policy domain for the whole term",sep="")
+		plot.file <- paste(folder,"term-counts",sep="")
+		data <- plot.unif.indiv.raw.bars(plot.file, 
+			bar.names=names(DOMAIN.FULLNAMES), 
+			values=doc.details[,COL.DOMID],
+			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
+			x.label="Domains", plot.title=title, 
+			x.rotate=FALSE, format=c("PDF","PNG",NA))
+		# record as a table
+		data <- data.frame(data)
+		data <- cbind(data.frame(names(DOMAIN.FULLNAMES)),data)
+		colnames(data) <- c(COL.DOMID, COL.COUNT)
+		table.file <- paste(plot.file,".csv",sep="")
+		write.csv(data,file=table.file, row.names=FALSE)
 		
-		# build the table
-		symbols <- names(counts)
-		domains <- DOMAIN.FULLNAMES[symbols]
-		result <- cbind(symbols,domains,counts[domains])
-		colnames(result) <- c(COL.DOMID,COL.DOMAIN,COL.FREQUENCY)
+		# proportions as bars
+		title <- paste("Proportions of documents by policy domain for the whole term",sep="")
+		plot.file <- paste(folder,"term-proportions",sep="")
+		data <- plot.unif.indiv.raw.bars(plot.file, 
+			bar.names=names(DOMAIN.FULLNAMES), 
+			values=doc.details[,COL.DOMID],
+			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
+			x.label="Domains", plot.title=title, 
+			x.rotate=FALSE, format=c("PDF","PNG",NA))
+		# record as a table
+		data <- data / sum(data)
+		data <- data.frame(data)
+		data <- cbind(data.frame(names(DOMAIN.FULLNAMES)),data)
+		colnames(data) <- c(COL.DOMID, COL.COUNT)
+		table.file <- paste(plot.file,".csv",sep="")
+		write.csv(data,file=table.file, row.names=FALSE)
+	
+	# process the list of documents by year
+	docs <- list()
+	for(date in DATE.T7.YEARS)
+	{	cat("Processing period ",DATE.STR.T7[date],"\n",sep="")
 		
-		# record the table
-		write.csv(result,file=DOMAIN.FREQ.FILE,row.names=FALSE)
+		# retain only the documents related to the selected dates
+		docids <- filter.by.date(doc.details, 
+			start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]])
+		idx <- match(docids,doc.details[,COL.DOCID])
+		if(length(idx)>0)
+			docs[[date]] <- doc.details[idx,COL.DOMID]
+		else
+			docs[[date]] <- NA
 	}
 	
-	return(result)
+	# yearly domain distribution
+		# absolute counts as bars
+		title <- paste("Yearly numbers of documents by policy domain",sep="")
+		plot.file <- paste(folder,"yearly-counts",sep="")
+		data <- plot.stacked.indiv.raw.bars(plot.file, 
+			bar.names=DATE.STR.T7[DATE.T7.YEARS], color.names=names(DOMAIN.FULLNAMES), 
+			values=docs, 
+			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
+			x.label="Years", colors.label="Domains", plot.title=title, 
+			x.rotate=FALSE, format=c("PDF","PNG",NA))
+		# record as a table
+		data <- t(data.frame(data))
+		data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
+		colnames(data) <- c(COL.DATE, names(DOMAIN.FULLNAMES))
+		table.file <- paste(plot.file,".csv",sep="")
+		write.csv(data,file=table.file, row.names=FALSE)
+		
+		# proportions as bars
+		title <- paste("Yearly proportions of documents by policy domain",sep="")
+		plot.file <- paste(folder,"yearly-proportions",sep="")
+		data <- plot.stacked.indiv.raw.bars(plot.file, 
+			bar.names=DATE.STR.T7[DATE.T7.YEARS], color.names=names(DOMAIN.FULLNAMES), 
+			values=docs, 
+			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
+			x.label="Years", colors.label="Domains", plot.title=title, 
+			x.rotate=FALSE, format=c("PDF","PNG",NA))
+		# record as a table
+		data <- lapply(data,function(v) v/sum(v))
+		data <- t(data.frame(data))
+		data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
+		colnames(data) <- c(COL.DATE, names(DOMAIN.FULLNAMES))
+		table.file <- paste(plot.file,".csv",sep="")
+		write.csv(data,file=table.file, row.names=FALSE)
 }
 
 
@@ -169,8 +235,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				domains=domval)
 			idx <- match(docids,doc.details[,COL.DOCID])
 			if(length(idx)>0)
-			{	filtered.docs <- doc.details[idx,]
-				cols <- match(docids, colnames(all.votes))
+			{	cols <- match(docids, colnames(all.votes))
 				if(date==DATE.T7.ALL)
 					votes.spe <- c(all.votes[,cols])
 				else
@@ -192,7 +257,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				bar.names=vote.values, 
 				values=votes.spe, 
 				proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
-				x.label="Vote value", plot.title=title, 
+				x.label="Vote values", plot.title=title, 
 				x.rotate=FALSE, format=c("PDF","PNG",NA))
 			# record as a table
 			data <- data.frame(data)

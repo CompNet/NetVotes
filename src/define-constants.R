@@ -30,7 +30,6 @@ DOC.DETAILS.FILE		<- file.path(OVERALL.FOLDER,"doc-details.csv")
 ALL.VOTES.FILE			<- file.path(OVERALL.FOLDER,"all-votes.csv")
 MEP.DETAILS.FILE		<- file.path(OVERALL.FOLDER,"mep-details.csv")
 MEP.LOYALTY.FILE		<- file.path(OVERALL.FOLDER,"mep-loyalty.csv")
-DOMAIN.FREQ.FILE		<- file.path(OVERALL.FOLDER,"domain-freq.csv")
 
 
 #############################################################################################
