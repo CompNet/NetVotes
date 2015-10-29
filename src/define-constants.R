@@ -144,34 +144,36 @@ DATE.START.T7 <- list()
 DATE.END.T7 <- list()
 DATE.T7.Y1 <- "DATE.T7.Y1"
 DATE.START.T7[[DATE.T7.Y1]] 	<- as.Date("01/07/2009","%d/%m/%Y")
-DATE.END.T7[[DATE.T7.Y1]] 	<- as.Date("31/05/2010","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y1]] 		<- as.Date("31/05/2010","%d/%m/%Y")
 DATE.STR.T7[DATE.T7.Y1] <- "2009-10"
 DATE.T7.Y2 <- "DATE.T7.Y2"
 DATE.START.T7[[DATE.T7.Y2]] 	<- as.Date("01/06/2010","%d/%m/%Y")
-DATE.END.T7[[DATE.T7.Y2]] 	<- as.Date("31/05/2011","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y2]] 		<- as.Date("31/05/2011","%d/%m/%Y")
 DATE.STR.T7[DATE.T7.Y2] <- "2010-11"
 DATE.T7.Y3 <- "DATE.T7.Y3"
 DATE.START.T7[[DATE.T7.Y3]] 	<- as.Date("01/06/2011","%d/%m/%Y")
-DATE.END.T7[[DATE.T7.Y3] ]	<- as.Date("31/05/2012","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y3] ]		<- as.Date("31/05/2012","%d/%m/%Y")
 DATE.STR.T7[DATE.T7.Y3] <- "2011-12"
 DATE.T7.Y4 <- "DATE.T7.Y4"
 DATE.START.T7[[DATE.T7.Y4]] 	<- as.Date("01/06/2012","%d/%m/%Y")
-DATE.END.T7[[DATE.T7.Y4]] 	<- as.Date("31/05/2013","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y4]] 		<- as.Date("31/05/2013","%d/%m/%Y")
 DATE.STR.T7[DATE.T7.Y4] <- "2012-13"
 DATE.T7.Y5 <- "DATE.T7.Y5"
 DATE.START.T7[[DATE.T7.Y5]] 	<- as.Date("01/06/2013","%d/%m/%Y")
-DATE.END.T7[[DATE.T7.Y5]] 	<- as.Date("01/05/2014","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.Y5]] 		<- as.Date("01/05/2014","%d/%m/%Y")
 DATE.STR.T7[DATE.T7.Y5] <- "2013-14"
 DATE.T7.ALL <- "DATE.T7.ALL"
-DATE.START.T7[[DATE.T7.ALL]] 	<- as.Date("01/07/2009","%d/%m/%Y")
-DATE.END.T7[[DATE.T7.ALL]] 	<- as.Date("01/05/2014","%d/%m/%Y")
+DATE.START.T7[[DATE.T7.ALL]]	<- as.Date("01/07/2009","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.ALL]] 		<- as.Date("01/05/2014","%d/%m/%Y")
 DATE.STR.T7[DATE.T7.ALL] <- "Term"
+DATE.T7.YEARS <- c(DATE.T7.Y1,DATE.T7.Y2,DATE.T7.Y3,DATE.T7.Y4,DATE.T7.Y5)
 
 
 #############################################################################################
 # Table column names
 #############################################################################################
 ## raw data
+COL.COUNT		<- "Count"
 COL.DATE		<- "Date"
 COL.DOCID		<- "Doc Id"
 COL.DOMAIN		<- "Domain"
@@ -182,9 +184,11 @@ COL.FULLNAME	<- "Full name"
 COL.GROUP		<- "Group"
 COL.LASTNAME	<- "Lastname"
 COL.MEPID		<- "MEP Id"
+COL.PERCENT		<- "Percent"
 COL.RESULT		<- "Vote result"
 COL.STATE		<- "State"
 COL.TITLE		<- "Title"
+COL.VOTE		<- "Vote"
 
 
 #
