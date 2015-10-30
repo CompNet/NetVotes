@@ -26,8 +26,9 @@ OUT.FOLDER <- "out"
 # Files
 #############################################################################################
 ## created overall tables
-DOC.DETAILS.FILE		<- file.path(OVERALL.FOLDER,"doc-details.csv")
 ALL.VOTES.FILE			<- file.path(OVERALL.FOLDER,"all-votes.csv")
+DOC.DETAILS.FILE		<- file.path(OVERALL.FOLDER,"doc-details.csv")
+GROUP.LINES.FILE		<- file.path(OVERALL.FOLDER,"group-lines.csv")
 MEP.DETAILS.FILE		<- file.path(OVERALL.FOLDER,"mep-details.csv")
 MEP.LOYALTY.FILE		<- file.path(OVERALL.FOLDER,"mep-loyalty.csv")
 
@@ -53,6 +54,13 @@ VOTE.DOCABSENT <- "DocAbsent"
 VOTE.VALUES <- c(VOTE.VALUES, VOTE.DOCABSENT)
 VOTE.OTHER <- "Other"
 VOTE.VALUES.SMPL <- c(VOTE.VALUES.SMPL,VOTE.OTHER)
+
+
+#############################################################################################
+# Loyalty values
+#############################################################################################
+LOYALTY.LOYAL = "Loyal"
+LOYALTY.REBEL = "Rebel"
 
 
 #############################################################################################
@@ -166,6 +174,37 @@ DATE.START.T7[[DATE.T7.ALL]]	<- as.Date("01/07/2009","%d/%m/%Y")
 DATE.END.T7[[DATE.T7.ALL]] 		<- as.Date("01/05/2014","%d/%m/%Y")
 DATE.STR.T7[DATE.T7.ALL] <- "Term"
 DATE.T7.YEARS <- c(DATE.T7.Y1,DATE.T7.Y2,DATE.T7.Y3,DATE.T7.Y4,DATE.T7.Y5)
+
+
+#############################################################################################
+# Political groups
+#############################################################################################
+GROUP.NAMES <- c()
+GROUP.FULLNAMES <- c()
+GROUP.ALDE <- "ALDE"
+GROUP.NAMES <- c(GROUP.NAMES, GROUP.ALDE)
+GROUP.FULLNAMES[GROUP.ALDE] <- "Alliance of Liberals and Democrats for Europe"
+GROUP.ECR <- "ECR"
+GROUP.NAMES <- c(GROUP.NAMES, GROUP.ECR)
+GROUP.FULLNAMES[GROUP.ECR] <- "European Conservatives and Reformists"
+GROUP.EFD <- "EFD"
+GROUP.NAMES <- c(GROUP.NAMES, GROUP.EFD)
+GROUP.FULLNAMES[GROUP.EFD] <- "Europe of Freedom and Democracy"
+GROUP.EPP <- "EPP"
+GROUP.NAMES <- c(GROUP.NAMES, GROUP.EPP)
+GROUP.FULLNAMES[GROUP.EPP] <- "European People's Party"
+GROUP.GREENS <- "Greens"
+GROUP.NAMES <- c(GROUP.NAMES, GROUP.GREENS)
+GROUP.FULLNAMES[GROUP.GREENS] <- "The Greens–European Free Alliance"
+GROUP.GUENGL <- "GUENGL"
+GROUP.NAMES <- c(GROUP.NAMES, GROUP.GUENGL)
+GROUP.FULLNAMES[GROUP.GUENGL] <- "European United Left–Nordic Green Left"
+GROUP.NI <- "NI"
+GROUP.NAMES <- c(GROUP.NAMES, GROUP.NI)
+GROUP.FULLNAMES[GROUP.NI] <- "Non-Inscrits"
+GROUP.SD <- "SD"
+GROUP.NAMES <- c(GROUP.NAMES, GROUP.SD)
+GROUP.FULLNAMES[GROUP.SD] <- "Progressive Alliance of Socialists and Democrats"
 
 
 #############################################################################################

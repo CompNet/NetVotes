@@ -352,6 +352,15 @@ process.vote.distribution <- function(all.votes, doc.details)
 	process.vote.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified")
 }
 
+
+#############################################################################################
+#############################################################################################
+process.rebellion.stats <- function(all.votes, doc.details)
+{
+	
+}
+
+
 #############################################################################################
 # Main function of this script, generating all stat-related tables and plots.
 #

@@ -16,6 +16,7 @@
 # 07/2015 Israel Mendonça (v1)
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
+source("src/prepare-data/load-common.R")
 
 
 #############################################################################################
@@ -55,7 +56,7 @@ DOC.DETAILS.RAW.FILE	<- file.path(VW.FOLDER,"list.csv")
 # Domain mapping
 #############################################################################################
 # map used to convert official domain names into VoteWatch ones
-DOM.SYMB2CUSTOM <- c()
+DOM.SYMB2CUSTOM <- c() #TODO this structure is apparently not used anywhere >> delete
 DOM.SYMB2CUSTOM[DOM.AFCO] <- "Constitutional and inter-institutional affairs"
 DOM.SYMB2CUSTOM[DOM.AFET] <- "Foreign & security policy"
 DOM.SYMB2CUSTOM[DOM.AGRI] <- "Agriculture"
@@ -81,7 +82,7 @@ DOM.SYMB2CUSTOM[DOM.TRAN] <- "Transport & tourism"
 DOM.CUSTOM2SYMB <- names(DOMAIN.FULLNAMES)
 names(DOM.CUSTOM2SYMB) <- DOM.SYMB2CUSTOM
 # the list of policy domain symbols
-DOMAIN.VALUES <- sort(names(DOMAIN.FULLNAMES))
+DOMAIN.VALUES <- sort(names(DOMAIN.FULLNAMES)) #TODO this should be in the "constants definition" script
 
 
 #############################################################################################
@@ -94,6 +95,20 @@ VOTE.CUSTOM2SYMB["Against"] <- VOTE.AGST
 VOTE.CUSTOM2SYMB["Didn't vote"] <- VOTE.NONE
 VOTE.CUSTOM2SYMB["Absent"] <- VOTE.ABSENT
 VOTE.CUSTOM2SYMB["Documented Absence"] <- VOTE.DOCABSENT
+
+
+#############################################################################################
+# Group mapping
+#############################################################################################
+GROUP.CUSTOM2SYMB <- c()
+GROUP.CUSTOM2SYMB["ALDE/ADLE"] <- GROUP.ALDE
+GROUP.CUSTOM2SYMB["ECR"] <- GROUP.ECR
+GROUP.CUSTOM2SYMB["EFD"] <- GROUP.EFD
+GROUP.CUSTOM2SYMB["EPP"] <- GROUP.EPP
+GROUP.CUSTOM2SYMB["Greens/EFA"] <- GROUP.GREENS
+GROUP.CUSTOM2SYMB["GUE-NGL"] <- GROUP.GUENGL
+GROUP.CUSTOM2SYMB["NI"] <- GROUP.NI
+GROUP.CUSTOM2SYMB["S&D"] <- GROUP.SD
 
 
 #############################################################################################
@@ -177,6 +192,9 @@ extract.mep.details <- function()
 					result <- rbind(result, cbind(matrix(NA,nrow=length(idx),ncol=2), data[idx,c(VW.COL.NAME,VW.COL.STATE,VW.COL.GROUP)]))
 			}
 		}
+		
+		# clean group names
+		result[,COL.GROUP] <- GROUP.CUSTOM2SYMB[result[,COL.GROUP]]
 		
 		# split the names
 		names <- sapply(result[,COL.FULLNAME], split.name)
@@ -358,7 +376,12 @@ concatenate.loyalties <- function(mep.details)
 doc.details <- clean.doc.details()
 mep.details <- extract.mep.details()
 all.votes <- concatenate.votes(mep.details)
-loyalty.values <- concatenate.loyalties(mep.details)
+#loyalty.values <- concatenate.loyalties(mep.details)
+group.lines <- extract.group.lines(all.votes, mep.details)
+loyalty.values <- process.loyalty.values(all.votes, mep.details, group.lines)
+	
+#TODO these calls should be moved in the caller script (functions are supposed to be standard, for the other vote scripts).
+# maybe the common method? which would contain a script taking the dataset name as a parameter? 
 
 
 #############################################################################################
