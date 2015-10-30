@@ -1,5 +1,5 @@
 #############################################################################################
-#  Functions useful to the various scripts designed to load raw data.
+# Functions useful to the other more specific scripts designed to load raw data.
 # 
 # 10/2015 Vincent Labatut
 #############################################################################################
@@ -7,7 +7,8 @@
 
 #############################################################################################
 # Process the political lines for each group for each vote. It is simply the vote value
-# used by the majority of MEPs in the considered group.
+# used by the majority of MEPs in the considered group. We consider only the expressed
+# votes, i.e. FOR, AGAINST and ABSTENTION.
 # 
 # all.votes: the complete vote matrix, as created by the function concatenate.votes.
 # mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
@@ -22,7 +23,12 @@ extract.group.lines <- function(all.votes, mep.details)
 	
 	# otherwise, build the table and record it
 	else
-	{	# init result matrix
+	{	# clean vote values to keep only expressed ones
+		all.votes[all.votes==VOTE.NONE] <- NA
+		all.votes[all.votes==VOTE.ABSENT] <- NA
+		all.votes[all.votes==VOTE.DOCABSENT] <- NA
+		
+		# init result matrix
 		result <- matrix(NA, ncol=ncol(all.votes), nrow=length(GROUP.NAMES))
 		cn <- colnames(all.votes)
 		cn[1] <- COL.GROUP
@@ -40,11 +46,15 @@ extract.group.lines <- function(all.votes, mep.details)
 			{	group <- groups[g]
 				idx <- which(mep.details[,COL.GROUP]==group)
 				counts <- table(votes[idx])
-				mx.idx <- which(counts==max(counts))
-				if(length(mx.idx)>1)
+				if(length(counts)==0)
 					result[g,i] <- NA
 				else
-					result[g,i] <- names(counts)[mx.idx]
+				{	mx.idx <- which(counts==max(counts))
+					if(length(mx.idx)>1)
+						result[g,i] <- NA
+					else
+						result[g,i] <- names(counts)[mx.idx]
+				}
 			}
 		}
 		
@@ -57,7 +67,7 @@ extract.group.lines <- function(all.votes, mep.details)
 
 
 #############################################################################################
-# There are different variants to process loyalty. Here, we consider the political line
+# There are different variants to process behavior values. Here, we consider the political line
 # of the groups as a reference. For a given MEP, we compare the way he votes to the political
 # line of his group. If the group did not express an opinion (in majority), i.e. no FOR, AGAINST
 # or ABSTENTION, we suppose there's no line. If the MEP did not express his opinion, we do not
@@ -75,12 +85,14 @@ extract.group.lines <- function(all.votes, mep.details)
 # mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
 # group.lines: the way each group voted for each document, in majority.
 #############################################################################################
-process.loyalty.values <- function(all.votes, mep.details, group.lines)
-{	cat("Processing the loyalty values\n",sep="")
+process.behavior.values <- function(all.votes, mep.details, group.lines)
+{	cat("Processing the behavior values\n",sep="")
 	
 	# if the file already exists, just load it
-	if(file.exists(MEP.LOYALTY.FILE))
-		result <- as.matrix(read.csv(MEP.LOYALTY.FILE,check.names=FALSE))
+	if(file.exists(MEP.BEHAVIOR.FILE))
+	{	result <- as.matrix(read.csv(MEP.BEHAVIOR.FILE,check.names=FALSE))
+		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
+	}
 	
 	# otherwise, build the table and record it
 	else
@@ -107,16 +119,16 @@ process.loyalty.values <- function(all.votes, mep.details, group.lines)
 			idx <- which(group.lines[,COL.GROUP]==group)
 			lines <- group.lines[idx,2:ncol(group.lines)]
 			votes <- all.votes[i,2:ncol(all.votes)]
-			loyalty <- lines == votes
-			idx.loyal <- which(loyalty)
-			idx.rebel <- which(!loyalty)
-			loyalty[idx.loyal] <- LOYALTY.LOYAL
-			loyalty[idx.rebel] <- LOYALTY.REBEL
-			result[i,2:ncol(result)] <- loyalty
+			behavior <- lines == votes
+			idx.loyal <- which(behavior)
+			idx.rebel <- which(!behavior)
+			behavior[idx.loyal] <- BEHAVIOR.LOYAL
+			behavior[idx.rebel] <- BEHAVIOR.REBEL
+			result[i,2:ncol(result)] <- behavior
 		}
 			
 		# record the table
-		write.csv(result,file=MEP.LOYALTY.FILE,row.names=FALSE)
+		write.csv(result,file=MEP.BEHAVIOR.FILE,row.names=FALSE)
 	}
 	
 	return(result)

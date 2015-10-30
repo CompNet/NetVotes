@@ -97,8 +97,13 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 	col.dispersion <- c()
 	if(proportions)
 	{	col.counts <- counts / sum(counts)
+		if(is.infinite(col.counts))
+			col.counts <- 0
 		if(length(dispersion)>0 && !is.na(dispersion))
-			col.dispersion <- dispersion / sum(counts)
+		{	col.dispersion <- dispersion / sum(counts)
+			if(is.infinite(col.dispersion))
+				col.dispersion <- 0
+		}			
 	}
 	else
 	{	col.counts <- counts
@@ -233,8 +238,8 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 		y.label <- "Count"
 	
 	# use the other function to perfom the actual plot
-	#print(counts)
 	#print(plot.title)
+	#print(counts)
 	plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, colors.label, plot.title, x.rotate, format)
 	return(counts)
 }
@@ -267,13 +272,13 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 {	# possibly complete the y axis ranges
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
 	{	if(proportions)
-			y.lim[1] <- 0
+			y.lim[1] <- 0 #TODO not tested
 		else
 			y.lim[1] <- min(sapply(counts, sum)) 
 	}
 	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
 	{	if(proportions)
-			y.lim[2] <- 1
+			y.lim[2] <- 1 #TODO not tested
 		else
 			y.lim[2] <- max(sapply(counts, sum))
 	}
@@ -290,8 +295,13 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 		col.colors <- c(col.colors, color.names)
 		if(proportions)
 		{	tc <- counts[[s]] / sum(counts[[s]])
+			if(is.infinite(tc))
+				tc <- 0
 			if(length(dispersion)>0 && !is.na(dispersion))
-				td <- dispersion[[s]] / sum(counts[[s]])
+			{	td <- dispersion[[s]] / sum(counts[[s]])
+				if(is.infinite(td))
+					td <- 0
+			}				
 		}
 		else
 		{	tc <- counts[[s]]
@@ -494,8 +504,13 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		col.bars <- c(col.bars, bar.names)
 		if(proportions)
 		{	tc <- counts[[s]] / sum(counts[[s]])
+			if(is.infinite(tc))
+				tc <- 0
 			if(length(dispersion)>0 && !is.na(dispersion))
-				td <- dispersion[[s]] / sum(counts[[s]])
+			{	td <- dispersion[[s]] / sum(counts[[s]])
+				if(is.infinite(td))
+					td <- 0
+			}
 		}
 		else
 		{	tc <- counts[[s]]
@@ -707,8 +722,13 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 			col.colors <- c(col.colors, color.names)
 			if(proportions)
 			{	tc <- l.counts[[s]] / sum(l.counts[[s]])
+				if(is.infinite(tc))
+					tc <- 0
 				if(length(dispersion)>0 && !is.na(dispersion))
-					td <- l.dispersion[[s]] / sum(l.counts[[s]])
+				{	td <- l.dispersion[[s]] / sum(l.counts[[s]])
+					if(is.infinite(td))
+						td <- 0
+				}
 			}
 			else
 			{	tc <- l.counts[[s]]

@@ -24,7 +24,7 @@ source("src/plot-tools/plot-common.R")
 # plot.title: general title of the plot (NA for no title at all).
 # format: vector of formats of the generated files (PDF and/or PNG).
 #############################################################################################
-plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,NA), y.max=NA, break.nbr=NA, plot.title, format=c("PDF","PNG"))
+plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,NA), y.max=NA, break.nbr=NA, plot.title, format=c("PDF","PNG",NA))
 {	# possibly complete the x axis ranges
 	if(is.na(x.lim[1]) & !is.na(x.lim[2]))
 		x.lim[1] <- min(values)
@@ -37,6 +37,7 @@ plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,
 	
 	# format the data
 	temp <- data.frame(vals=values)
+	#print(temp)
 
 	# process each specified format
 	for(frmt in format)
@@ -59,8 +60,8 @@ plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,
 		{	p <- p + geom_histogram(
 				aes(y = ..count.. / sum(..count..)),
 				binwidth=1/break.nbr,
-				fill="red",
-				col="black"
+				col="black",
+				fill="red"
 			)
 			#p <- p + geom_density(alpha=.2)
 			if(is.na(y.max))
@@ -72,13 +73,15 @@ plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,
 		{	p <- p + geom_histogram(
 				aes(y = ..count..),
 				binwidth=1/break.nbr,
+				col="black",
 				fill="red"
 			)
 			if(!is.na(y.max))
 				p <- p + ylim(c(0,y.max))
 		}
 		# set up the plot limits
-		p <- p + xlim(x.lim)
+		if(!any(is.na(x.lim)))
+			p <- p + xlim(x.lim)
 		# possiby add title and labels
 		if(!is.na(plot.title))
 			p <- p + ggtitle(plot.title)
@@ -94,6 +97,10 @@ plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,
 		if(!is.na(frmt))
 			dev.off()
 	}
+	
+	result <- ggplot_build(p)$data[[1]]
+	#print(result)
+	return(result)
 }
 
 
