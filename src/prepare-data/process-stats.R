@@ -9,10 +9,10 @@ source("src/plot-tools/plot-bars.R")
 
 
 #############################################################################################
-# Counts the occurrences of policy domains among the voted documents.
+# Counts the occurrences of policy domains among the voted documents. Generates the corresponding
+# plots: distribution for the whole term and for each year.
 #
 # doc.details: table describing the voted documents.
-# returns: a table containing the policy domains and their frequencies.
 #############################################################################################
 process.domain.frequencies <- function(doc.details)
 {	cat("Processing the frequencies of documents by policy domain\n",sep="")
@@ -107,7 +107,11 @@ process.domain.frequencies <- function(doc.details)
 
 
 #############################################################################################
-# Generate all plots and tables for the complete vote value distributions (FOR, AGAINST, etc.)
+# Generate all plots and tables for the complete vote value distributions (FOR, AGAINST, etc.).
+# This means a folder is created for each domain, and it contains a folder for each considered
+# period (each year and the whole term). Four different plots and two table are generated, 
+# corresponding to the distributions of vote values represented as bars vs. areas, for the
+# absolute counts vs. proportions.
 #
 # all.votes: raw vote data, including how each MEP voted.
 # doc.details: description of each voted document.
@@ -207,7 +211,9 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 #############################################################################################
 # Generate all plots and tables for the aggregated vote value distributions (FOR, AGAINST, etc.).
 # Unlike the "complete" variant, this function integrates data on various dimensions (temporal
-# or topical).
+# or topical). For each domain (including all domains), we aggregate the votes by year and for
+# the whole term. The results are represented as bar plots, for both absolute counts and
+# proportions.
 #
 # all.votes: raw vote data, including how each MEP voted.
 # doc.details: description of each voted document.
@@ -321,6 +327,11 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 
 
 #############################################################################################
+# Deals with the generation of stats and plots related to the distribution of vote values 
+# (FOR, AGAINST, etc.)
+#
+# all.votes: raw vote data, including how each MEP voted.
+# doc.details: description of each voted document.
 #############################################################################################
 process.vote.distribution <- function(all.votes, doc.details)
 {	# process a simplified version of the data
@@ -342,8 +353,12 @@ process.vote.distribution <- function(all.votes, doc.details)
 }
 
 #############################################################################################
+# Main function of this script, generating all stat-related tables and plots.
+#
+# all.votes: raw vote data, including how each MEP voted.
+# doc.details: description of each voted document.
 #############################################################################################
-process.stats <- function()
+process.stats <- function(all.votes, doc.details)
 {	# domains
 	process.domain.frequencies(doc.details)
 	
@@ -355,21 +370,12 @@ process.stats <- function()
 
 
 #TODO
-# x histogram of votes: each bar corresponds to a document and vertically breaks down to all types of votes
-#   we can do proportions and absolute values.
-# x also record the corresponding tables
-# x same thing by year (1 bar = 1 year) and for the whole term (hist bars = each type of vote?)
-# - same for all the above, but with domains instead of types of votes
-# - same thing but with the domains instead of the years (proportion of types of votes by domain).
-# - could also do that by year *and* by domain.
-#
 # - histogram of rebellion: each bar displays the proportion of loyal/rebel for each *expressed* vote
 # - same complementary stuff as above
 #
-# - move the domain distribution processing here, it has nothing to do in the load script.
-# - generate a histogram with the comparative frequencies of the domains for the whole term.
-# - histogram: each bar is one year, displaying the proportion for each domain.
-
+#
+# - on peut extraire des réseaux au niveau des partis politiques
+# - peut être aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 
 
 
 

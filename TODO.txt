@@ -10,6 +10,7 @@
 
 - DL an original data file from VoteWatch and compare with those of the project
   - did israel make a manual preprocessing on these files?
+  >> VoteWatch does not freely provide datasets anymore
 
   - Certain MEPs started at mid-term (or on a different moment) >> should not be considered as absent.
   
