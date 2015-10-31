@@ -140,7 +140,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 				domval <- NA
 			else
 				domval <- dom
-			docids <- filter.by.date.and.domain(doc.details, 
+			docids <- filter.docs.by.date.and.domain(doc.details, 
 				start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
 				domains=domval)
 			idx <- match(docids,doc.details[,COL.DOCID])
@@ -254,7 +254,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				domval <- NA
 			else
 				domval <- dom
-			docids <- filter.by.date.and.domain(doc.details, 
+			docids <- filter.docs.by.date.and.domain(doc.details, 
 				start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
 				domains=domval)
 			if(length(docids)>0)
@@ -367,7 +367,7 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 				domval <- NA
 			else
 				domval <- dom
-			docids <- filter.by.date.and.domain(doc.details, 
+			docids <- filter.docs.by.date.and.domain(doc.details, 
 					start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
 					domains=domval)
 			if(length(docids)>1)
@@ -451,8 +451,9 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 #
 # all.votes: raw vote data, including how each MEP voted.
 # doc.details: description of each voted document.
+# subfolder: subfolder used to store the generated files.
 #############################################################################################
-process.vote.distribution <- function(all.votes, doc.details)
+process.vote.distribution <- function(all.votes, doc.details, subfolder)
 {	# process a simplified version of the data
 	all.votes.smpl <- all.votes
 	all.votes.smpl[all.votes.smpl==VOTE.ABSENT] <- VOTE.OTHER
@@ -461,7 +462,7 @@ process.vote.distribution <- function(all.votes, doc.details)
 	all.votes.smpl[all.votes.smpl==VOTE.NONE] <- VOTE.OTHER
 	
 	# setup folder
-	main.folder <- paste(OUT.FOLDER,"/votes/",sep="")
+	main.folder <- paste(OUT.FOLDER,"/votes/",subfolder,"/",sep="")
 	object <- "votes"
 	colors.label <- "Votes"
 	
@@ -484,11 +485,11 @@ process.vote.distribution <- function(all.votes, doc.details)
 # behavior.values: individual behavior data, i.e. how each MEP voted relatively to his political 
 #				   group (loyal or rebel).
 # doc.details: description of each voted document.
+# subfolder: subfolder used to store the generated files.
 #############################################################################################
-process.behavior.stats <- function(behavior.values, doc.details)
-{
-	# setup folder
-	main.folder <- paste(OUT.FOLDER,"/behavior/",sep="")
+process.behavior.stats <- function(behavior.values, doc.details, subfolder)
+{	# setup folder
+	main.folder <- paste(OUT.FOLDER,"/behavior/",subfolder,"/",sep="")
 	object <- "loyal votes"
 	colors.label <- "Behavior"
 	
@@ -515,23 +516,61 @@ process.behavior.stats <- function(behavior.values, doc.details)
 # doc.details: description of each voted document.
 #############################################################################################
 process.stats <- function(all.votes, behavior.values, doc.details)
-{	# domains
-	process.domain.frequencies(doc.details)
+{	# domain stats
+#	process.domain.frequencies(doc.details)
 	
-	# votes
-	process.vote.distribution(all.votes, doc.details)
+	# process stats for all data
+#	cat("Process stats for all data","\n",sep="")
+#	folder <- "everything"
+#	process.vote.distribution(all.votes, doc.details, folder)
+#	process.behavior.stats(behavior.values, doc.details, folder)
 	
-	# behavior
-	process.behavior.stats(behavior.values, doc.details)
+	# stats by political group
+	cat("Process stats by group","\n",sep="")
+	folder <- "bygroup"
+	for(group in GROUP.NAMES)
+	{	cat("Process stats for group ",group,"\n",sep="")
+		
+		# select data
+		mepids <- filter.meps.by.group(mep.details,group)
+		idx <- match(mepids,all.votes[,COL.MEPID])
+		group.votes <- all.votes[idx,]
+		group.behavior <- behavior.values[idx,]
+		
+		# setup folder
+		grp.folder <- paste(folder,"/",group,sep="")
+		# process vote (for, against...) stats
+		process.vote.distribution(group.votes, doc.details, grp.folder)
+		# process behavior (loyalty vs. rebel) stats
+		process.behavior.stats(group.behavior, doc.details, grp.folder)
+	}
+	
+	# stats by home country
+	cat("Process stats by country","\n",sep="")
+	folder <- "bycountry"
+	for(country in COUNTRY.VALUES)
+	{	cat("Process stats for country ",country,"\n",sep="")
+		
+		# select data
+		mepids <- filter.meps.by.country(mep.details,country)
+		idx <- match(mepids,all.votes[,COL.MEPID])
+		country.votes <- all.votes[idx,]
+		country.behavior <- behavior.values[idx,]
+		
+		# setup folder
+		cntr.folder <- paste(folder,"/",country,sep="")
+		# process vote (for, against...) stats
+		process.vote.distribution(country.votes, doc.details, cntr.folder)
+		# process behavior (loyalty vs. rebel) stats
+		process.behavior.stats(country.behavior, doc.details, cntr.folder)
+	}
 }
-
 process.stats(all.votes, behavior.values, doc.details)
+	
 	
 #TODO
 # - on peut extraire des réseaux au niveau des partis politiques
 # - peut être aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 
-#
-# - distribution des votes par groupes ? par pays ? >> simplement restreindre les données puis réappliquer les méthodes existantes
 # 
 # - on pourrait aussi voir le comportement individuel: nombre de vote de chaque type pour une personne.
 #   ça peut être complet, agrégé par année, par législature... 

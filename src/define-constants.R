@@ -235,6 +235,68 @@ GROUP.FULLNAMES[GROUP.SD] <- "Progressive Alliance of Socialists and Democrats"
 
 
 #############################################################################################
+# Country names
+#############################################################################################
+COUNTRY.VALUES <- c()
+COUNTRY.AT <- "Austria"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.AT)
+COUNTRY.BE <- "Belgium"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.BE)
+COUNTRY.BG <- "Bulgaria"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.BG)
+COUNTRY.HR <- "Croatia"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.HR)
+COUNTRY.CY <- "Cyprus"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.CY)
+COUNTRY.CZ <- "Czech Republic"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.CZ)
+COUNTRY.DK <- "Denmark"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.DK)
+COUNTRY.EE <- "Estonia"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.EE)
+COUNTRY.FI <- "Finland"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.FI)
+COUNTRY.FR <- "France"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.FR)
+COUNTRY.DE <- "Germany"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.DE)
+COUNTRY.GR <- "Greece"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.GR)
+COUNTRY.HU <- "Hungary"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.HU)
+COUNTRY.IE <- "Ireland"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.IE)
+COUNTRY.IT <- "Italy"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.IT)
+COUNTRY.LV <- "Latvia"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.LV)
+COUNTRY.LT <- "Lithuania"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.LT)
+COUNTRY.LU <- "Luxembourg"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.LU)
+COUNTRY.MT <- "Malta"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.MT)
+COUNTRY.NL <- "Netherlands"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.NL)
+COUNTRY.PL <- "Poland"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.PL)
+COUNTRY.PT <- "Portugal"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.PT)
+COUNTRY.RO <- "Romania"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.RO)
+COUNTRY.SK <- "Slovakia"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.SK)
+COUNTRY.SI <- "Slovenia"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.SI)
+COUNTRY.ES <- "Spain"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.ES)
+COUNTRY.SE <- "Sweden"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.SE)
+COUNTRY.UK <- "United Kingdom"
+COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.UK)
+
+
+#############################################################################################
 # Table column names
 #############################################################################################
 ## raw data
