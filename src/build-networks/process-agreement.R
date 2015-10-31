@@ -10,11 +10,12 @@
 #############################################################################################
 # Loads the specified score matrix, and returns, well, this matrix.
 #
-# file.name: name of the file containing the scores.
+# file.name: name of the file containing the scores (without the .txt extension).
 # returns: the loaded matrix.
 #############################################################################################
 load.agreement.matrix <- function(file.name)
 {	# load the file content
+	file.name <- paste(file.name,".txt",sep="")
 	file <- file.path(SCORE.FOLDER,file.name)
 	df <- read.table(file, header=FALSE, as.is=TRUE, check.names=FALSE)
 	# possibly replace NA by equivalent strings
@@ -59,7 +60,8 @@ process.agreement.score <- function(votes, agreement.matrix)
 	# fill matrix
 	for(i in 1:length(votes))
 	{	for(j in 1:length(votes))
-		{	result[i,j] <- agreement.matrix[votes[i],votes[j]]
+		{	#cat(i,":",j,"\n")
+			result[i,j] <- agreement.matrix[votes[i],votes[j]]
 		}
 	}
 	
@@ -89,7 +91,8 @@ process.agreement.index <- function(votes, agreement.matrix)
 		
 	# process each document in the vote matrix
 	for(i in 1:ncol(votes))
-	{	# get scores
+	{	cat("Processing document",i,"\n")
+		# get scores
 		scores <- process.agreement.score(votes[,i], agreement.matrix)
 		
 		# update counts
@@ -112,9 +115,18 @@ process.agreement.index <- function(votes, agreement.matrix)
 
 
 #############################################################################################
+# Processes the agreement for all domains and time periods, for the specified raw votes.
+#
+# all.votes: raw vote data, including how each MEP voted.
+# doc.details: description of each voted document.
+# score.file: files describing the scores to use when processing the inter-MEP agreement.
+#			  (without the .txt extension).
+# subfolder: subfolder used to store the generated files.
 #############################################################################################
-process.all.agreement <- function(all.votes, score.file)
-{	# load the agreement scores
+process.agreement.stats <- function(all.votes, doc.details, score.file, subfolder)
+{	object <- "Agreement index"
+	
+	# load the agreement scores
 	agreement.matrix <- load.agreement.matrix(score.file)
 	
 	# consider each domain individually (including all domains at once)
@@ -122,12 +134,10 @@ process.all.agreement <- function(all.votes, score.file)
 	{	cat("Processing agreement data for domain ",dom,"\n",sep="")
 		
 		# setup folder
-		folder <- paste(main.folder,dom,"/averaged/",sep="")
+		folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
 		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 		
 		# consider each time period (each individual year as well as the whole term)
-		agr <- list()
-		agr.spe <- list()
 		for(date in c(DATE.T7.ALL,DATE.T7.YEARS))
 		{	cat("Processing period ",DATE.STR.T7[date],"\n",sep="")
 			
@@ -139,19 +149,28 @@ process.all.agreement <- function(all.votes, score.file)
 			docids <- filter.docs.by.date.and.domain(doc.details, 
 				start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
 				domains=domval)
+			# check if there's enough data remaining
 			if(length(docids)>1)
 			{	# format data
 				cols <- match(docids, colnames(all.votes))
 				votes <- all.votes[,cols]
 				aggreement <- process.agreement.index(votes, agreement.matrix)
-				agr <- apply(numerized, 2, mean)
+				
+				# record raw agreement index values
+				colnames(aggreement) <- all.votes[,COL.MEPID]
+				rownames(aggreement) <- all.votes[,COL.MEPID]
+				table.file <- paste(folder,DATE.STR.T7[date],"-agreement",sep="")
+				write.csv(aggreement,file=table.file, row.names=TRUE)
+				
+				# keep only the triangular part of the matrix (w/o the diagonal)
+				agr.vals <- aggreement[upper.tri(aggreement,diag=FALSE)]
 				
 				# plot absolute counts as bars
 				title <- paste("Distribution of ",object," for domain ",dom,", for period ",DATE.STR.T7[date],sep="")
-				plot.file <- paste(folder,prefix,DATE.STR.T7[date],"-counts",sep="")
-				data <- plot.histo(plot.file, values=agr[[date]],
+				plot.file <- paste(folder,DATE.STR.T7[date],"-counts",sep="")
+				data <- plot.histo(plot.file, values=agr.vals,
 					x.label=object, 
-					proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
+					proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA, 
 					plot.title=title, format=c("PDF","PNG",NA))
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
@@ -160,10 +179,10 @@ process.all.agreement <- function(all.votes, score.file)
 				
 				# plot proportions as bars
 				title <- paste("Distribution of ",object," for domain ",dom,", for period ",DATE.STR.T7[date],sep="")
-				plot.file <- paste(folder,prefix,DATE.STR.T7[date],"-proportions",sep="")
-				data <- plot.histo(plot.file, values=agr[[date]],
+				plot.file <- paste(folder,DATE.STR.T7[date],"-proportions",sep="")
+				data <- plot.histo(plot.file, values=agr.vals,
 					x.label=object, 
-					proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
+					proportions=TRUE, x.lim=c(-1,1), y.max=0.5, break.nbr=NA, 
 					plot.title=title, format=c("PDF","PNG",NA))
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
@@ -171,9 +190,59 @@ process.all.agreement <- function(all.votes, score.file)
 				write.csv(data,file=table.file, row.names=FALSE)
 			}
 		}
-	
+	}
 }
 
+
+#############################################################################################
+# Main function of this script, generating all agreement-related tables and plots.
+#
+# all.votes: individual vote data, i.e. how each MEP voted.
+# doc.details: description of each voted document.
+# mep.details: description of each MEP.
+# score.file: files describing the scores to use when processing the inter-MEP agreement
+#			  (without the .txt extension).
+#############################################################################################
+process.agreement <- function(all.votes, doc.details, mep.details, score.file)
+{	# process agreement for all data
+	cat("Process agreement for all data","\n",sep="")
+	folder <- "everything"
+#	process.agreement.stats(all.votes, doc.details, score.file, folder)
+	
+	# stats by political group
+	cat("Process stats by group","\n",sep="")
+	folder <- "bygroup"
+	for(group in GROUP.NAMES)
+	{	cat("Process stats for group ",group,"\n",sep="")
+		
+		# select data
+		mepids <- filter.meps.by.group(mep.details,group)
+		idx <- match(mepids,all.votes[,COL.MEPID])
+		group.votes <- all.votes[idx,]
+		
+		# setup folder
+		grp.folder <- paste(folder,"/",group,sep="")
+		# process agreement
+		process.agreement.stats(group.votes, doc.details, score.file, grp.folder)
+	}
+	
+	# stats by home country
+	cat("Process stats by country","\n",sep="")
+	folder <- "bycountry"
+	for(country in COUNTRY.VALUES)
+	{	cat("Process stats for country ",country,"\n",sep="")
+		
+		# select data
+		mepids <- filter.meps.by.country(mep.details,country)
+		idx <- match(mepids,all.votes[,COL.MEPID])
+		country.votes <- all.votes[idx,]
+		
+		# setup folder
+		cntr.folder <- paste(folder,"/",country,sep="")
+		# process agreement
+		process.agreement.stats(country.votes, doc.details, score.file, cntr.folder)
+	}
+}
 
 
 #############################################################################################
@@ -194,4 +263,5 @@ process.all.agreement <- function(all.votes, score.file)
 #indices <- process.agreement.index(votes, agreement.matrix)
 #print(indices)
 #################################################
-
+process.agreement(all.votes, doc.details, mep.details, score.file="m3")
+#################################################

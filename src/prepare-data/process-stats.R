@@ -344,6 +344,18 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 
 
 #############################################################################################
+# Generate all plots and tables for the averaged vote value distributions (FOR, AGAINST, etc.).
+# Unlike the "complete" variant, this function integrates data on various dimensions (temporal
+# or topical). For each domain (including all domains), we average the votes by year and for
+# the whole term. The resulting distributions are represented as histograms, for both absolute 
+# counts and proportions.
+#
+# all.votes: raw vote data, including how each MEP voted.
+# doc.details: description of each voted document.
+# target: the vote value we want to count (to get numerical values, since we want an average).
+# file.prefix: string to use in the file names.
+# main.folder: folder in which to record the generated plots and tables.
+# object: counted object (votes, loyal votes, etc.).
 #############################################################################################
 process.vote.distribution.average <- function(all.votes, doc.details, target, file.prefix, main.folder, object)
 {	# setup file prefix
@@ -356,9 +368,11 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 	for(dom in c(DOM.ALL,DOMAIN.VALUES))
 	{	cat("Processing ",file.prefix," data for domain ",dom,"\n",sep="")
 		
+		# setup folder
+		folder <- paste(main.folder,dom,"/averaged/",sep="")
+		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
+		
 		# consider each time period (each individual year as well as the whole term)
-		votes <- list()
-		votes.spe <- list()
 		for(date in c(DATE.T7.ALL,DATE.T7.YEARS))
 		{	cat("Processing period ",DATE.STR.T7[date],"\n",sep="")
 			
@@ -370,72 +384,35 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 			docids <- filter.docs.by.date.and.domain(doc.details, 
 					start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
 					domains=domval)
+			# check if there's enough data remaining
 			if(length(docids)>1)
-			{	cols <- match(docids, colnames(all.votes))
+			{	# format data
+				cols <- match(docids, colnames(all.votes))
 				temp <- all.votes[,cols]
 				#print(temp)
 				numerized <- matrix(0,nrow=nrow(temp), ncol=ncol(temp))
 				numerized[temp==target] <- 1
-				if(date==DATE.T7.ALL)
-					votes.spe <- apply(numerized, 2, mean)
-				else
-					votes[[date]] <- apply(numerized, 2, mean)
-			}
-			else
-				votes[[date]] <- NA
-		}
-		
-		# setup folder
-		folder <- paste(main.folder,dom,"/averaged/",sep="")
-		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
-		
-		# term-wise
-			# absolute counts
-			title <- paste("Distribution of ",object," for domain ",dom,", for the whole term",sep="")
-			plot.file <- paste(folder,prefix,"term-counts",sep="")
-			data <- plot.histo(plot.file, values=votes.spe,
-				x.label=object, 
-				proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
-				plot.title=title, format=c("PDF","PNG",NA))
-			# record as a table
-			data <- data[,c("y","xmin","xmax")]
-			table.file <- paste(plot.file,".csv",sep="")
-			write.csv(data,file=table.file, row.names=FALSE)
-			# proportions
-			title <- paste("Distribution of ",object," for domain ",dom,", for the whole term",sep="")
-			plot.file <- paste(folder,prefix,"term-proportions",sep="")
-			data <- plot.histo(plot.file, values=votes.spe,
-				x.label=object, 
-				proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
-				plot.title=title, format=c("PDF","PNG",NA))
-			# record as a table
-			data <- data[,c("y","xmin","xmax")]
-			table.file <- paste(plot.file,".csv",sep="")
-			write.csv(data,file=table.file, row.names=FALSE)
-		
-		# by year
-		for(date in DATE.T7.YEARS)
-		{	if(length(votes[[date]])>1)
-			{	#print(votes[[date]])
-				# absolute counts as bars
+				votes <- apply(numerized, 2, mean)
+				
+				# plot absolute counts as bars
 				title <- paste("Distribution of ",object," for domain ",dom,", for period ",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,prefix,DATE.STR.T7[date],"-counts",sep="")
 				data <- plot.histo(plot.file, values=votes[[date]],
-					x.label=object, 
-					proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
-					plot.title=title, format=c("PDF","PNG",NA))
+						x.label=object, 
+						proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
+						plot.title=title, format=c("PDF","PNG",NA))
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
 				table.file <- paste(plot.file,".csv",sep="")
 				write.csv(data,file=table.file, row.names=FALSE)
-		
-				# proportions as bars
+				
+				# plot proportions as bars
 				title <- paste("Distribution of ",object," for domain ",dom,", for period ",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,prefix,DATE.STR.T7[date],"-proportions",sep="")
 				data <- plot.histo(plot.file, values=votes[[date]],
-					x.label=object, 
-					proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
-					plot.title=title, format=c("PDF","PNG",NA))
+						x.label=object, 
+						proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
+						plot.title=title, format=c("PDF","PNG",NA))
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
 				table.file <- paste(plot.file,".csv",sep="")
@@ -462,7 +439,7 @@ process.vote.distribution <- function(all.votes, doc.details, subfolder)
 	all.votes.smpl[all.votes.smpl==VOTE.NONE] <- VOTE.OTHER
 	
 	# setup folder
-	main.folder <- paste(OUT.FOLDER,"/votes/",subfolder,"/",sep="")
+	main.folder <- paste(VOTES.FOLDER,"/",subfolder,"/",sep="")
 	object <- "votes"
 	colors.label <- "Votes"
 	
@@ -489,7 +466,7 @@ process.vote.distribution <- function(all.votes, doc.details, subfolder)
 #############################################################################################
 process.behavior.stats <- function(behavior.values, doc.details, subfolder)
 {	# setup folder
-	main.folder <- paste(OUT.FOLDER,"/behavior/",subfolder,"/",sep="")
+	main.folder <- paste(BEHAVIOR.FOLDER,"/",subfolder,"/",sep="")
 	object <- "loyal votes"
 	colors.label <- "Behavior"
 	
@@ -514,16 +491,17 @@ process.behavior.stats <- function(behavior.values, doc.details, subfolder)
 # behavior.values: individual behavior data, i.e. how each MEP voted relatively to his political 
 #				   group (i.e. loyal or rebel).
 # doc.details: description of each voted document.
+# mep.details: description of each MEP.
 #############################################################################################
-process.stats <- function(all.votes, behavior.values, doc.details)
+process.stats <- function(all.votes, behavior.values, doc.details, mep.details)
 {	# domain stats
-#	process.domain.frequencies(doc.details)
+	process.domain.frequencies(doc.details)
 	
 	# process stats for all data
-#	cat("Process stats for all data","\n",sep="")
-#	folder <- "everything"
-#	process.vote.distribution(all.votes, doc.details, folder)
-#	process.behavior.stats(behavior.values, doc.details, folder)
+	cat("Process stats for all data","\n",sep="")
+	folder <- "everything"
+	process.vote.distribution(all.votes, doc.details, folder)
+	process.behavior.stats(behavior.values, doc.details, folder)
 	
 	# stats by political group
 	cat("Process stats by group","\n",sep="")
@@ -575,4 +553,4 @@ process.stats <- function(all.votes, behavior.values, doc.details)
 # - on pourrait aussi voir le comportement individuel: nombre de vote de chaque type pour une personne.
 #   ça peut être complet, agrégé par année, par législature... 
 
-# les trous n'apparaissent pas dans graphiques d'aires en proportion
+# PROBLEME: les trous n'apparaissent pas dans graphiques d'aires en proportion

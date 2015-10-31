@@ -18,6 +18,12 @@ IN.FOLDER <- "in"
 OUT.FOLDER <- "out"
 	# output folder for everything not network-related
 	OVERALL.FOLDER <- file.path(OUT.FOLDER,"_overall")
+	# behavior folder
+	BEHAVIOR.FOLDER <- file.path(OUT.FOLDER,"behavior")
+	# agreement folder
+	AGREEMENT.FOLDER <- file.path(OUT.FOLDER,"agreement")
+	# votes folder
+	VOTES.FOLDER <- file.path(OUT.FOLDER,"votes")
 	# pils folder (tempary)
 	PILS.FOLDER <- file.path(OUT.FOLDER,"pils")
 	
