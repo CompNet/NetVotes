@@ -12,3 +12,4 @@ A score should be given for all possible combinations of two votes. If certain c
 When considering a combination of two votes, the order is not important, i.e. For vs. Against is similar to Against vs. For.
 The specified scores should be either a value between -1 (full disagreement) and +1 (full agreement), or NA.
 Here, NA is interpreted as the will to completely ignore the value when averaging the scores over the considered texts.
+If you put several times the same combination (or equivalent combinations) several times in the table, the last one will probably be kept, and the others ignored (no guarantee though).
