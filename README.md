@@ -92,6 +92,10 @@ For different data, you may have to adapt the functions used to load the tabular
 * [`igraph`](http://igraph.org/r/) package: used to build and handle graphs.
 
 
+# To-do List
+* use ggplot also for the line graphs
+
+
 # References
 * **[MFLM'15]** Mendonça, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015.
 http://arxiv.org/abs/1507.04215
