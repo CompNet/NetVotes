@@ -565,7 +565,7 @@ process.stats <- function(all.votes, behavior.values, doc.details)
 		process.behavior.stats(country.behavior, doc.details, cntr.folder)
 	}
 }
-process.stats(all.votes, behavior.values, doc.details)
+#process.stats(all.votes, behavior.values, doc.details)
 	
 	
 #TODO
@@ -574,3 +574,5 @@ process.stats(all.votes, behavior.values, doc.details)
 # 
 # - on pourrait aussi voir le comportement individuel: nombre de vote de chaque type pour une personne.
 #   ça peut être complet, agrégé par année, par législature... 
+
+# les trous n'apparaissent pas dans graphiques d'aires en proportion
