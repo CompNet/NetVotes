@@ -122,9 +122,18 @@ process.agreement.index <- function(votes, agreement.matrix)
 # score.file: files describing the scores to use when processing the inter-MEP agreement.
 #			  (without the .txt extension).
 # subfolder: subfolder used to store the generated files.
+# mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
+#		plot titles).
 #############################################################################################
-process.agreement.stats <- function(all.votes, doc.details, score.file, subfolder)
+process.agreement.stats <- function(all.votes, doc.details, score.file, subfolder, mode)
 {	object <- "Agreement index"
+	x.label <- paste("Agreement index - score=",score.file,sep="")
+			
+	# setup title prefix
+	if(is.na(mode))
+		plot.prefix <- ""
+	else
+		plot.prefix <- paste("[",mode,"] ",sep="")
 	
 	# load the agreement scores
 	agreement.matrix <- load.agreement.matrix(score.file)
@@ -166,10 +175,10 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 				agr.vals <- aggreement[upper.tri(aggreement,diag=FALSE)]
 				
 				# plot absolute counts as bars
-				title <- paste("Distribution of ",object," for domain ",dom,", for period ",DATE.STR.T7[date],sep="")
+				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,DATE.STR.T7[date],"-counts",sep="")
 				data <- plot.histo(plot.file, values=agr.vals,
-					x.label=object, 
+					x.label, 
 					proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA, 
 					plot.title=title, format=c("PDF","PNG",NA))
 				# record as a table
@@ -178,10 +187,10 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 				write.csv(data,file=table.file, row.names=FALSE)
 				
 				# plot proportions as bars
-				title <- paste("Distribution of ",object," for domain ",dom,", for period ",DATE.STR.T7[date],sep="")
+				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,DATE.STR.T7[date],"-proportions",sep="")
 				data <- plot.histo(plot.file, values=agr.vals,
-					x.label=object, 
+					x.label, 
 					proportions=TRUE, x.lim=c(-1,1), y.max=0.5, break.nbr=NA, 
 					plot.title=title, format=c("PDF","PNG",NA))
 				# record as a table
@@ -189,6 +198,8 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 				table.file <- paste(plot.file,".csv",sep="")
 				write.csv(data,file=table.file, row.names=FALSE)
 			}
+			else
+				cat("WARNING: Only ",length(docids)," documents remaining after filtering >> not processing these data\n",sep="")
 		}
 	}
 }
@@ -207,7 +218,7 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 {	# process agreement for all data
 	cat("Process agreement for all data","\n",sep="")
 	folder <- "everything"
-#	process.agreement.stats(all.votes, doc.details, score.file, folder)
+	process.agreement.stats(all.votes, doc.details, score.file, folder, mode=NA)
 	
 	# stats by political group
 	cat("Process stats by group","\n",sep="")
@@ -223,7 +234,7 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 		# setup folder
 		grp.folder <- paste(folder,"/",group,sep="")
 		# process agreement
-		process.agreement.stats(group.votes, doc.details, score.file, grp.folder)
+		process.agreement.stats(group.votes, doc.details, score.file, grp.folder, mode=group)
 	}
 	
 	# stats by home country
@@ -240,7 +251,7 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 		# setup folder
 		cntr.folder <- paste(folder,"/",country,sep="")
 		# process agreement
-		process.agreement.stats(country.votes, doc.details, score.file, cntr.folder)
+		process.agreement.stats(country.votes, doc.details, score.file, cntr.folder, mode=country)
 	}
 }
 
