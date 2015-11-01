@@ -420,7 +420,7 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 				# plot absolute counts as bars
 				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,file.prefix,DATE.STR.T7[date],"-counts",sep="")
-				data <- plot.histo(plot.file, values=votes[[date]],
+				data <- plot.histo(plot.file, values=votes,
 						x.label=object, 
 						proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
 						plot.title=title, format=c("PDF","PNG",NA))
@@ -432,7 +432,7 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 				# plot proportions as bars
 				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,file.prefix,DATE.STR.T7[date],"-proportions",sep="")
-				data <- plot.histo(plot.file, values=votes[[date]],
+				data <- plot.histo(plot.file, values=votes,
 						x.label=object, 
 						proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
 						plot.title=title, format=c("PDF","PNG",NA))

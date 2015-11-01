@@ -140,15 +140,13 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 	
 	# consider each domain individually (including all domains at once)
 	for(dom in c(DOM.ALL,DOMAIN.VALUES))
-	{	cat("Processing agreement data for domain ",dom,"\n",sep="")
-		
-		# setup folder
+	{	# setup folder
 		folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
 		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in c(DATE.T7.ALL,DATE.T7.YEARS))
-		{	cat("Processing period ",DATE.STR.T7[date],"\n",sep="")
+		{	cat("Processing agreement data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# retain only the documents related to the selected topic and dates
 			if(dom==DOM.ALL)
@@ -163,40 +161,46 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 			{	# format data
 				cols <- match(docids, colnames(all.votes))
 				votes <- all.votes[,cols]
-				aggreement <- process.agreement.index(votes, agreement.matrix)
+				agreement <- process.agreement.index(votes, agreement.matrix)
 				
 				# record raw agreement index values
-				colnames(aggreement) <- all.votes[,COL.MEPID]
-				rownames(aggreement) <- all.votes[,COL.MEPID]
+				colnames(agreement) <- all.votes[,COL.MEPID]
+				rownames(agreement) <- all.votes[,COL.MEPID]
 				table.file <- paste(folder,DATE.STR.T7[date],"-agreement",sep="")
-				write.csv(aggreement,file=table.file, row.names=TRUE)
+				write.csv(agreement,file=table.file, row.names=TRUE)
 				
 				# keep only the triangular part of the matrix (w/o the diagonal)
-				agr.vals <- aggreement[upper.tri(aggreement,diag=FALSE)]
+				#print(agreement)				
+				agr.vals <- agreement[upper.tri(agreement,diag=FALSE)]
 				
-				# plot absolute counts as bars
-				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
-				plot.file <- paste(folder,DATE.STR.T7[date],"-counts",sep="")
-				data <- plot.histo(plot.file, values=agr.vals,
-					x.label, 
-					proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA, 
-					plot.title=title, format=c("PDF","PNG",NA))
-				# record as a table
-				data <- data[,c("y","xmin","xmax")]
-				table.file <- paste(plot.file,".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
-				
-				# plot proportions as bars
-				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
-				plot.file <- paste(folder,DATE.STR.T7[date],"-proportions",sep="")
-				data <- plot.histo(plot.file, values=agr.vals,
-					x.label, 
-					proportions=TRUE, x.lim=c(-1,1), y.max=0.5, break.nbr=NA, 
-					plot.title=title, format=c("PDF","PNG",NA))
-				# record as a table
-				data <- data[,c("y","xmin","xmax")]
-				table.file <- paste(plot.file,".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
+				# check there are enough agreement values
+				if(all(is.na(agr.vals)))
+					cat("WARNING: All agreement values are NAs >> not processing these data\n",sep="")
+				else
+				{	# plot absolute counts as bars
+					title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
+					plot.file <- paste(folder,DATE.STR.T7[date],"-counts",sep="")
+					data <- plot.histo(plot.file, values=agr.vals,
+						x.label, 
+						proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA, 
+						plot.title=title, format=c("PDF","PNG",NA))
+					# record as a table
+					data <- data[,c("y","xmin","xmax")]
+					table.file <- paste(plot.file,".csv",sep="")
+					write.csv(data,file=table.file, row.names=FALSE)
+					
+					# plot proportions as bars
+					title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
+					plot.file <- paste(folder,DATE.STR.T7[date],"-proportions",sep="")
+					data <- plot.histo(plot.file, values=agr.vals,
+						x.label, 
+						proportions=TRUE, x.lim=c(-1,1), y.max=0.5, break.nbr=NA, 
+						plot.title=title, format=c("PDF","PNG",NA))
+					# record as a table
+					data <- data[,c("y","xmin","xmax")]
+					table.file <- paste(plot.file,".csv",sep="")
+					write.csv(data,file=table.file, row.names=FALSE)
+				}
 			}
 			else
 				cat("WARNING: Only ",length(docids)," documents remaining after filtering >> not processing these data\n",sep="")

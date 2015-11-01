@@ -75,11 +75,8 @@ extract.group.lines <- function(all.votes, mep.details)
 # The MEP is considered loyal if his expressed opinion matches that of his group.
 #
 # Note that VoteWatch uses a slightly different approach. They do not consider the NI group
-# as an actual group, and its members are labeled as INDEPENDENT. Also, they (apparently) 
-# determine the group line using only the expressed votes (we don't, because we think a group
-# can very well decide not to vote at all as a way of protesting). Finally, they only consider
-# MEPs who voted at least 100 times during the term (we suppose this also holds when determining
-# the group majority).
+# as an actual group, and its members are labeled as INDEPENDENT. Also, they only consider
+# MEPs who voted at least 100 times during the term to determine the group majority.
 #
 # all.votes: the complete vote matrix, as created by the function concatenate.votes.
 # mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
