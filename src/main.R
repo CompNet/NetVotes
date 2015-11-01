@@ -55,14 +55,14 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details)
+#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details)
 
 
 
 #############################################################################################
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
-#process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file)
+process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file)
 	
 
 
@@ -75,7 +75,6 @@ process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.d
 
 
 # Problèmes
-# - agreement: it seems the diagonal of agreement matrices is not 1
 # - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable 
 
 # test

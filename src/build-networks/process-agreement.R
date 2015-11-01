@@ -14,6 +14,10 @@ source("src/prepare-data/filter-data.R")
 #############################################################################################
 # Loads the specified score matrix, and returns, well, this matrix.
 #
+# Note: the agreement between a MEP and himself might not be 1, depending on how the score
+# matrix is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
+# MEP who abstained gets a score of zero when compared to himself.
+#
 # file.name: name of the file containing the scores (without the .txt extension).
 # returns: the loaded matrix.
 #############################################################################################
@@ -48,6 +52,10 @@ load.score.matrix <- function(file.name)
 #
 # NA values indicate the score is undefined for the considered pair of MEPs, and should
 # therefore be ignored in subsequent processings, e.g. when averaging to get the agreement index.
+#
+# Note: the agreement between a MEP and himself might not be 1, depending on how the score
+# matrix is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
+# MEP who abstained gets a score of zero when compared to himself.
 # 
 # votes: vector of all MEP votes for a given document.
 # agreement.matrix: matrix containing the reference scores, loaded with load.aggreement.matrix.
@@ -82,6 +90,10 @@ process.agreement.scores <- function(votes, agreement.matrix)
 # NA values indicate the agreement index is undefined for the considered pair of MEPs, and should
 # therefore be ignored in subsequent processings, e.g. when extracting a network or generating
 # plots.
+#
+# Note: the agreement between a MEP and himself might not be 1, depending on how the score
+# matrix is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
+# MEP who abstained gets a score of zero when compared to himself.
 # 
 # votes: matrix of all MEP (rows) votes for several documents (columns).
 # agreement.matrix: matrix containing the reference scores, loaded with load.aggreement.matrix.
@@ -103,7 +115,7 @@ process.agreement.index <- function(votes, agreement.matrix)
 		increments <- matrix(0,nrow=nrow(scores),ncol=ncol(scores))
 		increments[!is.na(scores)] <- 1
 		counts <- counts + increments
-
+		
 		# update sums
 		scores[is.na(scores)] <- 0
 		sums <- sums + scores
@@ -120,6 +132,10 @@ process.agreement.index <- function(votes, agreement.matrix)
 
 #############################################################################################
 # Processes the agreement for all domains and time periods, for the specified raw votes.
+#
+# Note: the agreement between a MEP and himself might not be 1, depending on how the score
+# matrix is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
+# MEP who abstained gets a score of zero when compared to himself.
 #
 # all.votes: raw vote data, including how each MEP voted.
 # doc.details: description of each voted document.
@@ -144,6 +160,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 	
 	# consider each domain individually (including all domains at once)
 	for(dom in c(DOM.ALL,DOMAIN.VALUES))
+	#dom <- DOM.ALL
 	{	# setup folder
 		folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
 		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
@@ -216,6 +233,10 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 #############################################################################################
 # Main function of this script, generating all agreement-related tables and plots.
 #
+# Note: the agreement between a MEP and himself might not be 1, depending on how the score
+# matrix is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
+# MEP who abstained gets a score of zero when compared to himself.
+#
 # all.votes: individual vote data, i.e. how each MEP voted.
 # doc.details: description of each voted document.
 # mep.details: description of each MEP.
@@ -249,6 +270,7 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 	cat("Process stats by country","\n",sep="")
 	folder <- "bycountry"
 	for(country in COUNTRY.VALUES)
+	#country <- COUNTRY.HR
 	{	cat("Process stats for country ",country,"\n",sep="")
 		
 		# select data
