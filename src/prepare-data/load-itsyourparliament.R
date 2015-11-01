@@ -11,7 +11,7 @@
 # "It's your parliament" data
 IYP.FOLDER <- file.path(IN.FOLDER,"itsyourparliament")
 	# raw data (i.e. tables)
-	RAW.FOLDER <- file.path(IYP.FOLDER,"raw")
+	IYP.RAW.FOLDER <- file.path(IYP.FOLDER,"raw")
 
 
 #############################################################################################

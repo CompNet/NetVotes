@@ -5,7 +5,11 @@
 # 07/2015 Israel Mendonça (v1)
 # 10/2015 Vincent Labatut (v2)
 #############################################################################################
+source("src/define-constants.R")
 source("src/plot-tools/plot-bars.R")
+source("src/plot-tools/plot-histos.R")
+source("src/prepare-data/filter-data.R")
+
 
 
 #############################################################################################
@@ -49,6 +53,7 @@ process.domain.frequencies <- function(doc.details)
 			x.rotate=FALSE, format=c("PDF","PNG",NA))
 		# record as a table
 		data <- data / sum(data)
+		data[is.na(data)] <- 0		# remove possible /0 outcomes
 		data <- data.frame(data)
 		data <- cbind(data.frame(DOMAIN.VALUES),data)
 		colnames(data) <- c(COL.DOMID, COL.COUNT)
@@ -97,7 +102,7 @@ process.domain.frequencies <- function(doc.details)
 			x.label="Years", colors.label="Domains", plot.title=title, 
 			x.rotate=FALSE, format=c("PDF","PNG",NA))
 		# record as a table
-		data <- lapply(data,function(v) v/sum(v))
+		data <- lapply(data, function(v) if(all(v==0)) {return(rep(0,length(v)))} else {return(v/sum(v))})
 		data <- t(data.frame(data))
 		data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
 		colnames(data) <- c(COL.DATE, DOMAIN.VALUES)
@@ -140,6 +145,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 	{	
 		# consider each domain individually (including all domains at once)
 		for(dom in c(DOM.ALL,DOMAIN.VALUES))
+		#dom <- DOM.AFCO
 		{	cat("Processing ",file.prefix," data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# retain only the documents related to the selected topic and dates
@@ -147,77 +153,81 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 				domval <- NA
 			else
 				domval <- dom
-			docids <- filter.docs.by.date.and.domain(doc.details, 
+			filtered.doc.ids <- filter.docs.by.date.and.domain(doc.details, 
 				start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
 				domains=domval)
-			idx <- match(docids,doc.details[,COL.DOCID])
+			idx <- match(filtered.doc.ids,doc.details[,COL.DOCID])
 			if(length(idx)<=1)
 				cat("WARNING: Only ",length(idx)," documents remaining after filtering >> not processing these data\n",sep="")
 			else
-			{	filtered.docs <- doc.details[idx,]
-				
-				# order the votes by date
-				indices <- order(as.Date(filtered.docs[,COL.DATE],"%d/%m/%Y"))
+			{	# order the votes by date
+				filtered.doc.details <- doc.details[idx,]
+				indices <- order(as.Date(filtered.doc.details[,COL.DATE],"%d/%m/%Y"))
 				
 				# get the corresponding votes from the complete table
-				cols <- match(docids, colnames(all.votes))
+				cols <- match(filtered.doc.ids, colnames(all.votes))
 				cols <- cols[indices]
 				# convert to list of column-vectors
 				votes.temp <- all.votes[,cols]
-				votes <- split(votes.temp, rep(1:ncol(votes.temp), each=nrow(votes.temp)))
+				if(all(is.na(votes.temp)))
+					cat("WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+				else
+				{	votes <- split(votes.temp, rep(1:ncol(votes.temp), each=nrow(votes.temp)))
 				
-				# setup folder
-				folder <- paste(main.folder,dom,"/",DATE.STR.T7[date],"/",sep="")
-				dir.create(folder, recursive=TRUE, showWarnings=FALSE)
+					# setup folder
+					folder <- paste(main.folder,dom,"/",DATE.STR.T7[date],"/",sep="")
+					dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 				
-				# absolute counts as bars
-				title <- paste(plot.prefix,"Numbers of ",object," - domain=",dom," - period=",DATE.STR.T7[date],sep="")
-				plot.file <- paste(folder,file.prefix,"counts-bars",sep="")
-				data <- plot.stacked.indiv.raw.bars(plot.file, 
-					bar.names=as.character(docids[indices]), color.names=vote.values, 
-					values=votes, 
-					proportions=FALSE, areas=FALSE, y.lim=c(0,nrow(all.votes)), 
-					x.label="Documents (sorted by date)", colors.label, plot.title=title, 
-					x.rotate=TRUE, format=c("PDF","PNG",NA))
-				# absolute counts as areas
-				plot.file <- paste(folder,file.prefix,"counts-areas",sep="")
-				data <- plot.stacked.indiv.raw.bars(plot.file, 
-					bar.names=1:length(docids), color.names=vote.values, 
-					values=votes, 
-					proportions=FALSE, areas=TRUE, y.lim=c(0,nrow(all.votes)), 
-					x.label="Documents (sorted by date)", colors.label, plot.title=title, 
-					x.rotate=FALSE, format=c("PDF","PNG",NA))
-				# record as a table
-				data <- t(data.frame(data))
-				data <- cbind(data.frame(docids[indices]),data)
-				colnames(data) <- c(COL.DOCID, vote.values)
-				table.file <- paste(folder,file.prefix,"counts",".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
-				
-				# proportions as bars
-				title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," - period=",DATE.STR.T7[date],sep="")
-				plot.file <- paste(folder,file.prefix,"proportions-bars",sep="")
-				data <- plot.stacked.indiv.raw.bars(plot.file, 
-					bar.names=as.character(docids[indices]), color.names=vote.values, 
-					values=votes, 
-					proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
-					x.label="Documents (sorted by date)", colors.label, plot.title=title, 
-					x.rotate=TRUE, format=c("PDF","PNG",NA))
-				# proportions as areas
-				plot.file <- paste(folder,file.prefix,"proportions-areas",sep="")
-				data <- plot.stacked.indiv.raw.bars(plot.file, 
-					bar.names=1:length(docids), color.names=vote.values, 
-					values=votes, 
-					proportions=TRUE, areas=TRUE, y.lim=c(0,NA), 
-					x.label="Documents (sorted by date)", colors.label, plot.title=title, 
-					x.rotate=FALSE, format=c("PDF","PNG",NA))
-				# record as a table
-				data <- lapply(data,function(v) v/sum(v))
-				data <- t(data.frame(data))
-				data <- cbind(data.frame(docids[indices]),data)
-				colnames(data) <- c(COL.DOCID, vote.values)
-				table.file <- paste(folder,file.prefix,"proportions",".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
+					# absolute counts as bars
+					#print(votes)				
+					title <- paste(plot.prefix,"Numbers of ",object," - domain=",dom," - period=",DATE.STR.T7[date],sep="")
+					plot.file <- paste(folder,file.prefix,"counts-bars",sep="")
+					data <- plot.stacked.indiv.raw.bars(plot.file, 
+						bar.names=as.character(filtered.doc.ids[indices]), color.names=vote.values, 
+						values=votes, 
+						proportions=FALSE, areas=FALSE, y.lim=c(0,nrow(all.votes)), 
+						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
+						x.rotate=TRUE, format=c("PDF","PNG",NA))
+					# absolute counts as areas
+					plot.file <- paste(folder,file.prefix,"counts-areas",sep="")
+					data <- plot.stacked.indiv.raw.bars(plot.file, 
+						bar.names=1:length(filtered.doc.ids), color.names=vote.values, 
+						values=votes, 
+						proportions=FALSE, areas=TRUE, y.lim=c(0,nrow(all.votes)), 
+						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
+						x.rotate=FALSE, format=c("PDF","PNG",NA))
+					# record as a table
+					data <- t(data.frame(data))
+					data <- cbind(data.frame(filtered.doc.ids[indices]),data)
+					colnames(data) <- c(COL.DOCID, vote.values)
+					table.file <- paste(folder,file.prefix,"counts",".csv",sep="")
+					write.csv(data,file=table.file, row.names=FALSE)
+					
+					# proportions as bars
+					title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," - period=",DATE.STR.T7[date],sep="")
+					plot.file <- paste(folder,file.prefix,"proportions-bars",sep="")
+					data <- plot.stacked.indiv.raw.bars(plot.file, 
+						bar.names=as.character(filtered.doc.ids[indices]), color.names=vote.values, 
+						values=votes, 
+						proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
+						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
+						x.rotate=TRUE, format=c("PDF","PNG",NA))
+					# proportions as areas
+					plot.file <- paste(folder,file.prefix,"proportions-areas",sep="")
+					data <- plot.stacked.indiv.raw.bars(plot.file, 
+						bar.names=1:length(filtered.doc.ids), color.names=vote.values, 
+						values=votes, 
+						proportions=TRUE, areas=TRUE, y.lim=c(0,NA), 
+						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
+						x.rotate=FALSE, format=c("PDF","PNG",NA))
+					# record as a table
+					data <- lapply(data, function(v) if(all(v==0)) {return(rep(0,length(v)))} else {return(v/sum(v))})
+					data <- t(data.frame(data))
+					data <- cbind(data.frame(filtered.doc.ids[indices]),data)
+					colnames(data) <- c(COL.DOCID, vote.values)
+					table.file <- paste(folder,file.prefix,"proportions",".csv",sep="")
+					write.csv(data,file=table.file, row.names=FALSE)
+				}
 			}
 		}
 	}
@@ -255,6 +265,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 	
 	# consider each domain individually (including all domains at once)
 	for(dom in c(DOM.ALL,DOMAIN.VALUES))
+	#dom <- DOM.DEVE
 	{	cat("Processing ",file.prefix," data for domain ",dom,"\n",sep="")
 		
 		# consider each time period (each individual year as well as the whole term)
@@ -268,11 +279,11 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				domval <- NA
 			else
 				domval <- dom
-			docids <- filter.docs.by.date.and.domain(doc.details, 
+			filtered.doc.ids <- filter.docs.by.date.and.domain(doc.details, 
 				start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
 				domains=domval)
-			if(length(docids)>0)
-			{	cols <- match(docids, colnames(all.votes))
+			if(length(filtered.doc.ids)>0)
+			{	cols <- match(filtered.doc.ids, colnames(all.votes))
 				if(date==DATE.T7.ALL)
 					votes.spe <- c(all.votes[,cols])
 				else
@@ -280,81 +291,86 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 			}
 			else
 			{	votes[[date]] <- NA
-				cat("WARNING: Only ",length(docids)," documents remaining after filtering >> not processing these data\n",sep="")
+				cat("WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")
 			}
 		}
 		
-		# setup folder
-		folder <- paste(main.folder,dom,"/aggregated/",sep="")
-		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
+		if(all(is.na(votes.spe)))
+			cat("WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+		else
+		{	# setup folder
+			folder <- paste(main.folder,dom,"/aggregated/",sep="")
+			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 		
-		# term-wise
-			# absolute counts as bars
-			title <- paste(plot.prefix,"Numbers of ",object," - domain=",dom," - aggregation=term",sep="")
-			plot.file <- paste(folder,file.prefix,"term-counts",sep="")
-			data <- plot.unif.indiv.raw.bars(plot.file, 
-				bar.names=vote.values, 
-				values=votes.spe, 
-				proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
-				x.label=colors.label, plot.title=title, 
-				x.rotate=FALSE, format=c("PDF","PNG",NA))
-			# record as a table
-			data <- data.frame(data)
-			data <- cbind(data.frame(vote.values),data)
-			colnames(data) <- c(COL.VOTE, COL.COUNT)
-			table.file <- paste(plot.file,".csv",sep="")
-			write.csv(data,file=table.file, row.names=FALSE)
+			# term-wise
+				# absolute counts as bars
+				title <- paste(plot.prefix,"Numbers of ",object," - domain=",dom," - aggregation=term",sep="")
+				plot.file <- paste(folder,file.prefix,"term-counts",sep="")
+				data <- plot.unif.indiv.raw.bars(plot.file, 
+					bar.names=vote.values, 
+					values=votes.spe, 
+					proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
+					x.label=colors.label, plot.title=title, 
+					x.rotate=FALSE, format=c("PDF","PNG",NA))
+				# record as a table
+				data <- data.frame(data)
+				data <- cbind(data.frame(vote.values),data)
+				colnames(data) <- c(COL.VOTE, COL.COUNT)
+				table.file <- paste(plot.file,".csv",sep="")
+				write.csv(data,file=table.file, row.names=FALSE)
+				
+				# proportions as bars
+				title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," - aggregation=term",sep="")
+				plot.file <- paste(folder,file.prefix,"term-proportions",sep="")
+				data <- plot.unif.indiv.raw.bars(plot.file, 
+					bar.names=vote.values, 
+					values=votes.spe, 
+					proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
+					x.label=colors.label, plot.title=title, 
+					x.rotate=FALSE, format=c("PDF","PNG",NA))
+				# record as a table
+				data <- data / sum(data)
+				data[is.na(data)] <- 0
+				data <- data.frame(data)
+				data <- cbind(data.frame(vote.values),data)
+				colnames(data) <- c(COL.VOTE, COL.PERCENT)
+				table.file <- paste(plot.file,".csv",sep="")
+				write.csv(data,file=table.file, row.names=FALSE)
 			
-			# proportions as bars
-			title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," - aggregation=term",sep="")
-			plot.file <- paste(folder,file.prefix,"term-proportions",sep="")
-			data <- plot.unif.indiv.raw.bars(plot.file, 
-				bar.names=vote.values, 
-				values=votes.spe, 
-				proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
-				x.label=colors.label, plot.title=title, 
-				x.rotate=FALSE, format=c("PDF","PNG",NA))
-			# record as a table
-			data <- data / sum(data)
-			data <- data.frame(data)
-			data <- cbind(data.frame(vote.values),data)
-			colnames(data) <- c(COL.VOTE, COL.PERCENT)
-			table.file <- paste(plot.file,".csv",sep="")
-			write.csv(data,file=table.file, row.names=FALSE)
-		
-		# by year
-			# absolute counts as bars
-			title <- paste(plot.prefix,"Numbers of ",object," - domain=",dom," aggregation=yearly",sep="")
-			plot.file <- paste(folder,file.prefix,"yearly-counts",sep="")
-			data <- plot.stacked.indiv.raw.bars(plot.file, 
-				bar.names=DATE.STR.T7[DATE.T7.YEARS], color.names=vote.values, 
-				values=votes, 
-				proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
-				x.label="Years", colors.label, plot.title=title, 
-				x.rotate=FALSE, format=c("PDF","PNG",NA))
-			# record as a table
-			data <- t(data.frame(data))
-			data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
-			colnames(data) <- c(COL.DATE, vote.values)
-			table.file <- paste(plot.file,".csv",sep="")
-			write.csv(data,file=table.file, row.names=FALSE)
-			
-			# proportions as bars
-			title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," aggregation=yearly",sep="")
-			plot.file <- paste(folder,file.prefix,"yearly-proportions",sep="")
-			data <- plot.stacked.indiv.raw.bars(plot.file, 
-				bar.names=DATE.STR.T7[DATE.T7.YEARS], color.names=vote.values, 
-				values=votes, 
-				proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
-				x.label="Years", colors.label, plot.title=title, 
-				x.rotate=FALSE, format=c("PDF","PNG",NA))
-			# record as a table
-			data <- lapply(data,function(v) v/sum(v))
-			data <- t(data.frame(data))
-			data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
-			colnames(data) <- c(COL.DATE, vote.values)
-			table.file <- paste(plot.file,".csv",sep="")
-			write.csv(data,file=table.file, row.names=FALSE)
+			# by year
+				# absolute counts as bars
+				title <- paste(plot.prefix,"Numbers of ",object," - domain=",dom," aggregation=yearly",sep="")
+				plot.file <- paste(folder,file.prefix,"yearly-counts",sep="")
+				data <- plot.stacked.indiv.raw.bars(plot.file, 
+					bar.names=DATE.STR.T7[DATE.T7.YEARS], color.names=vote.values, 
+					values=votes, 
+					proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
+					x.label="Years", colors.label, plot.title=title, 
+					x.rotate=FALSE, format=c("PDF","PNG",NA))
+				# record as a table
+				data <- t(data.frame(data))
+				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
+				colnames(data) <- c(COL.DATE, vote.values)
+				table.file <- paste(plot.file,".csv",sep="")
+				write.csv(data,file=table.file, row.names=FALSE)
+				
+				# proportions as bars
+				title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," aggregation=yearly",sep="")
+				plot.file <- paste(folder,file.prefix,"yearly-proportions",sep="")
+				data <- plot.stacked.indiv.raw.bars(plot.file, 
+					bar.names=DATE.STR.T7[DATE.T7.YEARS], color.names=vote.values, 
+					values=votes, 
+					proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
+					x.label="Years", colors.label, plot.title=title, 
+					x.rotate=FALSE, format=c("PDF","PNG",NA))
+				# record as a table
+				data <- lapply(data, function(v) if(all(v==0)) {return(rep(0,length(v)))} else {return(v/sum(v))})
+				data <- t(data.frame(data))
+				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
+				colnames(data) <- c(COL.DATE, vote.values)
+				table.file <- paste(plot.file,".csv",sep="")
+				write.csv(data,file=table.file, row.names=FALSE)
+		}
 	}
 }
 
@@ -389,6 +405,7 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 	
 	# consider each domain individually (including all domains at once)
 	for(dom in c(DOM.ALL,DOMAIN.VALUES))
+	# dom <- DOM.AFCO
 	{	cat("Processing ",file.prefix," data for domain ",dom,"\n",sep="")
 		
 		# setup folder
@@ -404,13 +421,13 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 				domval <- NA
 			else
 				domval <- dom
-			docids <- filter.docs.by.date.and.domain(doc.details, 
-					start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
-					domains=domval)
+			filtered.doc.ids <- filter.docs.by.date.and.domain(doc.details, 
+				start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
+				domains=domval)
 			# check if there's enough data remaining
-			if(length(docids)>1)
+			if(length(filtered.doc.ids)>1)
 			{	# format data
-				cols <- match(docids, colnames(all.votes))
+				cols <- match(filtered.doc.ids, colnames(all.votes))
 				temp <- all.votes[,cols]
 				#print(temp)
 				numerized <- matrix(0,nrow=nrow(temp), ncol=ncol(temp))
@@ -421,9 +438,9 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,file.prefix,DATE.STR.T7[date],"-counts",sep="")
 				data <- plot.histo(plot.file, values=votes,
-						x.label=object, 
-						proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
-						plot.title=title, format=c("PDF","PNG",NA))
+					x.label=object, 
+					proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
+					plot.title=title, format=c("PDF","PNG",NA))
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
 				table.file <- paste(plot.file,".csv",sep="")
@@ -433,16 +450,16 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,file.prefix,DATE.STR.T7[date],"-proportions",sep="")
 				data <- plot.histo(plot.file, values=votes,
-						x.label=object, 
-						proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
-						plot.title=title, format=c("PDF","PNG",NA))
+					x.label=object, 
+					proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
+					plot.title=title, format=c("PDF","PNG",NA))
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
 				table.file <- paste(plot.file,".csv",sep="")
 				write.csv(data,file=table.file, row.names=FALSE)
 			}
 			else
-				cat("WARNING: Only ",length(docids)," documents remaining after filtering >> not processing these data\n",sep="")
+				cat("WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")
 		}
 	}
 }
@@ -556,6 +573,7 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details)
 	cat("Process stats by country","\n",sep="")
 	folder <- "bycountry"
 	for(country in COUNTRY.VALUES)
+	#country <- COUNTRY.HR
 	{	cat("Process stats for country ",country,"\n",sep="")
 		
 		# select data
@@ -572,17 +590,3 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details)
 		process.behavior.stats(country.behavior, doc.details, cntr.folder, mode=country)
 	}
 }
-
-
-#############################################################################################
-process.stats(all.votes, behavior.values, doc.details, mep.details)
-	
-	
-#TODO
-# - on peut extraire des réseaux au niveau des partis politiques
-# - peut être aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 
-# 
-# - on pourrait aussi voir le comportement individuel: nombre de vote de chaque type pour une personne.
-#   ça peut être complet, agrégé par année, par législature... 
-
-# PROBLEME: les trous n'apparaissent pas dans graphiques d'aires en proportion

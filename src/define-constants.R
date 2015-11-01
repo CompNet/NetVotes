@@ -18,20 +18,22 @@ IN.FOLDER <- "in"
 OUT.FOLDER <- "out"
 	# output folder for everything not network-related
 	OVERALL.FOLDER <- file.path(OUT.FOLDER,"_overall")
+	# pils folder (tempary)
+	PILS.FOLDER <- file.path(OUT.FOLDER,"pils")
+	# votes folder
+	VOTES.FOLDER <- file.path(OUT.FOLDER,"votes")
 	# behavior folder
 	BEHAVIOR.FOLDER <- file.path(OUT.FOLDER,"behavior")
 	# agreement folder
 	AGREEMENT.FOLDER <- file.path(OUT.FOLDER,"agreement")
-	# votes folder
-	VOTES.FOLDER <- file.path(OUT.FOLDER,"votes")
-	# pils folder (tempary)
-	PILS.FOLDER <- file.path(OUT.FOLDER,"pils")
+	# networks folder
+	NETWORKS.FOLDER <- file.path(OUT.FOLDER,"networks")
 	
 		
 #############################################################################################
 # Files
 #############################################################################################
-## created overall tables
+## overall tables created during the preprocessing
 ALL.VOTES.FILE		<- file.path(OVERALL.FOLDER,"all-votes.csv")
 DOC.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"doc-details.csv")
 GROUP.LINES.FILE	<- file.path(OVERALL.FOLDER,"group-lines.csv")
@@ -210,7 +212,7 @@ DATE.T7.YEARS <- c(DATE.T7.Y1,DATE.T7.Y2,DATE.T7.Y3,DATE.T7.Y4,DATE.T7.Y5)
 
 
 #############################################################################################
-# Political groups
+# Political groups (normalized names)
 #############################################################################################
 GROUP.NAMES <- c()
 GROUP.FULLNAMES <- c()
@@ -241,7 +243,7 @@ GROUP.FULLNAMES[GROUP.SD] <- "Progressive Alliance of Socialists and Democrats"
 
 
 #############################################################################################
-# Country names
+# Country names (using ISO codes)
 #############################################################################################
 COUNTRY.VALUES <- c()
 COUNTRY.AT <- "Austria"

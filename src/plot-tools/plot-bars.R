@@ -97,12 +97,10 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 	col.dispersion <- c()
 	if(proportions)
 	{	col.counts <- counts / sum(counts)
-		if(is.infinite(col.counts))
-			col.counts <- 0
+		col.counts[is.infinite(col.counts) | is.nan(col.counts)] <- 0
 		if(length(dispersion)>0 && !is.na(dispersion))
 		{	col.dispersion <- dispersion / sum(counts)
-			if(is.infinite(col.dispersion))
-				col.dispersion <- 0
+			col.dispersion[is.infinite(col.dispersion) | is.nan(col.dispersion)] <- 0
 		}			
 	}
 	else
@@ -295,12 +293,10 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 		col.colors <- c(col.colors, color.names)
 		if(proportions)
 		{	tc <- counts[[s]] / sum(counts[[s]])
-			if(is.infinite(tc))
-				tc <- 0
+			tc[is.infinite(tc) | is.nan(tc)] <- 0
 			if(length(dispersion)>0 && !is.na(dispersion))
 			{	td <- dispersion[[s]] / sum(counts[[s]])
-				if(is.infinite(td))
-					td <- 0
+				td[is.infinite(td) | is.nan(td)] <- 0
 			}				
 		}
 		else
@@ -388,6 +384,8 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 		if(length(dispersion)>0 && !is.na(dispersion) && !areas)
 			p <- p + geom_errorbar(mapping=aes(ymin=cumul, ymax=upper), width=.2)
 		print(p)
+		#print(ggplot_build(p)$data[[1]])
+		
 		
 		# finalize plot file
 		if(!is.na(frmt))
@@ -504,12 +502,10 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		col.bars <- c(col.bars, bar.names)
 		if(proportions)
 		{	tc <- counts[[s]] / sum(counts[[s]])
-			if(is.infinite(tc))
-				tc <- 0
+			tc[is.infinite(tc) | is.nan(tc)] <- 0
 			if(length(dispersion)>0 && !is.na(dispersion))
 			{	td <- dispersion[[s]] / sum(counts[[s]])
-				if(is.infinite(td))
-					td <- 0
+				td[is.infinite(td) | is.nan(td)] <- 0
 			}
 		}
 		else
@@ -722,12 +718,10 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 			col.colors <- c(col.colors, color.names)
 			if(proportions)
 			{	tc <- l.counts[[s]] / sum(l.counts[[s]])
-				if(is.infinite(tc))
-					tc <- 0
+				tc[is.infinite(tc) | is.nan(tc)] <- 0
 				if(length(dispersion)>0 && !is.na(dispersion))
 				{	td <- l.dispersion[[s]] / sum(l.counts[[s]])
-					if(is.infinite(td))
-						td <- 0
+					td[is.infinite(td) | is.nan(td)] <- 0
 				}
 			}
 			else

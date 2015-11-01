@@ -25,7 +25,7 @@ source("src/prepare-data/load-common.R")
 # VoteWatch data
 VW.FOLDER <- file.path(IN.FOLDER,"votewatch")
 	# raw data (i.e. tables)
-	RAW.FOLDER <- file.path(VW.FOLDER,"raw")
+	VW.RAW.FOLDER <- file.path(VW.FOLDER,"raw")
 
 
 #############################################################################################
@@ -56,54 +56,54 @@ DOC.DETAILS.RAW.FILE	<- file.path(VW.FOLDER,"list.csv")
 # Domain mapping
 #############################################################################################
 # map used to convert official domain names into VoteWatch ones
-DOM.CUSTOM2SYMB <- c()
-DOM.CUSTOM2SYMB["Constitutional and inter-institutional affairs"] <- DOM.AFCO
-DOM.CUSTOM2SYMB["Foreign & security policy"] <- DOM.AFET
-DOM.CUSTOM2SYMB["Agriculture"] <- DOM.AGRI
-DOM.CUSTOM2SYMB["Budget"] <- DOM.BUDG
-DOM.CUSTOM2SYMB["Budgetary control"] <- DOM.CONT
-DOM.CUSTOM2SYMB["Culture & education"] <- DOM.CULT
-DOM.CUSTOM2SYMB["Development"] <- DOM.DEVE
-DOM.CUSTOM2SYMB["Gender equality"] <- DOM.FEMM
-DOM.CUSTOM2SYMB["Economic & monetary affairs"] <- DOM.ECON
-DOM.CUSTOM2SYMB["Employment & social affairs"] <- DOM.EMPL
-DOM.CUSTOM2SYMB["Environment & public health"] <- DOM.ENVI
-DOM.CUSTOM2SYMB["Internal market & consumer protection"] <- DOM.IMCO
-DOM.CUSTOM2SYMB["International trade"] <- DOM.INTA
-DOM.CUSTOM2SYMB["Industry, research & energy"] <- DOM.ITRE
-DOM.CUSTOM2SYMB["Legal affairs"] <- DOM.JURI
-DOM.CUSTOM2SYMB["Civil liberties, justice & home affairs"] <- DOM.LIBE
-DOM.CUSTOM2SYMB["Fisheries"] <- DOM.PECH
-DOM.CUSTOM2SYMB["Petitions"] <- DOM.PETI
-DOM.CUSTOM2SYMB["Regional development"] <- DOM.REGI
-DOM.CUSTOM2SYMB["Internal regulations of the EP"] <- DOM.RIPE
-DOM.CUSTOM2SYMB["Transport & tourism"] <- DOM.TRAN
+DOM.VW2SYMB <- c()
+DOM.VW2SYMB["Constitutional and inter-institutional affairs"] <- DOM.AFCO
+DOM.VW2SYMB["Foreign & security policy"] <- DOM.AFET
+DOM.VW2SYMB["Agriculture"] <- DOM.AGRI
+DOM.VW2SYMB["Budget"] <- DOM.BUDG
+DOM.VW2SYMB["Budgetary control"] <- DOM.CONT
+DOM.VW2SYMB["Culture & education"] <- DOM.CULT
+DOM.VW2SYMB["Development"] <- DOM.DEVE
+DOM.VW2SYMB["Gender equality"] <- DOM.FEMM
+DOM.VW2SYMB["Economic & monetary affairs"] <- DOM.ECON
+DOM.VW2SYMB["Employment & social affairs"] <- DOM.EMPL
+DOM.VW2SYMB["Environment & public health"] <- DOM.ENVI
+DOM.VW2SYMB["Internal market & consumer protection"] <- DOM.IMCO
+DOM.VW2SYMB["International trade"] <- DOM.INTA
+DOM.VW2SYMB["Industry, research & energy"] <- DOM.ITRE
+DOM.VW2SYMB["Legal affairs"] <- DOM.JURI
+DOM.VW2SYMB["Civil liberties, justice & home affairs"] <- DOM.LIBE
+DOM.VW2SYMB["Fisheries"] <- DOM.PECH
+DOM.VW2SYMB["Petitions"] <- DOM.PETI
+DOM.VW2SYMB["Regional development"] <- DOM.REGI
+DOM.VW2SYMB["Internal regulations of the EP"] <- DOM.RIPE
+DOM.VW2SYMB["Transport & tourism"] <- DOM.TRAN
 
 
 #############################################################################################
 # Vote mapping
 #############################################################################################
-VOTE.CUSTOM2SYMB <- c()
-VOTE.CUSTOM2SYMB["For"] <- VOTE.FOR
-VOTE.CUSTOM2SYMB["Abstain"] <- VOTE.ABST
-VOTE.CUSTOM2SYMB["Against"] <- VOTE.AGST
-VOTE.CUSTOM2SYMB["Didn't vote"] <- VOTE.NONE
-VOTE.CUSTOM2SYMB["Absent"] <- VOTE.ABSENT
-VOTE.CUSTOM2SYMB["Documented Absence"] <- VOTE.DOCABSENT
+VOTE.VW2SYMB <- c()
+VOTE.VW2SYMB["For"] <- VOTE.FOR
+VOTE.VW2SYMB["Abstain"] <- VOTE.ABST
+VOTE.VW2SYMB["Against"] <- VOTE.AGST
+VOTE.VW2SYMB["Didn't vote"] <- VOTE.NONE
+VOTE.VW2SYMB["Absent"] <- VOTE.ABSENT
+VOTE.VW2SYMB["Documented Absence"] <- VOTE.DOCABSENT
 
 
 #############################################################################################
 # Group mapping
 #############################################################################################
-GROUP.CUSTOM2SYMB <- c()
-GROUP.CUSTOM2SYMB["ALDE/ADLE"] <- GROUP.ALDE
-GROUP.CUSTOM2SYMB["ECR"] <- GROUP.ECR
-GROUP.CUSTOM2SYMB["EFD"] <- GROUP.EFD
-GROUP.CUSTOM2SYMB["EPP"] <- GROUP.EPP
-GROUP.CUSTOM2SYMB["Greens/EFA"] <- GROUP.GREENS
-GROUP.CUSTOM2SYMB["GUE-NGL"] <- GROUP.GUENGL
-GROUP.CUSTOM2SYMB["NI"] <- GROUP.NI
-GROUP.CUSTOM2SYMB["S&D"] <- GROUP.SD
+GROUP.VW2SYMB <- c()
+GROUP.VW2SYMB["ALDE/ADLE"] <- GROUP.ALDE
+GROUP.VW2SYMB["ECR"] <- GROUP.ECR
+GROUP.VW2SYMB["EFD"] <- GROUP.EFD
+GROUP.VW2SYMB["EPP"] <- GROUP.EPP
+GROUP.VW2SYMB["Greens/EFA"] <- GROUP.GREENS
+GROUP.VW2SYMB["GUE-NGL"] <- GROUP.GUENGL
+GROUP.VW2SYMB["NI"] <- GROUP.NI
+GROUP.VW2SYMB["S&D"] <- GROUP.SD
 
 
 #############################################################################################
@@ -131,7 +131,7 @@ clean.doc.details <- function()
 		# build the table
 		result <- cbind(result, as.integer(data[,VW.COL.DOCID]), data[,c(VW.COL.DATE,VW.COL.DOCNAME,VW.COL.RESULT)])
 		# clean the domain names
-		dom.ids <- DOM.CUSTOM2SYMB[data[,VW.COL.DOMAIN]]
+		dom.ids <- DOM.VW2SYMB[data[,VW.COL.DOMAIN]]
 		result <- cbind(result, dom.ids)
 		# add the column names
 		colnames(result) <- c(COL.DOCID,COL.DATE,COL.TITLE,COL.RESULT,COL.DOMID)
@@ -165,14 +165,14 @@ extract.mep.details <- function()
 		result <- NULL
 		
 		# get the list of document-wise vote files
-		file.list <- list.files(RAW.FOLDER, no..=TRUE)
+		file.list <- list.files(VW.RAW.FOLDER, no..=TRUE)
 		
 		# process each one of them
 		f <- 1
 		for(file in file.list)
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
-			path <- file.path(RAW.FOLDER,file)
+			path <- file.path(VW.RAW.FOLDER,file)
 			data <- as.matrix(read.csv(path,check.names=FALSE))
 			#tmp <- colnames(data)
 			f <- f + 1
@@ -193,7 +193,7 @@ extract.mep.details <- function()
 		}
 		
 		# clean group names
-		result[,COL.GROUP] <- GROUP.CUSTOM2SYMB[result[,COL.GROUP]]
+		result[,COL.GROUP] <- GROUP.VW2SYMB[result[,COL.GROUP]]
 		
 		# split the names
 		names <- sapply(result[,COL.FULLNAME], split.name)
@@ -272,7 +272,7 @@ concatenate.votes <- function(mep.details)
 		colnames(result)[1] <- COL.MEPID
 		
 		# get the list of document-wise vote files
-		file.list <- list.files(RAW.FOLDER, no..=TRUE)
+		file.list <- list.files(VW.RAW.FOLDER, no..=TRUE)
 		filename.list <- as.integer(sapply(file.list, function(n) substring(n,1,nchar(n)-4)))
 		idx <- match(sort(filename.list),filename.list)
 		file.list <- file.list[idx]
@@ -282,7 +282,7 @@ concatenate.votes <- function(mep.details)
 		for(file in file.list)
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
-			path <- file.path(RAW.FOLDER,file)
+			path <- file.path(VW.RAW.FOLDER,file)
 			data <- as.matrix(read.csv(path,check.names=FALSE))
 			f <- f + 1
 			
@@ -292,7 +292,7 @@ concatenate.votes <- function(mep.details)
 			
 			# complete this new column
 			idx <- match(data[,VW.COL.NAME],mep.details[,COL.FULLNAME])
-			result[idx,ncol(result)] <- VOTE.CUSTOM2SYMB[data[,VW.COL.VOTE]]
+			result[idx,ncol(result)] <- VOTE.VW2SYMB[data[,VW.COL.VOTE]]
 		}
 		
 		# record the table
@@ -324,7 +324,7 @@ concatenate.votes <- function(mep.details)
 #		colnames(result)[1] <- COL.MEPID
 #		
 #		# get the list of document-wise vote files
-#		file.list <- list.files(RAW.FOLDER, no..=TRUE)
+#		file.list <- list.files(VW.RAW.FOLDER, no..=TRUE)
 #		filename.list <- as.integer(sapply(file.list, function(n) substring(n,1,nchar(n)-4)))
 #		idx <- match(sort(filename.list),filename.list)
 #		file.list <- file.list[idx]
@@ -334,7 +334,7 @@ concatenate.votes <- function(mep.details)
 #		for(file in file.list)
 #		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 #			# read the file
-#			path <- file.path(RAW.FOLDER,file)
+#			path <- file.path(VW.RAW.FOLDER,file)
 #			data <- as.matrix(read.csv(path,check.names=FALSE))
 #			f <- f + 1
 #			
@@ -360,29 +360,17 @@ concatenate.votes <- function(mep.details)
 #
 # returns: a list containing all the loaded tables.
 #############################################################################################
-#load.raw.data <- function()
-#{	result <- list()
-#	
-#	# document-related
-#	result$doc.details <- clean.doc.details()
-#	result$domain.details <- extract.domains(result$doc.details)
-#	
-#	# MEP-related
-#	result$mep.details <- extract.mep.details()
-#	result$all.votes <- concatenate.votes(result$mep.details)
-#	result$behavior.values <- concatenate.loyalties(result$mep.details)
-#	
-#	return(result)
-#}
-doc.details <- clean.doc.details()
-mep.details <- extract.mep.details()
-all.votes <- concatenate.votes(mep.details)
-#behavior.values <- concatenate.behavior.values(mep.details)
-group.lines <- extract.group.lines(all.votes, mep.details)
-behavior.values <- process.behavior.values(all.votes, mep.details, group.lines)
+load.votewatch.data <- function()
+{	result <- list()
 	
-#TODO these calls should be moved in the caller script (functions are supposed to be standard, for the other vote scripts).
-# maybe the common method? which would contain a script taking the dataset name as a parameter? 
+	result$doc.details <- clean.doc.details()
+	result$mep.details <- extract.mep.details()
+	result$all.votes <- concatenate.votes(mep.details)
+	result$group.lines <- extract.group.lines(all.votes, mep.details)
+	result$behavior.values <- process.behavior.values(all.votes, mep.details, group.lines)
+		
+	return(result)
+}
 
 
 #############################################################################################

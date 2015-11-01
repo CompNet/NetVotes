@@ -9,9 +9,9 @@
 # Folder names
 #############################################################################################
 # "Parltrack" data
-IYP.FOLDER <- file.path(IN.FOLDER,"itsyourparliament")
+PT.FOLDER <- file.path(IN.FOLDER,"itsyourparliament")
 	# raw data (i.e. tables)
-	RAW.FOLDER <- file.path(IYP.FOLDER,"raw")
+	PT.RAW.FOLDER <- file.path(PT.FOLDER,"raw")
 
 
 #############################################################################################

@@ -5,6 +5,10 @@
 # 07/2015 Israel Mendonça (v1)
 # 10/2015 Vincent Labatut (v2)
 #############################################################################################
+source("src/define-constants.R")
+source("src/plot-tools/plot-histos.R")
+source("src/prepare-data/filter-data.R")
+
 
 
 #############################################################################################
@@ -13,7 +17,7 @@
 # file.name: name of the file containing the scores (without the .txt extension).
 # returns: the loaded matrix.
 #############################################################################################
-load.agreement.matrix <- function(file.name)
+load.score.matrix <- function(file.name)
 {	# load the file content
 	file.name <- paste(file.name,".txt",sep="")
 	file <- file.path(SCORE.FOLDER,file.name)
@@ -50,7 +54,7 @@ load.agreement.matrix <- function(file.name)
 # returns: a square matrix whose size is the number of MEPs, and containing all agreement scores
 #  		   for the considered document.
 #############################################################################################
-process.agreement.score <- function(votes, agreement.matrix)
+process.agreement.scores <- function(votes, agreement.matrix)
 {	# possibly replace NA by equivalent strings
 	votes[is.na(votes)] <- "NA"
 	
@@ -93,7 +97,7 @@ process.agreement.index <- function(votes, agreement.matrix)
 	for(i in 1:ncol(votes))
 	{	cat("Processing document",i,"\n")
 		# get scores
-		scores <- process.agreement.score(votes[,i], agreement.matrix)
+		scores <- process.agreement.scores(votes[,i], agreement.matrix)
 		
 		# update counts
 		increments <- matrix(0,nrow=nrow(scores),ncol=ncol(scores))
@@ -119,7 +123,7 @@ process.agreement.index <- function(votes, agreement.matrix)
 #
 # all.votes: raw vote data, including how each MEP voted.
 # doc.details: description of each voted document.
-# score.file: files describing the scores to use when processing the inter-MEP agreement.
+# score.file: files describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # subfolder: subfolder used to store the generated files.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
@@ -136,7 +140,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 		plot.prefix <- paste("[",mode,"] ",sep="")
 	
 	# load the agreement scores
-	agreement.matrix <- load.agreement.matrix(score.file)
+	agreement.matrix <- load.score.matrix(score.file)
 	
 	# consider each domain individually (including all domains at once)
 	for(dom in c(DOM.ALL,DOMAIN.VALUES))
@@ -153,20 +157,20 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 				domval <- NA
 			else
 				domval <- dom
-			docids <- filter.docs.by.date.and.domain(doc.details, 
+			filtered.doc.ids <- filter.docs.by.date.and.domain(doc.details, 
 				start.date=DATE.START.T7[[date]], end.date=DATE.END.T7[[date]], 
 				domains=domval)
 			# check if there's enough data remaining
-			if(length(docids)>1)
+			if(length(filtered.doc.ids)>1)
 			{	# format data
-				cols <- match(docids, colnames(all.votes))
+				cols <- match(filtered.doc.ids, colnames(all.votes))
 				votes <- all.votes[,cols]
 				agreement <- process.agreement.index(votes, agreement.matrix)
 				
 				# record raw agreement index values
 				colnames(agreement) <- all.votes[,COL.MEPID]
 				rownames(agreement) <- all.votes[,COL.MEPID]
-				table.file <- paste(folder,DATE.STR.T7[date],"-agreement",sep="")
+				table.file <- paste(folder,DATE.STR.T7[date],"-agreement.csv",sep="")
 				write.csv(agreement,file=table.file, row.names=TRUE)
 				
 				# keep only the triangular part of the matrix (w/o the diagonal)
@@ -203,7 +207,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 				}
 			}
 			else
-				cat("WARNING: Only ",length(docids)," documents remaining after filtering >> not processing these data\n",sep="")
+				cat("WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")
 		}
 	}
 }
@@ -231,8 +235,8 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 	{	cat("Process stats for group ",group,"\n",sep="")
 		
 		# select data
-		mepids <- filter.meps.by.group(mep.details,group)
-		idx <- match(mepids,all.votes[,COL.MEPID])
+		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
+		idx <- match(filtered.mep.ids,all.votes[,COL.MEPID])
 		group.votes <- all.votes[idx,]
 		
 		# setup folder
@@ -248,8 +252,8 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 	{	cat("Process stats for country ",country,"\n",sep="")
 		
 		# select data
-		mepids <- filter.meps.by.country(mep.details,country)
-		idx <- match(mepids,all.votes[,COL.MEPID])
+		filtered.mep.ids <- filter.meps.by.country(mep.details,country)
+		idx <- match(filtered.mep.ids,all.votes[,COL.MEPID])
 		country.votes <- all.votes[idx,]
 		
 		# setup folder
@@ -263,10 +267,10 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 #############################################################################################
 # Tests
 #############################################################################################
-#agreement.matrix <- load.agreement.matrix("m3.txt")
+#agreement.matrix <- load.score.matrix("m3.txt")
 #################################################
 #votes <- c("For",NA,NA,NA,"For","Against","Abstention")
-#scores <- process.agreement.score(votes, agreement.matrix)
+#scores <- process.agreement.scores(votes, agreement.matrix)
 #print(scores)
 #################################################
 #votes <- matrix(c(
@@ -278,5 +282,5 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 #indices <- process.agreement.index(votes, agreement.matrix)
 #print(indices)
 #################################################
-process.agreement(all.votes, doc.details, mep.details, score.file="m3")
+#process.agreement(all.votes, doc.details, mep.details, score.file="m3")
 #################################################
