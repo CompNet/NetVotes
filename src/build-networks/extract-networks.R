@@ -103,7 +103,7 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 			
 			# load agreement index file
-			table.file <- paste(agr.folder,DATE.STR.T7[date],"-agreement",sep="")
+			table.file <- paste(agr.folder,DATE.STR.T7[date],"-agreement.csv",sep="")
 			if(!file.exists(table.file))
 				cat("Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement","\n",sep="")
 			else
@@ -132,7 +132,7 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 {	# extract networks for all data
 	cat("Extract networks for all data","\n",sep="")
 	folder <- "everything"
-	extract.networks(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, folder, mode=NA)
+	extract.networks(mep.details, neg.thresh, pos.thresh, score.file, folder, mode=NA)
 	
 	# networks by political group
 	cat("Extract networks by group","\n",sep="")

@@ -36,8 +36,8 @@ dataset.name <- "VW"		# VoteWatch
 #dataset.name <- "PT"		# Parltrack
 ## score matrix used to process agreement
 score.file <- "m3"			# see folder in/score
-neg.thresh <- NA			# 
-pos.thresh <- NA			# 
+neg.thresh <- -0.1			# threshold applied to negative agreement index values (during network extraction)
+pos.thresh <- 0.1			# same thing, but for positive values
 
 #############################################################################################
 # Load raw data
@@ -55,7 +55,7 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details)
+process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details)
 
 
 
@@ -69,7 +69,7 @@ process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file
 #############################################################################################
 # Extract all the networks
 #############################################################################################
-#extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file)
+extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file)
 
 
 
