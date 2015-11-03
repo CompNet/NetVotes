@@ -74,10 +74,12 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 # score.file: files describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # subfolder: subfolder used to store the generated files.
+# domains: political domains to consider when processing the data.
+# dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
 #############################################################################################
-extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, subfolder, mode)
+extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, mode)
 {	# setup graph title
 	if(is.na(mode))
 		mode.str <- ""
@@ -86,12 +88,12 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 	base.graph.name <- paste("MEP agreement - score=",score.file,mode.str,sep="")
 	
 	# consider each domain individually (including all domains at once)
-	for(dom in c(DOM.ALL,DOMAIN.VALUES))
+	for(dom in domains)
 	{	# setup agreement folder
 		agr.folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
 		
 		# consider each time period (each individual year as well as the whole term)
-		for(date in c(DATE.T7.ALL,DATE.T7.YEARS))
+		for(date in dates)
 		{	cat("Extracting network data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph title
@@ -127,17 +129,24 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 # mep.details: description of each MEP.
 # neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
 # pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# domains: political domains to consider when processing the data.
+# dates: time periods to consider when processing the data.
+# everything: whether to process all data without distinction of country or political group.
+# countries: member states to consider separately when processing the data.
+# groups: political groups to consider separately when processing the data.
 #############################################################################################
-extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file)
+extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups)
 {	# extract networks for all data
-	cat("Extract networks for all data","\n",sep="")
-	folder <- "everything"
-	extract.networks(mep.details, neg.thresh, pos.thresh, score.file, folder, mode=NA)
+	if(everything)
+	{	cat("Extract networks for all data","\n",sep="")
+		folder <- "everything"
+		extract.networks(mep.details, neg.thresh, pos.thresh, score.file, folder, domains, dates, mode=NA)
+	}
 	
 	# networks by political group
 	cat("Extract networks by group","\n",sep="")
 	folder <- "bygroup"
-	for(group in GROUP.NAMES)
+	for(group in groups)
 	{	cat("Process stats for group ",group,"\n",sep="")
 		
 		# select data
@@ -149,13 +158,13 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		grp.folder <- paste(folder,"/",group,sep="")
 		
 		# extract networks
-		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, grp.folder, mode=group)
+		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, grp.folder, domains, dates, mode=group)
 	}
 	
 	# networks by home country
 	cat("Extract networks by country","\n",sep="")
 	folder <- "bycountry"
-	for(country in COUNTRY.VALUES)
+	for(country in countries)
 	{	cat("Process stats for country ",country,"\n",sep="")
 		
 		# select data
@@ -167,6 +176,6 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		cntr.folder <- paste(folder,"/",country,sep="")
 		
 		# extract networks
-		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, cntr.folder, mode=country)
+		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, cntr.folder, domains, dates, mode=country)
 	}
 }

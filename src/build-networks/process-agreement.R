@@ -142,10 +142,12 @@ process.agreement.index <- function(votes, agreement.matrix)
 # score.file: files describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # subfolder: subfolder used to store the generated files.
+# domains: political domains to consider when processing the data.
+# dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
 #############################################################################################
-process.agreement.stats <- function(all.votes, doc.details, score.file, subfolder, mode)
+process.agreement.stats <- function(all.votes, doc.details, score.file, subfolder, domains, dates, mode)
 {	object <- "Agreement index"
 	x.label <- paste("Agreement index - score=",score.file,sep="")
 			
@@ -159,18 +161,18 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 	agreement.matrix <- load.score.matrix(score.file)
 	
 	# consider each domain individually (including all domains at once)
-	for(dom in c(DOM.ALL,DOMAIN.VALUES))
-	#dom <- DOM.ALL
+	for(dom in domains)
+	#dom <- DOMAIN.ALL
 	{	# setup folder
 		folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
 		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 		
 		# consider each time period (each individual year as well as the whole term)
-		for(date in c(DATE.T7.ALL,DATE.T7.YEARS))
+		for(date in dates)
 		{	cat("Processing agreement data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# retain only the documents related to the selected topic and dates
-			if(dom==DOM.ALL)
+			if(dom==DOMAIN.ALL)
 				domval <- NA
 			else
 				domval <- dom
@@ -242,17 +244,24 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 # mep.details: description of each MEP.
 # score.file: files describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
+# domains: political domains to consider when processing the data.
+# dates: time periods to consider when processing the data.
+# everything: whether to process all data without distinction of country or political group.
+# countries: member states to consider separately when processing the data.
+# groups: political groups to consider separately when processing the data.
 #############################################################################################
-process.agreement <- function(all.votes, doc.details, mep.details, score.file)
+process.agreement <- function(all.votes, doc.details, mep.details, score.file, domains, dates, everything, countries, groups)
 {	# process agreement for all data
-	cat("Process agreement for all data","\n",sep="")
-	folder <- "everything"
-	process.agreement.stats(all.votes, doc.details, score.file, folder, mode=NA)
+	if(everything)
+	{	cat("Process agreement for all data","\n",sep="")
+		folder <- "everything"
+		process.agreement.stats(all.votes, doc.details, score.file, folder, domains, dates, mode=NA)
+	}
 	
-	# stats by political group
+	# process agreement by political group
 	cat("Process stats by group","\n",sep="")
 	folder <- "bygroup"
-	for(group in GROUP.NAMES)
+	for(group in groups)
 	{	cat("Process stats for group ",group,"\n",sep="")
 		
 		# select data
@@ -263,13 +272,13 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 		# setup folder
 		grp.folder <- paste(folder,"/",group,sep="")
 		# process agreement
-		process.agreement.stats(group.votes, doc.details, score.file, grp.folder, mode=group)
+		process.agreement.stats(group.votes, doc.details, score.file, grp.folder, domains, dates, mode=group)
 	}
 	
-	# stats by home country
+	# process agreement by home country
 	cat("Process stats by country","\n",sep="")
 	folder <- "bycountry"
-	for(country in COUNTRY.VALUES)
+	for(country in countries)
 	#country <- COUNTRY.HR
 	{	cat("Process stats for country ",country,"\n",sep="")
 		
@@ -281,7 +290,7 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file)
 		# setup folder
 		cntr.folder <- paste(folder,"/",country,sep="")
 		# process agreement
-		process.agreement.stats(country.votes, doc.details, score.file, cntr.folder, mode=country)
+		process.agreement.stats(country.votes, doc.details, score.file, cntr.folder, domains, dates, mode=country)
 	}
 }
 

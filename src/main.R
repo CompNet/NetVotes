@@ -16,6 +16,9 @@
 # 
 # 07/2015 Israel Mendonça (v1)
 # 09/2015 Vincent Labatut (v2)
+#
+# setwd("C:/Eclipse/workspaces/Networks/NetVotes")
+# source("src/main.R")
 #############################################################################################
 source("src/define-constants.R")
 source("src/build-networks/extract-networks.R")
@@ -34,10 +37,21 @@ source("src/prepare-data/process-stats.R")
 dataset.name <- "VW"		# VoteWatch
 #dataset.name <- "IYP"		# It's your Parliament
 #dataset.name <- "PT"		# Parltrack
+
+# filtering parameters
+domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
+#domains <- DOMAIN.AFCO
+dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
+everything <- TRUE							# whether or not to process all data without distinction of country or date
+countries <- c(COUNTRY.ALL, COUNTRY.VALUES)	# which country to process individually
+#countries <- COUNTRY.ALL
+groups <- c(GROUP.ALL, GROUP.VALUES)		# which group to process individually
+#groups <- c()
+
 ## score matrix used to process agreement
 score.file <- "m3"			# see folder in/score
-neg.thresh <- -0.1			# threshold applied to negative agreement index values (during network extraction)
-pos.thresh <- 0.1			# same thing, but for positive values
+neg.thresh <- -0.34			# threshold applied to negative agreement index values (during network extraction)
+pos.thresh <- +0.34			# same thing, but for positive values
 
 #############################################################################################
 # Load raw data
@@ -55,21 +69,24 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details)
+process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+		domains, dates, everything, countries, groups)
 
 
 
 #############################################################################################
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
-process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file)
+process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
+		domains, dates, everything, countries, groups)
 	
 
 
 #############################################################################################
 # Extract all the networks
 #############################################################################################
-extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file)
+extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups)
 
 
 

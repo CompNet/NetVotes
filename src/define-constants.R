@@ -81,99 +81,99 @@ BEHAVIOR.VALUES <- c(BEHAVIOR.VALUES, BEHAVIOR.REBEL)
 DOMAIN.VALUES <- c()
 DOMAIN.FULLNAMES <- c()
 # all domains
-DOM.ALL <- "_All"
+DOMAIN.ALL <- "_All"
 # Constitutional Affairs
-DOM.AFCO <- "AFCO"
-DOMAIN.FULLNAMES[DOM.AFCO] <- "Constitutional Affairs"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.AFCO)
+DOMAIN.AFCO <- "AFCO"
+DOMAIN.FULLNAMES[DOMAIN.AFCO] <- "Constitutional Affairs"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.AFCO)
 # Foreign Affairs
-DOM.AFET <- "AFET"
-DOMAIN.FULLNAMES[DOM.AFET] <- "Foreign Affairs"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.AFET)
+DOMAIN.AFET <- "AFET"
+DOMAIN.FULLNAMES[DOMAIN.AFET] <- "Foreign Affairs"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.AFET)
 	# Human Rights (seems included in AFET)
-	#DOM.DROI <- "DROI"
-	#DOMAIN.FULLNAMES[DOM.DROI] <- "Human Rights"
-	#DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.DROI)
+	#DOMAIN.DROI <- "DROI"
+	#DOMAIN.FULLNAMES[DOMAIN.DROI] <- "Human Rights"
+	#DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.DROI)
 	# Security and Defence (seems included in AFET)
-	#DOM.SEDE <- "SEDE"
-	#DOMAIN.FULLNAMES[DOM.SEDE] <- "Security and Defence"
-	#DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.SEDE)
+	#DOMAIN.SEDE <- "SEDE"
+	#DOMAIN.FULLNAMES[DOMAIN.SEDE] <- "Security and Defence"
+	#DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.SEDE)
 # Agriculture and Rural Development
-DOM.AGRI <- "AGRI"
-DOMAIN.FULLNAMES[DOM.AGRI] <- "Agriculture and Rural Development"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.AGRI)
+DOMAIN.AGRI <- "AGRI"
+DOMAIN.FULLNAMES[DOMAIN.AGRI] <- "Agriculture and Rural Development"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.AGRI)
 # Budgets
-DOM.BUDG <- "BUDG"
-DOMAIN.FULLNAMES[DOM.BUDG] <- "Budgets"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.BUDG)
+DOMAIN.BUDG <- "BUDG"
+DOMAIN.FULLNAMES[DOMAIN.BUDG] <- "Budgets"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.BUDG)
 # Budgetary Control
-DOM.CONT <- "CONT"
-DOMAIN.FULLNAMES[DOM.CONT] <- "Budgetary Control"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.CONT)
+DOMAIN.CONT <- "CONT"
+DOMAIN.FULLNAMES[DOMAIN.CONT] <- "Budgetary Control"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.CONT)
 # Culture and Education
-DOM.CULT <- "CULT"
-DOMAIN.FULLNAMES[DOM.CULT] <- "Culture and Education"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.CULT)
+DOMAIN.CULT <- "CULT"
+DOMAIN.FULLNAMES[DOMAIN.CULT] <- "Culture and Education"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.CULT)
 # Development
-DOM.DEVE <- "DEVE"
-DOMAIN.FULLNAMES[DOM.DEVE] <- "Development"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.DEVE)
+DOMAIN.DEVE <- "DEVE"
+DOMAIN.FULLNAMES[DOMAIN.DEVE] <- "Development"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.DEVE)
 # Economic and Monetary Affairs
-DOM.ECON <- "ECON"
-DOMAIN.FULLNAMES[DOM.ECON] <- "Economic and Monetary Affairs"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.ECON)
+DOMAIN.ECON <- "ECON"
+DOMAIN.FULLNAMES[DOMAIN.ECON] <- "Economic and Monetary Affairs"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.ECON)
 # Employment and Social Affairs
-DOM.EMPL <- "EMPL"
-DOMAIN.FULLNAMES[DOM.EMPL] <- "Employment and Social Affairs"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.EMPL)
+DOMAIN.EMPL <- "EMPL"
+DOMAIN.FULLNAMES[DOMAIN.EMPL] <- "Employment and Social Affairs"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.EMPL)
 # Environment, Public Health and Food Safety
-DOM.ENVI <- "ENVI"
-DOMAIN.FULLNAMES[DOM.ENVI] <- "Environment, Public Health and Food Safety"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.ENVI)
+DOMAIN.ENVI <- "ENVI"
+DOMAIN.FULLNAMES[DOMAIN.ENVI] <- "Environment, Public Health and Food Safety"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.ENVI)
 # Women's Rights and Gender Equality
-DOM.FEMM <- "FEMM"
-DOMAIN.FULLNAMES[DOM.FEMM] <- "Women's Rights and Gender Equality"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.FEMM)
+DOMAIN.FEMM <- "FEMM"
+DOMAIN.FULLNAMES[DOMAIN.FEMM] <- "Women's Rights and Gender Equality"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.FEMM)
 # Internal Market and Consumer Protection
-DOM.IMCO <- "IMCO"
-DOMAIN.FULLNAMES[DOM.IMCO] <- "Internal Market and Consumer Protection"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.IMCO)
+DOMAIN.IMCO <- "IMCO"
+DOMAIN.FULLNAMES[DOMAIN.IMCO] <- "Internal Market and Consumer Protection"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.IMCO)
 # International Trade
-DOM.INTA <- "INTA"
-DOMAIN.FULLNAMES[DOM.INTA] <- "International Trade"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.INTA)
+DOMAIN.INTA <- "INTA"
+DOMAIN.FULLNAMES[DOMAIN.INTA] <- "International Trade"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.INTA)
 # Industry, Research and Energy
-DOM.ITRE <- "ITRE"
-DOMAIN.FULLNAMES[DOM.ITRE] <- "Industry, Research and Energy"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.ITRE)
+DOMAIN.ITRE <- "ITRE"
+DOMAIN.FULLNAMES[DOMAIN.ITRE] <- "Industry, Research and Energy"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.ITRE)
 # Legal Affairs
-DOM.JURI <- "JURI"
-DOMAIN.FULLNAMES[DOM.JURI] <- "Legal Affairs"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.JURI)
+DOMAIN.JURI <- "JURI"
+DOMAIN.FULLNAMES[DOMAIN.JURI] <- "Legal Affairs"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.JURI)
 # Civil Liberties, Justice and Home Affairs
-DOM.LIBE <- "LIBE"
-DOMAIN.FULLNAMES[DOM.LIBE] <- "Civil Liberties, Justice and Home Affairs"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.LIBE)
+DOMAIN.LIBE <- "LIBE"
+DOMAIN.FULLNAMES[DOMAIN.LIBE] <- "Civil Liberties, Justice and Home Affairs"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.LIBE)
 # Fisheries
-DOM.PECH <- "PECH"
-DOMAIN.FULLNAMES[DOM.PECH] <- "Fisheries"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.PECH)
+DOMAIN.PECH <- "PECH"
+DOMAIN.FULLNAMES[DOMAIN.PECH] <- "Fisheries"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.PECH)
 # Petitions
-DOM.PETI <- "PETI"
-DOMAIN.FULLNAMES[DOM.PETI] <- "Petitions"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.PETI)
+DOMAIN.PETI <- "PETI"
+DOMAIN.FULLNAMES[DOMAIN.PETI] <- "Petitions"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.PETI)
 # Regional Development
-DOM.REGI <- "REGI"
-DOMAIN.FULLNAMES[DOM.REGI] <- "Regional Development"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.REGI)
+DOMAIN.REGI <- "REGI"
+DOMAIN.FULLNAMES[DOMAIN.REGI] <- "Regional Development"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.REGI)
 # Internal regulations of the EP
-DOM.RIPE <- "RIPE"
-DOMAIN.FULLNAMES[DOM.RIPE] <- "Internal regulations of the EP"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.RIPE)
+DOMAIN.RIPE <- "RIPE"
+DOMAIN.FULLNAMES[DOMAIN.RIPE] <- "Internal regulations of the EP"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.RIPE)
 # Transport and Tourism
-DOM.TRAN <- "TRAN"
-DOMAIN.FULLNAMES[DOM.TRAN] <- "Transport and Tourism"
-DOMAIN.VALUES <- c(DOMAIN.VALUES,DOM.TRAN)
+DOMAIN.TRAN <- "TRAN"
+DOMAIN.FULLNAMES[DOMAIN.TRAN] <- "Transport and Tourism"
+DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.TRAN)
 
 
 #############################################################################################
@@ -204,41 +204,42 @@ DATE.T7.Y5 <- "DATE.T7.Y5"
 DATE.START.T7[[DATE.T7.Y5]] 	<- as.Date("01/06/2013","%d/%m/%Y")
 DATE.END.T7[[DATE.T7.Y5]] 		<- as.Date("01/05/2014","%d/%m/%Y")
 DATE.STR.T7[DATE.T7.Y5] <- "2013-14"
-DATE.T7.ALL <- "DATE.T7.ALL"
-DATE.START.T7[[DATE.T7.ALL]]	<- as.Date("01/07/2009","%d/%m/%Y")
-DATE.END.T7[[DATE.T7.ALL]] 		<- as.Date("01/05/2014","%d/%m/%Y")
-DATE.STR.T7[DATE.T7.ALL] <- "Term"
+DATE.T7.TERM <- "DATE.T7.TERM"
+DATE.START.T7[[DATE.T7.TERM]]	<- as.Date("01/07/2009","%d/%m/%Y")
+DATE.END.T7[[DATE.T7.TERM]] 		<- as.Date("01/05/2014","%d/%m/%Y")
+DATE.STR.T7[DATE.T7.TERM] <- "Term"
 DATE.T7.YEARS <- c(DATE.T7.Y1,DATE.T7.Y2,DATE.T7.Y3,DATE.T7.Y4,DATE.T7.Y5)
 
 
 #############################################################################################
 # Political groups (normalized names)
 #############################################################################################
-GROUP.NAMES <- c()
+GROUP.VALUES <- c()
+GROUP.ALL <- "AllGroups"
 GROUP.FULLNAMES <- c()
 GROUP.ALDE <- "ALDE"
-GROUP.NAMES <- c(GROUP.NAMES, GROUP.ALDE)
+GROUP.VALUES <- c(GROUP.VALUES, GROUP.ALDE)
 GROUP.FULLNAMES[GROUP.ALDE] <- "Alliance of Liberals and Democrats for Europe"
 GROUP.ECR <- "ECR"
-GROUP.NAMES <- c(GROUP.NAMES, GROUP.ECR)
+GROUP.VALUES <- c(GROUP.VALUES, GROUP.ECR)
 GROUP.FULLNAMES[GROUP.ECR] <- "European Conservatives and Reformists"
 GROUP.EFD <- "EFD"
-GROUP.NAMES <- c(GROUP.NAMES, GROUP.EFD)
+GROUP.VALUES <- c(GROUP.VALUES, GROUP.EFD)
 GROUP.FULLNAMES[GROUP.EFD] <- "Europe of Freedom and Democracy"
 GROUP.EPP <- "EPP"
-GROUP.NAMES <- c(GROUP.NAMES, GROUP.EPP)
+GROUP.VALUES <- c(GROUP.VALUES, GROUP.EPP)
 GROUP.FULLNAMES[GROUP.EPP] <- "European People's Party"
 GROUP.GREENS <- "Greens"
-GROUP.NAMES <- c(GROUP.NAMES, GROUP.GREENS)
+GROUP.VALUES <- c(GROUP.VALUES, GROUP.GREENS)
 GROUP.FULLNAMES[GROUP.GREENS] <- "The Greens–European Free Alliance"
 GROUP.GUENGL <- "GUENGL"
-GROUP.NAMES <- c(GROUP.NAMES, GROUP.GUENGL)
+GROUP.VALUES <- c(GROUP.VALUES, GROUP.GUENGL)
 GROUP.FULLNAMES[GROUP.GUENGL] <- "European United Left–Nordic Green Left"
 GROUP.NI <- "NI"
-GROUP.NAMES <- c(GROUP.NAMES, GROUP.NI)
+GROUP.VALUES <- c(GROUP.VALUES, GROUP.NI)
 GROUP.FULLNAMES[GROUP.NI] <- "Non-Inscrits"
 GROUP.SD <- "SD"
-GROUP.NAMES <- c(GROUP.NAMES, GROUP.SD)
+GROUP.VALUES <- c(GROUP.VALUES, GROUP.SD)
 GROUP.FULLNAMES[GROUP.SD] <- "Progressive Alliance of Socialists and Democrats"
 
 
@@ -246,6 +247,7 @@ GROUP.FULLNAMES[GROUP.SD] <- "Progressive Alliance of Socialists and Democrats"
 # Country names (using ISO codes)
 #############################################################################################
 COUNTRY.VALUES <- c()
+COUNTRY.ALL <- "AllCountries"
 COUNTRY.AT <- "Austria"
 COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.AT)
 COUNTRY.BE <- "Belgium"

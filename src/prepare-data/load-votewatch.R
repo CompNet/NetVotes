@@ -56,28 +56,28 @@ DOC.DETAILS.RAW.FILE	<- file.path(VW.FOLDER,"list.csv")
 # Domain mapping
 #############################################################################################
 # map used to convert official domain names into VoteWatch ones
-DOM.VW2SYMB <- c()
-DOM.VW2SYMB["Constitutional and inter-institutional affairs"] <- DOM.AFCO
-DOM.VW2SYMB["Foreign & security policy"] <- DOM.AFET
-DOM.VW2SYMB["Agriculture"] <- DOM.AGRI
-DOM.VW2SYMB["Budget"] <- DOM.BUDG
-DOM.VW2SYMB["Budgetary control"] <- DOM.CONT
-DOM.VW2SYMB["Culture & education"] <- DOM.CULT
-DOM.VW2SYMB["Development"] <- DOM.DEVE
-DOM.VW2SYMB["Gender equality"] <- DOM.FEMM
-DOM.VW2SYMB["Economic & monetary affairs"] <- DOM.ECON
-DOM.VW2SYMB["Employment & social affairs"] <- DOM.EMPL
-DOM.VW2SYMB["Environment & public health"] <- DOM.ENVI
-DOM.VW2SYMB["Internal market & consumer protection"] <- DOM.IMCO
-DOM.VW2SYMB["International trade"] <- DOM.INTA
-DOM.VW2SYMB["Industry, research & energy"] <- DOM.ITRE
-DOM.VW2SYMB["Legal affairs"] <- DOM.JURI
-DOM.VW2SYMB["Civil liberties, justice & home affairs"] <- DOM.LIBE
-DOM.VW2SYMB["Fisheries"] <- DOM.PECH
-DOM.VW2SYMB["Petitions"] <- DOM.PETI
-DOM.VW2SYMB["Regional development"] <- DOM.REGI
-DOM.VW2SYMB["Internal regulations of the EP"] <- DOM.RIPE
-DOM.VW2SYMB["Transport & tourism"] <- DOM.TRAN
+DOMAIN.VW2SYMB <- c()
+DOMAIN.VW2SYMB["Constitutional and inter-institutional affairs"] <- DOMAIN.AFCO
+DOMAIN.VW2SYMB["Foreign & security policy"] <- DOMAIN.AFET
+DOMAIN.VW2SYMB["Agriculture"] <- DOMAIN.AGRI
+DOMAIN.VW2SYMB["Budget"] <- DOMAIN.BUDG
+DOMAIN.VW2SYMB["Budgetary control"] <- DOMAIN.CONT
+DOMAIN.VW2SYMB["Culture & education"] <- DOMAIN.CULT
+DOMAIN.VW2SYMB["Development"] <- DOMAIN.DEVE
+DOMAIN.VW2SYMB["Gender equality"] <- DOMAIN.FEMM
+DOMAIN.VW2SYMB["Economic & monetary affairs"] <- DOMAIN.ECON
+DOMAIN.VW2SYMB["Employment & social affairs"] <- DOMAIN.EMPL
+DOMAIN.VW2SYMB["Environment & public health"] <- DOMAIN.ENVI
+DOMAIN.VW2SYMB["Internal market & consumer protection"] <- DOMAIN.IMCO
+DOMAIN.VW2SYMB["International trade"] <- DOMAIN.INTA
+DOMAIN.VW2SYMB["Industry, research & energy"] <- DOMAIN.ITRE
+DOMAIN.VW2SYMB["Legal affairs"] <- DOMAIN.JURI
+DOMAIN.VW2SYMB["Civil liberties, justice & home affairs"] <- DOMAIN.LIBE
+DOMAIN.VW2SYMB["Fisheries"] <- DOMAIN.PECH
+DOMAIN.VW2SYMB["Petitions"] <- DOMAIN.PETI
+DOMAIN.VW2SYMB["Regional development"] <- DOMAIN.REGI
+DOMAIN.VW2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE
+DOMAIN.VW2SYMB["Transport & tourism"] <- DOMAIN.TRAN
 
 
 #############################################################################################
@@ -131,7 +131,7 @@ clean.doc.details <- function()
 		# build the table
 		result <- cbind(result, as.integer(data[,VW.COL.DOCID]), data[,c(VW.COL.DATE,VW.COL.DOCNAME,VW.COL.RESULT)])
 		# clean the domain names
-		dom.ids <- DOM.VW2SYMB[data[,VW.COL.DOMAIN]]
+		dom.ids <- DOMAIN.VW2SYMB[data[,VW.COL.DOMAIN]]
 		result <- cbind(result, dom.ids)
 		# add the column names
 		colnames(result) <- c(COL.DOCID,COL.DATE,COL.TITLE,COL.RESULT,COL.DOMID)

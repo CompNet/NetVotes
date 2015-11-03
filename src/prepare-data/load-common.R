@@ -30,11 +30,11 @@ extract.group.lines <- function(all.votes, mep.details)
 		all.votes[all.votes==VOTE.DOCABSENT] <- NA
 		
 		# init result matrix
-		result <- matrix(NA, ncol=ncol(all.votes), nrow=length(GROUP.NAMES))
+		result <- matrix(NA, ncol=ncol(all.votes), nrow=length(GROUP.VALUES))
 		cn <- colnames(all.votes)
 		cn[1] <- COL.GROUP
 		colnames(result) <- cn
-		result[,1] <- GROUP.NAMES	
+		result[,1] <- GROUP.VALUES	
 		
 		# process the group political lines for each vote
 		for(i in 2:ncol(all.votes))

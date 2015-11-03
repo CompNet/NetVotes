@@ -146,7 +146,7 @@ filter.meps.by.group <- function(mep.details, groups)
 	if(length(groups)==1 && is.na(groups))
 		groups <- c()
 	if(length(groups)==0)
-		groups <- GROUP.NAMES
+		groups <- GROUP.VALUES
 	
 	# retrieve the MEPs groups
 	cntrs <- mep.details[,COL.GROUP]
