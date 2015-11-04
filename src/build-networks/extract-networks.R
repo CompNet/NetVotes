@@ -7,6 +7,7 @@
 library("igraph")
 
 source("src/define-constants.R")
+source("src/plot-tools/plot-networks.R")
 source("src/prepare-data/filter-data.R")
 
 
@@ -24,7 +25,9 @@ source("src/prepare-data/filter-data.R")
 # returns: the generate graph, as an igraph object.
 #############################################################################################
 extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA, folder, graph.name)
-{	# replace NAs by zeros
+{	cat("Building network...\n")
+	
+	# replace NAs by zeros
 	agreement[is.na(agreement)] <- 0
 	
 	# possibly apply thresholds
@@ -55,11 +58,13 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	t <- get.edgelist(graph=result) - 1	# start numbering nodes at zero
 	t <- cbind(t,E(result)$weight)		# add weights as the third column
 	graph.file <- paste(graph.base,".G",sep="")
-	write.table(data.frame(length(mep.details),nrow(t)), file=graph.file, append=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)	# write header
+	write.table(data.frame(nrow(mep.details),nrow(t)), file=graph.file, append=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)	# write header
 	write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)								# write proper graph
 	
-	#TODO plot graph
-	
+	# plot graph
+	cat("Plotting network...\n")
+	plot.network(g=result, plot.file=graph.base, format=c("PDF","PNG",NA))
+		
 	return(result)
 }
 
@@ -94,7 +99,7 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	cat("Extracting network data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+		{	cat("Extracting network for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph title
 			graph.name <- paste(base.graph.name," - domain=",dom," - period=",DATE.STR.T7[date],
