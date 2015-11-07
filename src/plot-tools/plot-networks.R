@@ -20,10 +20,12 @@ plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
 	vertex.label <- V(g)$MEPid
 	
 	# setup link parameters
-	edge.colors <- rep(NA,ecount(g))
-	edge.colors[E(g)$weight<0] <- adjustcolor("RED", alpha.f=0.5)
-	edge.colors[E(g)$weight>0] <- adjustcolor("BLUE", alpha.f=0.5)
-	edge.widths <- abs(E(g)$weight)*10
+	if(ecount(g)>0)
+	{	edge.colors <- rep(NA,ecount(g))
+		edge.colors[E(g)$weight<0] <- adjustcolor("RED", alpha.f=0.5)
+		edge.colors[E(g)$weight>0] <- adjustcolor("BLUE", alpha.f=0.5)
+		edge.widths <- abs(E(g)$weight)*10
+	}
 	
 	# setup layout
 #	lyt <- layout.kamada.kawai(graph=g)
@@ -45,11 +47,18 @@ plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
 		}
 		
 		# create the plot
-		plot(g, layout=lyt, #main=g$name,
-			vertex.size=vertex.sizes, vertex.label=vertex.label,
-			edge.color=edge.colors, edge.width=edge.widths
-#			asp=1
-		)
+		if(ecount(g)>0)
+		{	plot(g, layout=lyt, #main=g$name,
+				vertex.size=vertex.sizes, vertex.label=vertex.label,
+				edge.color=edge.colors, edge.width=edge.widths
+#				asp=1
+			)
+		}
+		else
+		{	plot(g, layout=lyt,
+				vertex.size=vertex.sizes, vertex.label=vertex.label
+			)
+		}
 		title(g$name, cex.main=0.5)
 		
 		# finalize plot file

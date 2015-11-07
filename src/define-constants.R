@@ -215,7 +215,6 @@ DATE.T7.YEARS <- c(DATE.T7.Y1,DATE.T7.Y2,DATE.T7.Y3,DATE.T7.Y4,DATE.T7.Y5)
 # Political groups (normalized names)
 #############################################################################################
 GROUP.VALUES <- c()
-GROUP.ALL <- "AllGroups"
 GROUP.FULLNAMES <- c()
 GROUP.ALDE <- "ALDE"
 GROUP.VALUES <- c(GROUP.VALUES, GROUP.ALDE)
@@ -247,7 +246,6 @@ GROUP.FULLNAMES[GROUP.SD] <- "Progressive Alliance of Socialists and Democrats"
 # Country names (using ISO codes)
 #############################################################################################
 COUNTRY.VALUES <- c()
-COUNTRY.ALL <- "AllCountries"
 COUNTRY.AT <- "Austria"
 COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.AT)
 COUNTRY.BE <- "Belgium"

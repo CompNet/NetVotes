@@ -43,9 +43,9 @@ domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
 #domains <- DOMAIN.AFCO
 dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
 everything <- TRUE							# whether or not to process all data without distinction of country or date
-countries <- c(COUNTRY.ALL, COUNTRY.VALUES)	# which country to process individually
-#countries <- COUNTRY.ALL
-groups <- c(GROUP.ALL, GROUP.VALUES)		# which group to process individually
+countries <- COUNTRY.VALUES				# which country to process individually
+#countries <- COUNTRY.VALUES[!(COUNTRY.VALUES %in% c(COUNTRY.AT,COUNTRY.BE,COUNTRY.BG))]
+groups <- c(GROUP.VALUES)					# which group to process individually
 #groups <- c()
 
 ## score matrix used to process agreement
@@ -69,16 +69,16 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-		domains, dates, everything, countries, groups)
+#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+#		domains, dates, everything, countries, groups)
 
 
 
 #############################################################################################
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
-process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
-		domains, dates, everything, countries, groups)
+#process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
+#		domains, dates, everything, countries, groups)
 	
 
 
