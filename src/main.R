@@ -92,16 +92,16 @@ extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
 
 
 # Problèmes
-# - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable 
+# - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable
+#   note: might be due to small numbers of expressed votes (i.e. non-NA)
 
 # test
 # - définir de petits fichiers pour retester tout ça à fond
 
 # Extraction de réseaux
-# - generate plots for each graph
 # - on peut extraire des réseaux au niveau des partis politiques
 # - peut être aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 
 
 # Stats sur données brutes
-# - on pourrait aussi voir le comportement individuel: nombre de vote de chaque type pour une personne.
+# - on pourrait aussi voir le comportement individuel: nombre de votes de chaque type pour une personne.
 #   ça peut être complet, agrégé par année, par législature... 

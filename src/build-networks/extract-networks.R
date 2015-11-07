@@ -9,6 +9,7 @@ library("igraph")
 source("src/define-constants.R")
 source("src/plot-tools/plot-networks.R")
 source("src/prepare-data/filter-data.R")
+source("src/build-networks/process-network-stats.R")
 
 
 
@@ -48,13 +49,22 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	V(result)$Country <- mep.details[,COL.STATE]
 	V(result)$Group <- mep.details[,COL.GROUP]
 	
-	graph.base <- paste(folder,"network",sep="")
+	graph.base <- paste(folder,"signed",sep="")
 	
 	# export the graph under the graphml format
 	graph.file <- paste(graph.base,".graphml",sep="")
 	write.graph(graph=result, file=graph.file, format="graphml")
 	
-	# export using a format compatible with pils
+	# also export the positive and complementer negative graphs, as unsigned graphs
+	gp <- subgraph.edges(graph=g, eids=which(E(g)$weight>0), delete.vertices=FALSE)
+	graph.file <- paste(folder,"positive",".graphml",sep="")
+	write.graph(graph=gp, file=graph.file, format="graphml")
+	gn <- subgraph.edges(graph=g, eids=which(E(g)$weight<0), delete.vertices=FALSE)
+	gn <- graph.complementer(graph=gn, loops=FALSE)
+	graph.file <- paste(folder,"comp-negative",".graphml",sep="")
+	write.graph(graph=gn, file=graph.file, format="graphml")
+	
+	# export using a format compatible with pILS
 	t <- get.edgelist(graph=result) - 1	# start numbering nodes at zero
 	t <- cbind(t,E(result)$weight)		# add weights as the third column
 	graph.file <- paste(graph.base,".G",sep="")
@@ -63,8 +73,12 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	
 	# plot graph
 	cat("Plotting network...\n")
-	plot.network(g=result, plot.file=graph.base, format=c("PDF","PNG",NA))
-		
+#	plot.network(g=result, plot.file=graph.base, format=c("PDF","PNG",NA))
+	
+	# process network stats
+	cat("Processing network stats...\n")
+	process.network.stats(result, folder)
+
 	return(result)
 }
 
@@ -118,9 +132,6 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 				agreement <- as.matrix(read.csv(file=table.file, row.names=1))
 				# build and record network
 				g <- extract.network(agreement, mep.details, neg.thresh, pos.thresh, folder, graph.name)
-				
-				#TODO process network stats
-				
 			}
 		}
 	}
