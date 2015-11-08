@@ -39,10 +39,10 @@ dataset.name <- "VW"		# VoteWatch
 #dataset.name <- "PT"		# Parltrack
 
 # filtering parameters
-domains <- c(DOMAIN.VALUES)		# which domains to process individually
+domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
 #domains <- DOMAIN.AFCO
-dates <- c(DATE.T7.YEARS)		# which time period to process individually
-everything <- FALSE							# whether or not to process all data without distinction of country or date
+dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
+everything <- TRUE							# whether or not to process all data without distinction of country or date
 countries <- COUNTRY.VALUES				# which country to process individually
 #countries <- COUNTRY.VALUES[!(COUNTRY.VALUES %in% c(COUNTRY.AT,COUNTRY.BE,COUNTRY.BG))]
 groups <- c(GROUP.VALUES)					# which group to process individually

@@ -1,8 +1,9 @@
 #############################################################################################
-# 
+# Functions to apply various community detection methods on the positive networks, and possibly
+# the complementary negative graphs.
 # 
 # 07/2015 Israel Mendonça (v1)
-# 09/2015 Vincent Labatut (v2)
+# 11/2015 Vincent Labatut (v2)
 #############################################################################################
 
 # Clusterization Measures
