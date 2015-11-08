@@ -91,54 +91,60 @@ ROW.NAMES <- c()
 # returns: the modified table.
 #############################################################################################
 process.global.measures <- function(g, g.ref, result, col.name)
-{	# common processing
-	deg <- degree(g)
-	g.clean <- delete.vertices(graph=g, v=which(deg==0))
-	deg.clean <- degree(g.clean)
-	str.clean <- graph.strength(g.clean)
-	
-	# numbers of nodes
-	result[ROW.NODE.COUNT,col.name] <- vcount(g)
-	result[ROW.ISOLATE.COUNT,col.name] <- length(which(deg==0))
-	result[ROW.ISOLATE.PROP,col.name] <- length(which(deg==0))/vcount(g)
-	
-	# numbers of links
-	result[ROW.LINK.COUNT,col.name] <- ecount(g)
-	result[ROW.LINK.PROP,col.name] <- ecount(g)/ecount(g.ref)
+{	if(vcount(g)==0 | ecount(g)==0)
+		cat("WARNING: empty graph (",col.name,") >> cannot process any topological measure.\n",sep="")
+	else
+	{	# common processing
+		deg <- degree(g)
+		g.clean <- delete.vertices(graph=g, v=which(deg==0))
+		deg.clean <- degree(g.clean)
+		str.clean <- graph.strength(g.clean)
 		
-	### from now on, we ignore isolates
-	
-	# densities
-	result[ROW.DENSITY,col.name] <- graph.density(g.clean)
-	result[ROW.TRANSITIVITY.GLOBAL,col.name] <- transitivity(g.clean, type="globalundirected")
-	result[ROW.TRANSITIVITY.LOCAL,col.name] <- transitivity(g.clean, type="localaverageundirected")
-	
-	# components
-	tmp <- clusters(g.clean)
-	result[ROW.COMPONENT.COUNT,col.name] <- tmp$no
-	result[ROW.COMPONENT.SIZE,col.name] <- tmp$csize
-	result[ROW.COMPONENT.PROP,col.name] <- tmp$csize / vcount(g.clean)
-	
-	# connectivity
-	result[ROW.CONNECTIVITY.LINK,col.name] <- graph.adhesion(g.clean,checks=FALSE)
-	result[ROW.CONNECTIVITY.NODE,col.name] <- graph.cohesion(g.clean,checks=FALSE)
-	
-	# degree
-	result[ROW.DEGREE.AVERAGE,col.name] <- mean(deg.clean)
-	result[ROW.DEGREE.STDEV,col.name] <- sd(deg.clean)
-	result[ROW.DEGREE.MIN,col.name] <- min(deg.clean)
-	result[ROW.DEGREE.MAX,col.name] <- max(deg.clean)
-	result[ROW.DEGREE.CORRELATION,col.name] <- assortativity.degree(g.clean)
-	
-	# strength
-	result[ROW.STRENGTH.AVERAGE,col.name] <- mean(str.clean)
-	result[ROW.STRENGTH.STDEV,col.name] <- sd(str.clean)
-	result[ROW.STRENGTH.MIN,col.name] <- min(str.clean)
-	result[ROW.STRENGTH.MAX,col.name] <- max(str.clean)
-	result[ROW.STRENGTH.CORRELATION,col.name] <- assortativity (g.clean, types1=str.clean, types2=NULL, directed=FALSE)
-	
-	# distances // eccentricity
-	#TODO
+		# numbers of nodes
+		result[ROW.NODE.COUNT,col.name] <- vcount(g)
+		result[ROW.ISOLATE.COUNT,col.name] <- length(which(deg==0))
+		result[ROW.ISOLATE.PROP,col.name] <- length(which(deg==0))/vcount(g)
+		
+		# numbers of links
+		result[ROW.LINK.COUNT,col.name] <- ecount(g)
+		result[ROW.LINK.PROP,col.name] <- ecount(g)/ecount(g.ref)
+			
+		### from now on, we ignore isolates
+		
+		# densities
+		result[ROW.DENSITY,col.name] <- graph.density(g.clean)
+		result[ROW.TRANSITIVITY.GLOBAL,col.name] <- transitivity(g.clean, type="globalundirected")
+		result[ROW.TRANSITIVITY.LOCAL,col.name] <- transitivity(g.clean, type="localaverageundirected")
+		
+		# components
+		tmp <- clusters(g.clean)
+		#print(g.clean)		
+		#print(tmp)		
+		result[ROW.COMPONENT.COUNT,col.name] <- tmp$no
+		result[ROW.COMPONENT.SIZE,col.name] <- max(tmp$csize)
+		result[ROW.COMPONENT.PROP,col.name] <- max(tmp$csize) / vcount(g.clean)
+		
+		# connectivity
+		result[ROW.CONNECTIVITY.LINK,col.name] <- graph.adhesion(g.clean,checks=FALSE)
+		result[ROW.CONNECTIVITY.NODE,col.name] <- graph.cohesion(g.clean,checks=FALSE)
+		
+		# degree
+		result[ROW.DEGREE.AVERAGE,col.name] <- mean(deg.clean)
+		result[ROW.DEGREE.STDEV,col.name] <- sd(deg.clean)
+		result[ROW.DEGREE.MIN,col.name] <- min(deg.clean)
+		result[ROW.DEGREE.MAX,col.name] <- max(deg.clean)
+		result[ROW.DEGREE.CORRELATION,col.name] <- assortativity.degree(g.clean)
+		
+		# strength
+		result[ROW.STRENGTH.AVERAGE,col.name] <- mean(str.clean)
+		result[ROW.STRENGTH.STDEV,col.name] <- sd(str.clean)
+		result[ROW.STRENGTH.MIN,col.name] <- min(str.clean)
+		result[ROW.STRENGTH.MAX,col.name] <- max(str.clean)
+		result[ROW.STRENGTH.CORRELATION,col.name] <- assortativity (g.clean, types1=str.clean, types2=NULL, directed=FALSE)
+		
+		# distances // eccentricity
+		#TODO
+	}
 
 	return(result)
 }
@@ -158,26 +164,22 @@ process.network.stats <- function(g, folder)
 	rownames(result) <- ROW.NAMES
 	colnames(result) <- COL.NAMES
 	
-	if(vcount(g)==0 | ecount(g)==0)
-		cat("WARNING: empty graph >> cannot process any topological measure.\n")
-	else
-	{	# process original graph
-		result <- process.global.measures(g, g, result, col.name=COL.ORIGINAL.GRAPH)
+	# process original graph
+	result <- process.global.measures(g, g, result, col.name=COL.ORIGINAL.GRAPH)
 		
-		# process positive graph
-		pos.g <- subgraph.edges(graph=g, eids=which(E(g)$weight>0), delete.vertices=FALSE)
-		result <- process.global.measures(pos.g, g, result, col.name=COL.POSITIVE.GRAPH)
+	# process positive graph
+	pos.g <- subgraph.edges(graph=g, eids=which(E(g)$weight>0), delete.vertices=FALSE)
+	result <- process.global.measures(pos.g, g, result, col.name=COL.POSITIVE.GRAPH)
 		
-		# process negative graph
-		neg.g <- subgraph.edges(graph=g, eids=which(E(g)$weight<0), delete.vertices=FALSE)
-		result <- process.global.measures(neg.g, g, result, col.name=COL.NEGATIVE.GRAPH)
+	# process negative graph
+	neg.g <- subgraph.edges(graph=g, eids=which(E(g)$weight<0), delete.vertices=FALSE)
+	result <- process.global.measures(neg.g, g, result, col.name=COL.NEGATIVE.GRAPH)
 		
-		#TODO degree distribution (maybe add a special function to handle distributions and produce plots)
+	#TODO degree distribution (maybe add a special function to handle distributions and produce plots)
 		
-		# record result
-		table.file <- paste(folder,"properties",".csv",sep="")
-		write.csv(result, file=table.file, row.names=TRUE)
-	}
+	# record result
+	table.file <- paste(folder,"properties",".csv",sep="")
+	write.csv(result, file=table.file, row.names=TRUE)	
 	
 	return(result)
 }
