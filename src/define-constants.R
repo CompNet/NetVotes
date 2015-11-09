@@ -39,6 +39,10 @@ DOC.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"doc-details.csv")
 GROUP.LINES.FILE	<- file.path(OVERALL.FOLDER,"group-lines.csv")
 MEP.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"mep-details.csv")
 MEP.BEHAVIOR.FILE	<- file.path(OVERALL.FOLDER,"mep-behavior.csv")
+# graph files
+SIGNED.FILE <- "signed"
+POSTIVE.FILE <- "positive"
+COMP.NEGATIVE.FILE <- "comp-negative"
 
 
 #############################################################################################
