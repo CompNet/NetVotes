@@ -73,11 +73,11 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	
 	# plot graph
 	cat("Plotting network...\n")
-	plot.network(g=result, plot.file=graph.base, format=c("PDF","PNG",NA))
+#	plot.network(g=result, plot.file=graph.base, format=c("PDF","PNG",NA))
 	
 	# process network stats
 	cat("Processing network stats...\n")
-	process.network.stats(result, folder)
+#	process.network.stats(result, folder)
 
 	return(result)
 }
@@ -155,15 +155,15 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 {	# extract networks for all data
 	if(everything)
 	{	cat("Extract networks for all data","\n",sep="")
-		folder <- "everything"
-		extract.networks(mep.details, neg.thresh, pos.thresh, score.file, folder, domains, dates, mode=NA)
+		subfolder <- "everything"
+		extract.networks(mep.details, neg.thresh, pos.thresh, score.file, subfolder, domains, dates, mode=NA)
 	}
 	
 	# networks by political group
 	cat("Extract networks by group","\n",sep="")
-	folder <- "bygroup"
+	subfolder <- "bygroup"
 	for(group in groups)
-	{	cat("Process stats for group ",group,"\n",sep="")
+	{	cat("Extract networks for group ",group,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
@@ -171,17 +171,17 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		grp.meps <- mep.details[idx,]
 		
 		# setup folder
-		grp.folder <- paste(folder,"/",group,sep="")
+		grp.subfolder <- paste(subfolder,"/",group,sep="")
 		
 		# extract networks
-		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, grp.folder, domains, dates, mode=group)
+		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates, mode=group)
 	}
 	
 	# networks by home country
 	cat("Extract networks by country","\n",sep="")
-	folder <- "bycountry"
+	subfolder <- "bycountry"
 	for(country in countries)
-	{	cat("Process stats for country ",country,"\n",sep="")
+	{	cat("Extract networks for country ",country,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)
@@ -189,9 +189,9 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		cntr.meps <- mep.details[idx,]
 		
 		# setup folder
-		cntr.folder <- paste(folder,"/",country,sep="")
+		cntr.subfolder <- paste(subfolder,"/",country,sep="")
 		
 		# extract networks
-		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, cntr.folder, domains, dates, mode=country)
+		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, mode=country)
 	}
 }

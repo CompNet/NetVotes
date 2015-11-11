@@ -23,6 +23,7 @@
 source("src/define-constants.R")
 source("src/build-networks/extract-networks.R")
 source("src/build-networks/process-agreement.R")
+source("src/partition-networks/detect-clusters.R")
 source("src/prepare-data/load-itsyourparliament.R")
 source("src/prepare-data/load-parltrack.R")
 source("src/prepare-data/load-votewatch.R")
@@ -39,14 +40,14 @@ dataset.name <- "VW"		# VoteWatch
 #dataset.name <- "PT"		# Parltrack
 
 # filtering parameters
-domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
-#domains <- DOMAIN.AFCO
+#domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
+domains <- DOMAIN.AFCO
 dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
 everything <- TRUE							# whether or not to process all data without distinction of country or date
-countries <- COUNTRY.VALUES				# which country to process individually
-#countries <- COUNTRY.VALUES[!(COUNTRY.VALUES %in% c(COUNTRY.AT,COUNTRY.BE,COUNTRY.BG))]
-groups <- c(GROUP.VALUES)					# which group to process individually
-#groups <- c()
+#countries <- COUNTRY.VALUES				# which country to process individually
+countries <- c()
+#groups <- c(GROUP.VALUES)					# which group to process individually
+groups <- c()
 
 ## score matrix used to process agreement
 score.file <- "m3"			# see folder in/score
@@ -85,7 +86,14 @@ if(dataset.name=="VW")
 #############################################################################################
 # Extract all the networks
 #############################################################################################
-extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
+#extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
+#		domains, dates, everything, countries, groups)
+
+
+#############################################################################################
+# Detect communities for all the networks
+#############################################################################################
+detect.all.communities(data$mep.details, neg.thresh, pos.thresh, score.file,
 		domains, dates, everything, countries, groups)
 
 

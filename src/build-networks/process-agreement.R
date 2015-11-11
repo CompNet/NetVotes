@@ -254,13 +254,13 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file, d
 {	# process agreement for all data
 	if(everything)
 	{	cat("Process agreement for all data","\n",sep="")
-		folder <- "everything"
-		process.agreement.stats(all.votes, doc.details, score.file, folder, domains, dates, mode=NA)
+		subfolder <- "everything"
+		process.agreement.stats(all.votes, doc.details, score.file, subfolder, domains, dates, mode=NA)
 	}
 	
 	# process agreement by political group
 	cat("Process stats by group","\n",sep="")
-	folder <- "bygroup"
+	subfolder <- "bygroup"
 	for(group in groups)
 	{	cat("Process stats for group ",group,"\n",sep="")
 		
@@ -270,14 +270,14 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file, d
 		group.votes <- all.votes[idx,]
 		
 		# setup folder
-		grp.folder <- paste(folder,"/",group,sep="")
+		grp.subfolder <- paste(subfolder,"/",group,sep="")
 		# process agreement
-		process.agreement.stats(group.votes, doc.details, score.file, grp.folder, domains, dates, mode=group)
+		process.agreement.stats(group.votes, doc.details, score.file, grp.subfolder, domains, dates, mode=group)
 	}
 	
 	# process agreement by home country
 	cat("Process stats by country","\n",sep="")
-	folder <- "bycountry"
+	subfolder <- "bycountry"
 	for(country in countries)
 	#country <- COUNTRY.HR
 	{	cat("Process stats for country ",country,"\n",sep="")
@@ -288,9 +288,9 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file, d
 		country.votes <- all.votes[idx,]
 		
 		# setup folder
-		cntr.folder <- paste(folder,"/",country,sep="")
+		cntr.subfolder <- paste(subfolder,"/",country,sep="")
 		# process agreement
-		process.agreement.stats(country.votes, doc.details, score.file, cntr.folder, domains, dates, mode=country)
+		process.agreement.stats(country.votes, doc.details, score.file, cntr.subfolder, domains, dates, mode=country)
 	}
 }
 

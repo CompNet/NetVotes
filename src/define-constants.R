@@ -28,6 +28,8 @@ OUT.FOLDER <- "out"
 	AGREEMENT.FOLDER <- file.path(OUT.FOLDER,"agreement")
 	# networks folder
 	NETWORKS.FOLDER <- file.path(OUT.FOLDER,"networks")
+	# folder containing the estimated partitions
+	PARTITIONS.FOLDER <- file.path(OUT.FOLDER,"partitions")
 	
 		
 #############################################################################################
@@ -328,3 +330,17 @@ COL.RESULT		<- "Vote result"
 COL.STATE		<- "State"
 COL.TITLE		<- "Title"
 COL.VOTE		<- "Vote"
+## partition measures
+COL.MODULARITY <- "Modularity"
+COL.IMB.WGT.CNT.TOTAL <- "Weighted Total Imbalance (count)"
+COL.IMB.WGT.CNT.POS <- "Weighted Positive Imbalance (count)"
+COL.IMB.WGT.CNT.NEG <- "Weighted Negative Imbalance (count)"
+COL.IMB.UNW.CNT.TOTAL <- "Unweighted Total Imbalance (count)"
+COL.IMB.UNW.CNT.POS <- "Unweighted Positive Imbalance (count)"
+COL.IMB.UNW.CNT.NEG <- "Unweighted Negative Imbalance (count)"
+COL.IMB.WGT.PROP.TOTAL <- "Weighted Total Imbalance (prop.)"
+COL.IMB.WGT.PROP.POS <- "Weighted Positive Imbalance (prop.)"
+COL.IMB.WGT.PROP.NEG <- "Weighted Negative Imbalance (prop.)"
+COL.IMB.UNW.PROP.TOTAL <- "Unweighted Total Imbalance (prop.)"
+COL.IMB.UNW.PROP.POS <- "Unweighted Positive Imbalance (prop.)"
+COL.IMB.UNW.PROP.NEG <- "Unweighted Negative Imbalance (prop.)"
