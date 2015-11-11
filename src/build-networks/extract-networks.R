@@ -55,7 +55,7 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	graph.file <- paste(graph.base,".graphml",sep="")
 	write.graph(graph=result, file=graph.file, format="graphml")
 	
-	# also export the positive and complementer negative graphs, as unsigned graphs
+	# also export the positive and complementary negative graphs, as unsigned graphs
 	gp <- subgraph.edges(graph=result, eids=which(E(result)$weight>0), delete.vertices=FALSE)
 	graph.file <- paste(folder,POSTIVE.FILE,".graphml",sep="")
 	write.graph(graph=gp, file=graph.file, format="graphml")
@@ -84,7 +84,7 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 
 
 #############################################################################################
-# Generate all possible networks for all time periods and domains, for the specified thresholds 
+# Generates all possible networks for all time periods and domains, for the specified thresholds 
 # and agreement scores. 
 #
 # mep.details: description of each MEP.
@@ -139,7 +139,7 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 
 
 #############################################################################################
-# Generate all networks for the whole dataset, by country and by political group, for the 
+# Generates all networks for the whole dataset, by country and by political group, for the 
 # specified thresholds and agreement scores. 
 #
 # mep.details: description of each MEP.

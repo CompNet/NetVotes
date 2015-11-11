@@ -1,156 +1,120 @@
 #############################################################################################
-# Functions to apply various community detection methods on the positive networks, and possibly
-# the complementary negative graphs.
+# Functions to apply various community detection methods on the positive and complementary 
+# negative networks, and various correlation clustering methods to the signed networks.
 # 
 # 07/2015 Israel Mendonça (v1)
 # 11/2015 Vincent Labatut (v2)
 #############################################################################################
-library("igraph")
-
 source("src/define-constants.R")
-source("src/plot-tools/plot-bars.R")
-
-
-
-#############################################################################################
-# Algorithms info
-#############################################################################################
-COMDET.VALUES <- c()
-COMDET.NAMES <- c()
-COMDET.FUNCTIONS <- list()
-COMDET.EDGEBETW <- "EB"
-	COMDET.VALUES <- c(COMDET.VALUES, COMDET.EDGEBETW)
-	COMDET.NAMES[COMDET.EDGEBETW] <- "EdgeBetweenness"
-	COMDET.FUNCTIONS[[COMDET.EDGEBETW]] <- function(g) edge.betweenness.community(
-		graph=g, edge.betweenness=FALSE, merges=FALSE,
-		bridges=FALSE, modularity=TRUE, membership=TRUE)
-COMDET.INFOMAP <- "IM"
-	COMDET.VALUES <- c(COMDET.VALUES, COMDET.INFOMAP)
-	COMDET.NAMES[COMDET.INFOMAP] <- "InfoMap"
-	COMDET.FUNCTIONS[[COMDET.INFOMAP]] <- function(g) infomap.community(
-		graph=g, modularity = TRUE)
-COMDET.LABELPROP <- "LP"
-	COMDET.VALUES <- c(COMDET.VALUES, COMDET.LABELPROP)
-	COMDET.NAMES[COMDET.LABELPROP] <- "LabelPropagation"
-	COMDET.FUNCTIONS[[COMDET.LABELPROP]] <- function(g) label.propagation.community(
-		graph=g, 
-		initial=NULL, fixed=NULL)
-COMDET.LOUVAIN <- "LV"
-	COMDET.VALUES <- c(COMDET.VALUES, COMDET.LOUVAIN)
-	COMDET.NAMES[COMDET.LOUVAIN] <- "Louvain"
-	COMDET.FUNCTIONS[[COMDET.LOUVAIN]] <- function(g) multilevel.community (
-		graph=g, weights = NULL)
-COMDET.WALKTRAP <- "WT"
-	COMDET.VALUES <- c(COMDET.VALUES, COMDET.WALKTRAP)
-	COMDET.NAMES[COMDET.WALKTRAP] <- "WalkTrap"
-	COMDET.FUNCTIONS[[COMDET.WALKTRAP]] <- function(g) walktrap.community(
-		graph, steps=4, 
-		merges=FALSE, modularity=TRUE, membership=TRUE)
+source("src/partition-networks/networks-common.R")
 				
 				
 
 #############################################################################################
-# Detects the community structure of the specified network, using the specified algorithm,
-# and record the results as tables and plots. The graph Graphml file is also updated by
-# defining nodal attributes corresponding to the detected communities. 
+# Partitions the specified network, using the specified algorithm, and record the result
+# as a table.  
 #
 # g: graph to process.
 # algo.name: (normalized) name of the community detection algorithm.
-# net.path: path of the file corresponding to the processed network.
 # part.folder: folder in which to write the result files.
-# modularity: existing table, to be completed depending on the obtained modularity.
-# returns: the updated modularity table.
 #############################################################################################
-apply.community.detection.algorithm <- function(g, algo.name, net.path, part.folder, modularity)
-{	# apply the community detection algorithm
-	coms <- COMDET.FUNCTIONS[[algo.name]](g)
+apply.partitioning.algorithm <- function(g, algo.name, part.folder)
+{	cat("n=",vcount(g), " m=",ecount(g), " d=",graph.density(g), sep="")
+	cat(" connected=", is.connected(g,mode="weak"), sep="")
+	cat("\n", sep="")
 	
+	# apply the community detection algorithm
+	if(algo.name==COMDET.ALGO.EDGEBETW)
+		coms <- edge.betweenness.community(
+					graph=g, edge.betweenness=FALSE, merges=FALSE,
+					bridges=FALSE, modularity=FALSE, membership=TRUE)
+	else if(algo.name==COMDET.ALGO.INFOMAP)
+		coms <- infomap.community(
+					graph=g, modularity=FALSE)
+	else if(algo.name==COMDET.ALGO.LABELPROP)
+		coms <- label.propagation.community(
+					graph=g, 
+					initial=NULL, fixed=NULL)
+	else if(algo.name==COMDET.ALGO.LOUVAIN)
+		coms <- multilevel.community (
+					graph=g, weights=NULL)
+	else if(algo.name==COMDET.ALGO.WALKTRAP)
+		coms <- walktrap.community(
+					graph, steps=4, 
+					merges=FALSE, modularity=FALSE, membership=TRUE)
+	else if(algo.name==CORCLU.ALGO.PILS)
+	{	#TODO external invocation (pILS is coded in C++)
+	}
+		
 	# record the membership vector
-	data <- membership(coms)
-	table.file <- paste(part.folder,"-",algo.name,"-membership.txt",sep="")
-	write.table(x=data, file=table.file, row.names=FALSE, col.names=FALSE)
-	# update graph (graphml only) with detected communities
-	g <- set.vertex.attribute(graph=g, name=algo.name, value=data)
-	write.graph(graph=g, file=net.path, format="graphml")
-	
-	# update the modularity table
-	data <- modularity(coms)
-	modularity[algo.name] <- data
+	mbrshp <- membership(coms)
+	table.file <- paste(part.folder,"-membership.txt",sep="")
+	write.table(x=mbrshp, file=table.file, row.names=FALSE, col.names=FALSE)
 
-	# record the community sizes
-	data <- sizes(coms)
-	table.file <- paste(part.folder,"-",algo.name,"-comsizes.txt",sep="")
-	write.table(x=data, file=table.file, row.names=FALSE, col.names=FALSE)
-	# plot them
-	table.file <- paste(part.folder,"-",algo.name,"-comsizes",sep="")
-	plot.unif.indiv.count.bars(plot.file, bar.names, 
-		counts=data, dispersion=NA, proportions=FALSE, areas=FALSE, 
-		y.lim=c(0,NA), 
-		x.label="Community", y.label="Count", 
-		plot.title="Community sizes", 
-		x.rotate=FALSE, format=c("PDF","PNG",NA))
-	
-	return(modularity)
+	return(mbrshp)
 }
 
 
 
 #############################################################################################
-# Loads both graphs (positive and complementary negative) and applies all community detection
-# algorithms. Then records the results as text files and plots.
+# Loads all three graphs (signed, positive and complementary negative) and applies all 
+# community detection and correlation clustering algorithms. Then, records the results as text 
+# files and updates the graph file (Graphml format only) by defining nodal attributes corresponding 
+# to the detected communities, for each considered algorithm.
 #
-# folder: subfolder containing the graph files, and used to create the result folder.
+# subfolder: subfolder containing the graph files, and used to create the result folder.
+# comdet.algos: community detection algorithms to apply.
+# corclu.algos: correlation clustering algorithms to apply.
 #############################################################################################
-perform.community.detection <- function(subfolder)
-{	# load both graphs
-	net.folder.pos <- paste(NETWORKS.FOLDER,"/",subfolder,POSTIVE.FILE,sep="")
-	graph.file.pos <- paste(net.folder.pos,".graphml",sep="")
-	g.pos <- NA
-	if(!file.exists(graph.file.pos))
-		cat("Graph file ",graph.file.pos," not found >> no community detection for this one\n",sep="")
-	else
-		g.pos <- read.graph(file=graph.file.pos, format="graphml")
-	net.folder.neg <- paste(NETWORKS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,sep="")
-	graph.file.neg <- paste(net.folder.neg,".graphml",sep="")
-	g.neg <- NA
-	if(!file.exists(graph.file.neg))
-		cat("Graph file ",graph.file.neg," not found >> no community detection for this one\n",sep="")
-	else
-		g.neg <- read.graph(file=graph.file.neg, format="graphml")
-	
-	# init modularity matrices
-	part.folder.pos <- paste(PARTITIONS.FOLDER,"/",subfolder,POSTIVE.FILE,sep="")
-	mat.pos <- matrix(NA,nrow=length(COMDET.VALUES),ncol=1)
-	rownames(mat.pos) <- COMDET.VALUES
-	mat.file.pos <- paste(part.folder.pos,"-modularity.txt",sep="")
-	part.folder.neg <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,sep="")
-	mat.neg <- matrix(NA,nrow=length(COMDET.VALUES),ncol=1)
-	rownames(mat.neg) <- COMDET.VALUES
-	mat.file.neg <- paste(part.folder.neg,"-modularity.txt",sep="")
+perform.partitioning <- function(subfolder, comdet.algos, corclu.algos)
+{	# load the graphs
+	graphs <- retrieve.graphs(subfolder)
+	folder <- paste(PARTITIONS.FOLDER,"/",subfolder,sep="")
+	dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 	
 	# apply all community detection algorithms
-	for(algo.name in COMDET.VALUES)
-	{	# positive graph
-		if(!all(is.na(g.pos)))
-		{	cat("Applying ",COMDET.NAMES[algo.name]," to the positive graph\n",sep="")
-			mat.pos <- apply.community.detection.algorithm(g.pos, algo.name, graph.file.pos, part.folder.pos, mat.pos)
-			write.table(x=mat.pos, file=mat.file.pos, row.names=TRUE, col.names=FALSE)
+	for(algo.name in comdet.algos)
+	{	# complementary negative graph
+		if(!all(is.na(graphs$neg)))
+		{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph\n",sep="")
+			part.folder.neg <- paste(folder,COMP.NEGATIVE.FILE,"-",algo.name,sep="")
+			memb.neg <- apply.partitioning.algorithm(graphs$neg, algo.name, part.folder.neg)
+			graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=algo.name, value=memb.neg)
 		}
 		
-		# complementary negative graph
-		if(!all(is.na(g.neg)))
-		{	cat("Applying ",COMDET.NAMES[algo.name]," to the complementary negative graph\n",sep="")
-			mat.neg <- apply.community.detection.algorithm(g.neg, algo.name, graph.file.neg, part.folder.neg, mat.neg)
-			write.table(x=mat.neg, file=mat.file.neg, row.names=TRUE, col.names=FALSE)
+		# positive graph
+		if(!all(is.na(graphs$pos)))
+		{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph\n",sep="")
+			part.folder.pos <- paste(folder,POSTIVE.FILE,"-",algo.name,sep="")
+			memb.pos <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder.pos)
+			graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=algo.name, value=memb.pos)
 		}
 	}
+	
+	# apply all correlation clustering algorithms
+	for(algo.name in corclu.algos)
+	{	if(!all(is.na(graphs$signed)))
+		{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the signed graph\n",sep="")
+			part.folder.signed <- paste(folder,SIGNED.FILE,"-",algo.name,sep="")
+			memb <- apply.partitioning.algorithm(graphs$signed, algo.name, part.folder.signed)
+			graphs$signed <- set.vertex.attribute(graph=graphs$signed, name=algo.name, value=memb)
+		}
+	}
+	
+	# update graph (graphml only) with detected communities
+	graph.file.neg <- paste(NETWORKS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,".graphml",sep="")
+	write.graph(graph=graphs$neg, file=graph.file.neg, format="graphml")
+	graph.file.pos <- paste(NETWORKS.FOLDER,"/",subfolder,POSTIVE.FILE,".graphml",sep="")
+	write.graph(graph=graphs$pos, file=graph.file.pos, format="graphml")
+	graph.file <- paste(NETWORKS.FOLDER,"/",subfolder,SIGNED.FILE,".graphml",sep="")
+	write.graph(graph=graphs$signed, file=graph.file, format="graphml")
 }
 
 
 
 #############################################################################################
-# Generate all possible networks for all time periods and domains, for the specified thresholds 
-# and agreement scores. 
+# Applies the selected partitioning algorithms for all time periods and domains, for the specified 
+# thresholds and agreement scores. 
 #
 # neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
 # pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
@@ -159,29 +123,30 @@ perform.community.detection <- function(subfolder)
 # subfolder: subfolder used to store the generated files.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
+# comdet.algos: community detection algorithms to apply.
+# corclu.algos: correlation clustering algorithms to apply.
 #############################################################################################
-detect.communities <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates)
+partition.graphs <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, comdet.algos, corclu.algos)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
 	{	# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
 		{	cat("Detect communities for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
-			# setup graph folder
+			# setup graph subfolder
 			folder <- paste(subfolder,"/",score.file,"/",dom,"/",DATE.STR.T7[date],
 					"/","negtr=",neg.thresh,"-postr=",pos.thresh,"/",sep="")
-			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 			
 			# perform community detection
-			perform.community.detection(folder)
+			perform.partitioning(folder, comdet.algos, corclu.algos)
 		}
 	}
 }
 
 
 #############################################################################################
-# Generate all networks for the whole dataset, by country and by political group, for the 
-# specified thresholds and agreement scores. 
+# Applies all selected partitioning algorithms, for the whole dataset, by country and by political 
+# group, for the specified thresholds and agreement scores. 
 #
 # mep.details: description of each MEP.
 # neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
@@ -191,13 +156,15 @@ detect.communities <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfold
 # everything: whether to process all data without distinction of country or political group.
 # countries: member states to consider separately when processing the data.
 # groups: political groups to consider separately when processing the data.
+# comdet.algos: community detection algorithms to apply.
+# corclu.algos: correlation clustering algorithms to apply.
 #############################################################################################
-detect.all.communities <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups)
+partition.all.graphs <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos)
 {	# extract networks for all data
 	if(everything)
 	{	cat("Detect communities for all data","\n",sep="")
 		subfolder <- "everything"
-		detect.communities(neg.thresh, pos.thresh, score.file, subfolder, domains, dates)
+		partition.graphs(neg.thresh, pos.thresh, score.file, subfolder, domains, dates, comdet.algos, corclu.algos)
 	}
 	
 	# networks by political group
@@ -215,7 +182,7 @@ detect.all.communities <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		grp.subfolder <- paste(subfolder,"/",group,sep="")
 		
 		# extract networks
-		detect.communities(neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates)
+		partition.graphs(neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates, comdet.algos, corclu.algos)
 	}
 	
 	# networks by home country
@@ -233,6 +200,6 @@ detect.all.communities <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		cntr.subfolder <- paste(subfolder,"/",country,sep="")
 		
 		# extract networks
-		detect.communities(neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates)
+		partition.graphs(neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, comdet.algos, corclu.algos)
 	}
 }

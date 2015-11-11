@@ -24,6 +24,7 @@ source("src/define-constants.R")
 source("src/build-networks/extract-networks.R")
 source("src/build-networks/process-agreement.R")
 source("src/partition-networks/detect-clusters.R")
+source("src/partition-networks/evaluate-clusters.R")
 source("src/prepare-data/load-itsyourparliament.R")
 source("src/prepare-data/load-parltrack.R")
 source("src/prepare-data/load-votewatch.R")
@@ -39,20 +40,30 @@ dataset.name <- "VW"		# VoteWatch
 #dataset.name <- "IYP"		# It's your Parliament
 #dataset.name <- "PT"		# Parltrack
 
-# filtering parameters
+## filtering parameters
 #domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
 domains <- DOMAIN.AFCO
-dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
-everything <- TRUE							# whether or not to process all data without distinction of country or date
+#dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
+dates <- c(DATE.T7.Y1)
+#everything <- TRUE							# whether or not to process all data without distinction of country or date
+everything <- FALSE
 #countries <- COUNTRY.VALUES				# which country to process individually
-countries <- c()
-#groups <- c(GROUP.VALUES)					# which group to process individually
+countries <- c(COUNTRY.AT)
+#countries <- c()
+#groups <- GROUP.VALUES					# which group to process individually
+#groups <- c(GROUP.SD)
 groups <- c()
 
 ## score matrix used to process agreement
 score.file <- "m3"			# see folder in/score
 neg.thresh <- -0.34			# threshold applied to negative agreement index values (during network extraction)
 pos.thresh <- +0.34			# same thing, but for positive values
+
+## partitioning algorithms
+comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
+#corclst.algos <- CORCLST.ALGO.VALUES	# correlation clustering algorithms
+corclst.algos <- c()
+
 
 #############################################################################################
 # Load raw data
@@ -86,17 +97,22 @@ if(dataset.name=="VW")
 #############################################################################################
 # Extract all the networks
 #############################################################################################
-#extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups)
+extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups)
 
 
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-detect.all.communities(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups)
+partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos)
 
 
+#############################################################################################
+# Evaluate the detected partitions, for all the networks
+#############################################################################################
+evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos)
 
 
 # Problèmes
