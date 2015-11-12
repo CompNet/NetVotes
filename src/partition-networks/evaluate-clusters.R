@@ -234,7 +234,7 @@ evaluate.corclu.methods <- function(graphs, subfolder, corclu.algos)
 	
 	# record the table
 	table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,SIGNED.FILE,"-performances.csv",sep="")
-	write.csv(perf.table, file=table.file, row.names=TRUE, col.names=TRUE)
+	write.csv(perf.table, file=table.file, row.names=TRUE)
 }
 
 
@@ -298,10 +298,10 @@ evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos)
 	# record the tables
 		# partition obtained on the complementary negative subraph 
 		table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,"-performances.csv",sep="")
-		write.csv(neg.perf.table, file=table.file, row.names=TRUE, col.names=TRUE)
+		write.csv(neg.perf.table, file=table.file, row.names=TRUE)
 		# partition obtained on the postive subraph 
 		table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,POSITIVE.FILE,"-performances.csv",sep="")
-		write.csv(pos.perf.table, file=table.file, row.names=TRUE, col.names=TRUE)
+		write.csv(pos.perf.table, file=table.file, row.names=TRUE)
 }
 
 

@@ -21,7 +21,7 @@ retrieve.graphs <- function(subfolder)
 	if(!file.exists(graph.file.neg))
 		cat("Graph file ",graph.file.neg," not found\n",sep="")
 	else
-		g.neg <- read.graph(file=graph.file.neg, format="graphml")
+		g.neg <- suppressWarnings(read.graph(file=graph.file.neg, format="graphml"))
 	
 	# load the positive graph
 	graph.file.pos <- paste(NETWORKS.FOLDER,"/",subfolder,POSITIVE.FILE,".graphml",sep="")
@@ -29,7 +29,7 @@ retrieve.graphs <- function(subfolder)
 	if(!file.exists(graph.file.pos))
 		cat("Graph file ",graph.file.pos," not found\n",sep="")
 	else
-		g.pos <- read.graph(file=graph.file.pos, format="graphml")
+		g.pos <- suppressWarnings(read.graph(file=graph.file.pos, format="graphml"))
 	
 	# load the original graph
 	graph.file <- paste(NETWORKS.FOLDER,"/",subfolder,SIGNED.FILE,".graphml",sep="")
@@ -37,7 +37,7 @@ retrieve.graphs <- function(subfolder)
 	if(!file.exists(graph.file))
 		cat("Graph file ",graph.file," not found\n",sep="")
 	else
-		g <- read.graph(file=graph.file, format="graphml")
+		g <- suppressWarnings(read.graph(file=graph.file, format="graphml"))
 	
 	# build and return the result list
 	result <- list(neg=g.neg, pos=g.pos, signed=g)
