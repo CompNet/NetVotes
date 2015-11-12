@@ -43,7 +43,7 @@ MEP.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"mep-details.csv")
 MEP.BEHAVIOR.FILE	<- file.path(OVERALL.FOLDER,"mep-behavior.csv")
 # graph files
 SIGNED.FILE <- "signed"
-POSTIVE.FILE <- "positive"
+POSITIVE.FILE <- "positive"
 COMP.NEGATIVE.FILE <- "comp-negative"
 # partition files
 PART.COMPARISON.FILE <- "comparison.csv"

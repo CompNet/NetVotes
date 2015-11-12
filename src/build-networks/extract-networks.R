@@ -57,7 +57,7 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	
 	# also export the positive and complementary negative graphs, as unsigned graphs
 	gp <- subgraph.edges(graph=result, eids=which(E(result)$weight>0), delete.vertices=FALSE)
-	graph.file <- paste(folder,POSTIVE.FILE,".graphml",sep="")
+	graph.file <- paste(folder,POSITIVE.FILE,".graphml",sep="")
 	write.graph(graph=gp, file=graph.file, format="graphml")
 	gn <- subgraph.edges(graph=result, eids=which(E(result)$weight<0), delete.vertices=FALSE)
 	gn <- graph.complementer(graph=gn, loops=FALSE)

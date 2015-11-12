@@ -24,7 +24,7 @@ retrieve.graphs <- function(subfolder)
 		g.neg <- read.graph(file=graph.file.neg, format="graphml")
 	
 	# load the positive graph
-	graph.file.pos <- paste(NETWORKS.FOLDER,"/",subfolder,POSTIVE.FILE,".graphml",sep="")
+	graph.file.pos <- paste(NETWORKS.FOLDER,"/",subfolder,POSITIVE.FILE,".graphml",sep="")
 	g.pos <- NA
 	if(!file.exists(graph.file.pos))
 		cat("Graph file ",graph.file.pos," not found\n",sep="")

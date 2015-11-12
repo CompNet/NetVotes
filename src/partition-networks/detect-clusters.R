@@ -19,11 +19,12 @@ source("src/partition-networks/networks-common.R")
 # part.folder: folder in which to write the result files.
 #############################################################################################
 apply.partitioning.algorithm <- function(g, algo.name, part.folder)
-{	cat("n=",vcount(g), " m=",ecount(g), " d=",graph.density(g), sep="")
-	cat(" connected=", is.connected(g,mode="weak"), sep="")
-	cat("\n", sep="")
+{	#cat("n=",vcount(g), " m=",ecount(g), " d=",graph.density(g), sep="")
+	#cat(" connected=", is.connected(g,mode="weak"), sep="")
+	#cat("\n", sep="")
 	
 	# apply the community detection algorithm
+	coms <- NA
 	if(algo.name==COMDET.ALGO.EDGEBETW)
 		coms <- edge.betweenness.community(
 					graph=g, edge.betweenness=FALSE, merges=FALSE,
@@ -39,18 +40,23 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 		coms <- multilevel.community (
 					graph=g, weights=NULL)
 	else if(algo.name==COMDET.ALGO.WALKTRAP)
-		coms <- walktrap.community(
-					graph, steps=4, 
-					merges=FALSE, modularity=FALSE, membership=TRUE)
+	{	coms <- walktrap.community(
+					graph=g, steps=4, 
+					merges=TRUE, modularity=TRUE, membership=TRUE)
+	}
 	else if(algo.name==CORCLU.ALGO.PILS)
 	{	#TODO external invocation (pILS is coded in C++)
 	}
 		
 	# record the membership vector
-	mbrshp <- membership(coms)
-	table.file <- paste(part.folder,"-membership.txt",sep="")
-	write.table(x=mbrshp, file=table.file, row.names=FALSE, col.names=FALSE)
-
+	if(!all(is.na(coms)))
+	{	mbrshp <- membership(coms)
+		while(min(mbrshp)==0)
+			mbrshp <- mbrshp + 1
+		table.file <- paste(part.folder,"-membership.txt",sep="")
+		write.table(x=mbrshp, file=table.file, row.names=FALSE, col.names=FALSE)
+	}
+	
 	return(mbrshp)
 }
 
@@ -85,7 +91,7 @@ perform.partitioning <- function(subfolder, comdet.algos, corclu.algos)
 		# positive graph
 		if(!all(is.na(graphs$pos)))
 		{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph\n",sep="")
-			part.folder.pos <- paste(folder,POSTIVE.FILE,"-",algo.name,sep="")
+			part.folder.pos <- paste(folder,POSITIVE.FILE,"-",algo.name,sep="")
 			memb.pos <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder.pos)
 			graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=algo.name, value=memb.pos)
 		}
@@ -104,7 +110,7 @@ perform.partitioning <- function(subfolder, comdet.algos, corclu.algos)
 	# update graph (graphml only) with detected communities
 	graph.file.neg <- paste(NETWORKS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,".graphml",sep="")
 	write.graph(graph=graphs$neg, file=graph.file.neg, format="graphml")
-	graph.file.pos <- paste(NETWORKS.FOLDER,"/",subfolder,POSTIVE.FILE,".graphml",sep="")
+	graph.file.pos <- paste(NETWORKS.FOLDER,"/",subfolder,POSITIVE.FILE,".graphml",sep="")
 	write.graph(graph=graphs$pos, file=graph.file.pos, format="graphml")
 	graph.file <- paste(NETWORKS.FOLDER,"/",subfolder,SIGNED.FILE,".graphml",sep="")
 	write.graph(graph=graphs$signed, file=graph.file, format="graphml")

@@ -77,7 +77,8 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=T
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
 plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
-{	# possibly complete the y axis ranges
+{	#print(counts)
+	# possibly complete the y axis ranges
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
 	{	if(proportions)
 			y.lim[1] <- min(counts) / sum(counts)
@@ -112,9 +113,11 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 	if(proportions)
 		col.label <- round(col.label*100)
 	col.label[col.label==0] <- NA
+	#print(col.counts)	
 	temp <- data.frame(cats=col.names, cnts=col.counts, lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
 		temp[["upper"]] <- col.counts + col.dispersion
+	#print(temp)
 		
 	# process each specified format
 	for(frmt in format)

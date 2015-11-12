@@ -97,15 +97,15 @@ if(dataset.name=="VW")
 #############################################################################################
 # Extract all the networks
 #############################################################################################
-extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups)
+#extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
+#		domains, dates, everything, countries, groups)
 
 
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos)
+#partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos)
 
 
 #############################################################################################

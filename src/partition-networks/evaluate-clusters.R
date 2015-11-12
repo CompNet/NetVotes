@@ -17,15 +17,17 @@ source("src/plot-tools/plot-bars.R")
 # partition: membership vector.
 # folder: start of the file name used when recording values and plots.
 #############################################################################################
-record.partion.stats <- function(partition, folder)
+record.partition.stats <- function(partition, folder)
 {	# record the community sizes
 	comsz <- table(partition)
+	coms <- rownames(comsz)
+	comsz <- as.vector(comsz)
 	table.file <- paste(folder,"-comsizes.txt",sep="")
 	write.table(x=comsz, file=table.file, row.names=FALSE, col.names=FALSE)
 	
 	# plot them
-	table.file <- paste(folder,"-comsizes",sep="")
-	plot.unif.indiv.count.bars(plot.file, bar.names, 
+	plot.file <- paste(folder,"-comsizes",sep="")
+	plot.unif.indiv.count.bars(plot.file, bar.names=coms, 
 		counts=comsz, dispersion=NA, proportions=FALSE, areas=FALSE, 
 		y.lim=c(0,NA), 
 		x.label="Community", y.label="Count", 
@@ -100,7 +102,7 @@ process.structural.imbalance <- function(g, partition, algo.name, perf.table)
 {	# compare the clusters of connected nodes
 	edge.mat <- get.edgelist(g)
 	clus.mat <- cbind(partition[edge.mat[,1]],partition[edge.mat[,2]])
-	same.clus <- partition[,1]==partition[,2]
+	same.clus <- clus.mat[,1]==clus.mat[,2]
 	
 	# compare link signs and positions 
 	neg.links <- E(g)$weight<0
@@ -164,13 +166,13 @@ process.modularity <- function(g.neg, g.pos, partition, algo.name, perf.table)
 {	# evaluation on the complementary negative graph
 	if(!all(is.na(g.neg)))
 	{	perf.table[algo.name, COMDET.MEAS.MOD.UNW.NEG] <- modularity(x=g.neg, membership=partition, weights=NULL)
-		perf.table[algo.name, COMDET.MEAS.MOD.WGT.NEG] <- modularity(x=g.neg, membership=partition, weights=E(g)$weight)
+		perf.table[algo.name, COMDET.MEAS.MOD.WGT.NEG] <- modularity(x=g.neg, membership=partition, weights=E(g.neg)$weight)
 	}
 	
 	# evaluation on the positive graph
 	if(!all(is.na(g.pos)))
 	{	perf.table[algo.name, COMDET.MEAS.MOD.UNW.POS] <- modularity(x=g.pos, membership=partition, weights=NULL)
-		perf.table[algo.name, COMDET.MEAS.MOD.WGT.POS] <- modularity(x=g.pos, membership=partition, weights=E(g)$weight)
+		perf.table[algo.name, COMDET.MEAS.MOD.WGT.POS] <- modularity(x=g.pos, membership=partition, weights=E(g.neg)$weight)
 	}
 	
 	return(perf.table)
@@ -258,13 +260,16 @@ evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos)
 	
 	# process measures
 	for(algo.name in comdet.algos)
-	{	# partition obtained on the complementary negative subgraph
+	{	cat("Process algorithm ",algo.name,"\n"
+						)
+		# partition obtained on the complementary negative subgraph
 		neg.base.name <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,"-",algo.name,sep="")
 		neg.partition.file <- paste(neg.base.name,"-membership.txt",sep="")
 		if(!file.exists(neg.partition.file))
 			cat("Partition file ",neg.partition.file," not found\n",sep="")
 		else
-		{	# load partition
+		{	cat("Process complementary negative partition\n",sep="")
+			# load partition
 			neg.partition <- as.matrix(read.table(neg.partition.file))
 			# record stats
 			record.partition.stats(neg.partition, neg.base.name)
@@ -279,7 +284,8 @@ evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos)
 		if(!file.exists(pos.partition.file))
 			cat("Partition file ",pos.partition.file," not found\n",sep="")
 		else
-		{	# load partition
+		{	cat("Process positive partition\n",sep="")
+			# load partition
 			pos.partition <- as.matrix(read.table(pos.partition.file))
 			# record stats
 			record.partition.stats(pos.partition, pos.base.name)
@@ -318,17 +324,20 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 	for(dom in domains)
 	{	# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	cat("Detect communities for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+		{	cat("Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph subfolder
 			folder <- paste(subfolder,"/",score.file,"/",dom,"/",DATE.STR.T7[date],
 					"/","negtr=",neg.thresh,"-postr=",pos.thresh,"/",sep="")
 			
 			# load all three versions of the graph
+			cat("Load all three versions of the graph\n",sep="")
 			graphs <- retrieve.graphs(folder)
 			# evaluate community detection methods
+			cat("Evaluate community detection methods\n",sep="")
 			evaluate.comdet.methods(graphs, folder, comdet.algos)
 			# evaluate correlation clustering methods
+			cat("Evaluate correlation clustering methods\n",sep="")
 			evaluate.corclu.methods(graphs, folder, corclu.algos)
 		}
 	}
@@ -400,5 +409,3 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 
 #TODO missing thing when detecting clusters: repeat several times for result stability 
 #TODO verify which comdet algos handle weights
-#TODO when a signed graph does not contain many negative links, the complementary negative graph is too dense. 
-#TODO plus, the complementary negative graphs are not weighted (to be considered when calling the comdet functions). 
