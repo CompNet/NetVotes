@@ -23,6 +23,7 @@
 source("src/define-constants.R")
 source("src/build-networks/extract-networks.R")
 source("src/build-networks/process-agreement.R")
+source("src/partition-networks/compare-clusters.R")
 source("src/partition-networks/detect-clusters.R")
 source("src/partition-networks/evaluate-clusters.R")
 source("src/prepare-data/load-itsyourparliament.R")
@@ -64,6 +65,8 @@ comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
 #corclst.algos <- CORCLST.ALGO.VALUES	# correlation clustering algorithms
 corclst.algos <- c()
 
+## measures used to compare partitions
+comp.measures <- c("nmi", "rand", "adjusted.rand")
 
 #############################################################################################
 # Load raw data
@@ -111,9 +114,15 @@ if(dataset.name=="VW")
 #############################################################################################
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
-evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos)
+#evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos)
 
+
+#############################################################################################
+# Compare the detected partitions, for all the networks
+#############################################################################################
+compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures)
 
 # Problèmes
 # - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable

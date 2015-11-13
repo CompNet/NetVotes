@@ -306,7 +306,7 @@ evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos)
 
 
 #############################################################################################
-# Evaluate the partitions for the specified partitioning algorithms, for all possible networks, 
+# Evaluates the partitions for the specified partitioning algorithms, for all possible networks, 
 # for all time periods and domains, for the specified thresholds and agreement scores. 
 #
 # neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
@@ -345,7 +345,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 
 
 #############################################################################################
-# Evaluate the partitions for the specified partitioning algorithms, for all networks, for 
+# Evaluates the partitions for the specified partitioning algorithms, for all networks, for 
 # the whole dataset, by country and by political group, for the specified thresholds and 
 # agreement scores. 
 #
@@ -404,8 +404,3 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 		evaluate.partitions(neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, comdet.algos, corclu.algos)
 	}
 }
-
-
-
-#TODO missing thing when detecting clusters: repeat several times for result stability 
-#TODO verify which comdet algos handle weights
