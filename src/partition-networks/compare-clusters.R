@@ -38,68 +38,103 @@ compare.partition.pair <- function(partition1, partition2, measures="nmi")
 # comdet.algos: vector of community detection algorithm names.
 # corclu.algos: vector of correlation clustering algorithm names.
 # measures: vector of comparison measures to process.
+# repetitions: number of times each algorithm must be applied.
 #############################################################################################
-compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, measures="nmi")
-{	# load partitions
-	partitions <- list()
-	for(comdet.name in comdet.algos)
-	{	cat("Loading partition files for algorithm ",comdet.name,"\n",sep="")
-		
-		# partition obtained on the complementary negative subgraph
-		neg.partition.file <- paste(folder,COMP.NEGATIVE.FILE,"-",comdet.name,"-membership.txt",sep="")
-		if(!file.exists(neg.partition.file))
-			cat("Partition file ",neg.partition.file," not found\n",sep="")
-		else
-			partitions[[paste(comdet.name,"-CN",sep="")]] <- as.matrix(read.table(neg.partition.file))
-		
-		# partition obtained on the positive subgraph
-		pos.partition.file <- paste(folder,POSITIVE.FILE,"-",comdet.name,"-membership.txt",sep="")
-		if(!file.exists(pos.partition.file))
-			cat("Partition file ",pos.partition.file," not found\n",sep="")
-		else
-			partitions[[paste(comdet.name,"-P",sep="")]] <- as.matrix(read.table(pos.partition.file))
-	}
-	for(corclu.name in corclu.algos)
-	{	cat("Loading partition files for algorithm ",corclu.name,"\n",sep="")
-		signed.partition.file <- paste(folder,SIGNED.FILE,"-",corclu.name,"-membership.txt",sep="")
-		if(!file.exists(signed.partition.file))
-			cat("Partition file ",signed.partition.file," not found\n",sep="")
-		else
-			partitions[[corclu.name]] <- as.matrix(read.table(signed.partition.file))
+compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, measures="nmi", repetitions)
+{	# init the list used to process the average
+	if(repetitions>1)
+	{	avg.list <- list()
+		for(meas in measures)
+			avg.list[[meas]] <- list()
 	}
 	
-	# init result matrices
-	mats <- list() 
-	for(meas in measures)
-	{	m <- matrix(NA, nrow=length(partitions), ncol=length(partitions))
-		rownames(m) <- names(partitions)
-		colnames(m) <- names(partitions)
-		mats[[meas]] <- m
-	}
-	
-	# compare partitions
-	for(i in 1:(length(partitions)-1))
-	{	partition1 <- partitions[[i]]
-		for(j in (i+1):length(partitions))
-		{	cat("Processing ",names(partitions)[i]," vs ",names(partitions)[j],"\n",sep="")
-			partition2 <- partitions[[j]]
-			vals <- compare.partition.pair(partition1, partition2, measures)
-			print(vals)
-			if(any(is.nan(vals)))
-				cat("WARNING: some measures returned NaN, which will appear as NA in the recorded file","\n",sep="")
-			for(meas in measures)
-			{	mats[[meas]][i,j] <- vals[meas]
-				mats[[meas]][j,i] <- vals[meas]
+	# the process might be repeated several times
+	for(r in 1:repetitions)
+	{	cat("Processing iteration ",r,"/",repetitions,"\n",sep="")
+		# setup iteration folder
+		if(repetitions>1)
+			r.folder <- paste(folder,r,"/",sep="")
+		else
+			r.folder <- folder
+		
+		# load partitions
+		partitions <- list()
+		for(comdet.name in comdet.algos)
+		{	cat("Loading partition files for algorithm ",comdet.name,"\n",sep="")
+			
+			# partition obtained on the complementary negative subgraph
+			neg.partition.file <- paste(r.folder,COMP.NEGATIVE.FILE,"-",comdet.name,"-membership.txt",sep="")
+			if(!file.exists(neg.partition.file))
+				cat("Partition file ",neg.partition.file," not found\n",sep="")
+			else
+				partitions[[paste(comdet.name,"-CN",sep="")]] <- as.matrix(read.table(neg.partition.file))
+			
+			# partition obtained on the positive subgraph
+			pos.partition.file <- paste(r.folder,POSITIVE.FILE,"-",comdet.name,"-membership.txt",sep="")
+			if(!file.exists(pos.partition.file))
+				cat("Partition file ",pos.partition.file," not found\n",sep="")
+			else
+				partitions[[paste(comdet.name,"-P",sep="")]] <- as.matrix(read.table(pos.partition.file))
+		}
+		for(corclu.name in corclu.algos)
+		{	cat("Loading partition files for algorithm ",corclu.name,"\n",sep="")
+			signed.partition.file <- paste(r.folder,SIGNED.FILE,"-",corclu.name,"-membership.txt",sep="")
+			if(!file.exists(signed.partition.file))
+				cat("Partition file ",signed.partition.file," not found\n",sep="")
+			else
+				partitions[[corclu.name]] <- as.matrix(read.table(signed.partition.file))
+		}
+		
+		# init iteration matrices
+		mats <- list() 
+		for(meas in measures)
+		{	m <- matrix(NA, nrow=length(partitions), ncol=length(partitions))
+			rownames(m) <- names(partitions)
+			colnames(m) <- names(partitions)
+			mats[[meas]] <- m
+		}
+		
+		# compare partitions
+		for(i in 1:(length(partitions)-1))
+		{	#print(i);print(length(partitions))
+			partition1 <- partitions[[i]]
+			for(j in (i+1):length(partitions))
+			{	cat("Processing ",names(partitions)[i]," vs ",names(partitions)[j],"\n",sep="")
+				partition2 <- partitions[[j]]
+				vals <- compare.partition.pair(partition1, partition2, measures)
+				#print(vals)
+				if(any(is.nan(vals)))
+					cat("WARNING: some measures returned NaN, which will appear as NA in the recorded file","\n",sep="")
+				for(meas in measures)
+				{	mats[[meas]][i,j] <- vals[meas]
+					mats[[meas]][j,i] <- vals[meas]
+				}
 			}
+		}
+		
+		# record iteration matrices
+		for(meas in measures)
+		{	table.file <- paste(r.folder,"comparison-",meas,".csv",sep="")
+			write.csv(mats[[meas]], file=table.file, row.names=TRUE)
+		}
+		
+		# update the list used to average
+		if(repetitions>1)
+		{	for(meas in measures)
+				avg.list[[meas]][[r]] <- mats[[meas]]
 		}
 	}
 	
-	# record comparison results
-	for(meas in measures)
-	{	table.file <- paste(folder,PART.COMPARISON.FILE,sep="")
-		write.csv(mats[[meas]], file=table.file, row.names=TRUE)
+	# record the average tables
+	if(repetitions>1)
+	{	for(meas in measures)
+		{	tmp <- average.matrix.list(avg.list[[meas]])
+			table.file <- paste(folder,"comparison-mean-",meas,".csv",sep="")
+			write.csv(tmp$avg, file=table.file, row.names=TRUE)
+			table.file <- paste(folder,"comparison-stdev-",meas,".csv",sep="")
+			write.csv(tmp$stev, file=table.file, row.names=TRUE)
+		}
 	}
-	return(mats)
 }
 
 
@@ -117,8 +152,9 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 # comdet.algos: community detection algorithms to apply.
 # corclu.algos: correlation clustering algorithms to apply.
 # measures: vector of comparison measures to process.
+# repetitions: number of times each algorithm must be applied.
 #############################################################################################
-compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, folder, domains, dates, comdet.algos, corclu.algos, measures)
+compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
 	{	# consider each time period (each individual year as well as the whole term)
@@ -131,7 +167,7 @@ compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, folder,
 			
 			# compare algorithm performances
 			cat("Compare partitioning algorithm performances\n",sep="")
-			compare.partitions.measures(filtered.folder, comdet.algos, corclu.algos, measures)
+			compare.partitions.measures(filtered.folder, comdet.algos, corclu.algos, measures, repetitions)
 		}
 	}
 }
@@ -153,13 +189,14 @@ compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, folder,
 # comdet.algos: community detection algorithms to apply.
 # corclu.algos: correlation clustering algorithms to apply.
 # measures: vector of comparison measures to process.
+# repetitions: number of times each algorithm must be applied.
 #############################################################################################
-compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, measures)
+compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, measures, repetitions)
 {	# extract networks for all data
 	if(everything)
 	{	cat("Compare performance measures for all data","\n",sep="")
 		folder <- paste(PARTITIONS.FOLDER,"/","everything",sep="")
-		compare.partitions(neg.thresh, pos.thresh, score.file, folder, domains, dates, comdet.algos, corclu.algos, measures)
+		compare.partitions(neg.thresh, pos.thresh, score.file, folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
 	}
 	
 	# networks by political group
@@ -177,7 +214,7 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		grp.folder <- paste(folder,"/",group,sep="")
 		
 		# extract networks
-		compare.partitions(neg.thresh, pos.thresh, score.file, grp.folder, domains, dates, comdet.algos, corclu.algos, measures)
+		compare.partitions(neg.thresh, pos.thresh, score.file, grp.folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
 	}
 	
 	# networks by home country
@@ -195,7 +232,7 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		cntr.folder <- paste(folder,"/",country,sep="")
 		
 		# extract networks
-		compare.partitions(neg.thresh, pos.thresh, score.file, cntr.folder, domains, dates, comdet.algos, corclu.algos, measures)
+		compare.partitions(neg.thresh, pos.thresh, score.file, cntr.folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
 	}
 }
 
@@ -208,6 +245,6 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 
 
 
-#TODO missing thing when detecting clusters: repeat several times for result stability 
 #TODO verify which comdet algos handle weights
-#TODO some comparison values are NA: check why
+#TODO move graph updating from the detection to the evaluation script
+#TODO must generate a barplot of the perf in evaluate script: for each iteration, and in average

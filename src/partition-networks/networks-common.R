@@ -43,3 +43,52 @@ retrieve.graphs <- function(subfolder)
 	result <- list(neg=g.neg, pos=g.pos, signed=g)
 	return(result)
 }
+
+
+
+#############################################################################################
+# Receives a list of matrices, all with the same dimension, and processes individual mean
+# and standard deviation of each matrix term.
+# 
+# l: list of same-sized matrices.
+# returns: a list containing an "avg" and an "stdev" matrices, corresponding to the average
+#          and standard deviation of the matrices in the specified list, respectively.
+#############################################################################################
+average.matrix.list <- function(l)
+{	# init result
+	avg <- matrix(0,nrow=nrow(l[[1]]),ncol=ncol(l[[1]]))
+	rownames(avg) <- rownames(l[[1]])
+	colnames(avg) <- colnames(l[[1]])
+	stdev <- matrix(0,nrow=nrow(l[[1]]),ncol=ncol(l[[1]]))
+	rownames(stdev) <- rownames(l[[1]])
+	colnames(stdev) <- colnames(l[[1]])
+	
+	# process mean
+	cnt <- matrix(0,nrow=nrow(l[[1]]),ncol=ncol(l[[1]]))
+	for(i in 1:length(l))
+	{	m <- l[[i]]
+		# retain only numerical values
+		vals <- m
+		vals[is.na(vals) | is.nan(vals) | is.infinite(vals)] <- 0
+		avg <- avg + vals
+		# count numerical values
+		cnts <- matrix(1,nrow=nrow(m),ncol=ncol(m))
+		cnts[is.na(m) | is.nan(m) | is.infinite(m)] <- 0
+		cnt <- cnt + cnts
+	}
+	avg <- avg / cnt
+	
+	# process standard devation
+	for(i in 1:length(l))
+	{	m <- l[[i]]
+		# retain only numerical values
+		vals <- (m - avg)^2
+		vals[is.na(vals) | is.nan(vals) | is.infinite(vals)] <- 0
+		stdev <- stdev + vals
+	}
+	stdev <- sqrt(stdev/(cnt-1))
+	
+	# set up result
+	result <- list(avg=avg, stdev=stdev)
+	return(result)
+}
