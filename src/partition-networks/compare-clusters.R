@@ -12,7 +12,7 @@ source("src/partition-networks/networks-common.R")
 #
 # partition1: first partition.
 # partition2: second partition.
-# measures: vector of measure names.
+# measures: vector of measure names: c("vi", "nmi", "split.join", "rand", "adjusted.rand").
 # returns: vector of values corresponding to each specified measures.
 #############################################################################################
 compare.partition.pair <- function(partition1, partition2, measures="nmi")
@@ -22,11 +22,9 @@ compare.partition.pair <- function(partition1, partition2, measures="nmi")
 	
 	# process measures for specified partitions
 	for(measure in measures)
-	{	result[measure] <- compare(partition1, partition2, method=measure)
-		#c("vi", "nmi", "split.join", "rand", "adjusted.rand")
-	}
+		result[measure] <- compare(partition1, partition2, method=measure)
 	
-	#TODO one can add other measures here if needed
+	#TODO one can add the processing of other measures here if needed
 	
 	return(result)
 }
@@ -83,8 +81,12 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 	for(i in 1:(length(partitions)-1))
 	{	partition1 <- partitions[[i]]
 		for(j in (i+1):length(partitions))
-		{	partition2 <- partitions[[j]]
+		{	cat("Processing ",names(partitions)[i]," vs ",names(partitions)[j],"\n",sep="")
+			partition2 <- partitions[[j]]
 			vals <- compare.partition.pair(partition1, partition2, measures)
+			print(vals)
+			if(any(is.nan(vals)))
+				cat("WARNING: some measures returned NaN, which will appear as NA in the recorded file","\n",sep="")
 			for(meas in measures)
 			{	mats[[meas]][i,j] <- vals[meas]
 				mats[[meas]][j,i] <- vals[meas]
@@ -208,3 +210,4 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 
 #TODO missing thing when detecting clusters: repeat several times for result stability 
 #TODO verify which comdet algos handle weights
+#TODO some comparison values are NA: check why

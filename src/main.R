@@ -64,6 +64,7 @@ pos.thresh <- +0.34			# same thing, but for positive values
 comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
 #corclst.algos <- CORCLST.ALGO.VALUES	# correlation clustering algorithms
 corclst.algos <- c()
+repetitions <- 10						# number of times each algorithm must be applied
 
 ## measures used to compare partitions
 comp.measures <- c("nmi", "rand", "adjusted.rand")
@@ -107,22 +108,22 @@ if(dataset.name=="VW")
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-#partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos)
+partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions)
 
 
 #############################################################################################
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
-#evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos)
+evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions)
 
 
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
 compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures)
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 # Problèmes
 # - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable
