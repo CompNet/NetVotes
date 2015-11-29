@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		472
+	</mepid>
+	<mepname>
+		Díaz de Mera García Consuegra
+	</mepname>
+	<fullname>
+		Agustín Díaz de mera garcía consuegra
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Popular
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/472.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11E169, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1947-08-27
+	</birth>
+	<birthplace>
+		Daimiel (c.r.)
+	</birthplace>
+	<europarlid>
+		28397
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		77	</attendance>
+
+</mepinfo>

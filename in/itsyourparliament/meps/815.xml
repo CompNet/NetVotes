@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		815
+	</mepid>
+	<mepname>
+		Anderson
+	</mepname>
+	<fullname>
+		
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		
+	</title>
+	<party>
+		Sinn Féin
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/815.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		
+	</birth>
+	<birthplace>
+		
+	</birthplace>
+	<europarlid>
+		
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		19	</attendance>
+
+</mepinfo>

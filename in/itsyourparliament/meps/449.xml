@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		449
+	</mepid>
+	<mepname>
+		Maštálka
+	</mepname>
+	<fullname>
+		Jiří Maštálka
+	</fullname>
+	<country>
+		Czech Republic
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=18&amp;key=0
+	</countryinfo>
+	<title>
+		Treasurer
+	</title>
+	<party>
+		Komunistická strana Čech a Moravy
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/449.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Evropský parlament, Rue Wiertz, Altiero Spinelli 06F365, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1956-01-03
+	</birth>
+	<birthplace>
+		Sušice
+	</birthplace>
+	<europarlid>
+		23704
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		85	</attendance>
+
+</mepinfo>

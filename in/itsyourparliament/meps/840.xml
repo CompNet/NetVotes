@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		840
+	</mepid>
+	<mepname>
+		Lyubcheva
+	</mepname>
+	<fullname>
+		
+	</fullname>
+	<country>
+		Bulgaria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=12&amp;key=0
+	</countryinfo>
+	<title>
+		
+	</title>
+	<party>
+		Coalition for Bulgaria
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/840.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		
+	</birth>
+	<birthplace>
+		
+	</birthplace>
+	<europarlid>
+		
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		
+Warning: Division by zero in /var/www/epdb/itsyourparliament.eu/www/api/mep.php on line 91
+0	</attendance>
+
+</mepinfo>

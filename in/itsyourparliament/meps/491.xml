@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		491
+	</mepid>
+	<mepname>
+		Mastella
+	</mepname>
+	<fullname>
+		Clemente Mastella
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Unione Democratici per l'Europa
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/491.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 09E153, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1947-02-05
+	</birth>
+	<birthplace>
+		Ceppaloni (bn)
+	</birthplace>
+	<europarlid>
+		4462
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		62	</attendance>
+
+</mepinfo>

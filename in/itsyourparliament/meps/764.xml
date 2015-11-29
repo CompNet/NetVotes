@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		764
+	</mepid>
+	<mepname>
+		Becker
+	</mepname>
+	<fullname>
+		Heinz K. Becker
+	</fullname>
+	<country>
+		Austria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=13&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Österreichische Volkspartei
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/764.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Europaïsches Parlament, Rue Wiertz, Altiero Spinelli 03F154, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1950-06-29
+	</birth>
+	<birthplace>
+		Baden Bei Wien
+	</birthplace>
+	<europarlid>
+		107041
+	</europarlid>
+	<membersince>
+		2011-04-01
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		89	</attendance>
+
+</mepinfo>

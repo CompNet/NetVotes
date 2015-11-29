@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		121
+	</mepid>
+	<mepname>
+		Keller
+	</mepname>
+	<fullname>
+		Franziska Keller
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Bündnis 90/Die Grünen
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/121.html
+
+	</mepprofile>
+	<webpage>
+		http://www.skakeller.de
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 08H242, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1981-10-22
+	</birth>
+	<birthplace>
+		W.-p.-st. Guben
+	</birthplace>
+	<europarlid>
+		96734
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		92	</attendance>
+
+</mepinfo>

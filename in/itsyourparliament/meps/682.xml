@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		682
+	</mepid>
+	<mepname>
+		Plevris
+	</mepname>
+	<fullname>
+		Athanasios Plevris
+	</fullname>
+	<country>
+		Greece
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=17&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Laikos Orthodoxos Synagermos - G. Karatzaferis
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/682.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1976-04-04
+	</birth>
+	<birthplace>
+		Athens
+	</birthplace>
+	<europarlid>
+		97010
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		2009-10-13
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		19	</attendance>
+
+</mepinfo>

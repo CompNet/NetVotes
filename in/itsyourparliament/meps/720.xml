@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		720
+	</mepid>
+	<mepname>
+		Hankiss
+	</mepname>
+	<fullname>
+		Ágnes Hankiss
+	</fullname>
+	<country>
+		Hungary
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=16&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Fidesz-Magyar Polgári Szövetség-Keresztény Demokrata Néppárt
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/720.html
+
+	</mepprofile>
+	<webpage>
+		http://www.hankissagnes.hu
+	</webpage>
+	<address>
+		Európai Parlament, Rue Wiertz, Altiero Spinelli 12E169, B-1047, Brüsszel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1950-03-07
+	</birth>
+	<birthplace>
+		Budapest
+	</birthplace>
+	<europarlid>
+		96707
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		73	</attendance>
+
+</mepinfo>

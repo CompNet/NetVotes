@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		242
+	</mepid>
+	<mepname>
+		Danjean
+	</mepname>
+	<fullname>
+		Arnaud Danjean
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Union pour un Mouvement Populaire
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/242.html
+
+	</mepprofile>
+	<webpage>
+		http://www.arnaud-danjean.fr/
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 13E115, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1971-02-11
+	</birth>
+	<birthplace>
+		Louhans
+	</birthplace>
+	<europarlid>
+		96747
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		90	</attendance>
+
+</mepinfo>

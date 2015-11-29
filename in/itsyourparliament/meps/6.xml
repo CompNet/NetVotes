@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		6
+	</mepid>
+	<mepname>
+		Rinaldi
+	</mepname>
+	<fullname>
+		Niccolò Rinaldi
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair
+	</title>
+	<party>
+		-
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/6.html
+
+	</mepprofile>
+	<webpage>
+		http://www.niccolorinaldi.it
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 09G351, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1962-11-03
+	</birth>
+	<birthplace>
+		Firenze
+	</birthplace>
+	<europarlid>
+		97229
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		80	</attendance>
+
+</mepinfo>

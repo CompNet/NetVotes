@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		767
+	</mepid>
+	<mepname>
+		Prendergast
+	</mepname>
+	<fullname>
+		Phil Prendergast
+	</fullname>
+	<country>
+		Ireland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=8&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Labour Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/767.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 11G209, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1959-08-20
+	</birth>
+	<birthplace>
+		Kilkenny
+	</birthplace>
+	<europarlid>
+		107386
+	</europarlid>
+	<membersince>
+		2011-04-21
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		84	</attendance>
+
+</mepinfo>

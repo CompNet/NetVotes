@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		703
+	</mepid>
+	<mepname>
+		Regner
+	</mepname>
+	<fullname>
+		Evelyn Regner
+	</fullname>
+	<country>
+		Austria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=13&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Sozialdemokratische Partei Österreichs
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/703.html
+
+	</mepprofile>
+	<webpage>
+		http://www.evelyn-regner.at
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 15G354, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1966-01-24
+	</birth>
+	<birthplace>
+		Wien
+	</birthplace>
+	<europarlid>
+		96998
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		93	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		409
+	</mepid>
+	<mepname>
+		Nicolai
+	</mepname>
+	<fullname>
+		Norica Nicolai
+	</fullname>
+	<country>
+		Romania
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=21&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Partidul Naţional Liberal
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/409.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamentul European, Rue Wiertz, Altiero Spinelli 08G242, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1958-01-27
+	</birth>
+	<birthplace>
+		Sinaia
+	</birthplace>
+	<europarlid>
+		96825
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		87	</attendance>
+
+</mepinfo>

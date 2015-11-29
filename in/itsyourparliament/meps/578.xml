@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		578
+	</mepid>
+	<mepname>
+		Agnew
+	</mepname>
+	<fullname>
+		John Stuart Agnew
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		United Kingdom Independence Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/578.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 04F143, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1949-08-30
+	</birth>
+	<birthplace>
+		Norwich
+	</birthplace>
+	<europarlid>
+		96897
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		89	</attendance>
+
+</mepinfo>

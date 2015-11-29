@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		248
+	</mepid>
+	<mepname>
+		Deutsch
+	</mepname>
+	<fullname>
+		Tamás Deutsch
+	</fullname>
+	<country>
+		Hungary
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=16&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Fidesz-Magyar Polgári Szövetség-Keresztény Demokrata Néppárt
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/248.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Európai Parlament, Rue Wiertz, Altiero Spinelli 12E157, B-1047, Brüsszel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1966-07-27
+	</birth>
+	<birthplace>
+		Budapest
+	</birthplace>
+	<europarlid>
+		96826
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		71	</attendance>
+
+</mepinfo>

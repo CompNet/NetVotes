@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		249
+	</mepid>
+	<mepname>
+		Engel
+	</mepname>
+	<fullname>
+		Frank Engel
+	</fullname>
+	<country>
+		Luxembourg
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=2&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Parti chrétien social luxembourgeois
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/249.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 12E153, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1975-05-10
+	</birth>
+	<birthplace>
+		Luxembourg
+	</birthplace>
+	<europarlid>
+		96876
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		87	</attendance>
+
+</mepinfo>

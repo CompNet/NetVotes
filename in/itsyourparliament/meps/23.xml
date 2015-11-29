@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		23
+	</mepid>
+	<mepname>
+		Tsoukalas
+	</mepname>
+	<fullname>
+		Ioannis A. Tsoukalas
+	</fullname>
+	<country>
+		Greece
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=17&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Nea Dimokratia
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/23.html
+
+	</mepprofile>
+	<webpage>
+		http://www.tsoukalas.org
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 08E153, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1941-07-03
+	</birth>
+	<birthplace>
+		Thessaloniki
+	</birthplace>
+	<europarlid>
+		96898
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		2010-07-15
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		89	</attendance>
+
+</mepinfo>

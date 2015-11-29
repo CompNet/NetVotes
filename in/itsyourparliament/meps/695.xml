@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		695
+	</mepid>
+	<mepname>
+		Gomes
+	</mepname>
+	<fullname>
+		Ana Gomes
+	</fullname>
+	<country>
+		Portugal
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=15&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Socialista
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/695.html
+
+	</mepprofile>
+	<webpage>
+		http://www.anagomes.eu
+	</webpage>
+	<address>
+		Parlamento Europeu, Rue Wiertz, Altiero Spinelli 14G354, B-1047, Bruxelas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1954-02-09
+	</birth>
+	<birthplace>
+		Lisboa
+	</birthplace>
+	<europarlid>
+		28306
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		83	</attendance>
+
+</mepinfo>

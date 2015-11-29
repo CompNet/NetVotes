@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		289
+	</mepid>
+	<mepname>
+		Klaß
+	</mepname>
+	<fullname>
+		Christa Klass
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Christlich Demokratische Union Deutschlands
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/289.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 10E165, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-10-07
+	</birth>
+	<birthplace>
+		Osann
+	</birthplace>
+	<europarlid>
+		1929
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		97	</attendance>
+
+</mepinfo>

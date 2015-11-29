@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<votes>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=701&amp;key=0		</voteinfo>
+		<voteid>
+			701
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=688&amp;key=0		</voteinfo>
+		<voteid>
+			688
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1121&amp;key=0		</voteinfo>
+		<voteid>
+			1121
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1329&amp;key=0		</voteinfo>
+		<voteid>
+			1329
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1535&amp;key=0		</voteinfo>
+		<voteid>
+			1535
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1684&amp;key=0		</voteinfo>
+		<voteid>
+			1684
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1685&amp;key=0		</voteinfo>
+		<voteid>
+			1685
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1686&amp;key=0		</voteinfo>
+		<voteid>
+			1686
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1687&amp;key=0		</voteinfo>
+		<voteid>
+			1687
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1688&amp;key=0		</voteinfo>
+		<voteid>
+			1688
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1689&amp;key=0		</voteinfo>
+		<voteid>
+			1689
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1690&amp;key=0		</voteinfo>
+		<voteid>
+			1690
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1691&amp;key=0		</voteinfo>
+		<voteid>
+			1691
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1692&amp;key=0		</voteinfo>
+		<voteid>
+			1692
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1693&amp;key=0		</voteinfo>
+		<voteid>
+			1693
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1694&amp;key=0		</voteinfo>
+		<voteid>
+			1694
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=1695&amp;key=0		</voteinfo>
+		<voteid>
+			1695
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2201&amp;key=0		</voteinfo>
+		<voteid>
+			2201
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2200&amp;key=0		</voteinfo>
+		<voteid>
+			2200
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2199&amp;key=0		</voteinfo>
+		<voteid>
+			2199
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2198&amp;key=0		</voteinfo>
+		<voteid>
+			2198
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2197&amp;key=0		</voteinfo>
+		<voteid>
+			2197
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2251&amp;key=0		</voteinfo>
+		<voteid>
+			2251
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2649&amp;key=0		</voteinfo>
+		<voteid>
+			2649
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2650&amp;key=0		</voteinfo>
+		<voteid>
+			2650
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2651&amp;key=0		</voteinfo>
+		<voteid>
+			2651
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2740&amp;key=0		</voteinfo>
+		<voteid>
+			2740
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2741&amp;key=0		</voteinfo>
+		<voteid>
+			2741
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3220&amp;key=0		</voteinfo>
+		<voteid>
+			3220
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3383&amp;key=0		</voteinfo>
+		<voteid>
+			3383
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3424&amp;key=0		</voteinfo>
+		<voteid>
+			3424
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3432&amp;key=0		</voteinfo>
+		<voteid>
+			3432
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3814&amp;key=0		</voteinfo>
+		<voteid>
+			3814
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3816&amp;key=0		</voteinfo>
+		<voteid>
+			3816
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3817&amp;key=0		</voteinfo>
+		<voteid>
+			3817
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3888&amp;key=0		</voteinfo>
+		<voteid>
+			3888
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4179&amp;key=0		</voteinfo>
+		<voteid>
+			4179
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4180&amp;key=0		</voteinfo>
+		<voteid>
+			4180
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4181&amp;key=0		</voteinfo>
+		<voteid>
+			4181
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4182&amp;key=0		</voteinfo>
+		<voteid>
+			4182
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4183&amp;key=0		</voteinfo>
+		<voteid>
+			4183
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4184&amp;key=0		</voteinfo>
+		<voteid>
+			4184
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4189&amp;key=0		</voteinfo>
+		<voteid>
+			4189
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4190&amp;key=0		</voteinfo>
+		<voteid>
+			4190
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4625&amp;key=0		</voteinfo>
+		<voteid>
+			4625
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4631&amp;key=0		</voteinfo>
+		<voteid>
+			4631
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4672&amp;key=0		</voteinfo>
+		<voteid>
+			4672
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5098&amp;key=0		</voteinfo>
+		<voteid>
+			5098
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5097&amp;key=0		</voteinfo>
+		<voteid>
+			5097
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5096&amp;key=0		</voteinfo>
+		<voteid>
+			5096
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5095&amp;key=0		</voteinfo>
+		<voteid>
+			5095
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5094&amp;key=0		</voteinfo>
+		<voteid>
+			5094
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5093&amp;key=0		</voteinfo>
+		<voteid>
+			5093
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5134&amp;key=0		</voteinfo>
+		<voteid>
+			5134
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5135&amp;key=0		</voteinfo>
+		<voteid>
+			5135
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5160&amp;key=0		</voteinfo>
+		<voteid>
+			5160
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5161&amp;key=0		</voteinfo>
+		<voteid>
+			5161
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5162&amp;key=0		</voteinfo>
+		<voteid>
+			5162
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5163&amp;key=0		</voteinfo>
+		<voteid>
+			5163
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5164&amp;key=0		</voteinfo>
+		<voteid>
+			5164
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5165&amp;key=0		</voteinfo>
+		<voteid>
+			5165
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5166&amp;key=0		</voteinfo>
+		<voteid>
+			5166
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5167&amp;key=0		</voteinfo>
+		<voteid>
+			5167
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5168&amp;key=0		</voteinfo>
+		<voteid>
+			5168
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5311&amp;key=0		</voteinfo>
+		<voteid>
+			5311
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5312&amp;key=0		</voteinfo>
+		<voteid>
+			5312
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5313&amp;key=0		</voteinfo>
+		<voteid>
+			5313
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5314&amp;key=0		</voteinfo>
+		<voteid>
+			5314
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5315&amp;key=0		</voteinfo>
+		<voteid>
+			5315
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5316&amp;key=0		</voteinfo>
+		<voteid>
+			5316
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5784&amp;key=0		</voteinfo>
+		<voteid>
+			5784
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5932&amp;key=0		</voteinfo>
+		<voteid>
+			5932
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5933&amp;key=0		</voteinfo>
+		<voteid>
+			5933
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6022&amp;key=0		</voteinfo>
+		<voteid>
+			6022
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6078&amp;key=0		</voteinfo>
+		<voteid>
+			6078
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6079&amp;key=0		</voteinfo>
+		<voteid>
+			6079
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6080&amp;key=0		</voteinfo>
+		<voteid>
+			6080
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6179&amp;key=0		</voteinfo>
+		<voteid>
+			6179
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6180&amp;key=0		</voteinfo>
+		<voteid>
+			6180
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6248&amp;key=0		</voteinfo>
+		<voteid>
+			6248
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6249&amp;key=0		</voteinfo>
+		<voteid>
+			6249
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6250&amp;key=0		</voteinfo>
+		<voteid>
+			6250
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6251&amp;key=0		</voteinfo>
+		<voteid>
+			6251
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6252&amp;key=0		</voteinfo>
+		<voteid>
+			6252
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6253&amp;key=0		</voteinfo>
+		<voteid>
+			6253
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6254&amp;key=0		</voteinfo>
+		<voteid>
+			6254
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=6255&amp;key=0		</voteinfo>
+		<voteid>
+			6255
+		</voteid>
+	</vote>
+</votes>

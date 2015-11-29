@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		517
+	</mepid>
+	<mepname>
+		Weisgerber
+	</mepname>
+	<fullname>
+		Anja Weisgerber
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Christlich-Soziale Union in Bayern e.V.
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/517.html
+
+	</mepprofile>
+	<webpage>
+		http://www.anja-weisgerber.de
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 15E210, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1976-03-11
+	</birth>
+	<birthplace>
+		Schweinfurt
+	</birthplace>
+	<europarlid>
+		28227
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		75	</attendance>
+
+</mepinfo>

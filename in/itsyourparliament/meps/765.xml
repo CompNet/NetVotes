@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		765
+	</mepid>
+	<mepname>
+		Kleva
+	</mepname>
+	<fullname>
+		Mojca Kleva
+	</fullname>
+	<country>
+		Slovenia
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=5&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Socialni demokrati
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/765.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Evropski parlament, Rue Wiertz, Altiero Spinelli 09G309, B-1047, Bruselj
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1976-03-30
+	</birth>
+	<birthplace>
+		Koper
+	</birthplace>
+	<europarlid>
+		23413
+	</europarlid>
+	<membersince>
+		2011-04-13
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		65	</attendance>
+
+</mepinfo>

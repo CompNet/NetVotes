@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		665
+	</mepid>
+	<mepname>
+		Castex
+	</mepname>
+	<fullname>
+		Françoise Castex
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Parti socialiste
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/665.html
+
+	</mepprofile>
+	<webpage>
+		http://www.francoisecastex.org
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 14G210, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1956-02-07
+	</birth>
+	<birthplace>
+		Agadir
+	</birthplace>
+	<europarlid>
+		28148
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		87	</attendance>
+
+</mepinfo>

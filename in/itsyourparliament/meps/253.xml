@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		253
+	</mepid>
+	<mepname>
+		Fidanza
+	</mepname>
+	<fullname>
+		Carlo Fidanza
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Fratelli d'Italia - Alleanza Nazionale
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/253.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 09E169, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1976-08-21
+	</birth>
+	<birthplace>
+		San Benedetto Del Tronto
+	</birthplace>
+	<europarlid>
+		96810
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		92	</attendance>
+
+</mepinfo>

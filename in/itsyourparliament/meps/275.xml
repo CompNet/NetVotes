@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		275
+	</mepid>
+	<mepname>
+		Iturgaiz Angulo
+	</mepname>
+	<fullname>
+		Carlos José Iturgaiz angulo
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Popular
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/275.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11E242, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1965-09-20
+	</birth>
+	<birthplace>
+		Santurce
+	</birthplace>
+	<europarlid>
+		28398
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		79	</attendance>
+
+</mepinfo>

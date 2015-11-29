@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		603
+	</mepid>
+	<mepname>
+		Becali
+	</mepname>
+	<fullname>
+		George Becali
+	</fullname>
+	<country>
+		Romania
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=21&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partidul România Mare
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/603.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamentul European, Rue Wiertz, Altiero Spinelli 06F362, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1958-06-25
+	</birth>
+	<birthplace>
+		Brăila
+	</birthplace>
+	<europarlid>
+		96846
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		NI
+	</group>
+	<attendance>
+  		16	</attendance>
+
+</mepinfo>

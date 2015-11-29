@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		567
+	</mepid>
+	<mepname>
+		Hassi
+	</mepname>
+	<fullname>
+		Satu Hassi
+	</fullname>
+	<country>
+		Finland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=11&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Vihreä liitto
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/567.html
+
+	</mepprofile>
+	<webpage>
+		http://www.satuhassi.net
+	</webpage>
+	<address>
+		Euroopan parlamentti, Rue Wiertz, Altiero Spinelli 08G351, B-1047, Bryssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-06-03
+	</birth>
+	<birthplace>
+		Helsinki
+	</birthplace>
+	<europarlid>
+		28321
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		90	</attendance>
+
+</mepinfo>

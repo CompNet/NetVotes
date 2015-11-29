@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		476
+	</mepid>
+	<mepname>
+		Garriga Polledo
+	</mepname>
+	<fullname>
+		Salvador Garriga polledo
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Partido Popular
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/476.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11E103, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1957-08-06
+	</birth>
+	<birthplace>
+		Gijon
+	</birthplace>
+	<europarlid>
+		1665
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		70	</attendance>
+
+</mepinfo>

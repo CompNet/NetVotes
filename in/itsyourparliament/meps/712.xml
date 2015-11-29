@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		712
+	</mepid>
+	<mepname>
+		Bizzotto
+	</mepname>
+	<fullname>
+		Mara Bizzotto
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Lega Nord
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/712.html
+
+	</mepprofile>
+	<webpage>
+		http://www.marabizzotto.it
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 07H267, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1972-06-03
+	</birth>
+	<birthplace>
+		Bassano Del Grappa (vi)
+	</birthplace>
+	<europarlid>
+		97198
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		88	</attendance>
+
+</mepinfo>

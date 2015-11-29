@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		444
+	</mepid>
+	<mepname>
+		Bisky
+	</mepname>
+	<fullname>
+		Lothar Bisky
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Chair
+	</title>
+	<party>
+		DIE LINKE.
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/444.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 06F155, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1941-08-17
+	</birth>
+	<birthplace>
+		Zollbrück
+	</birthplace>
+	<europarlid>
+		96650
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		88	</attendance>
+
+</mepinfo>

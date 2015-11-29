@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		533
+	</mepid>
+	<mepname>
+		Gierek
+	</mepname>
+	<fullname>
+		Adam Gierek
+	</fullname>
+	<country>
+		Poland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=22&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Unia Pracy
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/533.html
+
+	</mepprofile>
+	<webpage>
+		http://www.adam.gierek.eu/
+	</webpage>
+	<address>
+		Parlament Europejski, Rue Wiertz, Altiero Spinelli 15G130, B-1047, Bruksela
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1938-04-17
+	</birth>
+	<birthplace>
+		Zwartberg
+	</birthplace>
+	<europarlid>
+		28379
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		96	</attendance>
+
+</mepinfo>

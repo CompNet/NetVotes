@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		89
+	</mepid>
+	<mepname>
+		Swoboda
+	</mepname>
+	<fullname>
+		Hannes Swoboda
+	</fullname>
+	<country>
+		Austria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=13&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair
+	</title>
+	<party>
+		Sozialdemokratische Partei Österreichs
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/89.html
+
+	</mepprofile>
+	<webpage>
+		http://www.hannes-swoboda.at
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, ATR 05K081, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1946-10-10
+	</birth>
+	<birthplace>
+		Bad Deutsch Altenburg
+	</birthplace>
+	<europarlid>
+		2295
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		84	</attendance>
+
+</mepinfo>

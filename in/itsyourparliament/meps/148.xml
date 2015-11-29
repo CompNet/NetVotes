@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		148
+	</mepid>
+	<mepname>
+		Harkin
+	</mepname>
+	<fullname>
+		Marian Harkin
+	</fullname>
+	<country>
+		Ireland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=8&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		-
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/148.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 10G253, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1953-10-26
+	</birth>
+	<birthplace>
+		Sligo
+	</birthplace>
+	<europarlid>
+		28116
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		92	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		390
+	</mepid>
+	<mepname>
+		Toussas
+	</mepname>
+	<fullname>
+		Georgios Toussas
+	</fullname>
+	<country>
+		Greece
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=17&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Communist Party of Greece
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/390.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 07F353, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1954-08-08
+	</birth>
+	<birthplace>
+		Kilada
+	</birthplace>
+	<europarlid>
+		28584
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		48	</attendance>
+
+</mepinfo>

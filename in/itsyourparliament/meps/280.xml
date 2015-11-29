@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		280
+	</mepid>
+	<mepname>
+		Jeggle
+	</mepname>
+	<fullname>
+		Elisabeth Jeggle
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Christlich Demokratische Union Deutschlands
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/280.html
+
+	</mepprofile>
+	<webpage>
+		http://www.eurojeggle.de
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 10E209, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1947-07-21
+	</birth>
+	<birthplace>
+		Untermarchtal
+	</birthplace>
+	<europarlid>
+		4271
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		97	</attendance>
+
+</mepinfo>

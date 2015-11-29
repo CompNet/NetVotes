@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		100
+	</mepid>
+	<mepname>
+		Zemke
+	</mepname>
+	<fullname>
+		Janusz Władysław Zemke
+	</fullname>
+	<country>
+		Poland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=22&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Sojusz Lewicy Demokratycznej
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/100.html
+
+	</mepprofile>
+	<webpage>
+		http://www.janusz-zemke.pl/
+	</webpage>
+	<address>
+		Parlament Europejski, Rue Wiertz, Altiero Spinelli 15G116, B-1047, Bruksela
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1949-02-24
+	</birth>
+	<birthplace>
+		Kowalewo
+	</birthplace>
+	<europarlid>
+		96784
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		97	</attendance>
+
+</mepinfo>

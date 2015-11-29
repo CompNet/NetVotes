@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		119
+	</mepid>
+	<mepname>
+		Hudghton
+	</mepname>
+	<fullname>
+		Ian Hudghton
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Scottish National Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/119.html
+
+	</mepprofile>
+	<webpage>
+		http://www.hudghtonmep.com
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 08H161, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-08-19
+	</birth>
+	<birthplace>
+		Forfar
+	</birthplace>
+	<europarlid>
+		2338
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		68	</attendance>
+
+</mepinfo>

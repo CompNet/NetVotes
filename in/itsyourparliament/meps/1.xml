@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		1
+	</mepid>
+	<mepname>
+		Bowles
+	</mepname>
+	<fullname>
+		Sharon Bowles
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Liberal Democrats Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/1.html
+
+	</mepprofile>
+	<webpage>
+		http://www.sharonbowles.org.uk
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 10G201, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1953-06-12
+	</birth>
+	<birthplace>
+		Oxford
+	</birthplace>
+	<europarlid>
+		33570
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		84	</attendance>
+
+</mepinfo>

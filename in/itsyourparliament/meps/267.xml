@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		267
+	</mepid>
+	<mepname>
+		Gutiérrez-Cortines
+	</mepname>
+	<fullname>
+		Cristina Gutiérrez-cortines
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Popular
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/267.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11E258, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1939-11-17
+	</birth>
+	<birthplace>
+		Madrid
+	</birthplace>
+	<europarlid>
+		4326
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		69	</attendance>
+
+</mepinfo>

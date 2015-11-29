@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		446
+	</mepid>
+	<mepname>
+		Klute
+	</mepname>
+	<fullname>
+		Jürgen Klute
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		DIE LINKE.
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/446.html
+
+	</mepprofile>
+	<webpage>
+		http://www.juergen-klute.eu
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 06F254, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1953-09-13
+	</birth>
+	<birthplace>
+		Bünde / Nrw
+	</birthplace>
+	<europarlid>
+		96769
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		91	</attendance>
+
+</mepinfo>

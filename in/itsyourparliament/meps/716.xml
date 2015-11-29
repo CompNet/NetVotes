@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		716
+	</mepid>
+	<mepname>
+		Ayuso
+	</mepname>
+	<fullname>
+		Pilar Ayuso
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Popular
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/716.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11E165, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1942-06-16
+	</birth>
+	<birthplace>
+		Badajoz
+	</birthplace>
+	<europarlid>
+		4319
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		78	</attendance>
+
+</mepinfo>

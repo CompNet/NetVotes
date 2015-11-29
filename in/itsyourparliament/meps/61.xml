@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		61
+	</mepid>
+	<mepname>
+		McAvan
+	</mepname>
+	<fullname>
+		Linda Mcavan
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Labour Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/61.html
+
+	</mepprofile>
+	<webpage>
+		http://www.lindamcavanmep.org.uk
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 13G346, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1962-11-02
+	</birth>
+	<birthplace>
+		Bradford
+	</birthplace>
+	<europarlid>
+		2327
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		80	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		756
+	</mepid>
+	<mepname>
+		Boulland
+	</mepname>
+	<fullname>
+		Philippe Boulland
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Union pour un Mouvement Populaire
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/756.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 13E253, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1955-08-18
+	</birth>
+	<birthplace>
+		Markala (mali)
+	</birthplace>
+	<europarlid>
+		105624
+	</europarlid>
+	<membersince>
+		2010-12-15
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		91	</attendance>
+
+</mepinfo>

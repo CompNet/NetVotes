@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		383
+	</mepid>
+	<mepname>
+		Muñiz De Urquiza
+	</mepname>
+	<fullname>
+		María Muñiz de urquiza
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Socialista Obrero Español
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/383.html
+
+	</mepprofile>
+	<webpage>
+		http://www.mmunizdeurquiza.blogspot.com
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11G354, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1962-08-05
+	</birth>
+	<birthplace>
+		Gijón
+	</birthplace>
+	<europarlid>
+		96701
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		92	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		296
+	</mepid>
+	<mepname>
+		Kukan
+	</mepname>
+	<fullname>
+		Eduard Kukan
+	</fullname>
+	<country>
+		Slovakia
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=9&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Slovenská demokratická a kresťanská únia - Demokratická strana
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/296.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Európsky parlament, Rue Wiertz, Altiero Spinelli 03F265, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1939-11-26
+	</birth>
+	<birthplace>
+		Trnovec Nad Váhom
+	</birthplace>
+	<europarlid>
+		96651
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		94	</attendance>
+
+</mepinfo>

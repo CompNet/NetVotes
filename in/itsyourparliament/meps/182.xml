@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		182
+	</mepid>
+	<mepname>
+		Ashworth
+	</mepname>
+	<fullname>
+		Richard Ashworth
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Conservative Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/182.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Willy Brandt 06M105, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1947-08-17
+	</birth>
+	<birthplace>
+		Folkestone
+	</birthplace>
+	<europarlid>
+		28132
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ECR
+	</group>
+	<attendance>
+  		90	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		216
+	</mepid>
+	<mepname>
+		Antonescu
+	</mepname>
+	<fullname>
+		Elena Oana Antonescu
+	</fullname>
+	<country>
+		Romania
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=21&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partidul Democrat-Liberal
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/216.html
+
+	</mepprofile>
+	<webpage>
+		http://www.oanaantonescu.ro
+	</webpage>
+	<address>
+		Parlamentul European, Rue Wiertz, Altiero Spinelli 10E153, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1979-11-30
+	</birth>
+	<birthplace>
+		Târgovişte
+	</birthplace>
+	<europarlid>
+		96702
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		93	</attendance>
+
+</mepinfo>

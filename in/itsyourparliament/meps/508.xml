@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		508
+	</mepid>
+	<mepname>
+		Šťastný
+	</mepname>
+	<fullname>
+		Peter Šťastný
+	</fullname>
+	<country>
+		Slovakia
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=9&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Slovenská demokratická a kresťanská únia - Demokratická strana
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/508.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Európsky parlament, Rue Wiertz, Altiero Spinelli 03F343, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1956-08-18
+	</birth>
+	<birthplace>
+		Bratislava
+	</birthplace>
+	<europarlid>
+		28170
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		95	</attendance>
+
+</mepinfo>

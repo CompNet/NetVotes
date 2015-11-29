@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		144
+	</mepid>
+	<mepname>
+		Godmanis
+	</mepname>
+	<fullname>
+		Ivars Godmanis
+	</fullname>
+	<country>
+		Latvia
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=6&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Latvijas Pirmā Partija/Latvijas Ceļš
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/144.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Eiropas Parlaments, Rue Wiertz, Altiero Spinelli 10G153, B-1047, Brisele
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-10-27
+	</birth>
+	<birthplace>
+		Rīga
+	</birthplace>
+	<europarlid>
+		97004
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		65	</attendance>
+
+</mepinfo>

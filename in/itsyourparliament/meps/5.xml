@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		5
+	</mepid>
+	<mepname>
+		Lyon
+	</mepname>
+	<fullname>
+		George Lyon
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Liberal Democrats Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/5.html
+
+	</mepprofile>
+	<webpage>
+		http://georgelyon.org.uk
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 10G210, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1956-07-16
+	</birth>
+	<birthplace>
+		Rothesay
+	</birthplace>
+	<europarlid>
+		96959
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		82	</attendance>
+
+</mepinfo>

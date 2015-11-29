@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		526
+	</mepid>
+	<mepname>
+		Cozzolino
+	</mepname>
+	<fullname>
+		Andrea Cozzolino
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partito Democratico
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/526.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 15G169, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1962-08-03
+	</birth>
+	<birthplace>
+		Napoli
+	</birthplace>
+	<europarlid>
+		96880
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		63	</attendance>
+
+</mepinfo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		859
+	</mepid>
+	<mepname>
+		Pakarinen
+	</mepname>
+	<fullname>
+		
+	</fullname>
+	<country>
+		Finland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=11&amp;key=0
+	</countryinfo>
+	<title>
+		
+	</title>
+	<party>
+		Suomen Keskusta
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/859.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		
+	</birth>
+	<birthplace>
+		
+	</birthplace>
+	<europarlid>
+		
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		
+Warning: Division by zero in /var/www/epdb/itsyourparliament.eu/www/api/mep.php on line 91
+0	</attendance>
+
+</mepinfo>

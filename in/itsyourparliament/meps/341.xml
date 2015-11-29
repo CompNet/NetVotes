@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		341
+	</mepid>
+	<mepname>
+		Ronzulli
+	</mepname>
+	<fullname>
+		Licia Ronzulli
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Forza Italia
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/341.html
+
+	</mepprofile>
+	<webpage>
+		http://www.liciaronzulli.it
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 09E246, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1975-08-14
+	</birth>
+	<birthplace>
+		Milano
+	</birthplace>
+	<europarlid>
+		96819
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		90	</attendance>
+
+</mepinfo>

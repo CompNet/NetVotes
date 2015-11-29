@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		580
+	</mepid>
+	<mepname>
+		(The Earl of) Dartmouth
+	</mepname>
+	<fullname>
+		William (the earl of) dartmouth
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		United Kingdom Independence Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/580.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 04F142, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1949-08-23
+	</birth>
+	<birthplace>
+		London
+	</birthplace>
+	<europarlid>
+		96958
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		70	</attendance>
+
+</mepinfo>

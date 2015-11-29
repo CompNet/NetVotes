@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		124
+	</mepid>
+	<mepname>
+		Lunacek
+	</mepname>
+	<fullname>
+		Ulrike Lunacek
+	</fullname>
+	<country>
+		Austria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=13&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Die Grünen - Die Grüne Alternative
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/124.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 08G169, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1957-05-26
+	</birth>
+	<birthplace>
+		Krems A.d. Donau
+	</birthplace>
+	<europarlid>
+		97017
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		90	</attendance>
+
+</mepinfo>

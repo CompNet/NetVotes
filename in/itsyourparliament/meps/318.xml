@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		318
+	</mepid>
+	<mepname>
+		Mauro
+	</mepname>
+	<fullname>
+		Mario Mauro
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Il Popolo della Libertà
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/318.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 09E102, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1961-07-24
+	</birth>
+	<birthplace>
+		S. Giovanni Rotondo
+	</birthplace>
+	<europarlid>
+		4393
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		95	</attendance>
+
+</mepinfo>

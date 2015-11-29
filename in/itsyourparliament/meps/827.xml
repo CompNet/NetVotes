@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		827
+	</mepid>
+	<mepname>
+		Vitkauskaite
+	</mepname>
+	<fullname>
+		
+	</fullname>
+	<country>
+		
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=&amp;key=0
+	</countryinfo>
+	<title>
+		
+	</title>
+	<party>
+		
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/827.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		
+	</birth>
+	<birthplace>
+		
+	</birthplace>
+	<europarlid>
+		
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		8	</attendance>
+
+</mepinfo>

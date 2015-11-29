@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		483
+	</mepid>
+	<mepname>
+		Kaczmarek
+	</mepname>
+	<fullname>
+		Filip Kaczmarek
+	</fullname>
+	<country>
+		Poland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=22&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Platforma Obywatelska
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/483.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlament Europejski, Rue Wiertz, Altiero Spinelli 14E218, B-1047, Bruksela
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1966-10-22
+	</birth>
+	<birthplace>
+		Poznań
+	</birthplace>
+	<europarlid>
+		28280
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		97	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		64
+	</mepid>
+	<mepname>
+		Martínez Martínez
+	</mepname>
+	<fullname>
+		Miguel Angel Martínez martínez
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Socialista Obrero Español
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/64.html
+
+	</mepprofile>
+	<webpage>
+		http://www.psoe-pe.org
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 12G206, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1940-01-30
+	</birth>
+	<birthplace>
+		Madrid
+	</birthplace>
+	<europarlid>
+		4346
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		83	</attendance>
+
+</mepinfo>

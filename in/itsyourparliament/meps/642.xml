@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		642
+	</mepid>
+	<mepname>
+		Balczó
+	</mepname>
+	<fullname>
+		Zoltán Balczó
+	</fullname>
+	<country>
+		Hungary
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=16&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Jobbik Magyarországért Mozgalom
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/642.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Európai Parlament, Rue Wiertz, ASP 02F265, B-1047, Brüsszel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1948-03-24
+	</birth>
+	<birthplace>
+		Nyíregyháza
+	</birthplace>
+	<europarlid>
+		96877
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		2010-05-13
+	</membertill>
+	<group>
+		NI
+	</group>
+	<attendance>
+  		13	</attendance>
+
+</mepinfo>

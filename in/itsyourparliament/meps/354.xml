@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		354
+	</mepid>
+	<mepname>
+		Skrzydlewska
+	</mepname>
+	<fullname>
+		Joanna Katarzyna Skrzydlewska
+	</fullname>
+	<country>
+		Poland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=22&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Platforma Obywatelska
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/354.html
+
+	</mepprofile>
+	<webpage>
+		http://www.skrzydlewska.eu
+	</webpage>
+	<address>
+		Parlament Europejski, Rue Wiertz, Altiero Spinelli 14E157, B-1047, Bruksela
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1977-02-17
+	</birth>
+	<birthplace>
+		Łódź
+	</birthplace>
+	<europarlid>
+		96770
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		95	</attendance>
+
+</mepinfo>

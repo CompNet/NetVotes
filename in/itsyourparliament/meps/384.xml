@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		384
+	</mepid>
+	<mepname>
+		Chountis
+	</mepname>
+	<fullname>
+		Nikolaos Chountis
+	</fullname>
+	<country>
+		Greece
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=17&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Coalition of the Radical Left
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/384.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 07F243, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1953-08-17
+	</birth>
+	<birthplace>
+		Lagadia Arkadias
+	</birthplace>
+	<europarlid>
+		26851
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		87	</attendance>
+
+</mepinfo>

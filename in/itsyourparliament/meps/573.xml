@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		573
+	</mepid>
+	<mepname>
+		Schlyter
+	</mepname>
+	<fullname>
+		Carl Schlyter
+	</fullname>
+	<country>
+		Sweden
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=14&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Miljöpartiet de gröna
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/573.html
+
+	</mepprofile>
+	<webpage>
+		http://www.mp.se/carl
+	</webpage>
+	<address>
+		Europaparlamentet, Rue Wiertz, Altiero Spinelli 08G115, B-1047, Bryssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1968-01-07
+	</birth>
+	<birthplace>
+		Danderyd
+	</birthplace>
+	<europarlid>
+		28139
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		94	</attendance>
+
+</mepinfo>

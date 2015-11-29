@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		744
+	</mepid>
+	<mepname>
+		Neynsky
+	</mepname>
+	<fullname>
+		Nadezhda Neynsky
+	</fullname>
+	<country>
+		Bulgaria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=12&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Blue Coalition
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/744.html
+
+	</mepprofile>
+	<webpage>
+		http://www.nadezhdaneynsky.eu
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 03F142, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1962-08-09
+	</birth>
+	<birthplace>
+		Sofia
+	</birthplace>
+	<europarlid>
+		96861
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		89	</attendance>
+
+</mepinfo>

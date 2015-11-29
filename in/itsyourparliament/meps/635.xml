@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		635
+	</mepid>
+	<mepname>
+		Cramer
+	</mepname>
+	<fullname>
+		Michael Cramer
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Bündnis 90/Die Grünen
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/635.html
+
+	</mepprofile>
+	<webpage>
+		http://www.michael-cramer.eu/
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 08G104, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1949-06-16
+	</birth>
+	<birthplace>
+		Gevelsberg
+	</birthplace>
+	<europarlid>
+		28238
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		79	</attendance>
+
+</mepinfo>

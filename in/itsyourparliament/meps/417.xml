@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		417
+	</mepid>
+	<mepname>
+		Watson
+	</mepname>
+	<fullname>
+		Sir Graham Watson
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Liberal Democrats Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/417.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 09G205, B-1047, Brussels<br />The Liberty, Old Kelways, Langport, Somerset
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1956-03-23
+	</birth>
+	<birthplace>
+		Rothesay (scotland)
+	</birthplace>
+	<europarlid>
+		2155
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		87	</attendance>
+
+</mepinfo>

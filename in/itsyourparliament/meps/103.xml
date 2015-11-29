@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		103
+	</mepid>
+	<mepname>
+		Bélier
+	</mepname>
+	<fullname>
+		Sandrine Bélier
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Europe Écologie
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/103.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 08G317, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1973-08-02
+	</birth>
+	<birthplace>
+		Longjumeau
+	</birthplace>
+	<europarlid>
+		96738
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		84	</attendance>
+
+</mepinfo>

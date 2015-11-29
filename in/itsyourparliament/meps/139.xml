@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		139
+	</mepid>
+	<mepname>
+		Buşoi
+	</mepname>
+	<fullname>
+		Cristian Silviu Buşoi
+	</fullname>
+	<country>
+		Romania
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=21&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partidul Naţional Liberal
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/139.html
+
+	</mepprofile>
+	<webpage>
+		http://www.cristibusoi.ro
+	</webpage>
+	<address>
+		Parlamentul European, Rue Wiertz, Altiero Spinelli 08G258, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1978-03-01
+	</birth>
+	<birthplace>
+		Drobeta Turnu-severin
+	</birthplace>
+	<europarlid>
+		38420
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		74	</attendance>
+
+</mepinfo>

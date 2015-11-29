@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		164
+	</mepid>
+	<mepname>
+		Michel
+	</mepname>
+	<fullname>
+		Louis Michel
+	</fullname>
+	<country>
+		Belgium
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=19&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Mouvement Réformateur
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/164.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 09G206, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1947-08-02
+	</birth>
+	<birthplace>
+		Tirlemont
+	</birthplace>
+	<europarlid>
+		96670
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		81	</attendance>
+
+</mepinfo>

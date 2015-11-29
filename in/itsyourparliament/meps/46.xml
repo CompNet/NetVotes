@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		46
+	</mepid>
+	<mepname>
+		Havel
+	</mepname>
+	<fullname>
+		Jiří Havel
+	</fullname>
+	<country>
+		Czech Republic
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=18&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Česká strana sociálně demokratická
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/46.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Evropský parlament, Rue Wiertz, Altiero Spinelli 14G103, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1957-08-20
+	</birth>
+	<birthplace>
+		Praha
+	</birthplace>
+	<europarlid>
+		96714
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		34	</attendance>
+
+</mepinfo>

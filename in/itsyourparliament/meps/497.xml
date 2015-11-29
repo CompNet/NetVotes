@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		497
+	</mepid>
+	<mepname>
+		Protasiewicz
+	</mepname>
+	<fullname>
+		Jacek Protasiewicz
+	</fullname>
+	<country>
+		Poland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=22&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Platforma Obywatelska
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/497.html
+
+	</mepprofile>
+	<webpage>
+		http://protasiewicz.pl
+	</webpage>
+	<address>
+		Parlament Europejski, Rue Wiertz, Altiero Spinelli 14E205, B-1047, Bruksela
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1967-06-05
+	</birth>
+	<birthplace>
+		Brzeg
+	</birthplace>
+	<europarlid>
+		23782
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		72	</attendance>
+
+</mepinfo>

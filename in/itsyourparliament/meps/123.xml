@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		123
+	</mepid>
+	<mepname>
+		Lichtenberger
+	</mepname>
+	<fullname>
+		Eva Lichtenberger
+	</fullname>
+	<country>
+		Austria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=13&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair
+	</title>
+	<party>
+		Die Grünen - Die Grüne Alternative
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/123.html
+
+	</mepprofile>
+	<webpage>
+		eva-lichtenberger.eu
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 08G157, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1954-07-01
+	</birth>
+	<birthplace>
+		Zams
+	</birthplace>
+	<europarlid>
+		28253
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		91	</attendance>
+
+</mepinfo>

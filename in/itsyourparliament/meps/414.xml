@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		414
+	</mepid>
+	<mepname>
+		Theurer
+	</mepname>
+	<fullname>
+		Michael Theurer
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Freie Demokratische Partei
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/414.html
+
+	</mepprofile>
+	<webpage>
+		http://michaeltheurer.de
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 10G154, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1967-01-12
+	</birth>
+	<birthplace>
+		Tübingen
+	</birthplace>
+	<europarlid>
+		96871
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		82	</attendance>
+
+</mepinfo>

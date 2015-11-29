@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		583
+	</mepid>
+	<mepname>
+		Le Pen Jean-Marie
+	</mepname>
+	<fullname>
+		Jean-Marie Le pen
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Front national
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/583.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 07H342, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1928-06-20
+	</birth>
+	<birthplace>
+		La Trinité-sur-mer (morbihan)
+	</birthplace>
+	<europarlid>
+		1023
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		NI
+	</group>
+	<attendance>
+  		62	</attendance>
+
+</mepinfo>

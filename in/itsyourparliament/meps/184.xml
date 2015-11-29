@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		184
+	</mepid>
+	<mepname>
+		Bradbourn
+	</mepname>
+	<fullname>
+		Philip Bradbourn
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Co-treasurer
+	</title>
+	<party>
+		Conservative Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/184.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 03F370, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-08-09
+	</birth>
+	<birthplace>
+		Tipton
+	</birthplace>
+	<europarlid>
+		4540
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ECR
+	</group>
+	<attendance>
+  		67	</attendance>
+
+</mepinfo>

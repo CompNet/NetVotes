@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		19
+	</mepid>
+	<mepname>
+		Vergiat
+	</mepname>
+	<fullname>
+		Marie-Christine Vergiat
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Treasurer
+	</title>
+	<party>
+		Front de gauche pour changer d’Europe
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/19.html
+
+	</mepprofile>
+	<webpage>
+		http://www.eurocitoyenne.fr/
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 07F154, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1956-08-23
+	</birth>
+	<birthplace>
+		Roanne
+	</birthplace>
+	<europarlid>
+		96858
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		85	</attendance>
+
+</mepinfo>

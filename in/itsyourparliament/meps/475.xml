@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		475
+	</mepid>
+	<mepname>
+		Gallo
+	</mepname>
+	<fullname>
+		Marielle Gallo
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Union des Démocrates et Indépendants
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/475.html
+
+	</mepprofile>
+	<webpage>
+		http://www.mariellegallo.eu/
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 14E146, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1949-05-19
+	</birth>
+	<birthplace>
+		Lons-le-saunier
+	</birthplace>
+	<europarlid>
+		96896
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		85	</attendance>
+
+</mepinfo>

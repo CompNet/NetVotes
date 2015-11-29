@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		769
+	</mepid>
+	<mepname>
+		Droutsas
+	</mepname>
+	<fullname>
+		Dimitrios Droutsas
+	</fullname>
+	<country>
+		Greece
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=17&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Panhellenic Socialist Movement
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/769.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 11G102, B-1047,  Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1968-08-05
+	</birth>
+	<birthplace>
+		Lefkosia
+	</birthplace>
+	<europarlid>
+		107977
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		42	</attendance>
+
+</mepinfo>

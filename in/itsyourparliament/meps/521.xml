@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		521
+	</mepid>
+	<mepname>
+		Berlinguer
+	</mepname>
+	<fullname>
+		Luigi Berlinguer
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partito Democratico
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/521.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 15G346, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1932-07-25
+	</birth>
+	<birthplace>
+		Sassari
+	</birthplace>
+	<europarlid>
+		97156
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		75	</attendance>
+
+</mepinfo>

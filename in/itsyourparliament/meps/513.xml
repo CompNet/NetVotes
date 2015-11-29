@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		513
+	</mepid>
+	<mepname>
+		Ungureanu
+	</mepname>
+	<fullname>
+		Traian Ungureanu
+	</fullname>
+	<country>
+		Romania
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=21&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partidul Democrat-Liberal
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/513.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamentul European, Rue Wiertz, Altiero Spinelli 05F167, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1958-03-01
+	</birth>
+	<birthplace>
+		Bucureşti
+	</birthplace>
+	<europarlid>
+		96835
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		75	</attendance>
+
+</mepinfo>

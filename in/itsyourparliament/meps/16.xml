@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		16
+	</mepid>
+	<mepname>
+		Händel
+	</mepname>
+	<fullname>
+		Thomas Händel
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		DIE LINKE.
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/16.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 06F259, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1953-08-27
+	</birth>
+	<birthplace>
+		Nürnberg
+	</birthplace>
+	<europarlid>
+		96851
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		82	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		109
+	</mepid>
+	<mepname>
+		Canfin
+	</mepname>
+	<fullname>
+		Pascal Canfin
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Europe Écologie
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/109.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 08G218, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1974-08-22
+	</birth>
+	<birthplace>
+		Arras
+	</birthplace>
+	<europarlid>
+		96711
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		65	</attendance>
+
+</mepinfo>

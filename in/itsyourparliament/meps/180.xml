@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		180
+	</mepid>
+	<mepname>
+		Weber Renate
+	</mepname>
+	<fullname>
+		Renate Weber
+	</fullname>
+	<country>
+		Romania
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=21&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partidul Naţional Liberal
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/180.html
+
+	</mepprofile>
+	<webpage>
+		http://www.renateweber.eu
+	</webpage>
+	<address>
+		Parlamentul European, Rue Wiertz, Altiero Spinelli 08G246, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1955-08-03
+	</birth>
+	<birthplace>
+		Botoşani
+	</birthplace>
+	<europarlid>
+		39713
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		88	</attendance>
+
+</mepinfo>

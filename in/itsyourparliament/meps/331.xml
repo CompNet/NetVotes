@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		331
+	</mepid>
+	<mepname>
+		Őry
+	</mepname>
+	<fullname>
+		Csaba Őry
+	</fullname>
+	<country>
+		Hungary
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=16&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Fidesz-Magyar Polgári Szövetség-Keresztény Demokrata Néppárt
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/331.html
+
+	</mepprofile>
+	<webpage>
+		http://www.orycsaba.hu
+	</webpage>
+	<address>
+		Európai Parlament, Rue Wiertz, Altiero Spinelli 12E242, B-1047, Brüsszel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1952-05-12
+	</birth>
+	<birthplace>
+		Budapest
+	</birthplace>
+	<europarlid>
+		23819
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		93	</attendance>
+
+</mepinfo>

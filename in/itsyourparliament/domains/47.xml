@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<votes>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2841&amp;key=0		</voteinfo>
+		<voteid>
+			2841
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2842&amp;key=0		</voteinfo>
+		<voteid>
+			2842
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2843&amp;key=0		</voteinfo>
+		<voteid>
+			2843
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2844&amp;key=0		</voteinfo>
+		<voteid>
+			2844
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2845&amp;key=0		</voteinfo>
+		<voteid>
+			2845
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2846&amp;key=0		</voteinfo>
+		<voteid>
+			2846
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2847&amp;key=0		</voteinfo>
+		<voteid>
+			2847
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2848&amp;key=0		</voteinfo>
+		<voteid>
+			2848
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2849&amp;key=0		</voteinfo>
+		<voteid>
+			2849
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3030&amp;key=0		</voteinfo>
+		<voteid>
+			3030
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3031&amp;key=0		</voteinfo>
+		<voteid>
+			3031
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=3792&amp;key=0		</voteinfo>
+		<voteid>
+			3792
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5177&amp;key=0		</voteinfo>
+		<voteid>
+			5177
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5353&amp;key=0		</voteinfo>
+		<voteid>
+			5353
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=5354&amp;key=0		</voteinfo>
+		<voteid>
+			5354
+		</voteid>
+	</vote>
+</votes>

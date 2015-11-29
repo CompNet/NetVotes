@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		463
+	</mepid>
+	<mepname>
+		Bastos
+	</mepname>
+	<fullname>
+		Regina Bastos
+	</fullname>
+	<country>
+		Portugal
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=15&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Social Democrata
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/463.html
+
+	</mepprofile>
+	<webpage>
+		http://www.reginabastos.eu
+	</webpage>
+	<address>
+		Parlamento Europeu, Rue Wiertz, Altiero Spinelli 08E108, B-1047, Bruxelas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1960-10-04
+	</birth>
+	<birthplace>
+		Veiros-estarreja
+	</birthplace>
+	<europarlid>
+		5956
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		87	</attendance>
+
+</mepinfo>

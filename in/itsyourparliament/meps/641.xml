@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		641
+	</mepid>
+	<mepname>
+		de Villiers
+	</mepname>
+	<fullname>
+		Philippe De villiers
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair/Member of the Bureau
+	</title>
+	<party>
+		Mouvement pour la France
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/641.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 07H154, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1949-03-25
+	</birth>
+	<birthplace>
+		Boulogne (vendée)
+	</birthplace>
+	<europarlid>
+		2212
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		47	</attendance>
+
+</mepinfo>

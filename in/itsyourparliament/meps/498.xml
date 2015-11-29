@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		498
+	</mepid>
+	<mepname>
+		Rangel
+	</mepname>
+	<fullname>
+		Paulo Rangel
+	</fullname>
+	<country>
+		Portugal
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=15&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair
+	</title>
+	<party>
+		Partido Social Democrata
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/498.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeu, Rue Wiertz, Altiero Spinelli 08E130, B-1047, Bruxelas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1968-02-18
+	</birth>
+	<birthplace>
+		V.n. Gaia
+	</birthplace>
+	<europarlid>
+		96903
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		76	</attendance>
+
+</mepinfo>

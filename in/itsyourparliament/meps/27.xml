@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		27
+	</mepid>
+	<mepname>
+		Ayala Sender
+	</mepname>
+	<fullname>
+		Inés Ayala sender
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Socialista Obrero Español
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/27.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11G157, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1957-03-28
+	</birth>
+	<birthplace>
+		Zaragoza
+	</birthplace>
+	<europarlid>
+		28292
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		80	</attendance>
+
+</mepinfo>

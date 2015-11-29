@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		564
+	</mepid>
+	<mepname>
+		Toia
+	</mepname>
+	<fullname>
+		Patrizia Toia
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair
+	</title>
+	<party>
+		Partito Democratico
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/564.html
+
+	</mepprofile>
+	<webpage>
+		http://www.patriziatoia.eu
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 15G351, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1950-03-17
+	</birth>
+	<birthplace>
+		Pogliano Milanese
+	</birthplace>
+	<europarlid>
+		28340
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		77	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		761
+	</mepid>
+	<mepname>
+		Hortefeux
+	</mepname>
+	<fullname>
+		Brice Hortefeux
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Union pour un Mouvement Populaire
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/761.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 13E142, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1958-05-11
+	</birth>
+	<birthplace>
+		Neuilly-sur-seine
+	</birthplace>
+	<europarlid>
+		5565
+	</europarlid>
+	<membersince>
+		2011-03-24
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		89	</attendance>
+
+</mepinfo>

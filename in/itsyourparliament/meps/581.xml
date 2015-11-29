@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		581
+	</mepid>
+	<mepname>
+		Tzavela
+	</mepname>
+	<fullname>
+		Niki Tzavela
+	</fullname>
+	<country>
+		Greece
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=17&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair/Member of the Bureau
+	</title>
+	<party>
+		Independent
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/581.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 07H169, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1947-06-30
+	</birth>
+	<birthplace>
+		Lamia
+	</birthplace>
+	<europarlid>
+		96660
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		78	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		298
+	</mepid>
+	<mepname>
+		de Lange
+	</mepname>
+	<fullname>
+		Esther De lange
+	</fullname>
+	<country>
+		Netherlands
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=20&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Christen Democratisch Appèl
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/298.html
+
+	</mepprofile>
+	<webpage>
+		http://www.estherdelange.nl
+	</webpage>
+	<address>
+		Europees Parlement, Wiertzstraat, Altiero Spinelli 12E146, B-1047, Brussel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1975-02-19
+	</birth>
+	<birthplace>
+		Spaubeek
+	</birthplace>
+	<europarlid>
+		38398
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		83	</attendance>
+
+</mepinfo>

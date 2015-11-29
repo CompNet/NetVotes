@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		443
+	</mepid>
+	<mepname>
+		Salvini
+	</mepname>
+	<fullname>
+		Matteo Salvini
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Lega Nord
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/443.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 07H242, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1973-03-09
+	</birth>
+	<birthplace>
+		Milano
+	</birthplace>
+	<europarlid>
+		28404
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		76	</attendance>
+
+</mepinfo>

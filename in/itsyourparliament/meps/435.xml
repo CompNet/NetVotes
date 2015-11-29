@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		435
+	</mepid>
+	<mepname>
+		Zahradil
+	</mepname>
+	<fullname>
+		Jan Zahradil
+	</fullname>
+	<country>
+		Czech Republic
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=18&amp;key=0
+	</countryinfo>
+	<title>
+		Chair
+	</title>
+	<party>
+		Občanská demokratická strana
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/435.html
+
+	</mepprofile>
+	<webpage>
+		http://www.zahradil.cz
+	</webpage>
+	<address>
+		Evropský parlament, Rue Wiertz, Willy Brandt 02M081, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1963-03-20
+	</birth>
+	<birthplace>
+		Praha
+	</birthplace>
+	<europarlid>
+		23712
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ECR
+	</group>
+	<attendance>
+  		81	</attendance>
+
+</mepinfo>

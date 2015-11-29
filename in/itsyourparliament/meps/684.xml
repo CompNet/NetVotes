@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		684
+	</mepid>
+	<mepname>
+		Giannakou
+	</mepname>
+	<fullname>
+		Marietta Giannakou
+	</fullname>
+	<country>
+		Greece
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=17&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Nea Demokratia
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/684.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 08E206, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-06-05
+	</birth>
+	<birthplace>
+		Gerakion (lakonias)
+	</birthplace>
+	<europarlid>
+		1431
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		85	</attendance>
+
+</mepinfo>

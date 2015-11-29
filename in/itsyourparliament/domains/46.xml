@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<votes>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2716&amp;key=0		</voteinfo>
+		<voteid>
+			2716
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2717&amp;key=0		</voteinfo>
+		<voteid>
+			2717
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2718&amp;key=0		</voteinfo>
+		<voteid>
+			2718
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=2719&amp;key=0		</voteinfo>
+		<voteid>
+			2719
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=4937&amp;key=0		</voteinfo>
+		<voteid>
+			4937
+		</voteid>
+	</vote>
+</votes>

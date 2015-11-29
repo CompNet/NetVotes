@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		628
+	</mepid>
+	<mepname>
+		Padar
+	</mepname>
+	<fullname>
+		Ivari Padar
+	</fullname>
+	<country>
+		Estonia
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=3&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Sotsiaaldemokraatlik Erakond
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/628.html
+
+	</mepprofile>
+	<webpage>
+		http://www.padar.ee
+	</webpage>
+	<address>
+		Euroopa Parlament, Rue Wiertz, Altiero Spinelli 13G142, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1965-03-12
+	</birth>
+	<birthplace>
+		Võru
+	</birthplace>
+	<europarlid>
+		97025
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		86	</attendance>
+
+</mepinfo>

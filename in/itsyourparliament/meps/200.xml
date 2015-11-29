@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		200
+	</mepid>
+	<mepname>
+		Tošenovský
+	</mepname>
+	<fullname>
+		Evžen Tošenovský
+	</fullname>
+	<country>
+		Czech Republic
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=18&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Občanská demokratická strana
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/200.html
+
+	</mepprofile>
+	<webpage>
+		http://www.tosenovsky.cz
+	</webpage>
+	<address>
+		Evropský parlament, Rue Wiertz, Willy Brandt 03M107, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1956-02-26
+	</birth>
+	<birthplace>
+		Ostrava
+	</birthplace>
+	<europarlid>
+		96713
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ECR
+	</group>
+	<attendance>
+  		89	</attendance>
+
+</mepinfo>

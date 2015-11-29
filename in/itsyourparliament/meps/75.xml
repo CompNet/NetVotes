@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		75
+	</mepid>
+	<mepname>
+		Rodust
+	</mepname>
+	<fullname>
+		Ulrike Rodust
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Sozialdemokratische Partei Deutschlands
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/75.html
+
+	</mepprofile>
+	<webpage>
+		http://www.ulrike-rodust.eu
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 12G310, B-1047,  Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1949-06-04
+	</birth>
+	<birthplace>
+		Quakenbrück
+	</birthplace>
+	<europarlid>
+		93624
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		95	</attendance>
+
+</mepinfo>

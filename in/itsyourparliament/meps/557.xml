@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		557
+	</mepid>
+	<mepname>
+		Skinner
+	</mepname>
+	<fullname>
+		Peter Skinner
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Labour Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/557.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 13G317, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1959-06-01
+	</birth>
+	<birthplace>
+		Oxford
+	</birthplace>
+	<europarlid>
+		2081
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		84	</attendance>
+
+</mepinfo>

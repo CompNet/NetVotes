@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		163
+	</mepid>
+	<mepname>
+		Meissner
+	</mepname>
+	<fullname>
+		Gesine Meissner
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Freie Demokratische Partei
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/163.html
+
+	</mepprofile>
+	<webpage>
+		http://www.gesine-meissner.de
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 10G116, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1952-02-22
+	</birth>
+	<birthplace>
+		Uelzen
+	</birthplace>
+	<europarlid>
+		96870
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		88	</attendance>
+
+</mepinfo>

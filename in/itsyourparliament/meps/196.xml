@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		196
+	</mepid>
+	<mepname>
+		Nicholson
+	</mepname>
+	<fullname>
+		James Nicholson
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Ulster Conservatives and Unionists-New Force
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/196.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Willy Brandt 04M097, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1945-01-29
+	</birth>
+	<birthplace>
+		Armagh (northern Ireland)
+	</birthplace>
+	<europarlid>
+		1318
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ECR
+	</group>
+	<attendance>
+  		91	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		162
+	</mepid>
+	<mepname>
+		Ludford
+	</mepname>
+	<fullname>
+		Baroness Sarah Ludford
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Liberal Democrats Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/162.html
+
+	</mepprofile>
+	<webpage>
+		http://www.sarahludfordmep.org.uk
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 10G165, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-03-14
+	</birth>
+	<birthplace>
+		Halesworth
+	</birthplace>
+	<europarlid>
+		4529
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		93	</attendance>
+
+</mepinfo>

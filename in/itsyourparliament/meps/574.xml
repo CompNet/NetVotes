@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		574
+	</mepid>
+	<mepname>
+		Smith
+	</mepname>
+	<fullname>
+		Alyn Smith
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Scottish National Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/574.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 08H149, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1973-08-15
+	</birth>
+	<birthplace>
+		Glasgow
+	</birthplace>
+	<europarlid>
+		28508
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		85	</attendance>
+
+</mepinfo>

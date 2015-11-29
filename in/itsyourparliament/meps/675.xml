@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		675
+	</mepid>
+	<mepname>
+		Le Pen Marine
+	</mepname>
+	<fullname>
+		Marine Le pen
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Front national
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/675.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 07H346, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1968-08-05
+	</birth>
+	<birthplace>
+		Neuilly Sur Seine
+	</birthplace>
+	<europarlid>
+		28210
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		NI
+	</group>
+	<attendance>
+  		63	</attendance>
+
+</mepinfo>

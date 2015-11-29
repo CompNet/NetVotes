@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		394
+	</mepid>
+	<mepname>
+		Werthmann
+	</mepname>
+	<fullname>
+		Angelika Werthmann
+	</fullname>
+	<country>
+		Austria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=13&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		-
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/394.html
+
+	</mepprofile>
+	<webpage>
+		http://www.angelika-werthmann.at/
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 06F258, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1963-10-07
+	</birth>
+	<birthplace>
+		Schwarzach
+	</birthplace>
+	<europarlid>
+		97016
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		NI
+	</group>
+	<attendance>
+  		97	</attendance>
+
+</mepinfo>

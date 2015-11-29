@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		713
+	</mepid>
+	<mepname>
+		Morganti
+	</mepname>
+	<fullname>
+		Claudio Morganti
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Io Cambio
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/713.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 07H255, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1973-04-14
+	</birth>
+	<birthplace>
+		Prato (po)
+	</birthplace>
+	<europarlid>
+		97280
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		91	</attendance>
+
+</mepinfo>

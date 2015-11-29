@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		367
+	</mepid>
+	<mepname>
+		Wałęsa
+	</mepname>
+	<fullname>
+		Jarosław Leszek Wałęsa
+	</fullname>
+	<country>
+		Poland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=22&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Platforma Obywatelska
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/367.html
+
+	</mepprofile>
+	<webpage>
+		http://jaroslawwalesa.pl
+	</webpage>
+	<address>
+		Parlament Europejski, Rue Wiertz, Altiero Spinelli 10E115, B-1047, Bruksela
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1976-08-13
+	</birth>
+	<birthplace>
+		Gdańsk
+	</birthplace>
+	<europarlid>
+		96774
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		81	</attendance>
+
+</mepinfo>

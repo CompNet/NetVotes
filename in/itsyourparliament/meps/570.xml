@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		570
+	</mepid>
+	<mepname>
+		Junqueras Vies
+	</mepname>
+	<fullname>
+		Oriol Junqueras vies
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Esquerra Republicana de Catalunya
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/570.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 08H165, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1969-04-11
+	</birth>
+	<birthplace>
+		Barcelona
+	</birthplace>
+	<europarlid>
+		96708
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		58	</attendance>
+
+</mepinfo>

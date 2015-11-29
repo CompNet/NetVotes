@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		34
+	</mepid>
+	<mepname>
+		Daerden
+	</mepname>
+	<fullname>
+		Frédéric Daerden
+	</fullname>
+	<country>
+		Belgium
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=19&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Parti Socialiste
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/34.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 12G116, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1970-01-11
+	</birth>
+	<birthplace>
+		Montegnée
+	</birthplace>
+	<europarlid>
+		97125
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		89	</attendance>
+
+</mepinfo>

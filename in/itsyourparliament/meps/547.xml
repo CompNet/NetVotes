@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		547
+	</mepid>
+	<mepname>
+		Neveďalová
+	</mepname>
+	<fullname>
+		Katarína Neveďalová
+	</fullname>
+	<country>
+		Slovakia
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=9&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		SMER-Sociálna demokracia
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/547.html
+
+	</mepprofile>
+	<webpage>
+		http://www.nevedalova.sk
+	</webpage>
+	<address>
+		Európsky parlament, Rue Wiertz, Altiero Spinelli 12G253, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1982-10-10
+	</birth>
+	<birthplace>
+		Nitra
+	</birthplace>
+	<europarlid>
+		96653
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		80	</attendance>
+
+</mepinfo>

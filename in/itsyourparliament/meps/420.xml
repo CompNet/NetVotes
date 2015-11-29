@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		420
+	</mepid>
+	<mepname>
+		Cabrnoch
+	</mepname>
+	<fullname>
+		Milan Cabrnoch
+	</fullname>
+	<country>
+		Czech Republic
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=18&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Občanská demokratická strana
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/420.html
+
+	</mepprofile>
+	<webpage>
+		http://www.cabrnoch.cz
+	</webpage>
+	<address>
+		Evropský parlament, Rue Wiertz, Willy Brandt 03M083, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1962-08-06
+	</birth>
+	<birthplace>
+		Čáslav
+	</birthplace>
+	<europarlid>
+		28324
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ECR
+	</group>
+	<attendance>
+  		68	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		424
+	</mepid>
+	<mepname>
+		Fox
+	</mepname>
+	<fullname>
+		Ashley Fox
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Conservative Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/424.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Willy Brandt 05M075, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1969-10-15
+	</birth>
+	<birthplace>
+		Sutton Coldfield
+	</birthplace>
+	<europarlid>
+		96957
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ECR
+	</group>
+	<attendance>
+  		91	</attendance>
+
+</mepinfo>

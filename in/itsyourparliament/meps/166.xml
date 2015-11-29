@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		166
+	</mepid>
+	<mepname>
+		Neyts-Uyttebroeck
+	</mepname>
+	<fullname>
+		Annemie Neyts-uyttebroeck
+	</fullname>
+	<country>
+		Belgium
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=19&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Open Vlaamse Liberalen en Democraten
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/166.html
+
+	</mepprofile>
+	<webpage>
+		http://www.annemie.eu
+	</webpage>
+	<address>
+		Europees Parlement, Wiertzstraat, Altiero Spinelli 09G218, B-1047, Brussel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1944-06-17
+	</birth>
+	<birthplace>
+		Elsene
+	</birthplace>
+	<europarlid>
+		1946
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		71	</attendance>
+
+</mepinfo>

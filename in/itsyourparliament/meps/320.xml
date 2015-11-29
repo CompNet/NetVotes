@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		320
+	</mepid>
+	<mepname>
+		Mayor Oreja
+	</mepname>
+	<fullname>
+		Jaime Mayor oreja
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair
+	</title>
+	<party>
+		Partido Popular
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/320.html
+
+	</mepprofile>
+	<webpage>
+		http://www.jaimemayororeja.eu
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11E130, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-07-12
+	</birth>
+	<birthplace>
+		San Sebastian
+	</birthplace>
+	<europarlid>
+		28362
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		75	</attendance>
+
+</mepinfo>

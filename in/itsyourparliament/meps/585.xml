@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		585
+	</mepid>
+	<mepname>
+		Morvai
+	</mepname>
+	<fullname>
+		Krisztina Morvai
+	</fullname>
+	<country>
+		Hungary
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=16&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Jobbik Magyarországért Mozgalom
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/585.html
+
+	</mepprofile>
+	<webpage>
+		http://www.morvaikrisztina.hu
+	</webpage>
+	<address>
+		Európai Parlament, Rue Wiertz, Altiero Spinelli 04F255, B-1047, Brüsszel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1963-06-22
+	</birth>
+	<birthplace>
+		Budapest
+	</birthplace>
+	<europarlid>
+		96661
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		NI
+	</group>
+	<attendance>
+  		55	</attendance>
+
+</mepinfo>

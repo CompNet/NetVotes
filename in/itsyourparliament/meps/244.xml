@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		244
+	</mepid>
+	<mepname>
+		Daul
+	</mepname>
+	<fullname>
+		Joseph Daul
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Chair
+	</title>
+	<party>
+		Union pour un Mouvement Populaire
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/244.html
+
+	</mepprofile>
+	<webpage>
+		http://president.eppgroup.eu/index.php?lang=en
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 05H357, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1947-04-13
+	</birth>
+	<birthplace>
+		Strasbourg
+	</birthplace>
+	<europarlid>
+		4342
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		94	</attendance>
+
+</mepinfo>

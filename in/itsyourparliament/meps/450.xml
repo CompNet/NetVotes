@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		450
+	</mepid>
+	<mepname>
+		Mélenchon
+	</mepname>
+	<fullname>
+		Jean-Luc Mélenchon
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Front de gauche pour changer d’Europe
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/450.html
+
+	</mepprofile>
+	<webpage>
+		http://www.jean-luc-melenchon.fr
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 07F155, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-08-19
+	</birth>
+	<birthplace>
+		Tanger
+	</birthplace>
+	<europarlid>
+		96742
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		GUE/NGL
+	</group>
+	<attendance>
+  		65	</attendance>
+
+</mepinfo>

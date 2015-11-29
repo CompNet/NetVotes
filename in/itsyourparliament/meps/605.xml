@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		605
+	</mepid>
+	<mepname>
+		Vadim Tudor
+	</mepname>
+	<fullname>
+		Corneliu Vadim tudor
+	</fullname>
+	<country>
+		Romania
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=21&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partidul România Mare
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/605.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamentul European, Rue Wiertz, Willy Brandt 05M121, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1949-10-28
+	</birth>
+	<birthplace>
+		Bucureşti
+	</birthplace>
+	<europarlid>
+		96845
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		NI
+	</group>
+	<attendance>
+  		68	</attendance>
+
+</mepinfo>

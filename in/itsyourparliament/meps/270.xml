@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		270
+	</mepid>
+	<mepname>
+		Herranz García
+	</mepname>
+	<fullname>
+		Esther Herranz garcía
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Popular
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/270.html
+
+	</mepprofile>
+	<webpage>
+		http://estherherranz.blogspot.com/
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11E154, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1969-07-03
+	</birth>
+	<birthplace>
+		Logroño
+	</birthplace>
+	<europarlid>
+		22418
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		85	</attendance>
+
+</mepinfo>

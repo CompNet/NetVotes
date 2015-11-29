@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		59
+	</mepid>
+	<mepname>
+		López Aguilar
+	</mepname>
+	<fullname>
+		Juan Fernando López aguilar
+	</fullname>
+	<country>
+		Spain
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=23&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partido Socialista Obrero Español
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/59.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento Europeo, Rue Wiertz, Altiero Spinelli 11G306, B-1047, Bruselas
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1961-06-10
+	</birth>
+	<birthplace>
+		Las Palmas
+	</birthplace>
+	<europarlid>
+		96812
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		81	</attendance>
+
+</mepinfo>

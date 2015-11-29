@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		256
+	</mepid>
+	<mepname>
+		Florenz
+	</mepname>
+	<fullname>
+		Karl-Heinz Florenz
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member of the Bureau
+	</title>
+	<party>
+		Christlich Demokratische Union Deutschlands
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/256.html
+
+	</mepprofile>
+	<webpage>
+		http://www.karl-heinz-florenz.de
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 10E242, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1947-09-22
+	</birth>
+	<birthplace>
+		Neukirchen-vluyn
+	</birthplace>
+	<europarlid>
+		1038
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		73	</attendance>
+
+</mepinfo>

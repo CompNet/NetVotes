@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<votes>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=195&amp;key=0		</voteinfo>
+		<voteid>
+			195
+		</voteid>
+	</vote>
+	<vote>
+		<voteinfo>
+			http://www.itsyourparliament.eu/api/vote.php?id=196&amp;key=0		</voteinfo>
+		<voteid>
+			196
+		</voteid>
+	</vote>
+</votes>

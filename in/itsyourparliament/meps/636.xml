@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		636
+	</mepid>
+	<mepname>
+		Giegold
+	</mepname>
+	<fullname>
+		Sven Giegold
+	</fullname>
+	<country>
+		Germany
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=27&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Bündnis 90/Die Grünen
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/636.html
+
+	</mepprofile>
+	<webpage>
+		http://www.sven-giegold.de
+	</webpage>
+	<address>
+		Europäisches Parlament, Rue Wiertz, Altiero Spinelli 08G209, B-1047, Brüssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1969-10-17
+	</birth>
+	<birthplace>
+		Las Palmas
+	</birthplace>
+	<europarlid>
+		96730
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		93	</attendance>
+
+</mepinfo>

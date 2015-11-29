@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		2
+	</mepid>
+	<mepname>
+		De Sarnez
+	</mepname>
+	<fullname>
+		Marielle De sarnez
+	</fullname>
+	<country>
+		France
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=26&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair
+	</title>
+	<party>
+		Mouvement Démocrate
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/2.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlement européen, Rue Wiertz, Altiero Spinelli 09G102, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-03-27
+	</birth>
+	<birthplace>
+		Paris
+	</birthplace>
+	<europarlid>
+		4335
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		76	</attendance>
+
+</mepinfo>

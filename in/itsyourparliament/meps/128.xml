@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		128
+	</mepid>
+	<mepname>
+		Sargentini
+	</mepname>
+	<fullname>
+		Judith Sargentini
+	</fullname>
+	<country>
+		Netherlands
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=20&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		GroenLinks
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/128.html
+
+	</mepprofile>
+	<webpage>
+		http://www.judithsargentini.nl
+	</webpage>
+	<address>
+		Europees Parlement, Wiertzstraat, Altiero Spinelli 07H153, B-1047,  Brussel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1974-03-13
+	</birth>
+	<birthplace>
+		Amsterdam
+	</birthplace>
+	<europarlid>
+		96815
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		Verts/ALE
+	</group>
+	<attendance>
+  		92	</attendance>
+
+</mepinfo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		405
+	</mepid>
+	<mepname>
+		Jäätteenmäki
+	</mepname>
+	<fullname>
+		Anneli Jäätteenmäki
+	</fullname>
+	<country>
+		Finland
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=11&amp;key=0
+	</countryinfo>
+	<title>
+		Vice-Chair
+	</title>
+	<party>
+		Suomen Keskusta
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/405.html
+
+	</mepprofile>
+	<webpage>
+		http://www.annelijaatteenmaki.net
+	</webpage>
+	<address>
+		Europaan parlamentti, Rue Wiertz, Altiero Spinelli 09G242, B-1047, Bryssel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1955-02-11
+	</birth>
+	<birthplace>
+		Lapua
+	</birthplace>
+	<europarlid>
+		28314
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		ALDE
+	</group>
+	<attendance>
+  		84	</attendance>
+
+</mepinfo>

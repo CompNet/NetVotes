@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		619
+	</mepid>
+	<mepname>
+		Zanicchi
+	</mepname>
+	<fullname>
+		Iva Zanicchi
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Forza Italia
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/619.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 09E142, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1940-01-18
+	</birth>
+	<birthplace>
+		Ligonchio (re)
+	</birthplace>
+	<europarlid>
+		41007
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		92	</attendance>
+
+</mepinfo>

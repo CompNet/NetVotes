@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		219
+	</mepid>
+	<mepname>
+		Baldassarre
+	</mepname>
+	<fullname>
+		Raffaele Baldassarre
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Forza Italia
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/219.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 08E217, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1956-08-23
+	</birth>
+	<birthplace>
+		Lecce
+	</birthplace>
+	<europarlid>
+		96757
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		89	</attendance>
+
+</mepinfo>

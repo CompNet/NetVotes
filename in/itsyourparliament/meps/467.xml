@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		467
+	</mepid>
+	<mepname>
+		Cancian
+	</mepname>
+	<fullname>
+		Antonio Cancian
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Nuovo Centrodestra
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/467.html
+
+	</mepprofile>
+	<webpage>
+		http://www.antoniocancian.eu
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 09E242, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1951-07-02
+	</birth>
+	<birthplace>
+		Mareno Di Piave (tv)
+	</birthplace>
+	<europarlid>
+		96733
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		93	</attendance>
+
+</mepinfo>

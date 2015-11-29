@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		378
+	</mepid>
+	<mepname>
+		Blinkevičiūtė
+	</mepname>
+	<fullname>
+		Vilija Blinkevičiūtė
+	</fullname>
+	<country>
+		Lithuania
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=7&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Lietuvos socialdemokratų partija
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/378.html
+
+	</mepprofile>
+	<webpage>
+		http://www.blinkeviciute.eu
+	</webpage>
+	<address>
+		Europos Parlamentas, Rue Wiertz, Altiero Spinelli 13G154, B-1047, Briuselyje
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1960-03-03
+	</birth>
+	<birthplace>
+		Linkuva Pakruojo Raj.
+	</birthplace>
+	<europarlid>
+		96681
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		88	</attendance>
+
+</mepinfo>

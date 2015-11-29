@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		514
+	</mepid>
+	<mepname>
+		Urutchev
+	</mepname>
+	<fullname>
+		Vladimir Urutchev
+	</fullname>
+	<country>
+		Bulgaria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=12&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Citizens for European Development of Bulgaria
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/514.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 05F361, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1954-09-01
+	</birth>
+	<birthplace>
+		Boukovo
+	</birthplace>
+	<europarlid>
+		38601
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		PPE
+	</group>
+	<attendance>
+  		92	</attendance>
+
+</mepinfo>

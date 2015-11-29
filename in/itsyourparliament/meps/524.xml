@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		524
+	</mepid>
+	<mepname>
+		Cofferati
+	</mepname>
+	<fullname>
+		Sergio Gaetano Cofferati
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Partito Democratico
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/524.html
+
+	</mepprofile>
+	<webpage>
+		http://www.sergiocofferati.eu/
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 15G317, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1948-01-30
+	</birth>
+	<birthplace>
+		Sesto Ed Uniti (cremona)
+	</birthplace>
+	<europarlid>
+		96915
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		93	</attendance>
+
+</mepinfo>

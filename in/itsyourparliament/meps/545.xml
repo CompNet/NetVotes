@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		545
+	</mepid>
+	<mepname>
+		Martin David
+	</mepname>
+	<fullname>
+		David Martin
+	</fullname>
+	<country>
+		United Kingdom
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=24&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Labour Party
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/545.html
+
+	</mepprofile>
+	<webpage>
+		http://martinmep.com
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 13G354, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1954-08-26
+	</birth>
+	<birthplace>
+		Edinburgh
+	</birthplace>
+	<europarlid>
+		1403
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		94	</attendance>
+
+</mepinfo>

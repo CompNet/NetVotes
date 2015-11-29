@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		15
+	</mepid>
+	<mepname>
+		Speroni
+	</mepname>
+	<fullname>
+		Francesco Enrico Speroni
+	</fullname>
+	<country>
+		Italy
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=25&amp;key=0
+	</countryinfo>
+	<title>
+		Co-Chair
+	</title>
+	<party>
+		Lega Nord
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/15.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Parlamento europeo, Rue Wiertz, Altiero Spinelli 07H359, B-1047, Bruxelles
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1946-09-04
+	</birth>
+	<birthplace>
+		Busto Arsizio
+	</birthplace>
+	<europarlid>
+		997
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		EFD
+	</group>
+	<attendance>
+  		93	</attendance>
+
+</mepinfo>

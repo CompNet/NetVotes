@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		552
+	</mepid>
+	<mepname>
+		Poc
+	</mepname>
+	<fullname>
+		Pavel Poc
+	</fullname>
+	<country>
+		Czech Republic
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=18&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Česká strana sociálně demokratická
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/552.html
+
+	</mepprofile>
+	<webpage>
+		
+	</webpage>
+	<address>
+		Evropský parlament, Rue Wiertz, Altiero Spinelli 14G153, B-1047, Brusel
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1964-05-26
+	</birth>
+	<birthplace>
+		Havlíčkův Brod
+	</birthplace>
+	<europarlid>
+		96715
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		96	</attendance>
+
+</mepinfo>

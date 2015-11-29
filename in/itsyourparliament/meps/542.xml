@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mepinfo>
+	<mepid>
+		542
+	</mepid>
+	<mepname>
+		Kalfin
+	</mepname>
+	<fullname>
+		Ivailo Kalfin
+	</fullname>
+	<country>
+		Bulgaria
+	</country>
+	<countryinfo>
+		http://www.itsyourparliament.eu/api/country.php?id=12&amp;key=0
+	</countryinfo>
+	<title>
+		Member
+	</title>
+	<party>
+		Coalition for Bulgaria
+	</party>
+	<mepprofile>
+		http://www.itsyourparliament.eu/meps/542.html
+
+	</mepprofile>
+	<webpage>
+		http://www.kalfin.eu
+	</webpage>
+	<address>
+		European Parliament, Rue Wiertz, Altiero Spinelli 14G146, B-1047, Brussels
+	</address>
+	<mail>
+		
+	</mail>
+	<birth>
+		1964-05-30
+	</birth>
+	<birthplace>
+		Sofia
+	</birthplace>
+	<europarlid>
+		96807
+	</europarlid>
+	<membersince>
+		
+	</membersince>
+	<membertill>
+		
+	</membertill>
+	<group>
+		SD
+	</group>
+	<attendance>
+  		81	</attendance>
+
+</mepinfo>
