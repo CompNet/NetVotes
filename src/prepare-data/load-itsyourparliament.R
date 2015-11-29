@@ -259,3 +259,11 @@ iyp.extract.votes <- function(vote.ids)
 	
 	return(result)
 }
+
+
+
+# TODO
+# - charger chaque vote et constituer les tables all-votes et doc-details
+# - calculer la ligne de groupe et constituer la table group-lines
+# - calculer la loyauté et constituer la table mep-behavior
+# (confronter aux fonctions communes dispo)
