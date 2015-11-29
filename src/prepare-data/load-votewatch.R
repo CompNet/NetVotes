@@ -1,8 +1,6 @@
 #############################################################################################
 # This script processes the raw data exported from the VoteWatch website, in order to extract
-# some tables the main script can then use. It is *not* called by the main script: the data
-# given with this project already contain the files resulting of this preprocessing. So, this
-# script does not need to be executed before the main one.
+# some tables the main script can then use.
 # 
 # Possible vote values:
 # - For: the MEP voted in favor of the text.

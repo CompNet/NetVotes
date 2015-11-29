@@ -36,15 +36,42 @@ OUT.FOLDER <- "out"
 # Files
 #############################################################################################
 ## overall tables created during the preprocessing
-ALL.VOTES.FILE		<- file.path(OVERALL.FOLDER,"all-votes.csv")
-DOC.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"doc-details.csv")
-GROUP.LINES.FILE	<- file.path(OVERALL.FOLDER,"group-lines.csv")
-MEP.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"mep-details.csv")
-MEP.BEHAVIOR.FILE	<- file.path(OVERALL.FOLDER,"mep-behavior.csv")
+	ALL.VOTES.FILE		<- file.path(OVERALL.FOLDER,"all-votes.csv")
+	DOC.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"doc-details.csv")
+	GROUP.LINES.FILE	<- file.path(OVERALL.FOLDER,"group-lines.csv")
+	MEP.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"mep-details.csv")
+	MEP.BEHAVIOR.FILE	<- file.path(OVERALL.FOLDER,"mep-behavior.csv")
 # graph files
-SIGNED.FILE <- "signed"
-POSITIVE.FILE <- "positive"
-COMP.NEGATIVE.FILE <- "comp-negative"
+	SIGNED.FILE <- "signed"
+	POSITIVE.FILE <- "positive"
+	COMP.NEGATIVE.FILE <- "comp-negative"
+
+
+#############################################################################################
+# Table column names
+#############################################################################################
+## raw data
+COL.BIRTHDATE 	<- "Birth date"
+COL.BIRTHPLACE 	<- "Birth place"
+COL.COUNT		<- "Count"
+COL.DATE		<- "Date"
+COL.DOCID		<- "Doc Id"
+COL.DOMAIN		<- "Domain"
+COL.DOMID		<- "Domain Id"
+COL.EP.ID 		<- "EP Id"
+COL.FIRSTNAME	<- "Firstname"
+COL.FREQUENCY	<- "Frequency"
+COL.FULLNAME	<- "Full name"
+COL.GROUP		<- "Group"
+COL.LASTNAME	<- "Lastname"
+COL.MEPID		<- "MEP Id"
+COL.PARTY 		<- "Party"
+COL.PERCENT		<- "Percent"
+COL.RESULT		<- "Vote result"
+COL.STATE		<- "State"
+COL.TITLE		<- "Title"
+COL.VOTE		<- "Vote"
+
 
 
 #############################################################################################
@@ -283,28 +310,6 @@ COUNTRY.SE <- "Sweden"
 COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.SE)
 COUNTRY.UK <- "United Kingdom"
 COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.UK)
-
-
-#############################################################################################
-# Table column names
-#############################################################################################
-## raw data
-COL.COUNT		<- "Count"
-COL.DATE		<- "Date"
-COL.DOCID		<- "Doc Id"
-COL.DOMAIN		<- "Domain"
-COL.DOMID		<- "Domain Id"
-COL.FIRSTNAME	<- "Firstname"
-COL.FREQUENCY	<- "Frequency"
-COL.FULLNAME	<- "Full name"
-COL.GROUP		<- "Group"
-COL.LASTNAME	<- "Lastname"
-COL.MEPID		<- "MEP Id"
-COL.PERCENT		<- "Percent"
-COL.RESULT		<- "Vote result"
-COL.STATE		<- "State"
-COL.TITLE		<- "Title"
-COL.VOTE		<- "Vote"
 
 
 #############################################################################################
