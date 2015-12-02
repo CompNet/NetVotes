@@ -369,9 +369,9 @@ load.votewatch.data <- function()
 	
 	result$doc.details <- vw.clean.doc.details()
 	result$mep.details <- vw.extract.mep.details()
-	result$all.votes <- vw.concatenate.votes(mep.details)
-	result$group.lines <- extract.group.lines(all.votes, mep.details)
-	result$behavior.values <- process.behavior.values(all.votes, mep.details, group.lines)
+	result$all.votes <- vw.concatenate.votes(result$mep.details)
+	result$group.lines <- extract.group.lines(result$all.votes, result$mep.details)
+	result$behavior.values <- process.behavior.values(result$all.votes, result$mep.details, result$group.lines)
 		
 	return(result)
 }

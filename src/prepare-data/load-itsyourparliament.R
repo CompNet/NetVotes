@@ -87,7 +87,7 @@ DOMAIN.IYP2SYMB["35"] <- DOMAIN.LIBE
 DOMAIN.IYP2SYMB["26"] <- DOMAIN.PECH
 DOMAIN.IYP2SYMB["47"] <- DOMAIN.PETI
 DOMAIN.IYP2SYMB["27"] <- DOMAIN.REGI
-#DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE #TODO à compléter en recherchant la catégorie où ces docs là se retrouve avec IYP
+#DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE #TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
 DOMAIN.IYP2SYMB["30"] <- DOMAIN.TRAN
 DOMAIN.IYP2SYMB["36"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["45"] <- DOMAIN.AUTR
@@ -355,7 +355,7 @@ iyp.extract.vote <- function(vote.id)
 	{	v <- xml[[IYP.ELT.VOTES]][[i]]
 		mep.id <- str_trim(v[[IYP.ELT.MEPID]])
 		vote.value <- VOTE.IYP2SYMB[[str_trim(v[[IYP.ELT.MEP.VOTE]])]]
-		votes[mep.id] <- vote.value #TODO pb du au fait que la numérotation n'est pas contigue
+		votes[as.character(mep.id)] <- vote.value
 	}
 	
 	for.count <- length(votes==VOTE.FOR)
@@ -376,11 +376,10 @@ iyp.extract.vote <- function(vote.id)
 iyp.extract.votes <- function(doc.domains, mep.details)
 {	cat("Extract vote-related data\n",sep="")
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
-	
 	result <- list()
 	
 	# check if the files already exist, load everything
-	if(all(file.exists(c(ALL.VOTES.FILE,DOC.DETAILS.FILE,GROUP.LINES.FILE,MEP.BEHAVIOR.FILE))))
+	if(file.exists(ALL.VOTES.FILE) & file.exists(DOC.DETAILS.FILE))
 	{	# vote values
 		temp <- as.matrix(read.csv2(ALL.VOTES.FILE,check.names=FALSE))
 		temp[,COL.MEPID] <- as.integer(temp[,COL.MEPID])
@@ -389,14 +388,6 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		temp <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
 		temp[,COL.DOCID] <- as.integer(temp[,COL.DOCID])
 		result$doc.details <- temp
-		# group lines
-		temp <- as.matrix(read.csv2(GROUP.LINES.FILE,check.names=FALSE))
-		temp[,COL.MEPID] <- as.integer(temp[,COL.MEPID])
-		result$group.lines <- temp
-		# MEP behavior
-		temp <- as.matrix(read.csv2(MEP.BEHAVIOR.FILE,check.names=FALSE))
-		temp[,COL.MEPID] <- as.integer(temp[,COL.MEPID])
-		result$mep.behavior <- temp
 	}
 	
 	# otherwise, process everything
@@ -410,43 +401,38 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		
 		# build vote values matrix
 		votes.mat <- matrix(NA,nrow=nrow(mep.details),ncol=nrow(doc.domains))
-		colnames(details.mat) <- 1:nrow(doc.domains)
+		colnames(votes.mat) <- 1:nrow(doc.domains)
 		
 		# fill both matrices
 		for(i in 1:nrow(doc.domains))
 		{	temp <- iyp.extract.vote(doc.domains[i,IYP.ELT.VOTEID])
-			temp$details
-			temp$votes
-			data[COL.MEPID] <- i
-			result[i,cols] <- data[cols]
+			# update details matrix
+			details.mat[i,details.cols] <- temp$details[details.cols]
+			details.mat[COL.DOCID] <- i
+			# update vote matrix
+			idx <- match(as.integer(names(temp$votes)), doc.domains[,IYP.ELT.VOTEID])
+			votes.mat[idx,i] <- temp$votes
 		}
+
+		# record details matrix
+		write.csv2(details.mat,file=DOC.DETAILS.FILE,row.names=FALSE)
+		result$doc.details <- details.mat
 		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		# record matrices
-		write.csv2(result,file=IYP.MEPS.FILE,row.names=FALSE)
+		# record vote values
+		votes.mat <- cbind(1:nrow(mep.details),votes.mat)
+		colnames(votes.mat)[1] <- COL.MEPID
+		write.csv2(votes.mat,file=ALL.VOTES.FILE,row.names=FALSE)
+		result$all.votes <- votes.mat
 	}
 	
 	return(result)
 }
 
-# TODO
-# - charger chaque vote et constituer les tables all-votes et doc-details
-# - calculer la ligne de groupe et constituer la table group-lines
-# - calculer la loyauté et constituer la table mep-behavior
-# (confronter aux fonctions communes dispo)
 
-#TODO faut refaire toutes les numérotations (car ça ne se suit pas dans IYP)
 #TODO revoir les MEPs retéléchargés, corriger les prénoms
 
+#############################################################################################
+#############################################################################################
 load.itsyourparliament.data <- function()
 {	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
@@ -454,10 +440,11 @@ load.itsyourparliament.data <- function()
 	
 	doc.domains <- iyp.extract.domains()
 	result$mep.details <- iyp.extract.meps.details()
-#	result$doc.details <- vw.clean.doc.details()
-#	result$all.votes <- vw.concatenate.votes(mep.details)
-#	result$group.lines <- extract.group.lines(all.votes, mep.details)
-#	result$behavior.values <- process.behavior.values(all.votes, mep.details, group.lines)
+	temp <- iyp.extract.votes(doc.domains, result$mep.details)
+	result$doc.details <- temp$doc.details
+	result$all.votes <- temp$all.votes
+	result$group.lines <- extract.group.lines(result$all.votes, result$mep.details)
+	result$behavior.values <- process.behavior.values(result$all.votes, result$mep.details, result$group.lines)
 	
 	return(result)
 }
