@@ -254,7 +254,7 @@ evaluate.corclu.methods <- function(graphs, subfolder, corclu.algos, repetitions
 		
 		# record iteration table
 		table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,SIGNED.FILE,"-performances.csv",sep="")
-		write.csv(perf.table, file=table.file, row.names=TRUE)
+		write.csv2(perf.table, file=table.file, row.names=TRUE)
 		
 		# update the list used to average
 		if(repetitions>1)
@@ -265,9 +265,9 @@ evaluate.corclu.methods <- function(graphs, subfolder, corclu.algos, repetitions
 	if(repetitions>1)
 	{	tmp <- average.matrix.list(avg.list)
 		table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,SIGNED.FILE,"-mean-performances.csv",sep="")
-		write.csv(tmp$avg, file=table.file, row.names=TRUE)
+		write.csv2(tmp$avg, file=table.file, row.names=TRUE)
 		table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,SIGNED.FILE,"-stdev-performances.csv",sep="")
-		write.csv(tmp$stev, file=table.file, row.names=TRUE)
+		write.csv2(tmp$stev, file=table.file, row.names=TRUE)
 	}
 }
 
@@ -352,10 +352,10 @@ evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos, repetitions
 		# record iteration tables
 			# partition obtained on the complementary negative subraph 
 			table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,COMP.NEGATIVE.FILE,"-performances.csv",sep="")
-			write.csv(neg.perf.table, file=table.file, row.names=TRUE)
+			write.csv2(neg.perf.table, file=table.file, row.names=TRUE)
 			# partition obtained on the postive subraph 
 			table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,POSITIVE.FILE,"-performances.csv",sep="")
-			write.csv(pos.perf.table, file=table.file, row.names=TRUE)
+			write.csv2(pos.perf.table, file=table.file, row.names=TRUE)
 			
 		# update the list used to average
 		if(repetitions>1)
@@ -369,15 +369,15 @@ evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos, repetitions
 	{	# partition obtained on the complementary negative subraph 
 			tmp <- average.matrix.list(neg.avg.list)
 			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,"-mean-performances.csv",sep="")
-			write.csv(tmp$avg, file=table.file, row.names=TRUE)
+			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
 			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,"-stdev-performances.csv",sep="")
-			write.csv(tmp$stev, file=table.file, row.names=TRUE)
+			write.csv2(tmp$stev, file=table.file, row.names=TRUE)
 		# partition obtained on the postive subraph 
 			tmp <- average.matrix.list(pos.avg.list)
 			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,POSITIVE.FILE,"-mean-performances.csv",sep="")
-			write.csv(tmp$avg, file=table.file, row.names=TRUE)
+			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
 			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,POSITIVE.FILE,"-stdev-performances.csv",sep="")
-			write.csv(tmp$stev, file=table.file, row.names=TRUE)
+			write.csv2(tmp$stev, file=table.file, row.names=TRUE)
 	}
 }
 

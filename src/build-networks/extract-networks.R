@@ -129,7 +129,7 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 				cat("Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement","\n",sep="")
 			else
 			{	# retrieve agreement
-				agreement <- as.matrix(read.csv(file=table.file, row.names=1))
+				agreement <- as.matrix(read.csv2(file=table.file, row.names=1))
 				# build and record network
 				g <- extract.network(agreement, mep.details, neg.thresh, pos.thresh, folder, graph.name)
 			}

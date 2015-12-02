@@ -115,7 +115,7 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 		# record iteration matrices
 		for(meas in measures)
 		{	table.file <- paste(r.folder,"comparison-",meas,".csv",sep="")
-			write.csv(mats[[meas]], file=table.file, row.names=TRUE)
+			write.csv2(mats[[meas]], file=table.file, row.names=TRUE)
 		}
 		
 		# update the list used to average
@@ -130,9 +130,9 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 	{	for(meas in measures)
 		{	tmp <- average.matrix.list(avg.list[[meas]])
 			table.file <- paste(folder,"comparison-mean-",meas,".csv",sep="")
-			write.csv(tmp$avg, file=table.file, row.names=TRUE)
+			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
 			table.file <- paste(folder,"comparison-stdev-",meas,".csv",sep="")
-			write.csv(tmp$stev, file=table.file, row.names=TRUE)
+			write.csv2(tmp$stev, file=table.file, row.names=TRUE)
 		}
 	}
 }

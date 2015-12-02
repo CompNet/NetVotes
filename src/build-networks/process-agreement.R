@@ -190,7 +190,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 				colnames(agreement) <- all.votes[,COL.MEPID]
 				rownames(agreement) <- all.votes[,COL.MEPID]
 				table.file <- paste(folder,DATE.STR.T7[date],"-agreement.csv",sep="")
-				write.csv(agreement,file=table.file, row.names=TRUE)
+				write.csv2(agreement,file=table.file, row.names=TRUE)
 				
 				# keep only the triangular part of the matrix (w/o the diagonal)
 				#print(agreement)				
@@ -210,7 +210,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 					# record as a table
 					data <- data[,c("y","xmin","xmax")]
 					table.file <- paste(plot.file,".csv",sep="")
-					write.csv(data,file=table.file, row.names=FALSE)
+					write.csv2(data,file=table.file, row.names=FALSE)
 					
 					# plot proportions as bars
 					title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
@@ -222,7 +222,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 					# record as a table
 					data <- data[,c("y","xmin","xmax")]
 					table.file <- paste(plot.file,".csv",sep="")
-					write.csv(data,file=table.file, row.names=FALSE)
+					write.csv2(data,file=table.file, row.names=FALSE)
 				}
 			}
 			else

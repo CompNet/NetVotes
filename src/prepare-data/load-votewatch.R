@@ -109,12 +109,12 @@ GROUP.VW2SYMB["S&D"] <- GROUP.SD
 #
 # returns: a table containing the document details.
 #############################################################################################
-clean.doc.details <- function()
+vw.clean.doc.details <- function()
 {	cat("Retrieving and cleaning the document details\n",sep="")
 	
 	# if the file already exists, just load it
 	if(file.exists(DOC.DETAILS.FILE))
-	{	result <- as.matrix(read.csv(DOC.DETAILS.FILE,check.names=FALSE))
+	{	result <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
 		result[,COL.DOCID] <- as.integer(result[,COL.DOCID])
 	}
 	
@@ -127,7 +127,12 @@ clean.doc.details <- function()
 		data <- as.matrix(read.csv2(DOC.DETAILS.RAW.FILE,check.names=FALSE))
 		
 		# build the table
-		result <- cbind(result, as.integer(data[,VW.COL.DOCID]), data[,c(VW.COL.DATE,VW.COL.DOCNAME,VW.COL.RESULT)])
+		result <- cbind(result, as.integer(data[,VW.COL.DOCID]), data[,c(VW.COL.DATE,VW.COL.DOCNAME)])
+		# clean the result values
+		doc.res <- data[,VW.COL.RESULT]
+		doc.rec[doc.res=="+"] <- VOTE.FOR
+		doc.rec[doc.res=="-"] <- VOTE.AGST
+		result <- cbind(result, doc.rec)
 		# clean the domain names
 		dom.ids <- DOMAIN.VW2SYMB[data[,VW.COL.DOMAIN]]
 		result <- cbind(result, dom.ids)
@@ -135,7 +140,7 @@ clean.doc.details <- function()
 		colnames(result) <- c(COL.DOCID,COL.DATE,COL.TITLE,COL.RESULT,COL.DOMID)
 		
 		# record the table
-		write.csv(result,file=DOC.DETAILS.FILE,row.names=FALSE)
+		write.csv2(result,file=DOC.DETAILS.FILE,row.names=FALSE)
 	}
 	
 	return(result)
@@ -148,12 +153,12 @@ clean.doc.details <- function()
 #
 # returns: a table containing the MEPs and their details.
 #############################################################################################
-extract.mep.details <- function()
+vw.extract.mep.details <- function()
 {	cat("Retrieving the MEPs' details\n",sep="")
 	
 	# if the file already exists, just load it
 	if(file.exists(MEP.DETAILS.FILE))
-	{	result <- as.matrix(read.csv(MEP.DETAILS.FILE,check.names=FALSE))
+	{	result <- as.matrix(read.csv2(MEP.DETAILS.FILE,check.names=FALSE))
 		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
 	}
 	
@@ -171,7 +176,7 @@ extract.mep.details <- function()
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
 			path <- file.path(VW.RAW.FOLDER,file)
-			data <- as.matrix(read.csv(path,check.names=FALSE))
+			data <- as.matrix(read.csv2(path,check.names=FALSE))
 			#tmp <- colnames(data)
 			f <- f + 1
 			
@@ -194,7 +199,7 @@ extract.mep.details <- function()
 		result[,COL.GROUP] <- GROUP.VW2SYMB[result[,COL.GROUP]]
 		
 		# split the names
-		names <- sapply(result[,COL.FULLNAME], split.name)
+		names <- sapply(result[,COL.FULLNAME], vw.split.name)
 		result[,COL.LASTNAME] <- names[1,]
 		result[,COL.FIRSTNAME] <- names[2,]
 		
@@ -208,7 +213,7 @@ extract.mep.details <- function()
 		colnames(result)[1] <- COL.MEPID
 		
 		# record the table
-		write.csv(result,file=MEP.DETAILS.FILE,row.names=FALSE)
+		write.csv2(result,file=MEP.DETAILS.FILE,row.names=FALSE)
 	}
 	
 	return(result)
@@ -222,7 +227,7 @@ extract.mep.details <- function()
 # name: a string containing both firstname(s) and lastname(s).
 # returns: a vector whose first element is the firstname(s) and second is the lastname(s).
 #############################################################################################
-split.name <- function(name)
+vw.split.name <- function(name)
 {	firstnames <- NA
 	lastnames <- NA
 	
@@ -254,12 +259,13 @@ split.name <- function(name)
 # mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
 # returns: the complete vote matrix.
 #############################################################################################
-concatenate.votes <- function(mep.details)
+vw.concatenate.votes <- function(mep.details)
 {	cat("Concatenating all the MEPs' votes\n",sep="")
+	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# if the file already exists, just load it
 	if(file.exists(ALL.VOTES.FILE))
-	{	result <- as.matrix(read.csv(ALL.VOTES.FILE,check.names=FALSE))
+	{	result <- as.matrix(read.csv2(ALL.VOTES.FILE,check.names=FALSE))
 		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
 	}
 	
@@ -281,7 +287,7 @@ concatenate.votes <- function(mep.details)
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
 			path <- file.path(VW.RAW.FOLDER,file)
-			data <- as.matrix(read.csv(path,check.names=FALSE))
+			data <- as.matrix(read.csv2(path,check.names=FALSE))
 			f <- f + 1
 			
 			# add a new column to the table
@@ -294,7 +300,7 @@ concatenate.votes <- function(mep.details)
 		}
 		
 		# record the table
-		write.csv(result,file=ALL.VOTES.FILE,row.names=FALSE)
+		write.csv2(result,file=ALL.VOTES.FILE,row.names=FALSE)
 	}
 	
 	return(result)
@@ -313,7 +319,7 @@ concatenate.votes <- function(mep.details)
 #	
 #	# if the file already exists, just load it
 #	if(file.exists(MEP.BEHAVIOR.FILE))
-#		result <- as.matrix(read.csv(MEP.BEHAVIOR.FILE,check.names=FALSE))
+#		result <- as.matrix(read.csv2(MEP.BEHAVIOR.FILE,check.names=FALSE))
 #	
 #	# otherwise, build the table and record it
 #	else
@@ -333,7 +339,7 @@ concatenate.votes <- function(mep.details)
 #		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 #			# read the file
 #			path <- file.path(VW.RAW.FOLDER,file)
-#			data <- as.matrix(read.csv(path,check.names=FALSE))
+#			data <- as.matrix(read.csv2(path,check.names=FALSE))
 #			f <- f + 1
 #			
 #			# add a new column to the table
@@ -346,7 +352,7 @@ concatenate.votes <- function(mep.details)
 #		}
 #		
 #		# record the table
-#		write.csv(result,file=MEP.BEHAVIOR.FILE,row.names=FALSE)
+#		write.csv2(result,file=MEP.BEHAVIOR.FILE,row.names=FALSE)
 #	}
 #	
 #	return(result)
@@ -361,9 +367,9 @@ concatenate.votes <- function(mep.details)
 load.votewatch.data <- function()
 {	result <- list()
 	
-	result$doc.details <- clean.doc.details()
-	result$mep.details <- extract.mep.details()
-	result$all.votes <- concatenate.votes(mep.details)
+	result$doc.details <- vw.clean.doc.details()
+	result$mep.details <- vw.extract.mep.details()
+	result$all.votes <- vw.concatenate.votes(mep.details)
 	result$group.lines <- extract.group.lines(all.votes, mep.details)
 	result$behavior.values <- process.behavior.values(all.votes, mep.details, group.lines)
 		

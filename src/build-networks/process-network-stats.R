@@ -186,7 +186,7 @@ process.network.stats <- function(g, folder)
 		
 	# record result
 	table.file <- paste(folder,"properties",".csv",sep="")
-	write.csv(result, file=table.file, row.names=TRUE)	
+	write.csv2(result, file=table.file, row.names=TRUE)	
 	
 	return(result)
 }

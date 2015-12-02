@@ -40,7 +40,7 @@ process.domain.frequencies <- function(doc.details)
 		data <- cbind(data.frame(DOMAIN.VALUES),data)
 		colnames(data) <- c(COL.DOMID, COL.COUNT)
 		table.file <- paste(plot.file,".csv",sep="")
-		write.csv(data,file=table.file, row.names=FALSE)
+		write.csv2(data,file=table.file, row.names=FALSE)
 		
 		# proportions as bars
 		title <- paste("Proportions of documents by policy domain - period=term",sep="")
@@ -58,7 +58,7 @@ process.domain.frequencies <- function(doc.details)
 		data <- cbind(data.frame(DOMAIN.VALUES),data)
 		colnames(data) <- c(COL.DOMID, COL.COUNT)
 		table.file <- paste(plot.file,".csv",sep="")
-		write.csv(data,file=table.file, row.names=FALSE)
+		write.csv2(data,file=table.file, row.names=FALSE)
 	
 	# process the list of documents by year
 	docs <- list()
@@ -90,7 +90,7 @@ process.domain.frequencies <- function(doc.details)
 		data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
 		colnames(data) <- c(COL.DATE, DOMAIN.VALUES)
 		table.file <- paste(plot.file,".csv",sep="")
-		write.csv(data,file=table.file, row.names=FALSE)
+		write.csv2(data,file=table.file, row.names=FALSE)
 		
 		# proportions as bars
 		title <- paste("Proportions of documents by policy domain - period=yearly",sep="")
@@ -107,7 +107,7 @@ process.domain.frequencies <- function(doc.details)
 		data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
 		colnames(data) <- c(COL.DATE, DOMAIN.VALUES)
 		table.file <- paste(plot.file,".csv",sep="")
-		write.csv(data,file=table.file, row.names=FALSE)
+		write.csv2(data,file=table.file, row.names=FALSE)
 }
 
 
@@ -202,7 +202,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 					data <- cbind(data.frame(filtered.doc.ids[indices]),data)
 					colnames(data) <- c(COL.DOCID, vote.values)
 					table.file <- paste(folder,file.prefix,"counts",".csv",sep="")
-					write.csv(data,file=table.file, row.names=FALSE)
+					write.csv2(data,file=table.file, row.names=FALSE)
 					
 					# proportions as bars
 					title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," - period=",DATE.STR.T7[date],sep="")
@@ -227,7 +227,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 					data <- cbind(data.frame(filtered.doc.ids[indices]),data)
 					colnames(data) <- c(COL.DOCID, vote.values)
 					table.file <- paste(folder,file.prefix,"proportions",".csv",sep="")
-					write.csv(data,file=table.file, row.names=FALSE)
+					write.csv2(data,file=table.file, row.names=FALSE)
 				}
 			}
 		}
@@ -320,7 +320,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				data <- cbind(data.frame(vote.values),data)
 				colnames(data) <- c(COL.VOTE, COL.COUNT)
 				table.file <- paste(plot.file,".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
+				write.csv2(data,file=table.file, row.names=FALSE)
 				
 				# proportions as bars
 				title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," - aggregation=term",sep="")
@@ -338,7 +338,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				data <- cbind(data.frame(vote.values),data)
 				colnames(data) <- c(COL.VOTE, COL.PERCENT)
 				table.file <- paste(plot.file,".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
+				write.csv2(data,file=table.file, row.names=FALSE)
 			}
 		}
 		
@@ -361,7 +361,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
 				colnames(data) <- c(COL.DATE, vote.values)
 				table.file <- paste(plot.file,".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
+				write.csv2(data,file=table.file, row.names=FALSE)
 				
 				# proportions as bars
 				title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," aggregation=yearly",sep="")
@@ -378,7 +378,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
 				colnames(data) <- c(COL.DATE, vote.values)
 				table.file <- paste(plot.file,".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
+				write.csv2(data,file=table.file, row.names=FALSE)
 			}
 		}
 	}
@@ -456,7 +456,7 @@ print(votes)
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
 				table.file <- paste(plot.file,".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
+				write.csv2(data,file=table.file, row.names=FALSE)
 				
 				# plot proportions as bars
 				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
@@ -468,7 +468,7 @@ print(votes)
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
 				table.file <- paste(plot.file,".csv",sep="")
-				write.csv(data,file=table.file, row.names=FALSE)
+				write.csv2(data,file=table.file, row.names=FALSE)
 			}
 			else
 				cat("WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")

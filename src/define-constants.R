@@ -41,6 +41,8 @@ OUT.FOLDER <- "out"
 	GROUP.LINES.FILE	<- file.path(OVERALL.FOLDER,"group-lines.csv")
 	MEP.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"mep-details.csv")
 	MEP.BEHAVIOR.FILE	<- file.path(OVERALL.FOLDER,"mep-behavior.csv")
+	DOMAIN.DETAILS.FILE <- file.path(OVERALL.FOLDER,"dom-details.csv")
+	DOC.DOMAINS.FILE 	<- file.path(IYP.DOMAINS.FOLDER,"doc-domains.csv")
 # graph files
 	SIGNED.FILE <- "signed"
 	POSITIVE.FILE <- "positive"
@@ -71,6 +73,10 @@ COL.RESULT		<- "Vote result"
 COL.STATE		<- "State"
 COL.TITLE		<- "Title"
 COL.VOTE		<- "Vote"
+COL.DOC.REF		<- "Document Reference"
+COL.FULL.TITLE	<- "Full title"
+COL.EP.REF		<- "EP reference"
+COL.REPORTER.ID	<- "Reporter ID"
 
 
 
@@ -182,7 +188,10 @@ DOMAIN.RIPE <- "RIPE"
 DOMAIN.TRAN <- "TRAN"
 	DOMAIN.FULLNAMES[DOMAIN.TRAN] <- "Transport and Tourism"
 	DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.TRAN)
-
+DOMAIN.AUTR <- "AUTR"
+	DOMAIN.FULLNAMES[DOMAIN.AUTR] <- "Other domains"
+	DOMAIN.VALUES <- c(DOMAIN.VALUES,DOMAIN.AUTR)
+	
 
 #############################################################################################
 # Temporal constants

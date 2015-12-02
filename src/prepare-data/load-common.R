@@ -20,7 +20,7 @@ extract.group.lines <- function(all.votes, mep.details)
 	
 	# if the file already exists, just load it
 	if(file.exists(GROUP.LINES.FILE))
-		result <- as.matrix(read.csv(GROUP.LINES.FILE,check.names=FALSE))
+		result <- as.matrix(read.csv2(GROUP.LINES.FILE,check.names=FALSE))
 	
 	# otherwise, build the table and record it
 	else
@@ -60,7 +60,7 @@ extract.group.lines <- function(all.votes, mep.details)
 		}
 		
 		# record the table
-		write.csv(result,file=GROUP.LINES.FILE,row.names=FALSE)
+		write.csv2(result,file=GROUP.LINES.FILE,row.names=FALSE)
 	}
 
 	return(result)
@@ -88,7 +88,7 @@ process.behavior.values <- function(all.votes, mep.details, group.lines)
 	
 	# if the file already exists, just load it
 	if(file.exists(MEP.BEHAVIOR.FILE))
-	{	result <- as.matrix(read.csv(MEP.BEHAVIOR.FILE,check.names=FALSE))
+	{	result <- as.matrix(read.csv2(MEP.BEHAVIOR.FILE,check.names=FALSE))
 		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
 	}
 	
@@ -126,7 +126,7 @@ process.behavior.values <- function(all.votes, mep.details, group.lines)
 		}
 			
 		# record the table
-		write.csv(result,file=MEP.BEHAVIOR.FILE,row.names=FALSE)
+		write.csv2(result,file=MEP.BEHAVIOR.FILE,row.names=FALSE)
 	}
 	
 	return(result)
