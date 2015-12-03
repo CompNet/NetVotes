@@ -42,7 +42,7 @@ OUT.FOLDER <- "out"
 	MEP.DETAILS.FILE	<- file.path(OVERALL.FOLDER,"mep-details.csv")
 	MEP.BEHAVIOR.FILE	<- file.path(OVERALL.FOLDER,"mep-behavior.csv")
 	DOMAIN.DETAILS.FILE <- file.path(OVERALL.FOLDER,"dom-details.csv")
-	DOC.DOMAINS.FILE 	<- file.path(IYP.DOMAINS.FOLDER,"doc-domains.csv")
+	DOC.DOMAINS.FILE 	<- file.path(OVERALL.FOLDER,"doc-domains.csv")
 # graph files
 	SIGNED.FILE <- "signed"
 	POSITIVE.FILE <- "positive"

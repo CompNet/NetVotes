@@ -67,40 +67,77 @@ IYP.DOMAIN.LIST.FILE <- file.path(IYP.DOMAINS.FOLDER,"_domains.xml")
 #############################################################################################
 # map used to convert official domain names into VoteWatch ones
 DOMAIN.IYP2SYMB <- c()
-DOMAIN.IYP2SYMB["41"] <- DOMAIN.AFCO
-DOMAIN.IYP2SYMB["34"] <- DOMAIN.AFET
-DOMAIN.IYP2SYMB["37"] <- DOMAIN.AGRI
-DOMAIN.IYP2SYMB["44"] <- DOMAIN.BUDG
-DOMAIN.IYP2SYMB["42"] <- DOMAIN.CONT
-DOMAIN.IYP2SYMB["40"] <- DOMAIN.CULT
-DOMAIN.IYP2SYMB["48"] <- DOMAIN.DEVE
-DOMAIN.IYP2SYMB["32"] <- DOMAIN.FEMM
-DOMAIN.IYP2SYMB["53"] <- DOMAIN.FEMM
-DOMAIN.IYP2SYMB["28"] <- DOMAIN.ECON
-DOMAIN.IYP2SYMB["31"] <- DOMAIN.EMPL
-DOMAIN.IYP2SYMB["38"] <- DOMAIN.ENVI
-DOMAIN.IYP2SYMB["43"] <- DOMAIN.IMCO
-DOMAIN.IYP2SYMB["29"] <- DOMAIN.INTA
-DOMAIN.IYP2SYMB["33"] <- DOMAIN.ITRE
-DOMAIN.IYP2SYMB["39"] <- DOMAIN.JURI
-DOMAIN.IYP2SYMB["35"] <- DOMAIN.LIBE
-DOMAIN.IYP2SYMB["26"] <- DOMAIN.PECH
-DOMAIN.IYP2SYMB["47"] <- DOMAIN.PETI
-DOMAIN.IYP2SYMB["27"] <- DOMAIN.REGI
+#DOMAIN.IYP2SYMB["41"] <- DOMAIN.AFCO
+#DOMAIN.IYP2SYMB["34"] <- DOMAIN.AFET
+#DOMAIN.IYP2SYMB["37"] <- DOMAIN.AGRI
+#DOMAIN.IYP2SYMB["44"] <- DOMAIN.BUDG
+#DOMAIN.IYP2SYMB["42"] <- DOMAIN.CONT
+#DOMAIN.IYP2SYMB["40"] <- DOMAIN.CULT
+#DOMAIN.IYP2SYMB["48"] <- DOMAIN.DEVE
+#DOMAIN.IYP2SYMB["32"] <- DOMAIN.FEMM
+#DOMAIN.IYP2SYMB["53"] <- DOMAIN.FEMM
+#DOMAIN.IYP2SYMB["28"] <- DOMAIN.ECON
+#DOMAIN.IYP2SYMB["31"] <- DOMAIN.EMPL
+#DOMAIN.IYP2SYMB["38"] <- DOMAIN.ENVI
+#DOMAIN.IYP2SYMB["43"] <- DOMAIN.IMCO
+#DOMAIN.IYP2SYMB["29"] <- DOMAIN.INTA
+#DOMAIN.IYP2SYMB["33"] <- DOMAIN.ITRE
+#DOMAIN.IYP2SYMB["39"] <- DOMAIN.JURI
+#DOMAIN.IYP2SYMB["35"] <- DOMAIN.LIBE
+#DOMAIN.IYP2SYMB["26"] <- DOMAIN.PECH
+#DOMAIN.IYP2SYMB["47"] <- DOMAIN.PETI
+#DOMAIN.IYP2SYMB["27"] <- DOMAIN.REGI
+##DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE #TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
+#DOMAIN.IYP2SYMB["30"] <- DOMAIN.TRAN
+#DOMAIN.IYP2SYMB["36"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["45"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["46"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["49"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["50"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["51"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["52"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["54"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["55"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["56"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["57"] <- DOMAIN.AUTR
+#DOMAIN.IYP2SYMB["58"] <- DOMAIN.AUTR
+#####################################
+DOMAIN.IYP2SYMB["Constitutional Affairs"] <- DOMAIN.AFCO
+DOMAIN.IYP2SYMB["Foreign Affairs"] <- DOMAIN.AFET
+DOMAIN.IYP2SYMB["Agriculture and Rural Development"] <- DOMAIN.AGRI
+DOMAIN.IYP2SYMB["Budgets"] <- DOMAIN.BUDG
+DOMAIN.IYP2SYMB["Budgetary Control"] <- DOMAIN.CONT
+DOMAIN.IYP2SYMB["Culture and Education"] <- DOMAIN.CULT
+DOMAIN.IYP2SYMB["Development"] <- DOMAIN.DEVE
+DOMAIN.IYP2SYMB["Women\\'s Rights and Gender Equality"] <- DOMAIN.FEMM
+DOMAIN.IYP2SYMB["Women’s Rights and Gender Equality"] <- DOMAIN.FEMM
+DOMAIN.IYP2SYMB["Economic and Monetary Affairs"] <- DOMAIN.ECON
+DOMAIN.IYP2SYMB["Employment and Social Affairs"] <- DOMAIN.EMPL
+DOMAIN.IYP2SYMB["Environment, Public Health and Food Safety"] <- DOMAIN.ENVI
+DOMAIN.IYP2SYMB["Internal Market and Consumer Protection"] <- DOMAIN.IMCO
+DOMAIN.IYP2SYMB["International Trade"] <- DOMAIN.INTA
+DOMAIN.IYP2SYMB["Industry, Research and Energy"] <- DOMAIN.ITRE
+DOMAIN.IYP2SYMB["Legal Affairs"] <- DOMAIN.JURI
+DOMAIN.IYP2SYMB["Civil Liberties, Justice and Home Affairs"] <- DOMAIN.LIBE
+DOMAIN.IYP2SYMB["Fisheries"] <- DOMAIN.PECH
+DOMAIN.IYP2SYMB["Petitions"] <- DOMAIN.PETI
+DOMAIN.IYP2SYMB["Regional Development"] <- DOMAIN.REGI
 #DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE #TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
-DOMAIN.IYP2SYMB["30"] <- DOMAIN.TRAN
-DOMAIN.IYP2SYMB["36"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["45"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["46"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["49"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["50"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["51"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["52"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["54"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["55"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["56"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["57"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["58"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["Transport and Tourism"] <- DOMAIN.TRAN
+DOMAIN.IYP2SYMB["Conciliation"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["The use of European countries by the CIA"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["EP Delegation to Conciliation"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["Climate Change"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["The enlarged Union for 2007-2013"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["Resolutions/not categorized"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["Inquiry  on the Equitable Life Assurance Society"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["The financial, economic and social crisis"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["Parliament delegation to Conciliation"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["EU policy challenges and budgetary resources after 2013"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["European Parliament delegation to the Budgetary Conciliation"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["Organised crime, corruption and money laundering"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB[""] <- DOMAIN.AUTR
+
 		
 
 #############################################################################################
@@ -146,7 +183,7 @@ iyp.extract.mep.details <- function(mep.id)
 	xml.data <- xmlParse(doc)
 	xml <- xmlToList(xml.data)
 	
-	# id
+	# MEP id in NetVotes
 	result[IYP.ELT.MEPID] <- mep.id
 	
 	# names
@@ -156,18 +193,57 @@ iyp.extract.mep.details <- function(mep.id)
 	idx <- str_locate(fullname,ignore.case(lastname))[1]-2
 	
 	firstname <- substr(fullname,1,idx)
+	if(!is.na(lastname) & lastname=="")
+		lastname <- NA
 	result[COL.LASTNAME] <- lastname
+	if(!is.na(firstname) & firstname=="")
+		firstname <- NA
 	result[COL.FIRSTNAME] <- firstname
+	if(!is.na(fullname) & fullname=="")
+		fullname <- NA
 	result[COL.FULLNAME] <- fullname
 	
-	# other details
-	result[COL.STATE] <- str_trim(xml[[IYP.ELT.COUNTRY]])
-	result[COL.GROUP] <- GROUP.IYP2SYMB[[str_trim(xml[[IYP.ELT.GROUP]])]]
-	result[COL.TITLE] <- str_trim(xml[[IYP.ELT.TITLE]])
-	result[COL.PARTY] <- str_trim(xml[[IYP.ELT.PARTY]])
-	result[COL.BIRTHDATE] <- str_trim(xml[[IYP.ELT.BIRTHDATE]])
-	result[COL.BIRTHPLACE] <- str_trim(xml[[IYP.ELT.BIRTHPLACE]])
-	result[COL.EP.ID] <- str_trim(xml[[IYP.ELT.EP_ID]])
+	# state
+	state <- str_trim(xml[[IYP.ELT.COUNTRY]])
+	if(!is.na(state) & state=="")
+		state <- NA
+	result[COL.STATE] <- state
+	
+	# european political group
+	group <- GROUP.IYP2SYMB[str_trim(xml[[IYP.ELT.GROUP]])]
+	if(!is.na(group) & group=="")
+		group <- NA
+	result[COL.GROUP] <- group
+	
+	# MEP title
+	title <- str_trim(xml[[IYP.ELT.TITLE]])
+	if(!is.na(title) & title=="")
+		title <- NA
+	result[COL.TITLE] <- title
+	
+	# european party
+	party <- str_trim(xml[[IYP.ELT.PARTY]])
+	if(!is.na(party) & party=="")
+		party <- NA
+	result[COL.PARTY] <- party
+	
+	# MEP date of birth
+	birthdate <- str_trim(xml[[IYP.ELT.BIRTHDATE]])
+	if(!is.na(birthdate) & birthdate=="")
+		birthdate <- NA
+	result[COL.BIRTHDATE] <- birthdate
+	
+	# MEP place of birth
+	birthplace <- str_trim(xml[[IYP.ELT.BIRTHPLACE]])
+	if(!is.na(birthplace) & birthplace=="")
+		birthplace <- NA
+	result[COL.BIRTHPLACE] <- birthplace
+	
+	# official MEP ID in the european parliament
+	ep.id <- str_trim(xml[[IYP.ELT.EP_ID]])
+	if(!is.na(ep.id) & ep.id=="")
+		ep.id <- NA
+	result[COL.EP.ID] <- ep.id
 	
 	return(result)
 }
@@ -185,14 +261,14 @@ iyp.extract.meps.details <- function()
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# if the file already exists, just load it
-	if(file.exists(MEP.DETAILS.FILE))
-	{	result <- as.matrix(read.csv2(MEP.DETAILS.FILE,check.names=FALSE))
-		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
-		result[,IYP.ELT.MEPID] <- as.integer(result[,IYP.ELT.MEPID])
-	}
-	
-	# otherwise, build the table and record it
-	else
+#	if(file.exists(MEP.DETAILS.FILE))
+#	{	result <- as.matrix(read.csv2(MEP.DETAILS.FILE,check.names=FALSE))
+#		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
+#		result[,IYP.ELT.MEPID] <- as.integer(result[,IYP.ELT.MEPID])
+#	}
+#	
+#	# otherwise, build the table and record it
+#	else
 	{	# retrieve the list of MEP ids
 		files <- list.files(path=IYP.MEPS.FOLDER, full.names=FALSE, no..=TRUE)
 		mep.ids <- c()
@@ -302,7 +378,7 @@ iyp.extract.domains <- function()
 			# update vote list
 			if(dom.id %in% dom.ids)
 			{	vote.ids <- iyp.extract.domain(domains[i,IYP.ELT.ID])
-				domain.code <- DOMAIN.IYP2SYMB[[domains[i,IYP.ELT.ID]]]
+				domain.code <- DOMAIN.IYP2SYMB[domains[i,IYP.ELT.ID]]
 				result <- rbind(result,
 					cbind(vote.ids, rep(domain.code,length(vote.ids))))
 			}
@@ -341,23 +417,62 @@ iyp.extract.vote <- function(vote.id)
 	# extract vote information
 	details <- c()
 	details[IYP.ELT.VOTEID] <- vote.id
-	details[COL.TITLE] <- str_trim(xml[[IYP.ELT.VOTE.TITLE]])
-	details[COL.FULL.TITLE] <- str_trim(xml[[IYP.ELT.FULL.TITLE]])
-	details[COL.DOMID] <- DOMAIN.IYP2SYMB[[str_trim(xml[[IYP.ELT.POLICY.AREA]])]]
-	details[COL.DOC.REF] <- str_trim(xml[[IYP.ELT.DOC.REF]])
-	details[COL.EP.REF] <- str_trim(xml[[IYP.ELT.EP.REF]])
-	details[COL.REPORTER.ID] <- str_trim(xml[[IYP.ELT.REPORTER.ID]])
-	details[COL.DATE] <- str_trim(xml[[IYP.ELT.VOTE.DATE]])	
+	
+	# document title
+	title <- str_trim(xml[[IYP.ELT.VOTE.TITLE]])
+	if(!is.na(title) & title=="")
+		title <- NA
+	details[COL.TITLE] <- title
+	
+	# different title (not always present)
+	full.title <- str_trim(xml[[IYP.ELT.FULL.TITLE]])
+	if(!is.na(full.title) & full.title=="")
+		full.title <- NA
+	details[COL.FULL.TITLE] <- full.title
+	
+	# id of the policy domain
+	dom.id <- str_trim(xml[[IYP.ELT.POLICY.AREA]])
+#print(dom.id)	
+#	if(!is.na(dom.id) & dom.id=="")
+#		dom.id <- NA
+#	else
+		dom.id <- DOMAIN.IYP2SYMB[dom.id]
+	details[COL.DOMID] <- dom.id
+	
+	# document reference
+	doc.ref <- str_trim(xml[[IYP.ELT.DOC.REF]])
+	if(!is.na(doc.ref) & doc.ref=="")
+		doc.ref <- NA
+	details[COL.DOC.REF] <- doc.ref
+	
+	# european parliament official reference
+	ep.ref <- str_trim(xml[[IYP.ELT.EP.REF]])
+	if(!is.na(ep.ref) & ep.ref=="")
+		ep.ref <- NA
+	details[COL.EP.REF] <- ep.ref
+	
+	# id of the reporter of the document
+	reporter.id <- str_trim(xml[[IYP.ELT.REPORTER.ID]])
+	if(!is.na(reporter.id) & reporter.id=="")
+		reporter.id <- NA
+	details[COL.REPORTER.ID] <- reporter.id
+	
+	# date of the vote
+	date <- str_trim(xml[[IYP.ELT.VOTE.DATE]])	
+	if(!is.na(date) & date=="")
+		date <- NA
+	details[COL.DATE] <- date
 	
 	# extract vote values
 	votes <- c()
 	for(i in 1:length(xml[[IYP.ELT.VOTES]]))
 	{	v <- xml[[IYP.ELT.VOTES]][[i]]
 		mep.id <- str_trim(v[[IYP.ELT.MEPID]])
-		vote.value <- VOTE.IYP2SYMB[[str_trim(v[[IYP.ELT.MEP.VOTE]])]]
+		vote.value <- VOTE.IYP2SYMB[str_trim(v[[IYP.ELT.MEP.VOTE]])]
 		votes[as.character(mep.id)] <- vote.value
 	}
 	
+	# process vote total result
 	for.count <- length(votes==VOTE.FOR)
 	against.count <- length(votes==VOTE.AGST)
 	if(against.count>for.count)
@@ -365,13 +480,18 @@ iyp.extract.vote <- function(vote.id)
 	else
 		details[COL.RESULT] <- VOTE.AGST
 	
-	result <- list(details=details, votes=votes)	
+	result <- list(details=details, votes=votes)
+#print(result)	
 	return(result)
 }
 
 
 
 #############################################################################################
+# Read the XML files corresponding to all the vote ids, and returns the corresponding
+# vote data, as two tables: document details and vote values.
+#
+# returns: a list containing the document details (doc.details) annd the vote values (all.votes).
 #############################################################################################
 iyp.extract.votes <- function(doc.domains, mep.details)
 {	cat("Extract vote-related data\n",sep="")
@@ -404,14 +524,16 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		colnames(votes.mat) <- 1:nrow(doc.domains)
 		
 		# fill both matrices
-		for(i in 1:nrow(doc.domains))
+		for(i in 4000:nrow(doc.domains))
 		{	temp <- iyp.extract.vote(doc.domains[i,IYP.ELT.VOTEID])
 			# update details matrix
+			temp$details[COL.DOCID] <- i
 			details.mat[i,details.cols] <- temp$details[details.cols]
-			details.mat[COL.DOCID] <- i
 			# update vote matrix
-			idx <- match(as.integer(names(temp$votes)), doc.domains[,IYP.ELT.VOTEID])
+			idx <- match(as.integer(names(temp$votes)), mep.details[,IYP.ELT.MEPID])
+#print(idx)			
 			votes.mat[idx,i] <- temp$votes
+			#TODO rajouter doc domain si manquant
 		}
 
 		# record details matrix
@@ -419,6 +541,7 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		result$doc.details <- details.mat
 		
 		# record vote values
+print(sort(unique(votes.mat)))	
 		votes.mat <- cbind(1:nrow(mep.details),votes.mat)
 		colnames(votes.mat)[1] <- COL.MEPID
 		write.csv2(votes.mat,file=ALL.VOTES.FILE,row.names=FALSE)
@@ -429,9 +552,13 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 }
 
 
-#TODO revoir les MEPs retéléchargés, corriger les prénoms
+#TODO vérif les valeurs des votes dans la table all.votes
+#TODO tous les votes ne sont pas répertoriés dans les document domains
 
 #############################################################################################
+# Load all the tables and returns them as a list.
+#
+# returns: a list containing all the loaded tables.
 #############################################################################################
 load.itsyourparliament.data <- function()
 {	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
