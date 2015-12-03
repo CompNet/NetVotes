@@ -524,7 +524,7 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		colnames(votes.mat) <- 1:nrow(doc.domains)
 		
 		# fill both matrices
-		for(i in 4000:nrow(doc.domains))
+		for(i in 1:nrow(doc.domains))
 		{	temp <- iyp.extract.vote(doc.domains[i,IYP.ELT.VOTEID])
 			# update details matrix
 			temp$details[COL.DOCID] <- i
