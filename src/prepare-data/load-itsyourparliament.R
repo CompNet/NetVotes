@@ -499,19 +499,19 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 	result <- list()
 	
 	# check if the files already exist, load everything
-	if(file.exists(ALL.VOTES.FILE) & file.exists(DOC.DETAILS.FILE))
-	{	# vote values
-		temp <- as.matrix(read.csv2(ALL.VOTES.FILE,check.names=FALSE))
-		temp[,COL.MEPID] <- as.integer(temp[,COL.MEPID])
-		result$all.votes <- temp
-		# document details
-		temp <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
-		temp[,COL.DOCID] <- as.integer(temp[,COL.DOCID])
-		result$doc.details <- temp
-	}
-	
-	# otherwise, process everything
-	else
+#	if(file.exists(ALL.VOTES.FILE) & file.exists(DOC.DETAILS.FILE))
+#	{	# vote values
+#		temp <- as.matrix(read.csv2(ALL.VOTES.FILE,check.names=FALSE))
+#		temp[,COL.MEPID] <- as.integer(temp[,COL.MEPID])
+#		result$all.votes <- temp
+#		# document details
+#		temp <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
+#		temp[,COL.DOCID] <- as.integer(temp[,COL.DOCID])
+#		result$doc.details <- temp
+#	}
+#	
+#	# otherwise, process everything
+#	else
 	{	# build details matrix
 		details.cols <- c(COL.DOCID, IYP.ELT.VOTEID,
 			COL.TITLE, COL.FULL.TITLE, COL.DOMID, COL.DOC.REF,
@@ -541,7 +541,7 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		result$doc.details <- details.mat
 		
 		# record vote values
-print(sort(unique(votes.mat)))	
+print(sort(unique(c(votes.mat))))	
 		votes.mat <- cbind(1:nrow(mep.details),votes.mat)
 		colnames(votes.mat)[1] <- COL.MEPID
 		write.csv2(votes.mat,file=ALL.VOTES.FILE,row.names=FALSE)
