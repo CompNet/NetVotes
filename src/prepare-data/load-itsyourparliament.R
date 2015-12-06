@@ -111,6 +111,7 @@ DOMAIN.IYP2SYMB["Culture and Education"] <- DOMAIN.CULT
 DOMAIN.IYP2SYMB["Development"] <- DOMAIN.DEVE
 DOMAIN.IYP2SYMB["Women\\'s Rights and Gender Equality"] <- DOMAIN.FEMM
 DOMAIN.IYP2SYMB["Women’s Rights and Gender Equality"] <- DOMAIN.FEMM
+DOMAIN.IYP2SYMB["Women's Rights and Gender Equality"] <- DOMAIN.FEMM
 DOMAIN.IYP2SYMB["Economic and Monetary Affairs"] <- DOMAIN.ECON
 DOMAIN.IYP2SYMB["Employment and Social Affairs"] <- DOMAIN.EMPL
 DOMAIN.IYP2SYMB["Environment, Public Health and Food Safety"] <- DOMAIN.ENVI
@@ -136,20 +137,17 @@ DOMAIN.IYP2SYMB["Parliament delegation to Conciliation"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["EU policy challenges and budgetary resources after 2013"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["European Parliament delegation to the Budgetary Conciliation"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["Organised crime, corruption and money laundering"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB[""] <- DOMAIN.AUTR
 
 		
 
 #############################################################################################
 # Vote mapping
 #############################################################################################
+# note: no "Didn't vote", "Absent" or "Documented Absence" like with VoteWatch
 VOTE.IYP2SYMB <- c()
 VOTE.IYP2SYMB["For"] <- VOTE.FOR
 VOTE.IYP2SYMB["Abstention"] <- VOTE.ABST
 VOTE.IYP2SYMB["Against"] <- VOTE.AGST
-#VOTE.IYP2SYMB["Didn't vote"] <- VOTE.NONE
-#VOTE.IYP2SYMB["Absent"] <- VOTE.ABSENT
-#VOTE.IYP2SYMB["Documented Absence"] <- VOTE.DOCABSENT
 
 
 #############################################################################################
@@ -261,14 +259,14 @@ iyp.extract.meps.details <- function()
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# if the file already exists, just load it
-#	if(file.exists(MEP.DETAILS.FILE))
-#	{	result <- as.matrix(read.csv2(MEP.DETAILS.FILE,check.names=FALSE))
-#		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
-#		result[,IYP.ELT.MEPID] <- as.integer(result[,IYP.ELT.MEPID])
-#	}
-#	
-#	# otherwise, build the table and record it
-#	else
+	if(file.exists(MEP.DETAILS.FILE))
+	{	result <- as.matrix(read.csv2(MEP.DETAILS.FILE,check.names=FALSE))
+		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
+		result[,IYP.ELT.MEPID] <- as.integer(result[,IYP.ELT.MEPID])
+	}
+	
+	# otherwise, build the table and record it
+	else
 	{	# retrieve the list of MEP ids
 		files <- list.files(path=IYP.MEPS.FOLDER, full.names=FALSE, no..=TRUE)
 		mep.ids <- c()
@@ -432,12 +430,13 @@ iyp.extract.vote <- function(vote.id)
 	
 	# id of the policy domain
 	dom.id <- str_trim(xml[[IYP.ELT.POLICY.AREA]])
-#print(dom.id)	
+cat("'",dom.id,"'",sep="")
 #	if(!is.na(dom.id) & dom.id=="")
-#		dom.id <- NA
+#		dom.id <- DOMAIN.AUTR
 #	else
 		dom.id <- DOMAIN.IYP2SYMB[dom.id]
 	details[COL.DOMID] <- dom.id
+cat(" >> ",dom.id,"\n",sep="")
 	
 	# document reference
 	doc.ref <- str_trim(xml[[IYP.ELT.DOC.REF]])
@@ -498,7 +497,7 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	result <- list()
 	
-	# check if the files already exist, load everything
+#	# check if the files already exist, load everything
 #	if(file.exists(ALL.VOTES.FILE) & file.exists(DOC.DETAILS.FILE))
 #	{	# vote values
 #		temp <- as.matrix(read.csv2(ALL.VOTES.FILE,check.names=FALSE))
@@ -512,28 +511,45 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 #	
 #	# otherwise, process everything
 #	else
-	{	# build details matrix
+	{	# retrieve the list of vote ids
+		files <- list.files(path=IYP.VOTES.FOLDER, full.names=FALSE, no..=TRUE)
+		vote.ids <- c()
+		for(file in files)
+			vote.ids <- c(vote.ids,substr(file,1,str_locate(file,".xml")-1))
+		vote.ids <- sort(as.integer(vote.ids))
+		
+		# complete the list of document domains (some docs are missing)
+		doc.domains0 <- doc.domains
+		doc.domains <- cbind(vote.ids,DOMAIN.AUTR)
+		colnames(doc.domains) <- c(IYP.ELT.VOTEID, COL.DOMID)
+		idx <- match(doc.domains0[,IYP.ELT.VOTEID],vote.ids)
+		doc.domains[idx,] <- doc.domains0
+		print(doc.domains)
+		
+		# build details matrix
 		details.cols <- c(COL.DOCID, IYP.ELT.VOTEID,
 			COL.TITLE, COL.FULL.TITLE, COL.DOMID, COL.DOC.REF,
 			COL.EP.REF, COL.REPORTER.ID, COL.DATE)
-		details.mat <- matrix(NA,nrow=nrow(doc.domains),ncol=length(details.cols))
+		details.mat <- matrix(NA,nrow=length(vote.ids),ncol=length(details.cols))
 		colnames(details.mat) <- details.cols
 		
 		# build vote values matrix
-		votes.mat <- matrix(NA,nrow=nrow(mep.details),ncol=nrow(doc.domains))
-		colnames(votes.mat) <- 1:nrow(doc.domains)
+		votes.mat <- matrix(NA,nrow=nrow(mep.details),ncol=length(vote.ids))
+		colnames(votes.mat) <- 1:length(vote.ids)
 		
 		# fill both matrices
-		for(i in 1:nrow(doc.domains))
-		{	temp <- iyp.extract.vote(doc.domains[i,IYP.ELT.VOTEID])
+		for(i in 1:length(vote.ids))
+		{	temp <- iyp.extract.vote(vote.ids[i])
 			# update details matrix
 			temp$details[COL.DOCID] <- i
+			if(is.na(temp$details[COL.DOMID]))
+				temp$details[COL.DOMID] <- doc.domains[i,COL.DOMID]
+			else if(temp$details[COL.DOMID]!=doc.domains[i,COL.DOMID])
+				cat("WARNING: domain is different in vote (",temp$details[COL.DOMID],") and domain (",doc.domains[i,COL.DOMID],") files\n",sep="")
 			details.mat[i,details.cols] <- temp$details[details.cols]
 			# update vote matrix
 			idx <- match(as.integer(names(temp$votes)), mep.details[,IYP.ELT.MEPID])
-#print(idx)			
 			votes.mat[idx,i] <- temp$votes
-			#TODO rajouter doc domain si manquant
 		}
 
 		# record details matrix
@@ -541,13 +557,13 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		result$doc.details <- details.mat
 		
 		# record vote values
-print(sort(unique(c(votes.mat))))	
 		votes.mat <- cbind(1:nrow(mep.details),votes.mat)
 		colnames(votes.mat)[1] <- COL.MEPID
 		write.csv2(votes.mat,file=ALL.VOTES.FILE,row.names=FALSE)
 		result$all.votes <- votes.mat
 	}
 	
+	#print(sort(unique(c(result$all.votes))))	
 	return(result)
 }
 
