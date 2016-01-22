@@ -1,6 +1,6 @@
 #############################################################################################
 # Estimates the quality of the detected partitions, using various measures designed for
-# community detection and for correlationc clustering.
+# community detection and for correlation clustering.
 # 
 # 07/2015 Israel Mendonça (v1)
 # 11/2015 Vincent Labatut (v2)
@@ -120,13 +120,13 @@ process.structural.imbalance <- function(g, partition, algo.name, perf.table)
 	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.POS] <- sum(E(g)$weight[pos.misplaced])
 	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.TOTAL] <- sum(E(g)$weight[all.misplaced])
 	# unweighted proportions
-	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.NEG] <- perf.table[CORCLU.MEAS.IMB.UNW.CNT.NEG]/ecount(g)
-	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.POS] <- perf.table[CORCLU.MEAS.IMB.UNW.CNT.POS]/ecount(g)
+	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.NEG] <- perf.table[CORCLU.MEAS.IMB.UNW.CNT.NEG]/length(E(g)$weight[E(g)$weight<0])
+	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.POS] <- perf.table[CORCLU.MEAS.IMB.UNW.CNT.POS]/length(E(g)$weight[E(g)$weight>=0])
 	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.TOTAL] <- perf.table[CORCLU.MEAS.IMB.UNW.CNT.TOTAL]/ecount(g)
 	# weighted proportions
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.NEG] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.NEG]/sum(E(g)$weight)
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.POS] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.POS]/sum(E(g)$weight)
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.TOTAL] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.TOTAL]/sum(E(g)$weight)
+	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.NEG] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.NEG]/sum(abs(E(g)$weight[E(g)$weight<0]))
+	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.POS] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.POS]/sum(abs(E(g)$weight[E(g)$weight>=0]))
+	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.TOTAL] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.TOTAL]/sum(abs(E(g)$weight))
 	
 	return(perf.table)
 }
@@ -202,18 +202,63 @@ process.comdet.measures <- function(g.neg, g.pos, partition, algo.name, perf.tab
 
 
 #############################################################################################
+# This methods receives a list of matrix. Each element of the list is a matrix corresponding
+# to an iteration. In this matrix, the rows correspond to partitioning algorithms and the
+# columns to performance measures.
+# 
+# The function generates a series of plots, including two types:
+# - Algorithm-specific performance plots: performance obtained for one, detailed and for each 
+#	iteration, for a specific measure.
+# - Average performance plots: average performance obtained by each algo over all iterations, 
+#	for a specific measure.
+# 
+# perf.list: list containing all the previously processed performances.
+# avg.vals: list of two matrices, one whose elements correspond to averages processed over
+# 			the "perf.list" list (element-wise), and the other which is similar but for
+#			standard deviations (as processed by function "average.matrix.list").
+# subfolder: subfolder containing the networks and partitions.
+#############################################################################################
+plot.partition.perf <- function(perf.list, avg.vals, subfolder)
+{	# init
+	algos <- rownames(perf.list[[1]])
+	measures <- colnames(perf.list[[1]])
+	
+	# process each measure separately
+	for(measure in measures)
+	{	# generate the algo-specific perf plots
+		for(algo in algos)
+		{	plot.file <- paste(subfolder,"-",measure,"-",algo,"-performances",sep="")
+#TODO remplacer toutes les utilisations de COMDET.MEAS et CORCLU.MEAS
+#TODO mettre à jour les noms de fichiers ici-même
+			
+		}
+		
+		# generate the average perf plot
+		plot.file <- paste(subfolder,"-mean-performances",sep="")
+		plot.unif.indiv.count.bars(plot.file, bar.names=coms, 
+			counts=avg.vals[[1]][algos,measure], dispersion=avg.vals[[2]][algos,measure], proportions=FALSE, areas=FALSE, 
+			y.lim=c(0,NA), 
+			x.label="Algorithm", y.label=measure, 
+			plot.title=paste("Average ",measure," value by partitioning algorithm"), 
+			x.rotate=FALSE, format=c("PDF","PNG",NA))
+	}
+}
+
+
+
+#############################################################################################
 # Evaluates the performances of the selected correlation clustering methods, using all 
 # available measures. The results are recorded in a table.
 #
 # graphs: graphs to consider.
 # subfolder: subfolder containing the networks and partitions.
-# corclu.algos: correlation clustering algorithms to apply.
-# repetitions: number of times each algorithm must be applied.
+# corclu.algos: correlation clustering algorithms to treat.
+# repetitions: number of times each algorithm has been applied.
 #############################################################################################
 evaluate.corclu.methods <- function(graphs, subfolder, corclu.algos, repetitions)
-{	# init the list used to process the average
+{	# init the list used to process the average and plots
 	if(repetitions>1)
-		avg.list <- list()
+		perf.list <- list()
 	
 	# the process might be repeated several times
 	for(r in 1:repetitions)
@@ -237,7 +282,8 @@ evaluate.corclu.methods <- function(graphs, subfolder, corclu.algos, repetitions
 			else
 				att.name <- algo.name
 			
-			base.name <- paste(PARTITIONS.FOLDER,"/",r.subfolder,SIGNED.FILE,"-",algo.name,,sep="")
+			base.name <- paste(PARTITIONS.FOLDER,"/",r.subfolder,SIGNED.FILE,"-",algo.name,sep="")
+#TODO là on a du algo name dans le chemin, réutilisable pr les plots ? (mais y a aussi r)			
 			partition.file <- paste(base.name,"-membership.txt",sep="")
 			if(!file.exists(partition.file))
 				cat("Partition file ",partition.file," not found\n",sep="")
@@ -254,20 +300,33 @@ evaluate.corclu.methods <- function(graphs, subfolder, corclu.algos, repetitions
 		
 		# record iteration table
 		table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,SIGNED.FILE,"-performances.csv",sep="")
-		write.csv2(perf.table, file=table.file, row.names=TRUE)
+		write.csv2(perf.table, file=table.file, 
+			row.names=CORCLU.ALGO.NAMES[row.names(perf.table)],
+			col.names=PART.MEAS.NAMES[col.names(perf.table)])
 		
-		# update the list used to average
+		# update the list used to process average and plots
 		if(repetitions>1)
-			avg.list[[r]] <- perf.table
+			perf.list[[r]] <- perf.table
 	}
 	
-	# record the average tables
+	# record the average (over repetitions) tables and generate the plots
 	if(repetitions>1)
-	{	tmp <- average.matrix.list(avg.list)
-		table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,SIGNED.FILE,"-mean-performances.csv",sep="")
-		write.csv2(tmp$avg, file=table.file, row.names=TRUE)
-		table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,SIGNED.FILE,"-stdev-performances.csv",sep="")
-		write.csv2(tmp$stev, file=table.file, row.names=TRUE)
+	{	prefix <- paste(PARTITIONS.FOLDER,"/",subfolder,SIGNED.FILE,sep="")
+		
+		# record average table
+		avg.vals <- average.matrix.list(perf.list)
+		table.file <- paste(prefix,"-mean-performances.csv",sep="")
+		write.csv2(avg.vals$avg, file=table.file, row.names=TRUE)
+		table.file <- paste(prefix,"-stdev-performances.csv",sep="")
+		write.csv2(avg.vals$stev, file=table.file, row.names=TRUE)
+		
+		# plot all of this
+		plot.partition.perf(perf.list, avg.vals, subfolder=prefix)
+#TODO		
+# - plotter perf par itération dans la fonction
+# - renvoyer avg+stdev (ou simplement l'unique matrice de la liste)
+# - plotter les perfs moyennes (ou pas) pour tous les algos traités pour une mesure donnée (dans la fonction appelante
+# - essayer de reproduire le plot d'israel
 	}
 }
 
@@ -279,8 +338,8 @@ evaluate.corclu.methods <- function(graphs, subfolder, corclu.algos, repetitions
 #
 # graphs: graphs to consider.
 # subfolder: subfolder containing the networks and partitions.
-# comdet.algos: community detection algorithms to apply.
-# repetitions: number of times each algorithm must be applied.
+# comdet.algos: community detection algorithms to treat.
+# repetitions: number of times each algorithm has been applied.
 #############################################################################################
 evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos, repetitions)
 {	# init the list used to process the average
@@ -350,29 +409,39 @@ evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos, repetitions
 			}
 		}
 		# record iteration tables
-			# partition obtained on the complementary negative subraph 
+			# partition obtained on the complementary negative subgraph 
 			table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,COMP.NEGATIVE.FILE,"-performances.csv",sep="")
-			write.csv2(neg.perf.table, file=table.file, row.names=TRUE)
-			# partition obtained on the postive subraph 
-			table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,POSITIVE.FILE,"-performances.csv",sep="")
-			write.csv2(pos.perf.table, file=table.file, row.names=TRUE)
+			write.csv2(neg.perf.table, file=table.file,
+				row.names=CORCLU.ALGO.NAMES[row.names(neg.perf.table)],
+				col.names=PART.MEAS.NAMES[col.names(neg.perf.table)])
 			
-		# update the list used to average
+			# partition obtained on the positive subgraph 
+			table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,POSITIVE.FILE,"-performances.csv",sep="")
+			write.csv2(pos.perf.table, file=table.file,
+				row.names=CORCLU.ALGO.NAMES[row.names(perf.table)],
+				col.names=PART.MEAS.NAMES[col.names(pos.perf.table)])
+			
+		# update the list used to average and plot
 		if(repetitions>1)
 		{	neg.avg.list[[r]] <- neg.perf.table
 			pos.avg.list[[r]] <- pos.perf.table
 		}
 	}
 	
-	# record the average tables
+#TODO
+# pas une bonne idée de séparer en plusieurs matrices, vaut mieux distinguer pos/neg pr CD
+# faudrait avoir un fichier unique pr tous les algos, qu'ils soient CD ou CC
+# ça implique que les itérations soient traitées en amont, et qu'on init puis transmette la matrice des perfs aussi en amont
+	
+	# record the average (over repetitions) tables
 	if(repetitions>1)
-	{	# partition obtained on the complementary negative subraph 
+	{	# partition obtained on the complementary negative subgraph 
 			tmp <- average.matrix.list(neg.avg.list)
 			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,"-mean-performances.csv",sep="")
 			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
 			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,"-stdev-performances.csv",sep="")
 			write.csv2(tmp$stev, file=table.file, row.names=TRUE)
-		# partition obtained on the postive subraph 
+		# partition obtained on the positive subgraph 
 			tmp <- average.matrix.list(pos.avg.list)
 			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,POSITIVE.FILE,"-mean-performances.csv",sep="")
 			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
@@ -387,16 +456,16 @@ evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos, repetitions
 # Evaluates the partitions for the specified partitioning algorithms, for all possible networks, 
 # for all time periods and domains, for the specified thresholds and agreement scores. 
 #
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# neg.thresh: agreement negative threshold used during cluster detection.
+# pos.thresh: agreement positive threshold used during cluster detection.
 # score.file: file describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # subfolder: subfolder used to store the generated files.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# comdet.algos: community detection algorithms to apply.
-# corclu.algos: correlation clustering algorithms to apply.
-# repetitions: number of times each algorithm must be applied.
+# comdet.algos: community detection algorithms to treat.
+# corclu.algos: correlation clustering algorithms to treat.
+# repetitions: number of times each algorithm has been applied.
 #############################################################################################
 evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
 {	# consider each domain individually (including all domains at once)
@@ -412,9 +481,11 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 			# load all three versions of the graph
 			cat("Load all three versions of the graph\n",sep="")
 			graphs <- retrieve.graphs(folder)
+			
 			# evaluate community detection methods
 			cat("Evaluate community detection methods\n",sep="")
 			evaluate.comdet.methods(graphs, folder, comdet.algos, repetitions)
+			
 			# evaluate correlation clustering methods
 			cat("Evaluate correlation clustering methods\n",sep="")
 			evaluate.corclu.methods(graphs, folder, corclu.algos, repetitions)
@@ -429,26 +500,26 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 # agreement scores. 
 #
 # mep.details: description of each MEP.
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# neg.thresh: agreement negative threshold used during cluster detection.
+# pos.thresh: agreement positive threshold used during cluster detection.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
 # everything: whether to process all data without distinction of country or political group.
 # countries: member states to consider separately when processing the data.
 # groups: political groups to consider separately when processing the data.
-# comdet.algos: community detection algorithms to apply.
-# corclu.algos: correlation clustering algorithms to apply.
-# repetitions: number of times each algorithm must be applied.
+# comdet.algos: community detection algorithms to treat.
+# corclu.algos: correlation clustering algorithms to treat.
+# repetitions: number of times each algorithm has been applied.
 #############################################################################################
 evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions)
-{	# extract networks for all data
+{	# process performance for all data
 	if(everything)
 	{	cat("Process performance measures for all data","\n",sep="")
 		subfolder <- "everything"
 		evaluate.partitions(neg.thresh, pos.thresh, score.file, subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
 	}
 	
-	# networks by political group
+	# process performance by political group
 	cat("Process performance measures by group","\n",sep="")
 	subfolder <- "bygroup"
 	for(group in groups)
@@ -462,11 +533,11 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 		# setup folder
 		grp.subfolder <- paste(subfolder,"/",group,sep="")
 		
-		# extract networks
+		# process performance
 		evaluate.partitions(neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
 	}
 	
-	# networks by home country
+	# process performance by home country
 	cat("Process performance measures by country","\n",sep="")
 	subfolder <- "bycountry"
 	for(country in countries)
@@ -480,7 +551,7 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 		# setup folder
 		cntr.subfolder <- paste(subfolder,"/",country,sep="")
 		
-		# extract networks
+		# process performance
 		evaluate.partitions(neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
 	}
 }

@@ -17,6 +17,7 @@ source("src/partition-networks/networks-common.R")
 # g: graph to process.
 # algo.name: (normalized) name of the community detection algorithm.
 # part.folder: folder in which to write the result files.
+# returns: membership vector, i.e. cluster/community number for each node.
 #############################################################################################
 apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 {	#cat("n=",vcount(g), " m=",ecount(g), " d=",graph.density(g), sep="")
@@ -55,11 +56,15 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 					merges=TRUE, modularity=TRUE, membership=TRUE)
 	}
 	else if(algo.name==CORCLU.ALGO.PILS)
-	{	#TODO external invocation (pILS is coded in C++)
+	{	# external invocation (pILS is coded in C++)
+		#TODO add external invocation
+		#TODO add loading the resulting membership vector (variable com)
 	}
 		
 	# record the membership vector
-	if(!all(is.na(coms)))
+	if(all(is.na(coms)))
+		cat("WARNING: problem while applying partitioning algorithm ",algo.name," on folder ",part.folder,"\n")
+	else
 	{	mbrshp <- membership(coms)
 		while(min(mbrshp)==0)
 			mbrshp <- mbrshp + 1
@@ -194,7 +199,7 @@ partition.graphs <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder
 # groups: political groups to consider separately when processing the data.
 # comdet.algos: community detection algorithms to apply.
 # corclu.algos: correlation clustering algorithms to apply.
-# repetitions: number of times each algorithm must be applied.
+# repetitions: number of times each algorithm must be applied (to assess the stability of the results).
 #############################################################################################
 partition.all.graphs <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions)
 {	# extract networks for all data

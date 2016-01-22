@@ -132,6 +132,9 @@ compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
 # test
 # - définir de petits fichiers pour retester tout ça à fond
 
+# format plots
+# - faudrait avoir un unique paramètre permettant de contrôler le format de tous les plots générés
+
 # Extraction de réseaux
 # - on peut extraire des réseaux au niveau des partis politiques
 # - peut être aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 

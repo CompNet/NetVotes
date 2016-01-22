@@ -325,52 +325,93 @@ COUNTRY.VALUES <- c(COUNTRY.VALUES, COUNTRY.UK)
 # Partition measures for signed networks
 #############################################################################################
 CORCLU.MEAS.VALUES <- c()
+CORCLU.MEAS.NAMES <- c()
+CORCLU.MEAS.BOUNDS <- list() #returns the inf and sup bounds of the measure
 	# unweighted counts
-	CORCLU.MEAS.IMB.UNW.CNT.NEG <- "Unweighted Negative Imbalance (count)"
+	CORCLU.MEAS.IMB.UNW.CNT.NEG <- "unIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.CNT.NEG)
-	CORCLU.MEAS.IMB.UNW.CNT.POS <- "Unweighted Positive Imbalance (count)"
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.CNT.NEG] <- "Unweighted Negative Imbalance (count)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.NEG]] <- function(g) c(0,length(E(g)$weight[E(g)$weight<0]))
+	CORCLU.MEAS.IMB.UNW.CNT.POS <- "upIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.CNT.POS)
-	CORCLU.MEAS.IMB.UNW.CNT.TOTAL <- "Unweighted Total Imbalance (count)"
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.CNT.POS] <- "Unweighted Positive Imbalance (count)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.POS]] <- function(g) c(0,length(E(g)$weight[E(g)$weight>=0]))
+	CORCLU.MEAS.IMB.UNW.CNT.TOTAL <- "utIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.CNT.TOTAL)
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.CNT.TOTAL] <- "Unweighted Total Imbalance (count)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.TOTAL]] <- function(g) c(0,length(E(g)$weight))
 	# weighted counts
-	CORCLU.MEAS.IMB.WGT.CNT.NEG <- "Weighted Negative Imbalance (count)"
+	CORCLU.MEAS.IMB.WGT.CNT.NEG <- "wnIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.CNT.NEG)
-	CORCLU.MEAS.IMB.WGT.CNT.POS <- "Weighted Positive Imbalance (count)"
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.CNT.NEG] <- "Weighted Negative Imbalance (count)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.NEG]] <- function(g) c(0,sum(abs(E(g)$weight[E(g)$weight<0])))
+	CORCLU.MEAS.IMB.WGT.CNT.POS <- "wpIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.CNT.POS)
-	CORCLU.MEAS.IMB.WGT.CNT.TOTAL <- "Weighted Total Imbalance (count)"
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.CNT.POS] <- "Weighted Positive Imbalance (count)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.POS]] <- function(g) c(0,sum(abs(E(g)$weight[E(g)$weight>=0])))
+	CORCLU.MEAS.IMB.WGT.CNT.TOTAL <- "wtIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.CNT.TOTAL)
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.CNT.TOTAL] <- "Weighted Total Imbalance (count)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.TOTAL]] <- function(g) c(0,sum(abs(E(g)$weight)))
 	# unweighted proportions
-	CORCLU.MEAS.IMB.UNW.PROP.NEG <- "Unweighted Negative Imbalance (prop.)"
+	CORCLU.MEAS.IMB.UNW.PROP.NEG <- "unIp"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.PROP.NEG)
-	CORCLU.MEAS.IMB.UNW.PROP.POS <- "Unweighted Positive Imbalance (prop.)"
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.PROP.NEG] <- "Unweighted Negative Imbalance (prop.)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.PROP.NEG]] <- function(g) c(0,1)
+	CORCLU.MEAS.IMB.UNW.PROP.POS <- "upIp"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.PROP.POS)
-	CORCLU.MEAS.IMB.UNW.PROP.TOTAL <- "Unweighted Total Imbalance (prop.)"
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.PROP.POS] <- "Unweighted Positive Imbalance (prop.)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.PROP.POS]] <- function(g) c(0,1)
+	CORCLU.MEAS.IMB.UNW.PROP.TOTAL <- "utIp"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.PROP.TOTAL)
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.PROP.TOTAL] <- "Unweighted Total Imbalance (prop.)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.PROP.TOTAL]] <- function(g) c(0,1)
 	# weighted proportions
-	CORCLU.MEAS.IMB.WGT.PROP.NEG <- "Weighted Negative Imbalance (prop.)"
+	CORCLU.MEAS.IMB.WGT.PROP.NEG <- "wnIp"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.PROP.NEG)
-	CORCLU.MEAS.IMB.WGT.PROP.POS <- "Weighted Positive Imbalance (prop.)"
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.PROP.NEG] <- "Weighted Negative Imbalance (prop.)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.PROP.NEG]] <- function(g) c(0,1)
+	CORCLU.MEAS.IMB.WGT.PROP.POS <- "wpIp"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.PROP.POS)
-	CORCLU.MEAS.IMB.WGT.PROP.TOTAL <- "Weighted Total Imbalance (prop.)"
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.PROP.POS] <- "Weighted Positive Imbalance (prop.)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.PROP.POS]] <- function(g) c(0,1)
+	CORCLU.MEAS.IMB.WGT.PROP.TOTAL <- "wtIp"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.PROP.TOTAL)
-PART.MEAS.VALUES <- c(CORCLU.MEAS.VALUES)	
-	
+	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.PROP.TOTAL] <- "Weighted Total Imbalance (prop.)"
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.PROP.TOTAL]] <- function(g) c(0,1)
+PART.MEAS.VALUES <- CORCLU.MEAS.VALUES
+PART.MEAS.NAMES <- CORCLU.MEAS.NAMES
+PART.MEAS.BOUNDS <- CORCLU.MEAS.BOUNDS	
+
 	
 #############################################################################################
 # Partition measures for unsigned networks
 #############################################################################################
 COMDET.MEAS.VALUES <- c()
+COMDET.MEAS.NAMES <- c()
+COMDET.MEAS.BOUNDS <- list()
 	# modularity
-	COMDET.MEAS.MOD.UNW.NEG <- "Negative unweighted modularity"
+	COMDET.MEAS.MOD.UNW.NEG <- "unM"
 	COMDET.MEAS.VALUES <- c(COMDET.MEAS.VALUES, COMDET.MEAS.MOD.UNW.NEG)
-	COMDET.MEAS.MOD.UNW.POS <- "Positive unweighted modularity"
+	COMDET.MEAS.NAMES[COMDET.MEAS.MOD.UNW.NEG] <- "Unweighted negative modularity"
+	COMDET.MEAS.BOUNDS[[COMDET.MEAS.MOD.UNW.NEG]] <- function(g) c(0,1)
+	COMDET.MEAS.MOD.UNW.POS <- "upM"
 	COMDET.MEAS.VALUES <- c(COMDET.MEAS.VALUES, COMDET.MEAS.MOD.UNW.POS)
-	COMDET.MEAS.MOD.WGT.NEG <- "Negative weighted modularity"
+	COMDET.MEAS.NAMES[COMDET.MEAS.MOD.UNW.POS] <- "Unweighted positive modularity"
+	COMDET.MEAS.BOUNDS[[COMDET.MEAS.MOD.UNW.POS]] <- function(g) c(0,1)
+	COMDET.MEAS.MOD.WGT.NEG <- "wnM"
 	COMDET.MEAS.VALUES <- c(COMDET.MEAS.VALUES, COMDET.MEAS.MOD.WGT.NEG)
-	COMDET.MEAS.MOD.WGT.POS <- "Positive weighted modularity"
+	COMDET.MEAS.NAMES[COMDET.MEAS.MOD.WGT.NEG] <- "Weighted negative modularity"
+	COMDET.MEAS.BOUNDS[[COMDET.MEAS.MOD.WGT.NEG]] <- function(g) c(0,1)
+	COMDET.MEAS.MOD.WGT.POS <- "wpM"
 	COMDET.MEAS.VALUES <- c(COMDET.MEAS.VALUES, COMDET.MEAS.MOD.WGT.POS)
-PART.MEAS.VALUES <- c(PART.MEAS.VALUES,COMDET.MEAS.VALUES)	
-	
+	COMDET.MEAS.NAMES[COMDET.MEAS.MOD.WGT.POS] <- "Weighted positive modularity"
+	COMDET.MEAS.BOUNDS[[COMDET.MEAS.MOD.WGT.POS]] <- function(g) c(0,1)
+PART.MEAS.VALUES <- c(PART.MEAS.VALUES,COMDET.MEAS.VALUES)
+PART.MEAS.NAMES <- c(PART.MEAS.NAMES,COMDET.MEAS.NAMES)
+PART.MEAS.BOUNDS <- c(PART.MEAS.BOUNDS,COMDET.MEAS.BOUNDS)
+
+
 #############################################################################################
 # Unsigned networks partitioning algorithms info
 #############################################################################################

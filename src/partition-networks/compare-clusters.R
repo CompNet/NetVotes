@@ -245,5 +245,4 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 
 
 
-#TODO move graph updating from the detection to the evaluation script
-#TODO must generate a barplot of the perf in evaluate script: for each iteration, and in average
+#TODO must generate a barplot of the perf in the evaluation script: for each iteration, and in average
