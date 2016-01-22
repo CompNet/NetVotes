@@ -57,8 +57,8 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 	}
 	else if(algo.name==CORCLU.ALGO.PILS)
 	{	# external invocation (pILS is coded in C++)
-		#TODO add external invocation
-		#TODO add loading the resulting membership vector (variable com)
+		#TODO add the external invocation of the application
+		#TODO add the loading of the resulting membership vector (put that in the 'coms' variable)
 	}
 		
 	# record the membership vector
@@ -107,26 +107,36 @@ perform.partitioning <- function(subfolder, comdet.algos, corclu.algos, repetiti
 		
 		# apply all community detection algorithms
 		for(algo.name in comdet.algos)
-		{	# setup attribute name
+		{	neg.algo.name <- comdet.algo.ncg.value(algo.name)
+			
+			# setup attribute name
 			if(repetitions>1)
-				att.name <- paste(algo.name,'-',r,sep="")
+			{	pos.att.name <- paste(algo.name,'-',r,sep="")
+				neg.att.name <- paste(neg.algo.name,'-',r,sep="")
+			}
 			else
-				att.name <- algo.name
+			{	pos.att.name <- algo.name
+				neg.att.name <- neg.algo.name
+			}
 			
 			# complementary negative graph
 			if(!all(is.na(graphs$neg)))
 			{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph\n",sep="")
-				part.folder.neg <- paste(r.folder,COMP.NEGATIVE.FILE,"-",algo.name,sep="")
-				memb.neg <- apply.partitioning.algorithm(graphs$neg, algo.name, part.folder.neg)
-				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=att.name, value=memb.neg)
+				part.folder.neg <- paste(r.folder,neg.algo.name,sep="")
+				memb <- apply.partitioning.algorithm(graphs$neg, algo.name, part.folder.neg)
+				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=neg.att.name, value=memb)
+				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=neg.att.name, value=memb)
+				graphs$signed <- set.vertex.attribute(graph=graphs$signed, name=neg.att.name, value=memb)
 			}
 			
 			# positive graph
 			if(!all(is.na(graphs$pos)))
 			{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph\n",sep="")
-				part.folder.pos <- paste(r.folder,POSITIVE.FILE,"-",algo.name,sep="")
-				memb.pos <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder.pos)
-				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=att.name, value=memb.pos)
+				part.folder.pos <- paste(r.folder,algo.name,sep="")
+				memb <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder.pos)
+				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=pos.att.name, value=memb)
+				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=pos.att.name, value=memb)
+				graphs$signed <- set.vertex.attribute(graph=graphs$signed, name=pos.att.name, value=memb)
 			}
 		}
 		
@@ -134,14 +144,16 @@ perform.partitioning <- function(subfolder, comdet.algos, corclu.algos, repetiti
 		for(algo.name in corclu.algos)
 		{	if(!all(is.na(graphs$signed)))
 			{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the signed graph\n",sep="")
-				part.folder.signed <- paste(r.folder,SIGNED.FILE,"-",algo.name,sep="")
+				part.folder.signed <- paste(r.folder,algo.name,sep="")
 				memb <- apply.partitioning.algorithm(graphs$signed, algo.name, part.folder.signed)
+				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=att.name, value=memb)
+				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=att.name, value=memb)
 				graphs$signed <- set.vertex.attribute(graph=graphs$signed, name=att.name, value=memb)
 			}
 		}
 	}
 
-	# record graph (graphml only) with detected communities, in the partition folder (not the network one)
+	# record graph (Graphml only) with detected communities, in the partition folder (not the network one)
 	graph.file.neg <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,".graphml",sep="")
 	write.graph(graph=graphs$neg, file=graph.file.neg, format="graphml")
 	graph.file.pos <- paste(PARTITIONS.FOLDER,"/",subfolder,POSITIVE.FILE,".graphml",sep="")

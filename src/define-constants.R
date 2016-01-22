@@ -437,8 +437,11 @@ COMDET.ALGO.WALKTRAP <- "WT"
 	# this implementation will use the weights, if present, and simply ignores directions
 	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.WALKTRAP)
 	COMDET.ALGO.NAMES[COMDET.ALGO.WALKTRAP] <- "WalkTrap"
-PART.ALGO.VALUES <- c(COMDET.ALGO.VALUES)
-	
+PART.ALGO.VALUES <- c(COMDET.ALGO.VALUES) #TODO not really useful (is it?)
+comdet.algo.ncg.value <- function(value) paste("NCG",value,sep="-")	# returns the negative complementary value (i.e. short code) associated to the specified algo
+comdet.algo.ncg.name <- function(name) paste("NCG",name)			# returns the negative complementary name associated to the specified algo
+
+
 #############################################################################################
 # Signed networks partitioning algorithms info
 #############################################################################################

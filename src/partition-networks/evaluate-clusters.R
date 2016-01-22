@@ -228,8 +228,8 @@ plot.partition.perf <- function(perf.list, avg.vals, subfolder)
 	{	# generate the algo-specific perf plots
 		for(algo in algos)
 		{	plot.file <- paste(subfolder,"-",measure,"-",algo,"-performances",sep="")
-#TODO remplacer toutes les utilisations de COMDET.MEAS et CORCLU.MEAS
 #TODO mettre à jour les noms de fichiers ici-même
+#TODO penser à utiliser les bounds définies juste avant			
 			
 		}
 		
@@ -247,206 +247,76 @@ plot.partition.perf <- function(perf.list, avg.vals, subfolder)
 
 
 #############################################################################################
-# Evaluates the performances of the selected correlation clustering methods, using all 
-# available measures. The results are recorded in a table.
+# Evaluates the performances of the selected correlation clustering method, using all 
+# available measures. The function updates the specified table and records some partition stats.
 #
 # graphs: graphs to consider.
-# subfolder: subfolder containing the networks and partitions.
-# corclu.algos: correlation clustering algorithms to treat.
-# repetitions: number of times each algorithm has been applied.
+# subfolder: subfolder containing the partitions (and recorded files).
+# algo.name: correlation clustering algorithm to treat.
+# perf.table: table containing all the performances, to be updated.
 #############################################################################################
-evaluate.corclu.methods <- function(graphs, subfolder, corclu.algos, repetitions)
-{	# init the list used to process the average and plots
-	if(repetitions>1)
-		perf.list <- list()
-	
-	# the process might be repeated several times
-	for(r in 1:repetitions)
-	{	cat("Processing iteration ",r,"/",repetitions,"\n",sep="")
-		# setup iteration folder
-		if(repetitions>1)
-			r.subfolder <- paste(subfolder,r,"/",sep="")
-		else
-			r.subfolder <- folder
+evaluate.corclu.method <- function(graphs, subfolder, algo.name, perf.table)
+{	# process all measures
+	base.name <- paste(PARTITIONS.FOLDER,"/",subfolder,algo.name,sep="")
+	partition.file <- paste(base.name,"-membership.txt",sep="")
+	if(!file.exists(partition.file))
+		cat("WARNING: Partition file '",partition.file,"' not found\n",sep="")
+	else
+	{	# load partition
+		partition <- load.corclu.partition(partition.file, algo.name)
 		
-		# init the iteration performance table
-		perf.table <- matrix(NA,nrow=length(CORCLU.ALGO.VALUES),ncol=length(PART.MEAS.VALUES))
-		colnames(perf.table) <- PART.MEAS.VALUES
-		rownames(perf.table) <- CORCLU.ALGO.VALUES
+		# record stats
+		record.partition.stats(partition, base.name)
 		
-		# process measures
-		for(algo.name in corclu.algos)
-		{	# setup iteration folder
-			if(repetitions>1)
-				att.name <- paste(algo.name,'-',r,sep="")
-			else
-				att.name <- algo.name
-			
-			base.name <- paste(PARTITIONS.FOLDER,"/",r.subfolder,SIGNED.FILE,"-",algo.name,sep="")
-#TODO là on a du algo name dans le chemin, réutilisable pr les plots ? (mais y a aussi r)			
-			partition.file <- paste(base.name,"-membership.txt",sep="")
-			if(!file.exists(partition.file))
-				cat("Partition file ",partition.file," not found\n",sep="")
-			else
-			{	# load partition
-				partition <- load.corclu.partition(partition.file, algo.name)
-				# record stats
-				record.partition.stats(partition, base.name)
-				# complete perf table
-				perf.table <- process.comdet.measures(graphs$neg, graphs$pos, partition, algo.name, perf.table)
-				perf.table <- process.corclu.measures(graphs$signed, partition, algo.name, perf.table)
-			}
-		}
-		
-		# record iteration table
-		table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,SIGNED.FILE,"-performances.csv",sep="")
-		write.csv2(perf.table, file=table.file, 
-			row.names=CORCLU.ALGO.NAMES[row.names(perf.table)],
-			col.names=PART.MEAS.NAMES[col.names(perf.table)])
-		
-		# update the list used to process average and plots
-		if(repetitions>1)
-			perf.list[[r]] <- perf.table
-	}
-	
-	# record the average (over repetitions) tables and generate the plots
-	if(repetitions>1)
-	{	prefix <- paste(PARTITIONS.FOLDER,"/",subfolder,SIGNED.FILE,sep="")
-		
-		# record average table
-		avg.vals <- average.matrix.list(perf.list)
-		table.file <- paste(prefix,"-mean-performances.csv",sep="")
-		write.csv2(avg.vals$avg, file=table.file, row.names=TRUE)
-		table.file <- paste(prefix,"-stdev-performances.csv",sep="")
-		write.csv2(avg.vals$stev, file=table.file, row.names=TRUE)
-		
-		# plot all of this
-		plot.partition.perf(perf.list, avg.vals, subfolder=prefix)
-#TODO		
-# - plotter perf par itération dans la fonction
-# - renvoyer avg+stdev (ou simplement l'unique matrice de la liste)
-# - plotter les perfs moyennes (ou pas) pour tous les algos traités pour une mesure donnée (dans la fonction appelante
-# - essayer de reproduire le plot d'israel
+		# complete perf table
+		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, partition, algo.name, perf.table)
+		perf.table <- process.corclu.measures(graphs$signed, partition, algo.name, perf.table)
 	}
 }
 
 
 
 #############################################################################################
-# Evaluates the performances of the selected community detection methods, using all 
-# available measures. The results are recorded in a table.
+# Evaluates the performances of the selected community detection method, using all 
+# available measures. The function updates the specified table and records some partition stats.
 #
 # graphs: graphs to consider.
-# subfolder: subfolder containing the networks and partitions.
-# comdet.algos: community detection algorithms to treat.
-# repetitions: number of times each algorithm has been applied.
+# subfolder: subfolder containing the partitions (and recorded files).
+# algo.name: community detection algorithm to treat.
+# perf.table: table containing all the performances, to be updated.
 #############################################################################################
-evaluate.comdet.methods <- function(graphs, subfolder, comdet.algos, repetitions)
-{	# init the list used to process the average
-	if(repetitions>1)
-	{	neg.avg.list <- list()
-		pos.avg.list <- list()
+evaluate.comdet.method <- function(graphs, subfolder, algo.name, perf.table)
+{	# partition obtained on the complementary negative subgraph
+	neg.algo.name <- comdet.algo.ncg.value(algo.name)
+	neg.base.name <- paste(PARTITIONS.FOLDER,"/",subfolder,neg.algo.name,sep="")
+	neg.partition.file <- paste(neg.base.name,"-membership.txt",sep="")
+	if(!file.exists(neg.partition.file))
+		cat("WARNING: Partition file '",neg.partition.file,"' not found\n",sep="")
+	else
+	{	cat("Process complementary negative partition\n",sep="")
+		# load partition
+		neg.partition <- as.matrix(read.table(neg.partition.file))
+		# record stats
+		record.partition.stats(neg.partition, neg.base.name)
+		# complete perf table
+		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, neg.partition, neg.algo.name, perf.table)
+		perf.table <- process.corclu.measures(graphs$signed, neg.partition, neg.algo.name, perf.table)
 	}
 	
-	# the process might be repeated several times
-	for(r in 1:repetitions)
-	{	cat("Processing iteration ",r,"/",repetitions,"\n",sep="")
-		# setup iteration folder
-		if(repetitions>1)
-			r.subfolder <- paste(subfolder,r,"/",sep="")
-		else
-			r.subfolder <- subfolder
-		
-		# init the iteration performance tables
-			# complementary negative subraph 
-			neg.perf.table <- matrix(NA,nrow=length(COMDET.ALGO.VALUES),ncol=length(PART.MEAS.VALUES))
-			colnames(neg.perf.table) <- PART.MEAS.VALUES
-			rownames(neg.perf.table) <- COMDET.ALGO.VALUES
-			# positive subgraph
-			pos.perf.table <- matrix(NA,nrow=length(COMDET.ALGO.VALUES),ncol=length(PART.MEAS.VALUES))
-			colnames(pos.perf.table) <- PART.MEAS.VALUES
-			rownames(pos.perf.table) <- COMDET.ALGO.VALUES
-		
-		# process measures
-		for(algo.name in comdet.algos)
-		{	cat("Process algorithm ",algo.name,"\n",sep="")
-			# setup iteration folder
-			if(repetitions>1)
-				att.name <- paste(algo.name,'-',r,sep="")
-			else
-				att.name <- algo.name
-			
-			# partition obtained on the complementary negative subgraph
-			neg.base.name <- paste(PARTITIONS.FOLDER,"/",r.subfolder,COMP.NEGATIVE.FILE,"-",algo.name,sep="")
-			neg.partition.file <- paste(neg.base.name,"-membership.txt",sep="")
-			if(!file.exists(neg.partition.file))
-				cat("Partition file ",neg.partition.file," not found\n",sep="")
-			else
-			{	cat("Process complementary negative partition\n",sep="")
-				# load partition
-				neg.partition <- as.matrix(read.table(neg.partition.file))
-				# record stats
-				record.partition.stats(neg.partition, neg.base.name)
-				# complete perf table
-				neg.perf.table <- process.comdet.measures(graphs$neg, graphs$pos, neg.partition, algo.name, neg.perf.table)
-				neg.perf.table <- process.corclu.measures(graphs$signed, neg.partition, algo.name, neg.perf.table)
-			}
-			
-			# partition obtained on the positive subgraph
-			pos.base.name <- paste(PARTITIONS.FOLDER,"/",r.subfolder,POSITIVE.FILE,"-",algo.name,sep="")
-			pos.partition.file <- paste(pos.base.name,"-membership.txt",sep="")
-			if(!file.exists(pos.partition.file))
-				cat("Partition file ",pos.partition.file," not found\n",sep="")
-			else
-			{	cat("Process positive partition\n",sep="")
-				# load partition
-				pos.partition <- as.matrix(read.table(pos.partition.file))
-				# record stats
-				record.partition.stats(pos.partition, pos.base.name)
-				# complete perf table
-				pos.perf.table <- process.modularity(graphs$neg, graphs$pos, pos.partition, algo.name, pos.perf.table)
-				pos.perf.table <- process.corclu.measures(graphs$signed, pos.partition, algo.name, pos.perf.table)
-			}
-		}
-		# record iteration tables
-			# partition obtained on the complementary negative subgraph 
-			table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,COMP.NEGATIVE.FILE,"-performances.csv",sep="")
-			write.csv2(neg.perf.table, file=table.file,
-				row.names=CORCLU.ALGO.NAMES[row.names(neg.perf.table)],
-				col.names=PART.MEAS.NAMES[col.names(neg.perf.table)])
-			
-			# partition obtained on the positive subgraph 
-			table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,POSITIVE.FILE,"-performances.csv",sep="")
-			write.csv2(pos.perf.table, file=table.file,
-				row.names=CORCLU.ALGO.NAMES[row.names(perf.table)],
-				col.names=PART.MEAS.NAMES[col.names(pos.perf.table)])
-			
-		# update the list used to average and plot
-		if(repetitions>1)
-		{	neg.avg.list[[r]] <- neg.perf.table
-			pos.avg.list[[r]] <- pos.perf.table
-		}
-	}
-	
-#TODO
-# pas une bonne idée de séparer en plusieurs matrices, vaut mieux distinguer pos/neg pr CD
-# faudrait avoir un fichier unique pr tous les algos, qu'ils soient CD ou CC
-# ça implique que les itérations soient traitées en amont, et qu'on init puis transmette la matrice des perfs aussi en amont
-	
-	# record the average (over repetitions) tables
-	if(repetitions>1)
-	{	# partition obtained on the complementary negative subgraph 
-			tmp <- average.matrix.list(neg.avg.list)
-			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,"-mean-performances.csv",sep="")
-			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
-			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,COMP.NEGATIVE.FILE,"-stdev-performances.csv",sep="")
-			write.csv2(tmp$stev, file=table.file, row.names=TRUE)
-		# partition obtained on the positive subgraph 
-			tmp <- average.matrix.list(pos.avg.list)
-			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,POSITIVE.FILE,"-mean-performances.csv",sep="")
-			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
-			table.file <- paste(PARTITIONS.FOLDER,"/",subfolder,POSITIVE.FILE,"-stdev-performances.csv",sep="")
-			write.csv2(tmp$stev, file=table.file, row.names=TRUE)
+	# partition obtained on the positive subgraph
+	pos.base.name <- paste(PARTITIONS.FOLDER,"/",subfolder,algo.name,sep="")
+	pos.partition.file <- paste(pos.base.name,"-membership.txt",sep="")
+	if(!file.exists(pos.partition.file))
+		cat("WARNING: Partition file '",pos.partition.file,"' not found\n",sep="")
+	else
+	{	cat("Process positive partition\n",sep="")
+		# load partition
+		pos.partition <- as.matrix(read.table(pos.partition.file))
+		# record stats
+		record.partition.stats(pos.partition, pos.base.name)
+		# complete perf table
+		perf.table <- process.modularity(graphs$neg, graphs$pos, pos.partition, algo.name, perf.table)
+		perf.table <- process.corclu.measures(graphs$signed, pos.partition, algo.name, perf.table)
 	}
 }
 
@@ -482,13 +352,70 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 			cat("Load all three versions of the graph\n",sep="")
 			graphs <- retrieve.graphs(folder)
 			
-			# evaluate community detection methods
-			cat("Evaluate community detection methods\n",sep="")
-			evaluate.comdet.methods(graphs, folder, comdet.algos, repetitions)
+			# init the list used to process the average and plots
+			if(repetitions>1)
+				perf.list <- list()
 			
-			# evaluate correlation clustering methods
-			cat("Evaluate correlation clustering methods\n",sep="")
-			evaluate.corclu.methods(graphs, folder, corclu.algos, repetitions)
+			# merge the vectors of algos
+			algo.names <- c(comdet.algos, corclu.algos)
+			
+			# the process might be repeated several times
+			for(r in 1:repetitions)
+			{	cat("Processing iteration ",r,"/",repetitions,"\n",sep="")
+				# setup iteration folder
+				if(repetitions>1)
+					r.subfolder <- paste(folder,r,"/",sep="")
+				else
+					r.subfolder <- folder
+				
+				# init the iteration performance table
+				perf.table <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(PART.MEAS.VALUES))
+				rownames(perf.table) <- CORCLU.ALGO.VALUES
+				colnames(perf.table) <- c(comdet.algos,comdet.algo.ncg.value(comdet.algos),corclu.algos)
+				
+				# process measures
+				for(algo.name in algo.names)
+				{	cat("Process algorithm ",algo.name,"\n",sep="")
+					
+					# community detection method (must treat both positive and complementary negative graphs)
+					if(algo.name %in% COMDET.ALGO.VALUES)
+						perf.table <- evaluate.comdet.method(graphs, r.subfolder, algo.name, perf.table)
+					
+					# correlation clustering method (must treat only the signed graph)
+					else
+						perf.table <- evaluate.corclu.method(graphs, r.subfolder, algo.name, perf.table)
+				}
+				
+				# record iteration table
+				table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,"performances.csv",sep="")
+				write.csv2(perf.table, file=table.file, 
+						row.names=c(COMDET.ALGO.NAMES[comdet.algos],comdet.algo.ncg.name(COMDET.ALGO.NAMES[comdet.algos]),CORCLU.ALGO.NAMES[corclu.algos]),
+						col.names=PART.MEAS.NAMES[col.names(perf.table)])
+				
+				# update the list used to process average and plots
+				if(repetitions>1)
+					perf.list[[r]] <- perf.table
+			}
+			
+			# record the average (over repetitions) tables and generate the plots
+			if(repetitions>1)
+			{	prefix <- paste(PARTITIONS.FOLDER,"/",folder,sep="")
+				
+				# record average table
+				avg.vals <- average.matrix.list(perf.list)
+				table.file <- paste(prefix,"mean-performances.csv",sep="")
+				write.csv2(avg.vals$avg, file=table.file, row.names=TRUE)
+				table.file <- paste(prefix,"stdev-performances.csv",sep="")
+				write.csv2(avg.vals$stev, file=table.file, row.names=TRUE)
+				
+				# plot all of this
+				plot.partition.perf(perf.list, avg.vals, subfolder=prefix)
+#TODO		
+# - plotter perf par itération dans la fonction
+# - renvoyer avg+stdev (ou simplement l'unique matrice de la liste)
+# - plotter les perfs moyennes (ou pas) pour tous les algos traités pour une mesure donnée (dans la fonction appelante
+# - essayer de reproduire le plot d'israel
+			}
 		}
 	}
 }
