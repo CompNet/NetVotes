@@ -245,6 +245,5 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 
 
 
-#TODO verify which comdet algos handle weights
 #TODO move graph updating from the detection to the evaluation script
 #TODO must generate a barplot of the perf in evaluate script: for each iteration, and in average

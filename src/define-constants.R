@@ -377,18 +377,23 @@ PART.MEAS.VALUES <- c(PART.MEAS.VALUES,COMDET.MEAS.VALUES)
 COMDET.ALGO.VALUES <- c()
 COMDET.ALGO.NAMES <- c()
 COMDET.ALGO.EDGEBETW <- "EB"
+	# this implementation will use the weights and directions, if present
 	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.EDGEBETW)
 	COMDET.ALGO.NAMES[COMDET.ALGO.EDGEBETW] <- "EdgeBetweenness"
 COMDET.ALGO.INFOMAP <- "IM"
+	# this implementation will use the weights and directions, if present
 	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.INFOMAP)
 	COMDET.ALGO.NAMES[COMDET.ALGO.INFOMAP] <- "InfoMap"
 COMDET.ALGO.LABELPROP <- "LP"
+	# this implementation will use the weights and directions, if present
 	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.LABELPROP)
 	COMDET.ALGO.NAMES[COMDET.ALGO.LABELPROP] <- "LabelPropagation"
 COMDET.ALGO.LOUVAIN <- "LV"
+	# this implementation will use the weights, if present, but cannot use directions
 	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.LOUVAIN)
 	COMDET.ALGO.NAMES[COMDET.ALGO.LOUVAIN] <- "Louvain"
 COMDET.ALGO.WALKTRAP <- "WT"
+	# this implementation will use the weights, if present, and simply ignores directions
 	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.WALKTRAP)
 	COMDET.ALGO.NAMES[COMDET.ALGO.WALKTRAP] <- "WalkTrap"
 PART.ALGO.VALUES <- c(COMDET.ALGO.VALUES)

@@ -26,21 +26,31 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 	# apply the community detection algorithm
 	coms <- NA
 	if(algo.name==COMDET.ALGO.EDGEBETW)
+	{	# this implementation will use the weights and directions, if present
 		coms <- edge.betweenness.community(
 					graph=g, edge.betweenness=FALSE, merges=FALSE,
 					bridges=FALSE, modularity=FALSE, membership=TRUE)
+	}
 	else if(algo.name==COMDET.ALGO.INFOMAP)
+	{	# this implementation will use the weights and directions, if present
 		coms <- infomap.community(
 					graph=g, modularity=FALSE)
+	}
 	else if(algo.name==COMDET.ALGO.LABELPROP)
+	{	# this implementation will use the weights and directions, if present
 		coms <- label.propagation.community(
 					graph=g, 
 					initial=NULL, fixed=NULL)
+	}
 	else if(algo.name==COMDET.ALGO.LOUVAIN)
-		coms <- multilevel.community (
+	{	# this implementation will use the weights, if present, but cannot use directions
+		g2 <- as.undirected(g, mode="collapse")
+		coms <- multilevel.community(
 					graph=g, weights=NULL)
+	}
 	else if(algo.name==COMDET.ALGO.WALKTRAP)
-	{	coms <- walktrap.community(
+	{	# this implementation will use the weights, if present, and ignores directions
+		coms <- walktrap.community(
 					graph=g, steps=4, 
 					merges=TRUE, modularity=TRUE, membership=TRUE)
 	}

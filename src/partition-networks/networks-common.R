@@ -12,7 +12,7 @@ library("igraph")
 # and complementary negative.
 #
 # folder: the subfolder containing the graphs.
-# returns: a list containing the three graphs (named signed, pos, neg).
+# returns: a list containing the three graphs (named: signed, pos, neg).
 #############################################################################################
 retrieve.graphs <- function(subfolder)
 {	# load the complementary negative graph
@@ -52,7 +52,7 @@ retrieve.graphs <- function(subfolder)
 # 
 # l: list of same-sized matrices.
 # returns: a list containing an "avg" and an "stdev" matrices, corresponding to the average
-#          and standard deviation of the matrices in the specified list, respectively.
+#          and standard deviation of each list of matrix elements, respectively.
 #############################################################################################
 average.matrix.list <- function(l)
 {	# init result
