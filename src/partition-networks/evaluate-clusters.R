@@ -353,7 +353,9 @@ evaluate.comdet.method <- function(graphs, subfolder, algo.name, perf.table)
 evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
-	{	dom.folder <- paste(subfolder,"/",score.file,"/",dom,"/",sep="") #TODO the thresholds should be top-level parameters
+	{	dom.folder <- paste(subfolder,"/",score.file,"/",
+				"negtr=",neg.thresh,"-postr=",pos.thresh,"/",
+				dom,"/",sep="") #TODO the thresholds should be top-level parameters
 		date.perf.list <- list()
 		
 		# consider each time period (each individual year as well as the whole term)
@@ -362,7 +364,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 			cat("Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph subfolder
-			date.folder <- paste(dom.folder,"/",DATE.STR.T7[date],"/","negtr=",neg.thresh,"-postr=",pos.thresh,"/",sep="") # TODO the thresholds should be top-level parameters
+			date.folder <- paste(dom.folder,"/",DATE.STR.T7[date],"/",sep="")
 			
 			# load all three versions of the graph
 			cat("Load all three versions of the graph\n",sep="")

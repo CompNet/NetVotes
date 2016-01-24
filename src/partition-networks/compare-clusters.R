@@ -162,8 +162,10 @@ compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, folder,
 		{	cat("Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph folder
-			filtered.folder <- paste(folder,"/",score.file,"/",dom,"/",DATE.STR.T7[date],
-					"/","negtr=",neg.thresh,"-postr=",pos.thresh,"/",sep="")
+			filtered.folder <- paste(folder,"/",score.file,
+					"/","negtr=",neg.thresh,"-postr=",pos.thresh,
+					"/",dom,"/",DATE.STR.T7[date],
+					"/",sep="")
 			
 			# compare algorithm performances
 			cat("Compare partitioning algorithm performances\n",sep="")
@@ -245,7 +247,5 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 
 
 
-# TODO move the threhsold-related stuff in file path at the top of the hierarchy (not at the bottom like it currently is) 
-
-# TODO must update this script to reflect the changes in the evaluation one
+# TODO must update this script to reflect the changes in the evaluation one (regarding no signed/pos/neg subfolders
 # TODO to test the scripts, define probas on mep-to-mep voting similarity, then generate very small data set and see if it is recovered when extracting the network

@@ -119,8 +119,9 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 			graph.name <- paste(base.graph.name," - domain=",dom," - period=",DATE.STR.T7[date],
 					" - neg.tresh=",neg.thresh," - pos.tresh=",pos.thresh,sep="")
 			# setup graph folder
-			folder <- paste(NETWORKS.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",DATE.STR.T7[date],
-					"/","negtr=",neg.thresh,"-postr=",pos.thresh,"/",sep="")
+			folder <- paste(NETWORKS.FOLDER,"/",subfolder,"/",score.file,
+					"/","negtr=",neg.thresh,"-postr=",pos.thresh,
+					"/",dom,"/",DATE.STR.T7[date],"/",sep="")
 			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 			
 			# load agreement index file

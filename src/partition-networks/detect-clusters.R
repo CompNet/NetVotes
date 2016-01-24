@@ -192,8 +192,9 @@ partition.graphs <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder
 		{	cat("Detect communities for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph subfolder
-			folder <- paste(subfolder,"/",score.file,"/",dom,"/",DATE.STR.T7[date],
-					"/","negtr=",neg.thresh,"-postr=",pos.thresh,"/",sep="")
+			folder <- paste(subfolder,"/",score.file,
+					"/","negtr=",neg.thresh,"-postr=",pos.thresh,
+					"/",dom,"/",DATE.STR.T7[date],"/",sep="")
 			
 			# perform community detection
 			perform.partitioning(folder, comdet.algos, corclu.algos, repetitions)
