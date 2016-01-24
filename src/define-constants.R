@@ -331,28 +331,28 @@ CORCLU.MEAS.BOUNDS <- list() #returns the inf and sup bounds of the measure
 	CORCLU.MEAS.IMB.UNW.CNT.NEG <- "unIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.CNT.NEG)
 	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.CNT.NEG] <- "Unweighted Negative Imbalance (count)"
-	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.NEG]] <- function(g) c(0,length(E(g)$weight[E(g)$weight<0]))
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.NEG]] <- function(g) if(is.na(g)) c(0,NA) else c(0,length(E(g)$weight[E(g)$weight<0]))
 	CORCLU.MEAS.IMB.UNW.CNT.POS <- "upIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.CNT.POS)
 	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.CNT.POS] <- "Unweighted Positive Imbalance (count)"
-	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.POS]] <- function(g) c(0,length(E(g)$weight[E(g)$weight>=0]))
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.POS]] <- function(g) if(is.na(g)) c(0,NA) else c(0,length(E(g)$weight[E(g)$weight>=0]))
 	CORCLU.MEAS.IMB.UNW.CNT.TOTAL <- "utIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.CNT.TOTAL)
 	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.UNW.CNT.TOTAL] <- "Unweighted Total Imbalance (count)"
-	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.TOTAL]] <- function(g) c(0,length(E(g)$weight))
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.UNW.CNT.TOTAL]] <- function(g) if(is.na(g)) c(0,NA) else c(0,length(E(g)$weight))
 	# weighted counts
 	CORCLU.MEAS.IMB.WGT.CNT.NEG <- "wnIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.CNT.NEG)
 	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.CNT.NEG] <- "Weighted Negative Imbalance (count)"
-	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.NEG]] <- function(g) c(0,sum(abs(E(g)$weight[E(g)$weight<0])))
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.NEG]] <- function(g) if(is.na(g)) c(0,NA) else c(0,sum(abs(E(g)$weight[E(g)$weight<0])))
 	CORCLU.MEAS.IMB.WGT.CNT.POS <- "wpIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.CNT.POS)
 	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.CNT.POS] <- "Weighted Positive Imbalance (count)"
-	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.POS]] <- function(g) c(0,sum(abs(E(g)$weight[E(g)$weight>=0])))
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.POS]] <- function(g) if(is.na(g)) c(0,NA) else c(0,sum(abs(E(g)$weight[E(g)$weight>=0])))
 	CORCLU.MEAS.IMB.WGT.CNT.TOTAL <- "wtIc"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.WGT.CNT.TOTAL)
 	CORCLU.MEAS.NAMES[CORCLU.MEAS.IMB.WGT.CNT.TOTAL] <- "Weighted Total Imbalance (count)"
-	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.TOTAL]] <- function(g) c(0,sum(abs(E(g)$weight)))
+	CORCLU.MEAS.BOUNDS[[CORCLU.MEAS.IMB.WGT.CNT.TOTAL]] <- function(g) if(is.na(g)) c(0,NA) else c(0,sum(abs(E(g)$weight)))
 	# unweighted proportions
 	CORCLU.MEAS.IMB.UNW.PROP.NEG <- "unIp"
 	CORCLU.MEAS.VALUES <- c(CORCLU.MEAS.VALUES, CORCLU.MEAS.IMB.UNW.PROP.NEG)

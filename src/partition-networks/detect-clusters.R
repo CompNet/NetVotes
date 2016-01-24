@@ -59,7 +59,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 	}
 	else if(algo.name==CORCLU.ALGO.PILS)
 	{	# external invocation (pILS is coded in C++)
-# TODO add the external invocation of the application
+			# TODO add the external invocation of the application
 		# load the resulting file
 		file <- paste(dirname(part.folder),"/cc-result.txt",sep="") # TODO possibly necessary to fix the file name
 		mbrshp <- load.external.partition(file, algo.name)
@@ -67,7 +67,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 	
 	# record the membership vector
 	if(all(is.na(coms)))
-		cat("WARNING: problem while applying partitioning algorithm ",algo.name," on folder ",part.folder,"\n")
+		cat("WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder,"\n")
 	else
 	{	if(is.na(mbrshp))
 			mbrshp <- membership(coms)

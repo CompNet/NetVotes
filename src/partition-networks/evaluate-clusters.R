@@ -239,7 +239,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 			plot.unif.grouped.count.bars(plot.file, group.names=PART.ALGO.NAMES[algos], bar.names=PART.MEAS.NAMES[measures],
 				counts=data.m, dispersion=data.sd, proportions=FALSE,
 				y.lim=c(min(bounds),max(bounds)),
-				x.label, y.label, 
+				x.label="Algorithm", y.label="Performance", 
 				plot.title=paste("Average ", measure.group.names[[i]]," values for all algorithms",sep=""), 
 				x.rotate=TRUE, format=c("PDF","PNG",NA))
 		}
@@ -248,7 +248,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 			plot.unif.grouped.count.bars(plot.file, group.names=PART.ALGO.NAMES[algos], bar.names=PART.MEAS.NAMES[measures],
 				counts=data, dispersion=NA, proportions=FALSE,
 				y.lim=c(min(bounds),max(bounds)),
-				x.label, y.label, 
+				x.label="Algorithm", y.label="Performance", 
 				plot.title=paste(measure.group.names[[i]]," values for all algorithms",sep=""), 
 				x.rotate=TRUE, format=c("PDF","PNG",NA))
 		}
@@ -353,17 +353,20 @@ evaluate.comdet.method <- function(graphs, subfolder, algo.name, perf.table)
 evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
-	{	# consider each time period (each individual year as well as the whole term)
-		for(date in dates)
-		{	cat("Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+	{	dom.folder <- paste(subfolder,"/",score.file,"/",dom,"/",sep="") #TODO the thresholds should be top-level parameters
+		date.perf.list <- list()
+		
+		# consider each time period (each individual year as well as the whole term)
+		for(d in 1:length(dates))
+		{	date <- dates[d]
+			cat("Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph subfolder
-			folder <- paste(subfolder,"/",score.file,"/",dom,"/",DATE.STR.T7[date],
-					"/","negtr=",neg.thresh,"-postr=",pos.thresh,"/",sep="")
+			date.folder <- paste(dom.folder,"/",DATE.STR.T7[date],"/","negtr=",neg.thresh,"-postr=",pos.thresh,"/",sep="") # TODO the thresholds should be top-level parameters
 			
 			# load all three versions of the graph
 			cat("Load all three versions of the graph\n",sep="")
-			graphs <- retrieve.graphs(folder)
+			graphs <- retrieve.graphs(date.folder)
 			
 			# init the list used to process the average and plots
 			if(repetitions>1)
@@ -377,14 +380,14 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 			{	cat("Processing iteration ",r,"/",repetitions,"\n",sep="")
 				# setup iteration folder
 				if(repetitions>1)
-					r.subfolder <- paste(folder,r,"/",sep="")
+					r.subfolder <- paste(date.folder,r,"/",sep="")
 				else
-					r.subfolder <- folder
+					r.subfolder <- date.folder
 				
 				# init the iteration performance table
 				perf.table <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(PART.MEAS.VALUES))
-				rownames(perf.table) <- CORCLU.ALGO.VALUES
-				colnames(perf.table) <- c(comdet.algos,comdet.algo.ncg.value(comdet.algos),corclu.algos)
+				rownames(perf.table) <- c(comdet.algos,comdet.algo.ncg.value(comdet.algos),corclu.algos)
+				colnames(perf.table) <- PART.MEAS.VALUES
 				
 				# process measures
 				for(algo.name in algo.names)
@@ -402,8 +405,8 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 				# record iteration table
 				table.file <- paste(PARTITIONS.FOLDER,"/",r.subfolder,"performances.csv",sep="")
 				write.csv2(perf.table, file=table.file, 
-						row.names=c(COMDET.ALGO.NAMES[comdet.algos],comdet.algo.ncg.name(COMDET.ALGO.NAMES[comdet.algos]),CORCLU.ALGO.NAMES[corclu.algos]),
-						col.names=PART.MEAS.NAMES[col.names(perf.table)])
+					row.names=c(COMDET.ALGO.NAMES[comdet.algos],comdet.algo.ncg.name(COMDET.ALGO.NAMES[comdet.algos]),CORCLU.ALGO.NAMES[corclu.algos]),
+					col.names=PART.MEAS.NAMES[col.names(perf.table)])
 				
 				# update the list used to process average and plots
 				if(repetitions>1)
@@ -412,7 +415,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 			
 			# record the average (over repetitions) tables and generate the plots
 			if(repetitions>1)
-			{	prefix <- paste(PARTITIONS.FOLDER,"/",folder,sep="")
+			{	prefix <- paste(PARTITIONS.FOLDER,"/",date.folder,sep="")
 				
 				# record average table
 				avg.vals <- average.matrix.list(perf.list)
@@ -423,11 +426,65 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 				
 				# plot all of this
 				plot.partition.perf(graphs$signed, perf.list, avg.vals, subfolder=prefix)
-# TODO		
-# - plotter perf par itération dans la fonction
-# - renvoyer avg+stdev (ou simplement l'unique matrice de la liste)
-# - plotter les perfs moyennes (ou pas) pour tous les algos traités pour une mesure donnée (dans la fonction appelante
-# - essayer de reproduire le plot d'israel
+				
+				date.perf.list[[d]] <- avg.vals
+			}
+			else
+				date.perf.list[[d]] <- perf.list[[1]]
+		}
+		
+		# generate overall tables and plots for each measure independently
+		for(measure in PART.MEAS.VALUES)
+		{	# build tables representing how each algorithm behaved on each considered period
+			data.m <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(dates))
+			rownames(data.m) <- c(comdet.algos,comdet.algo.ncg.value(comdet.algos),corclu.algos)
+			colnames(data.m) <- dates
+			data.sd <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(dates))
+			for(d in 1:length(dates))
+			{	if(repetitions>1)
+				{	data.m[,dates[d]] <- date.perf.list[[d]][[1]][,measure]
+					data.sd[,dates[d]] <- date.perf.list[[d]][[2]][,measure]
+				}
+				else
+				{	data.m[,dates[d]] <- date.perf.list[[d]][,measure]
+				}
+			}
+			# record these table(s)
+			prefix <- paste(PARTITIONS.FOLDER,"/",dom.folder,sep="")
+			if(repetitions>1)
+			{	table.file <- paste(prefix,measure,"-mean-performances.csv",sep="")
+				write.csv2(data.m, file=table.file, row.names=TRUE)
+				table.file <- paste(prefix,measure,"-stdev-performances.csv",sep="")
+				write.csv2(data.sd, file=table.file, row.names=TRUE)
+			}
+			else
+			{	table.file <- paste(prefix,measure,"-single-performances.csv",sep="")
+				write.csv2(data.m, file=table.file, row.names=TRUE)
+			}
+			
+			# plot the table(s) as barplots whose bars represent periods and bar groups correspond to algorithms
+			# (i.e. something quite similar to Israel's plot from the ENIC paper)
+#			bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g)) # TODO should actually process the actual bounds and use "y.lim=c(min(bounds),max(bounds))" later when calling the plot function
+			if(repetitions>1)
+			{	dm <- lapply(algos, function(a) data.m[[1]][a,])
+				dsd <- lapply(algos, function(a) data.sd[[2]][a,])
+				plot.file <- paste(prefix,measure,"-mean-performances",sep="")
+				plot.unif.grouped.count.bars(plot.file, group.names=PART.ALGO.NAMES[algos], bar.names=DATE.STR.T7[dates],
+					counts=dm, dispersion=dsd, proportions=FALSE,
+					y.lim=PART.MEAS.BOUNDS[[measure]](NA),
+					x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
+					plot.title=paste("Average ", PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
+					x.rotate=TRUE, format=c("PDF","PNG",NA))
+			}
+			else
+			{	dm <- lapply(algos, function(a) data.m[[1]][a,])
+				plot.file <- paste(prefix,measure,"-single-performances",sep="")
+				plot.unif.grouped.count.bars(plot.file, group.names=PART.ALGO.NAMES[algos], bar.names=DATE.STR.T7[dates],
+					counts=dm, dispersion=NA, proportions=FALSE,
+					y.lim=PART.MEAS.BOUNDS[[measure]](NA),
+					x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
+					plot.title=paste(PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
+					x.rotate=TRUE, format=c("PDF","PNG",NA))
 			}
 		}
 	}

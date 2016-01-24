@@ -245,7 +245,7 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 
 
 
+# TODO move the threhsold-related stuff in file path at the top of the hierarchy (not at the bottom like it currently is) 
+
 # TODO must update this script to reflect the changes in the evaluation one
-# TODO must generate a barplot of the perf in the evaluation script: for each iteration, and in average
-# TODO check all use of cat to see if WARNINGS are correctly indicated
 # TODO to test the scripts, define probas on mep-to-mep voting similarity, then generate very small data set and see if it is recovered when extracting the network

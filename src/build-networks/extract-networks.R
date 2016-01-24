@@ -126,7 +126,7 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 			# load agreement index file
 			table.file <- paste(agr.folder,DATE.STR.T7[date],"-agreement.csv",sep="")
 			if(!file.exists(table.file))
-				cat("Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement","\n",sep="")
+				cat("WARNING: Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement","\n",sep="")
 			else
 			{	# retrieve agreement
 				agreement <- as.matrix(read.csv2(file=table.file, row.names=1))
