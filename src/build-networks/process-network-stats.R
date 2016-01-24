@@ -150,7 +150,7 @@ process.global.measures <- function(g, g.ref, result, col.name)
 		result[ROW.STRENGTH.CORRELATION,col.name] <- assortativity (g.clean, types1=str.clean, types2=NULL, directed=FALSE)
 		
 		# distances // eccentricity
-		#TODO
+		# TODO
 	}
 
 	return(result)
@@ -182,7 +182,7 @@ process.network.stats <- function(g, folder)
 	neg.g <- subgraph.edges(graph=g, eids=which(E(g)$weight<0), delete.vertices=FALSE)
 	result <- process.global.measures(neg.g, g, result, col.name=COL.NEGATIVE.GRAPH)
 		
-	#TODO degree distribution (maybe add a special function to handle distributions and produce plots)
+	# TODO degree distribution (maybe add a special function to handle distributions and produce plots)
 		
 	# record result
 	table.file <- paste(folder,"properties",".csv",sep="")

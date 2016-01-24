@@ -87,7 +87,7 @@ DOMAIN.IYP2SYMB <- c()
 #DOMAIN.IYP2SYMB["26"] <- DOMAIN.PECH
 #DOMAIN.IYP2SYMB["47"] <- DOMAIN.PETI
 #DOMAIN.IYP2SYMB["27"] <- DOMAIN.REGI
-##DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE #TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
+##DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE # TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
 #DOMAIN.IYP2SYMB["30"] <- DOMAIN.TRAN
 #DOMAIN.IYP2SYMB["36"] <- DOMAIN.AUTR
 #DOMAIN.IYP2SYMB["45"] <- DOMAIN.AUTR
@@ -123,7 +123,7 @@ DOMAIN.IYP2SYMB["Civil Liberties, Justice and Home Affairs"] <- DOMAIN.LIBE
 DOMAIN.IYP2SYMB["Fisheries"] <- DOMAIN.PECH
 DOMAIN.IYP2SYMB["Petitions"] <- DOMAIN.PETI
 DOMAIN.IYP2SYMB["Regional Development"] <- DOMAIN.REGI
-#DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE #TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
+#DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE # TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
 DOMAIN.IYP2SYMB["Transport and Tourism"] <- DOMAIN.TRAN
 DOMAIN.IYP2SYMB["Conciliation"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["The use of European countries by the CIA"] <- DOMAIN.AUTR
@@ -568,8 +568,8 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 }
 
 
-#TODO vérif les valeurs des votes dans la table all.votes
-#TODO tous les votes ne sont pas répertoriés dans les document domains
+# TODO vérif les valeurs des votes dans la table all.votes
+# TODO tous les votes ne sont pas répertoriés dans les document domains
 
 #############################################################################################
 # Load all the tables and returns them as a list.

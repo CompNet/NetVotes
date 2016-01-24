@@ -38,58 +38,6 @@ record.partition.stats <- function(partition, folder)
 
 
 #############################################################################################
-# Loads the partition estimated by the external tools (their file format needs a specific
-# conversion processing).
-# 
-# partition.file: name of the file containing the partition.
-# algo.name: name of the concerned partitioning algorithm.
-# returns: the corresponding partition as a membership vector.
-#############################################################################################
-load.corclu.partition <- function(partition.file, algo.name)
-{	if(algo.name==CORCLU.ALGO.PILS)
-	{	# open and read the file
-		con <- file(file.name, "r")
-		lines <- readLines(con)
-		close(con)
-	
-		# process the file content
-		i <- 4
-		line <- lines[i]
-		res <- list()
-		while(line!="")
-		{  # process current line
-			#print(line)
-			line <- strsplit(x=line, "[ ", fixed=TRUE)[[1]][2]
-			line <- strsplit(x=line, " ]", fixed=TRUE)[[1]][1]
-			nodes <- as.integer(strsplit(x=line," ", fixed=TRUE)[[1]]) + 1 # plus one because C++ starts counting from 0
-			res[[length(res)+1]] <- nodes
-			
-			# process next line
-			i <- i + 1
-			line <- lines[i]      
-		}
-		
-		# build the membership vector
-		mx <- max(unlist(res))
-		membership <- rep(NA,mx)
-		for(i in 1:length(res))
-		{  nodes <- res[[i]]
-			membership[nodes] <- i 
-		}
-	}
-	else
-	{	#TODO for now, only pILS is treated, but other algorithms can go here
-	}
-	
-	# record the partition using the internal format
-	write.table(x=membership, file=partition.file, row.names=FALSE, col.names=FALSE)
-	
-	return(membership)
-}
-
-
-
-#############################################################################################
 # Processes a bunch of versions of the structural imbalance for the specified graph and partition.
 #
 # g: graph to consider.
@@ -145,7 +93,7 @@ process.corclu.measures <- function(g, partition, algo.name, perf.table)
 {	# process imbalance variants
 	perf.table <- process.structural.imbalance(g, partition, algo.name, perf.table)
 	
-	#TODO possibly add other measures here
+	# TODO possibly add other measures here
 	
 	return(perf.table)
 }
@@ -194,7 +142,7 @@ process.comdet.measures <- function(g.neg, g.pos, partition, algo.name, perf.tab
 {	# process modularity
 	perf.table <- process.modularity(g.neg, g.pos, partition, algo.name, perf.table)
 	
-	#TODO possibly add other measures here
+	# TODO possibly add other measures here
 	
 	return(perf.table)
 }
@@ -212,36 +160,101 @@ process.comdet.measures <- function(g.neg, g.pos, partition, algo.name, perf.tab
 # - Average performance plots: average performance obtained by each algo over all iterations, 
 #	for a specific measure.
 # 
-# perf.list: list containing all the previously processed performances.
+# g: considered (signed) graph.
+# perf.list: list containing all the (previously processed) performance values.
 # avg.vals: list of two matrices, one whose elements correspond to averages processed over
 # 			the "perf.list" list (element-wise), and the other which is similar but for
 #			standard deviations (as processed by function "average.matrix.list").
 # subfolder: subfolder containing the networks and partitions.
 #############################################################################################
-plot.partition.perf <- function(perf.list, avg.vals, subfolder)
+plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 {	# init
 	algos <- rownames(perf.list[[1]])
 	measures <- colnames(perf.list[[1]])
+	measure.groups <- list(
+		wIc=c(CORCLU.MEAS.IMB.UNW.CNT.NEG,CORCLU.MEAS.IMB.UNW.CNT.POS,CORCLU.MEAS.IMB.UNW.CNT.TOTAL),
+		uIc=c(CORCLU.MEAS.IMB.WGT.CNT.NEG,CORCLU.MEAS.IMB.WGT.CNT.POS,CORCLU.MEAS.IMB.WGT.CNT.TOTAL),
+		wIp=c(CORCLU.MEAS.IMB.UNW.PROP.NEG,CORCLU.MEAS.IMB.UNW.PROP.POS,CORCLU.MEAS.IMB.UNW.PROP.TOTAL),
+		uIp=c(CORCLU.MEAS.IMB.WGT.PROP.NEG,CORCLU.MEAS.IMB.WGT.PROP.POS,CORCLU.MEAS.IMB.WGT.PROP.TOTAL),
+		uM=c(COMDET.MEAS.MOD.UNW.NEG,COMDET.MEAS.MOD.UNW.POS),
+		wM=c(COMDET.MEAS.MOD.WGT.NEG,COMDET.MEAS.MOD.WGT.POS)
+	)
+	measure.group.names <- list(
+		wIc="Weighted Imbalance (counts)",
+		uIc="Unweighted Imbalance (counts)",
+		wIp="Weighted Imbalance (prop.)",
+		uIp="Unweighted Imbalance (counts)",
+		uM="Weighted Modularity",
+		wM="Unweighted Modularity"
+	)
 	
 	# process each measure separately
 	for(measure in measures)
-	{	# generate the algo-specific perf plots
-		for(algo in algos)
-		{	plot.file <- paste(subfolder,"-",measure,"-",algo,"-performances",sep="")
-#TODO mettre à jour les noms de fichiers ici-même
-#TODO penser à utiliser les bounds définies juste avant			
+	{	cat("Plotting measure ",COMDET.MEAS.NAMES[measure],"\n")
+		
+		# if there was several repetitions
+		if(length(perf.list)>1)
+		{	# generate the algo-specific perf plots (one bar for each repetition)
+			for(algo in algos)
+			{	data <- sapply(perf.list, function(m) m[algo,measure])
+				plot.file <- paste(subfolder,measure,"-",algo,"-performances",sep="")
+				plot.unif.indiv.count.bars(plot.file, bar.names=1:length(perf.list), 
+					counts=data, dispersion=NA, proportions=FALSE, areas=FALSE, 
+					y.lim=PART.MEAS.BOUNDS[[measure]](g), 
+					x.label="Repetition", y.label=PART.MEAS.NAMES[measure], 
+					plot.title=paste(PART.MEAS.NAMES[measure]," for each repetition"), 
+					x.rotate=FALSE, format=c("PDF","PNG",NA))
+			}
 			
+			# generate the average perf plot (one bar for each algo)
+			plot.file <- paste(subfolder,measure,"-mean-performances",sep="")
+			plot.unif.indiv.count.bars(plot.file, bar.names=PART.ALGO.NAMES[algos], 
+				counts=avg.vals[[1]][,measure], dispersion=avg.vals[[2]][,measure], proportions=FALSE, areas=FALSE, 
+				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
+				x.label="Algorithm", y.label=PART.MEAS.NAMES[measure], 
+				plot.title=paste("Average ",PART.MEAS.NAMES[measure]," value by partitioning algorithm"), 
+				x.rotate=TRUE, format=c("PDF","PNG",NA))
 		}
 		
-		# generate the average perf plot
-		plot.file <- paste(subfolder,"-mean-performances",sep="")
-		plot.unif.indiv.count.bars(plot.file, bar.names=coms, 
-			counts=avg.vals[[1]][algos,measure], dispersion=avg.vals[[2]][algos,measure], proportions=FALSE, areas=FALSE, 
-			y.lim=c(0,NA), 
-			x.label="Algorithm", y.label=measure, 
-			plot.title=paste("Average ",measure," value by partitioning algorithm"), 
-			x.rotate=FALSE, format=c("PDF","PNG",NA))
+		# if there was only a single repetition
+		else
+		{ 	plot.file <- paste(subfolder,measure,"-single-performances",sep="")
+			plot.unif.indiv.count.bars(plot.file, bar.names=PART.ALGO.NAMES[algos], 
+				counts=perf.list[[1]][,measure], dispersion=NA, proportions=FALSE, areas=FALSE, 
+				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
+				x.label="Algorithm", y.label=PART.MEAS.NAMES[measure], 
+				plot.title=paste(PART.MEAS.NAMES[measure]," value by partitioning algorithm"), 
+				x.rotate=TRUE, format=c("PDF","PNG",NA))
+		}
 	}
+	
+	# compare imbalance values for all algos
+	for(i in 1:length(measure.groups))
+	{	measures <- measure.groups[[i]]
+		bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g))
+		plot.file <- paste(subfolder,"comparison-",names(measure.groups)[i],"-performances",sep="")
+		if(length(perf.list)>1)
+		{	data.m <- lapply(algos, function(a) avg.vals[[1]][a,measures])
+			data.sd <- lapply(algos, function(a) avg.vals[[2]][a,measures])
+			plot.unif.grouped.count.bars(plot.file, group.names=PART.ALGO.NAMES[algos], bar.names=PART.MEAS.NAMES[measures],
+				counts=data.m, dispersion=data.sd, proportions=FALSE,
+				y.lim=c(min(bounds),max(bounds)),
+				x.label, y.label, 
+				plot.title=paste("Average ", measure.group.names[[i]]," values for all algorithms",sep=""), 
+				x.rotate=TRUE, format=c("PDF","PNG",NA))
+		}
+		else
+		{	data <- lapply(algos, function(a) perf.list[[1]][a,measures])
+			plot.unif.grouped.count.bars(plot.file, group.names=PART.ALGO.NAMES[algos], bar.names=PART.MEAS.NAMES[measures],
+				counts=data, dispersion=NA, proportions=FALSE,
+				y.lim=c(min(bounds),max(bounds)),
+				x.label, y.label, 
+				plot.title=paste(measure.group.names[[i]]," values for all algorithms",sep=""), 
+				x.rotate=TRUE, format=c("PDF","PNG",NA))
+		}
+	}
+	
+	# TODO possibly add other types of comparison plots
 }
 
 
@@ -263,7 +276,7 @@ evaluate.corclu.method <- function(graphs, subfolder, algo.name, perf.table)
 		cat("WARNING: Partition file '",partition.file,"' not found\n",sep="")
 	else
 	{	# load partition
-		partition <- load.corclu.partition(partition.file, algo.name)
+		partition <- as.matrix(read.table(partition.file))
 		
 		# record stats
 		record.partition.stats(partition, base.name)
@@ -409,8 +422,8 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 				write.csv2(avg.vals$stev, file=table.file, row.names=TRUE)
 				
 				# plot all of this
-				plot.partition.perf(perf.list, avg.vals, subfolder=prefix)
-#TODO		
+				plot.partition.perf(graphs$signed, perf.list, avg.vals, subfolder=prefix)
+# TODO		
 # - plotter perf par itération dans la fonction
 # - renvoyer avg+stdev (ou simplement l'unique matrice de la liste)
 # - plotter les perfs moyennes (ou pas) pour tous les algos traités pour une mesure donnée (dans la fonction appelante

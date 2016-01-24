@@ -437,7 +437,8 @@ COMDET.ALGO.WALKTRAP <- "WT"
 	# this implementation will use the weights, if present, and simply ignores directions
 	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.WALKTRAP)
 	COMDET.ALGO.NAMES[COMDET.ALGO.WALKTRAP] <- "WalkTrap"
-PART.ALGO.VALUES <- c(COMDET.ALGO.VALUES) #TODO not really useful (is it?)
+PART.ALGO.VALUES <- c(COMDET.ALGO.VALUES) # TODO not really useful (is it?)
+PART.ALGO.NAMES <- c(COMDET.ALGO.NAMES)
 comdet.algo.ncg.value <- function(value) paste("NCG",value,sep="-")	# returns the negative complementary value (i.e. short code) associated to the specified algo
 comdet.algo.ncg.name <- function(name) paste("NCG",name)			# returns the negative complementary name associated to the specified algo
 
@@ -451,3 +452,4 @@ CORCLU.ALGO.PILS <- "PI"
 	CORCLU.ALGO.VALUES <- c(CORCLU.ALGO.VALUES, CORCLU.ALGO.PILS)
 	CORCLU.ALGO.NAMES[CORCLU.ALGO.PILS] <- "pILS"
 PART.ALGO.VALUES <- c(PART.ALGO.VALUES,CORCLU.ALGO.VALUES)
+PART.ALGO.NAMES <- c(PART.ALGO.NAMES,CORCLU.ALGO.NAMES)

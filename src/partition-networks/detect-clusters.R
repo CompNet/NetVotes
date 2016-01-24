@@ -7,7 +7,8 @@
 #############################################################################################
 source("src/define-constants.R")
 source("src/partition-networks/networks-common.R")
-				
+source("src/partition-networks/load-membership.R")
+
 				
 
 #############################################################################################
@@ -26,6 +27,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 	
 	# apply the community detection algorithm
 	coms <- NA
+	mbrshp <- NA
 	if(algo.name==COMDET.ALGO.EDGEBETW)
 	{	# this implementation will use the weights and directions, if present
 		coms <- edge.betweenness.community(
@@ -57,15 +59,18 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder)
 	}
 	else if(algo.name==CORCLU.ALGO.PILS)
 	{	# external invocation (pILS is coded in C++)
-		#TODO add the external invocation of the application
-		#TODO add the loading of the resulting membership vector (put that in the 'coms' variable)
+# TODO add the external invocation of the application
+		# load the resulting file
+		file <- paste(dirname(part.folder),"/cc-result.txt",sep="") # TODO possibly necessary to fix the file name
+		mbrshp <- load.external.partition(file, algo.name)
 	}
-		
+	
 	# record the membership vector
 	if(all(is.na(coms)))
 		cat("WARNING: problem while applying partitioning algorithm ",algo.name," on folder ",part.folder,"\n")
 	else
-	{	mbrshp <- membership(coms)
+	{	if(is.na(mbrshp))
+			mbrshp <- membership(coms)
 		while(min(mbrshp)==0)
 			mbrshp <- mbrshp + 1
 		table.file <- paste(part.folder,"-membership.txt",sep="")

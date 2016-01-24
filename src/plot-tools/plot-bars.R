@@ -273,13 +273,13 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 {	# possibly complete the y axis ranges
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
 	{	if(proportions)
-			y.lim[1] <- 0 #TODO not tested
+			y.lim[1] <- 0 # TODO not tested
 		else
 			y.lim[1] <- min(sapply(counts, sum)) 
 	}
 	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
 	{	if(proportions)
-			y.lim[2] <- 1 #TODO not tested
+			y.lim[2] <- 1 # TODO not tested
 		else
 			y.lim[2] <- max(sapply(counts, sum))
 	}
@@ -547,7 +547,7 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		
 		# init the plot
 		p <- ggplot(data=temp, aes(x=factor(grps),y=counts,fill=factor(bars)))
-		p <- p + scale_x_discrete(limits=bar.names) #TODO not tested
+		p <- p + scale_x_discrete(limits=bar.names) # TODO not tested
 		# change the theme
 		p <- p + theme_bw() + theme(
 			panel.grid.major=element_line(colour = "grey90"),
@@ -689,17 +689,17 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 {	# possibly complete the y axis ranges
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
 	{	if(proportions)
-			y.lim[1] <- 0 #TODO not tested
+			y.lim[1] <- 0 # TODO not tested
 		else
-			y.lim[1] <- min(sapply(counts, function(l) min(sapply(l, sum)))) #TODO not tested  
+			y.lim[1] <- min(sapply(counts, function(l) min(sapply(l, sum)))) # TODO not tested  
 	}
 	
 	
 	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
 	{	if(proportions)
-			y.lim[2] <- 1 #TODO not tested
+			y.lim[2] <- 1 # TODO not tested
 		else
-			y.lim[2] <- max(sapply(counts, function(l) max(sapply(l, sum)))) #TODO not tested
+			y.lim[2] <- max(sapply(counts, function(l) max(sapply(l, sum)))) # TODO not tested
 	}
 	
 	# create the data frame
@@ -766,7 +766,7 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 		
 		# init the plot
 		p <- ggplot(data=temp, aes(x=factor(bars),y=counts,fill=factor(clrs)))
-		p <- p + scale_x_discrete(limits=bar.names) #TODO not tested
+		p <- p + scale_x_discrete(limits=bar.names) # TODO not tested
 		# change the theme
 		p <- p + theme_bw() + theme(
 			panel.grid.major=element_line(colour = "grey90"),
