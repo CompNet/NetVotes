@@ -63,22 +63,23 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 		{	cat("Loading partition files for algorithm ",comdet.name,"\n",sep="")
 			
 			# partition obtained on the complementary negative subgraph
-			neg.partition.file <- paste(r.folder,COMP.NEGATIVE.FILE,"-",comdet.name,"-membership.txt",sep="")
+			neg.algo.name <- comdet.algo.ncg.value(comdet.name)
+			neg.partition.file <- paste(r.folder,neg.algo.name,"-membership.txt",sep="")
 			if(!file.exists(neg.partition.file))
 				cat("Partition file ",neg.partition.file," not found\n",sep="")
 			else
-				partitions[[paste(comdet.name,"-CN",sep="")]] <- as.matrix(read.table(neg.partition.file))
+				partitions[[neg.algo.name]] <- as.matrix(read.table(neg.partition.file))
 			
 			# partition obtained on the positive subgraph
-			pos.partition.file <- paste(r.folder,POSITIVE.FILE,"-",comdet.name,"-membership.txt",sep="")
+			pos.partition.file <- paste(r.folder,comdet.name,"-membership.txt",sep="")
 			if(!file.exists(pos.partition.file))
 				cat("Partition file ",pos.partition.file," not found\n",sep="")
 			else
-				partitions[[paste(comdet.name,"-P",sep="")]] <- as.matrix(read.table(pos.partition.file))
+				partitions[[comdet.name]] <- as.matrix(read.table(pos.partition.file))
 		}
 		for(corclu.name in corclu.algos)
 		{	cat("Loading partition files for algorithm ",corclu.name,"\n",sep="")
-			signed.partition.file <- paste(r.folder,SIGNED.FILE,"-",corclu.name,"-membership.txt",sep="")
+			signed.partition.file <- paste(r.folder,corclu.name,"-membership.txt",sep="")
 			if(!file.exists(signed.partition.file))
 				cat("Partition file ",signed.partition.file," not found\n",sep="")
 			else
@@ -237,15 +238,3 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		compare.partitions(neg.thresh, pos.thresh, score.file, cntr.folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
 	}
 }
-
-
-
-
-
-
-
-
-
-
-# TODO must update this script to reflect the changes in the evaluation one (regarding no signed/pos/neg subfolders
-# TODO to test the scripts, define probas on mep-to-mep voting similarity, then generate very small data set and see if it is recovered when extracting the network

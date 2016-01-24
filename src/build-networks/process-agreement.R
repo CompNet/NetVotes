@@ -146,8 +146,9 @@ process.agreement.index <- function(votes, agreement.matrix)
 # dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
+# plot.formats: formats used for the plot files.
 #############################################################################################
-process.agreement.stats <- function(all.votes, doc.details, score.file, subfolder, domains, dates, mode)
+process.agreement.stats <- function(all.votes, doc.details, score.file, subfolder, domains, dates, mode, plot.formats)
 {	object <- "Agreement index"
 	x.label <- paste("Agreement index - score=",score.file,sep="")
 			
@@ -206,7 +207,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 					data <- plot.histo(plot.file, values=agr.vals,
 						x.label, 
 						proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA, 
-						plot.title=title, format=c("PDF","PNG",NA))
+						plot.title=title, format=plot.formats)
 					# record as a table
 					data <- data[,c("y","xmin","xmax")]
 					table.file <- paste(plot.file,".csv",sep="")
@@ -218,7 +219,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 					data <- plot.histo(plot.file, values=agr.vals,
 						x.label, 
 						proportions=TRUE, x.lim=c(-1,1), y.max=0.5, break.nbr=NA, 
-						plot.title=title, format=c("PDF","PNG",NA))
+						plot.title=title, format=plot.formats)
 					# record as a table
 					data <- data[,c("y","xmin","xmax")]
 					table.file <- paste(plot.file,".csv",sep="")
@@ -249,13 +250,14 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 # everything: whether to process all data without distinction of country or political group.
 # countries: member states to consider separately when processing the data.
 # groups: political groups to consider separately when processing the data.
+# plot.formats: formats used for the plot files.
 #############################################################################################
-process.agreement <- function(all.votes, doc.details, mep.details, score.file, domains, dates, everything, countries, groups)
+process.agreement <- function(all.votes, doc.details, mep.details, score.file, domains, dates, everything, countries, groups, plot.formats)
 {	# process agreement for all data
 	if(everything)
 	{	cat("Process agreement for all data","\n",sep="")
 		subfolder <- "everything"
-		process.agreement.stats(all.votes, doc.details, score.file, subfolder, domains, dates, mode=NA)
+		process.agreement.stats(all.votes, doc.details, score.file, subfolder, domains, dates, mode=NA, plot.formats)
 	}
 	
 	# process agreement by political group
@@ -272,7 +274,7 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file, d
 		# setup folder
 		grp.subfolder <- paste(subfolder,"/",group,sep="")
 		# process agreement
-		process.agreement.stats(group.votes, doc.details, score.file, grp.subfolder, domains, dates, mode=group)
+		process.agreement.stats(group.votes, doc.details, score.file, grp.subfolder, domains, dates, mode=group, plot.formats)
 	}
 	
 	# process agreement by home country
@@ -290,7 +292,7 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file, d
 		# setup folder
 		cntr.subfolder <- paste(subfolder,"/",country,sep="")
 		# process agreement
-		process.agreement.stats(country.votes, doc.details, score.file, cntr.subfolder, domains, dates, mode=country)
+		process.agreement.stats(country.votes, doc.details, score.file, cntr.subfolder, domains, dates, mode=country, plot.formats)
 	}
 }
 

@@ -67,7 +67,18 @@ corclst.algos <- c()
 repetitions <- 10						# number of times each algorithm must be applied
 
 ## measures used to compare partitions
-comp.measures <- c("nmi", "rand", "adjusted.rand")
+comp.measures <- c(
+	"nmi", 
+	"rand", 
+	"adjusted.rand"
+)
+
+## formats of the generated plot (NA for screen)
+plot.formats <- c(
+	"PDF", 
+	"PNG", 
+	NA
+)
 
 #############################################################################################
 # Load raw data
@@ -86,7 +97,7 @@ if(dataset.name=="VW")
 # Process raw data stats (this might take a while)
 #############################################################################################
 #process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-#		domains, dates, everything, countries, groups)
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 
@@ -94,7 +105,7 @@ if(dataset.name=="VW")
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
 #process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
-#		domains, dates, everything, countries, groups)
+#		domains, dates, everything, countries, groups, plot.formats)
 	
 
 
@@ -102,7 +113,7 @@ if(dataset.name=="VW")
 # Extract all the networks
 #############################################################################################
 #extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups)
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 #############################################################################################
@@ -116,7 +127,7 @@ partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
 evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions)
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
 
 
 #############################################################################################
@@ -131,9 +142,8 @@ compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
 
 # test
 # - définir de petits fichiers pour retester tout ça à fond
-
-# format plots
-# - faudrait avoir un unique paramètre permettant de contrôler le format de tous les plots générés
+# TODO to test the scripts, define probas on mep-to-mep voting similarity, 
+# then generate very small data set and see if it is recovered when extracting the network
 
 # Extraction de réseaux
 # - on peut extraire des réseaux au niveau des partis politiques

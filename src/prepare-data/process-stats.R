@@ -17,8 +17,9 @@ source("src/prepare-data/filter-data.R")
 # plots: distribution for the whole term and for each year.
 #
 # doc.details: table describing the voted documents.
+# plot.formats: formats of the plot files.
 #############################################################################################
-process.domain.frequencies <- function(doc.details)
+process.domain.frequencies <- function(doc.details, plot.formats)
 {	cat("Processing the frequencies of documents by policy domain\n",sep="")
 	
 	# set folder up
@@ -34,7 +35,7 @@ process.domain.frequencies <- function(doc.details)
 			values=doc.details[,COL.DOMID],
 			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
 			x.label="Domains", plot.title=title, 
-			x.rotate=FALSE, format=c("PDF","PNG",NA))
+			x.rotate=FALSE, format=plot.formats)
 		# record as a table
 		data <- data.frame(data)
 		data <- cbind(data.frame(DOMAIN.VALUES),data)
@@ -50,7 +51,7 @@ process.domain.frequencies <- function(doc.details)
 			values=doc.details[,COL.DOMID],
 			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
 			x.label="Domains", plot.title=title, 
-			x.rotate=FALSE, format=c("PDF","PNG",NA))
+			x.rotate=FALSE, format=plot.formats)
 		# record as a table
 		data <- data / sum(data)
 		data[is.na(data)] <- 0		# remove possible /0 outcomes
@@ -84,7 +85,7 @@ process.domain.frequencies <- function(doc.details)
 			values=docs, 
 			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
 			x.label="Years", colors.label="Domains", plot.title=title, 
-			x.rotate=FALSE, format=c("PDF","PNG",NA))
+			x.rotate=FALSE, format=plot.formats)
 		# record as a table
 		data <- t(data.frame(data))
 		data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
@@ -100,7 +101,7 @@ process.domain.frequencies <- function(doc.details)
 			values=docs, 
 			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
 			x.label="Years", colors.label="Domains", plot.title=title, 
-			x.rotate=FALSE, format=c("PDF","PNG",NA))
+			x.rotate=FALSE, format=plot.formats)
 		# record as a table
 		data <- lapply(data, function(v) if(all(v==0)) {return(rep(0,length(v)))} else {return(v/sum(v))})
 		data <- t(data.frame(data))
@@ -129,8 +130,9 @@ process.domain.frequencies <- function(doc.details)
 # dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
+# plot.formats: formats of the plot files.
 #############################################################################################
-process.vote.distribution.complete <- function(all.votes, doc.details, vote.values, file.prefix, main.folder, colors.label, object, domains, dates, mode)
+process.vote.distribution.complete <- function(all.votes, doc.details, vote.values, file.prefix, main.folder, colors.label, object, domains, dates, mode, plot.formats)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -188,7 +190,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 						values=votes, 
 						proportions=FALSE, areas=FALSE, y.lim=c(0,nrow(all.votes)), 
 						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
-						x.rotate=TRUE, format=c("PDF","PNG",NA))
+						x.rotate=TRUE, format=plot.formats)
 					# absolute counts as areas
 					plot.file <- paste(folder,file.prefix,"counts-areas",sep="")
 					data <- plot.stacked.indiv.raw.bars(plot.file, 
@@ -196,7 +198,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 						values=votes, 
 						proportions=FALSE, areas=TRUE, y.lim=c(0,nrow(all.votes)), 
 						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
-						x.rotate=FALSE, format=c("PDF","PNG",NA))
+						x.rotate=FALSE, format=plot.formats)
 					# record as a table
 					data <- t(data.frame(data))
 					data <- cbind(data.frame(filtered.doc.ids[indices]),data)
@@ -212,7 +214,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 						values=votes, 
 						proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
 						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
-						x.rotate=TRUE, format=c("PDF","PNG",NA))
+						x.rotate=TRUE, format=plot.formats)
 					# proportions as areas
 					plot.file <- paste(folder,file.prefix,"proportions-areas",sep="")
 					data <- plot.stacked.indiv.raw.bars(plot.file, 
@@ -220,7 +222,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 						values=votes, 
 						proportions=TRUE, areas=TRUE, y.lim=c(0,NA), 
 						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
-						x.rotate=FALSE, format=c("PDF","PNG",NA))
+						x.rotate=FALSE, format=plot.formats)
 					# record as a table
 					data <- lapply(data, function(v) if(all(v==0)) {return(rep(0,length(v)))} else {return(v/sum(v))})
 					data <- t(data.frame(data))
@@ -253,8 +255,9 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 # dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
+# plot.formats: formats of the plot files.
 #############################################################################################
-process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.values, file.prefix, main.folder, colors.label, object, domains, dates, mode)
+process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.values, file.prefix, main.folder, colors.label, object, domains, dates, mode, plot.formats)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -314,7 +317,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 					values=votes.spe, 
 					proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
 					x.label=colors.label, plot.title=title, 
-					x.rotate=FALSE, format=c("PDF","PNG",NA))
+					x.rotate=FALSE, format=plot.formats)
 				# record as a table
 				data <- data.frame(data)
 				data <- cbind(data.frame(vote.values),data)
@@ -330,7 +333,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 					values=votes.spe, 
 					proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
 					x.label=colors.label, plot.title=title, 
-					x.rotate=FALSE, format=c("PDF","PNG",NA))
+					x.rotate=FALSE, format=plot.formats)
 				# record as a table
 				data <- data / sum(data)
 				data[is.na(data)] <- 0
@@ -355,7 +358,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 					values=votes, 
 					proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
 					x.label="Years", colors.label, plot.title=title, 
-					x.rotate=FALSE, format=c("PDF","PNG",NA))
+					x.rotate=FALSE, format=plot.formats)
 				# record as a table
 				data <- t(data.frame(data))
 				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
@@ -371,7 +374,7 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 					values=votes, 
 					proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
 					x.label="Years", colors.label, plot.title=title, 
-					x.rotate=FALSE, format=c("PDF","PNG",NA))
+					x.rotate=FALSE, format=plot.formats)
 				# record as a table
 				data <- lapply(data, function(v) if(all(v==0)) {return(rep(0,length(v)))} else {return(v/sum(v))})
 				data <- t(data.frame(data))
@@ -402,8 +405,9 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 # dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
+# plot.formats: formats of the plot files.
 #############################################################################################
-process.vote.distribution.average <- function(all.votes, doc.details, target, file.prefix, main.folder, object, domains, dates, mode)
+process.vote.distribution.average <- function(all.votes, doc.details, target, file.prefix, main.folder, object, domains, dates, mode, plot.formats)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -452,7 +456,7 @@ print(votes)
 				data <- plot.histo(plot.file, values=votes,
 					x.label=object, 
 					proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
-					plot.title=title, format=c("PDF","PNG",NA))
+					plot.title=title, format=plot.formats)
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
 				table.file <- paste(plot.file,".csv",sep="")
@@ -464,7 +468,7 @@ print(votes)
 				data <- plot.histo(plot.file, values=votes,
 					x.label=object, 
 					proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
-					plot.title=title, format=c("PDF","PNG",NA))
+					plot.title=title, format=plot.formats)
 				# record as a table
 				data <- data[,c("y","xmin","xmax")]
 				table.file <- paste(plot.file,".csv",sep="")
@@ -487,8 +491,9 @@ print(votes)
 # dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
+# plot.formats: formats of the plot files.
 #############################################################################################
-process.vote.distribution <- function(all.votes, doc.details, subfolder, domains, dates, mode)
+process.vote.distribution <- function(all.votes, doc.details, subfolder, domains, dates, mode, plot.formats)
 {	# process a simplified version of the data
 	all.votes.smpl <- all.votes
 	all.votes.smpl[all.votes.smpl==VOTE.ABSENT] <- VOTE.OTHER
@@ -503,13 +508,13 @@ process.vote.distribution <- function(all.votes, doc.details, subfolder, domains
 	
 	# process complete vote distributions
 	cat("Plotting complete vote value distributions","\n",sep="")
-	process.vote.distribution.complete(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", main.folder, colors.label, object, domains, dates, mode)
-	process.vote.distribution.complete(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", main.folder, colors.label, object, domains, dates, mode)
+	process.vote.distribution.complete(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", main.folder, colors.label, object, domains, dates, mode, plot.formats)
+	process.vote.distribution.complete(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", main.folder, colors.label, object, domains, dates, mode, plot.formats)
 	
 	# process aggregated vote distributions
 	cat("Plotting aggregated vote values distributions","\n",sep="")
-	process.vote.distribution.aggregate(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", main.folder, colors.label, object, domains, dates, mode)
-	process.vote.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", main.folder, colors.label, object, domains, dates, mode)
+	process.vote.distribution.aggregate(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", main.folder, colors.label, object, domains, dates, mode, plot.formats)
+	process.vote.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", main.folder, colors.label, object, domains, dates, mode, plot.formats)
 }
 
 
@@ -525,8 +530,9 @@ process.vote.distribution <- function(all.votes, doc.details, subfolder, domains
 # dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
+# plot.formats: formats of the plot files.
 #############################################################################################
-process.behavior.stats <- function(behavior.values, doc.details, subfolder, domains, dates, mode)
+process.behavior.stats <- function(behavior.values, doc.details, subfolder, domains, dates, mode, plot.formats)
 {	# setup folder
 	main.folder <- paste(BEHAVIOR.FOLDER,"/",subfolder,"/",sep="")
 	object <- "loyal votes"
@@ -534,15 +540,15 @@ process.behavior.stats <- function(behavior.values, doc.details, subfolder, doma
 	
 	# process complete behavior distributions
 	cat("Plotting complete behavior distributions","\n",sep="")
-	process.vote.distribution.complete(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, main.folder, colors.label, object, domains, dates, mode)
+	process.vote.distribution.complete(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, main.folder, colors.label, object, domains, dates, mode, plot.formats)
 	
 	# process aggregated behavior distributions
 	cat("Plotting aggregated behavior distributions","\n",sep="")
-	process.vote.distribution.aggregate(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, main.folder, colors.label, object, domains, dates, mode)
+	process.vote.distribution.aggregate(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, main.folder, colors.label, object, domains, dates, mode, plot.formats)
 	
 	# processed average behavior distributions
 	cat("Plotting average behavior distributions","\n",sep="")
-	process.vote.distribution.average(all.votes=behavior.values, doc.details, target=BEHAVIOR.LOYAL, file.prefix=NA, main.folder, object="loyalty index", domains, dates, mode)
+	process.vote.distribution.average(all.votes=behavior.values, doc.details, target=BEHAVIOR.LOYAL, file.prefix=NA, main.folder, object="loyalty index", domains, dates, mode, plot.formats)
 }
 
 
@@ -559,17 +565,18 @@ process.behavior.stats <- function(behavior.values, doc.details, subfolder, doma
 # everything: whether to process all data without distinction of country or political group.
 # countries: member states to consider separately when processing the data.
 # groups: political groups to consider separately when processing the data.
+# plot.formats: formats of the plot files.
 #############################################################################################
-process.stats <- function(all.votes, behavior.values, doc.details, mep.details, domains, dates, everything, countries, groups)
+process.stats <- function(all.votes, behavior.values, doc.details, mep.details, domains, dates, everything, countries, groups, plot.formats)
 {	# domain stats
-	process.domain.frequencies(doc.details)
+	process.domain.frequencies(doc.details, plot.formats)
 	
 	# process stats for all data
 	if(everything)
 	{	cat("Process stats for all data","\n",sep="")
 		folder <- "everything"
-		process.vote.distribution(all.votes, doc.details, folder, domains, dates, mode=NA)
-		process.behavior.stats(behavior.values, doc.details, folder, domains, dates, mode=NA)
+		process.vote.distribution(all.votes, doc.details, folder, domains, dates, mode=NA, plot.formats)
+		process.behavior.stats(behavior.values, doc.details, folder, domains, dates, mode=NA, plot.formats)
 	}
 	
 	# stats by political group
@@ -587,9 +594,9 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		# setup folder
 		grp.folder <- paste(folder,"/",group,sep="")
 		# process vote (for, against...) stats
-		process.vote.distribution(group.votes, doc.details, grp.folder, domains, dates, mode=group)
+		process.vote.distribution(group.votes, doc.details, grp.folder, domains, dates, mode=group, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
-		process.behavior.stats(group.behavior, doc.details, grp.folder, domains, dates, mode=group)
+		process.behavior.stats(group.behavior, doc.details, grp.folder, domains, dates, mode=group, plot.formats)
 	}
 	
 	# stats by home country
@@ -608,8 +615,8 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		# setup folder
 		cntr.folder <- paste(folder,"/",country,sep="")
 		# process vote (for, against...) stats
-		process.vote.distribution(country.votes, doc.details, cntr.folder, domains, dates, mode=country)
+		process.vote.distribution(country.votes, doc.details, cntr.folder, domains, dates, mode=country, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
-		process.behavior.stats(country.behavior, doc.details, cntr.folder, domains, dates, mode=country)
+		process.behavior.stats(country.behavior, doc.details, cntr.folder, domains, dates, mode=country, plot.formats)
 	}
 }

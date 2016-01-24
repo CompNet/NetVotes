@@ -16,8 +16,9 @@ source("src/plot-tools/plot-bars.R")
 #
 # partition: membership vector.
 # folder: start of the file name used when recording values and plots.
+# plot.formats: formats of the plot files.
 #############################################################################################
-record.partition.stats <- function(partition, folder)
+record.partition.stats <- function(partition, folder, plot.formats)
 {	# record the community sizes
 	comsz <- table(partition)
 	coms <- rownames(comsz)
@@ -32,7 +33,7 @@ record.partition.stats <- function(partition, folder)
 		y.lim=c(0,NA), 
 		x.label="Community", y.label="Count", 
 		plot.title="Community sizes", 
-		x.rotate=FALSE, format=c("PDF","PNG",NA))
+		x.rotate=FALSE, format=plot.formats)
 }
 
 
@@ -166,8 +167,9 @@ process.comdet.measures <- function(g.neg, g.pos, partition, algo.name, perf.tab
 # 			the "perf.list" list (element-wise), and the other which is similar but for
 #			standard deviations (as processed by function "average.matrix.list").
 # subfolder: subfolder containing the networks and partitions.
+# plot.formats: formats of the plot files.
 #############################################################################################
-plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
+plot.partition.perf <- function(g, perf.list, avg.vals, subfolder, plot.formats)
 {	# init
 	algos <- rownames(perf.list[[1]])
 	measures <- colnames(perf.list[[1]])
@@ -203,7 +205,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 					y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 					x.label="Repetition", y.label=PART.MEAS.NAMES[measure], 
 					plot.title=paste(PART.MEAS.NAMES[measure]," for each repetition"), 
-					x.rotate=FALSE, format=c("PDF","PNG",NA))
+					x.rotate=FALSE, format=plot.formats)
 			}
 			
 			# generate the average perf plot (one bar for each algo)
@@ -213,7 +215,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 				x.label="Algorithm", y.label=PART.MEAS.NAMES[measure], 
 				plot.title=paste("Average ",PART.MEAS.NAMES[measure]," value by partitioning algorithm"), 
-				x.rotate=TRUE, format=c("PDF","PNG",NA))
+				x.rotate=TRUE, format=plot.formats)
 		}
 		
 		# if there was only a single repetition
@@ -224,7 +226,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 				x.label="Algorithm", y.label=PART.MEAS.NAMES[measure], 
 				plot.title=paste(PART.MEAS.NAMES[measure]," value by partitioning algorithm"), 
-				x.rotate=TRUE, format=c("PDF","PNG",NA))
+				x.rotate=TRUE, format=plot.formats)
 		}
 	}
 	
@@ -232,7 +234,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 	for(i in 1:length(measure.groups))
 	{	measures <- measure.groups[[i]]
 		bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g))
-		plot.file <- paste(subfolder,"comparison-",names(measure.groups)[i],"-performances",sep="")
+		plot.file <- paste(subfolder,"grouped-",names(measure.groups)[i],"-performances",sep="")
 		if(length(perf.list)>1)
 		{	data.m <- lapply(algos, function(a) avg.vals[[1]][a,measures])
 			data.sd <- lapply(algos, function(a) avg.vals[[2]][a,measures])
@@ -241,7 +243,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 				y.lim=c(min(bounds),max(bounds)),
 				x.label="Algorithm", y.label="Performance", 
 				plot.title=paste("Average ", measure.group.names[[i]]," values for all algorithms",sep=""), 
-				x.rotate=TRUE, format=c("PDF","PNG",NA))
+				x.rotate=TRUE, format=plot.formats)
 		}
 		else
 		{	data <- lapply(algos, function(a) perf.list[[1]][a,measures])
@@ -250,7 +252,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 				y.lim=c(min(bounds),max(bounds)),
 				x.label="Algorithm", y.label="Performance", 
 				plot.title=paste(measure.group.names[[i]]," values for all algorithms",sep=""), 
-				x.rotate=TRUE, format=c("PDF","PNG",NA))
+				x.rotate=TRUE, format=plot.formats)
 		}
 	}
 	
@@ -267,8 +269,9 @@ plot.partition.perf <- function(g, perf.list, avg.vals, subfolder)
 # subfolder: subfolder containing the partitions (and recorded files).
 # algo.name: correlation clustering algorithm to treat.
 # perf.table: table containing all the performances, to be updated.
+# plot.formats: formats of the plot files.
 #############################################################################################
-evaluate.corclu.method <- function(graphs, subfolder, algo.name, perf.table)
+evaluate.corclu.method <- function(graphs, subfolder, algo.name, perf.table, plot.formats)
 {	# process all measures
 	base.name <- paste(PARTITIONS.FOLDER,"/",subfolder,algo.name,sep="")
 	partition.file <- paste(base.name,"-membership.txt",sep="")
@@ -279,7 +282,7 @@ evaluate.corclu.method <- function(graphs, subfolder, algo.name, perf.table)
 		partition <- as.matrix(read.table(partition.file))
 		
 		# record stats
-		record.partition.stats(partition, base.name)
+		record.partition.stats(partition, base.name, plot.formats)
 		
 		# complete perf table
 		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, partition, algo.name, perf.table)
@@ -297,8 +300,9 @@ evaluate.corclu.method <- function(graphs, subfolder, algo.name, perf.table)
 # subfolder: subfolder containing the partitions (and recorded files).
 # algo.name: community detection algorithm to treat.
 # perf.table: table containing all the performances, to be updated.
+# plot.formats: formats of the plot files.
 #############################################################################################
-evaluate.comdet.method <- function(graphs, subfolder, algo.name, perf.table)
+evaluate.comdet.method <- function(graphs, subfolder, algo.name, perf.table, plot.formats)
 {	# partition obtained on the complementary negative subgraph
 	neg.algo.name <- comdet.algo.ncg.value(algo.name)
 	neg.base.name <- paste(PARTITIONS.FOLDER,"/",subfolder,neg.algo.name,sep="")
@@ -310,7 +314,7 @@ evaluate.comdet.method <- function(graphs, subfolder, algo.name, perf.table)
 		# load partition
 		neg.partition <- as.matrix(read.table(neg.partition.file))
 		# record stats
-		record.partition.stats(neg.partition, neg.base.name)
+		record.partition.stats(neg.partition, neg.base.name, plot.formats)
 		# complete perf table
 		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, neg.partition, neg.algo.name, perf.table)
 		perf.table <- process.corclu.measures(graphs$signed, neg.partition, neg.algo.name, perf.table)
@@ -326,7 +330,7 @@ evaluate.comdet.method <- function(graphs, subfolder, algo.name, perf.table)
 		# load partition
 		pos.partition <- as.matrix(read.table(pos.partition.file))
 		# record stats
-		record.partition.stats(pos.partition, pos.base.name)
+		record.partition.stats(pos.partition, pos.base.name, plot.formats)
 		# complete perf table
 		perf.table <- process.modularity(graphs$neg, graphs$pos, pos.partition, algo.name, perf.table)
 		perf.table <- process.corclu.measures(graphs$signed, pos.partition, algo.name, perf.table)
@@ -349,8 +353,9 @@ evaluate.comdet.method <- function(graphs, subfolder, algo.name, perf.table)
 # comdet.algos: community detection algorithms to treat.
 # corclu.algos: correlation clustering algorithms to treat.
 # repetitions: number of times each algorithm has been applied.
+# plot.formats: formats of the plot files.
 #############################################################################################
-evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
+evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
 	{	dom.folder <- paste(subfolder,"/",score.file,"/",
@@ -397,11 +402,11 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 					
 					# community detection method (must treat both positive and complementary negative graphs)
 					if(algo.name %in% COMDET.ALGO.VALUES)
-						perf.table <- evaluate.comdet.method(graphs, r.subfolder, algo.name, perf.table)
+						perf.table <- evaluate.comdet.method(graphs, r.subfolder, algo.name, perf.table, plot.formats)
 					
 					# correlation clustering method (must treat only the signed graph)
 					else
-						perf.table <- evaluate.corclu.method(graphs, r.subfolder, algo.name, perf.table)
+						perf.table <- evaluate.corclu.method(graphs, r.subfolder, algo.name, perf.table, plot.formats)
 				}
 				
 				# record iteration table
@@ -427,7 +432,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 				write.csv2(avg.vals$stev, file=table.file, row.names=TRUE)
 				
 				# plot all of this
-				plot.partition.perf(graphs$signed, perf.list, avg.vals, subfolder=prefix)
+				plot.partition.perf(graphs$signed, perf.list, avg.vals, subfolder=prefix, plot.formats)
 				
 				date.perf.list[[d]] <- avg.vals
 			}
@@ -476,7 +481,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 					y.lim=PART.MEAS.BOUNDS[[measure]](NA),
 					x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
 					plot.title=paste("Average ", PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
-					x.rotate=TRUE, format=c("PDF","PNG",NA))
+					x.rotate=TRUE, format=plot.formats)
 			}
 			else
 			{	dm <- lapply(algos, function(a) data.m[[1]][a,])
@@ -486,7 +491,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 					y.lim=PART.MEAS.BOUNDS[[measure]](NA),
 					x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
 					plot.title=paste(PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
-					x.rotate=TRUE, format=c("PDF","PNG",NA))
+					x.rotate=TRUE, format=plot.formats)
 			}
 		}
 	}
@@ -509,13 +514,14 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, subfol
 # comdet.algos: community detection algorithms to treat.
 # corclu.algos: correlation clustering algorithms to treat.
 # repetitions: number of times each algorithm has been applied.
+# plot.formats: formats of the plot files.
 #############################################################################################
-evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions)
+evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# process performance for all data
 	if(everything)
 	{	cat("Process performance measures for all data","\n",sep="")
 		subfolder <- "everything"
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
+		evaluate.partitions(neg.thresh, pos.thresh, score.file, subfolder, domains, dates, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 	
 	# process performance by political group
@@ -533,7 +539,7 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 		grp.subfolder <- paste(subfolder,"/",group,sep="")
 		
 		# process performance
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
+		evaluate.partitions(neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 	
 	# process performance by home country
@@ -551,6 +557,6 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 		cntr.subfolder <- paste(subfolder,"/",country,sep="")
 		
 		# process performance
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, comdet.algos, corclu.algos, repetitions)
+		evaluate.partitions(neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 }

@@ -24,8 +24,9 @@ source("src/build-networks/process-network-stats.R")
 # folder: folder (and beginning of the filename) for the produced graph files.
 # graph.name: name of the graph in the graphml file.
 # returns: the generate graph, as an igraph object.
+# plot.formats: formats of the plot files.
 #############################################################################################
-extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA, folder, graph.name)
+extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA, folder, graph.name, plot.formats)
 {	cat("Building network...\n")
 	
 	# replace NAs by zeros
@@ -73,7 +74,7 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	
 	# plot graph
 	cat("Plotting network...\n")
-#	plot.network(g=result, plot.file=graph.base, format=c("PDF","PNG",NA))
+#	plot.network(g=result, plot.file=graph.base, format=plot.formats)
 	
 	# process network stats
 	cat("Processing network stats...\n")
@@ -97,8 +98,9 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 # dates: time periods to consider when processing the data.
 # mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
 #		plot titles).
+# plot.formats: formats of the plot files.
 #############################################################################################
-extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, mode)
+extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, mode, plot.formats)
 {	# setup graph title
 	if(is.na(mode))
 		mode.str <- ""
@@ -132,7 +134,7 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 			{	# retrieve agreement
 				agreement <- as.matrix(read.csv2(file=table.file, row.names=1))
 				# build and record network
-				g <- extract.network(agreement, mep.details, neg.thresh, pos.thresh, folder, graph.name)
+				g <- extract.network(agreement, mep.details, neg.thresh, pos.thresh, folder, graph.name, plot.formats)
 			}
 		}
 	}
@@ -151,13 +153,14 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 # everything: whether to process all data without distinction of country or political group.
 # countries: member states to consider separately when processing the data.
 # groups: political groups to consider separately when processing the data.
+# plot.formats: formats of the plot files.
 #############################################################################################
-extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups)
+extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, plot.formats)
 {	# extract networks for all data
 	if(everything)
 	{	cat("Extract networks for all data","\n",sep="")
 		subfolder <- "everything"
-		extract.networks(mep.details, neg.thresh, pos.thresh, score.file, subfolder, domains, dates, mode=NA)
+		extract.networks(mep.details, neg.thresh, pos.thresh, score.file, subfolder, domains, dates, mode=NA, plot.formats)
 	}
 	
 	# networks by political group
@@ -175,7 +178,7 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		grp.subfolder <- paste(subfolder,"/",group,sep="")
 		
 		# extract networks
-		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates, mode=group)
+		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates, mode=group, plot.formats)
 	}
 	
 	# networks by home country
@@ -193,6 +196,6 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		cntr.subfolder <- paste(subfolder,"/",country,sep="")
 		
 		# extract networks
-		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, mode=country)
+		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, mode=country, plot.formats)
 	}
 }
