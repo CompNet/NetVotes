@@ -60,14 +60,23 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	political.groups <- sample(x=names(GROUP.VW2SYMB),size=mep.nbr,replace=TRUE)
 	absent.rate <- rtnorm(n=mep.nbr, mean=0, sd=0.1, lower=0, upper=1)
 	rebellion.rate <- rtnorm(n=mep.nbr, mean=0.1, sd=0.2, lower=0, upper=1)
+	# record them (for debug)
+	table.file <- paste(root.folder,"absent-rate.csv",sep="")
+	write.csv2(absent.rate,file=table.file,row.names=TRUE)
+	table.file <- paste(root.folder,"rebellion-rate.csv",sep="")
+	write.csv2(rebellion.rate,file=table.file,row.names=TRUE)
 	
 	# draw vote outcomes for each group
 	group.votes <- matrix(sample(x=c(V.FOR,V.AGAINST,V.ABSTAIN),size=length(GROUP.VW2SYMB)*doc.nbr,replace=TRUE,prob=c(0.4,0.4,0.2)),
 			nrow=length(GROUP.VW2SYMB),ncol=doc.nbr)
+	colnames(group.votes) <- 1:doc.nbr
 	rownames(group.votes) <- names(GROUP.VW2SYMB)
-	doc.votes <- rep(NA,doc.nbr)
+	# record these group political lines
+	table.file <- paste(root.folder,"group-lines.csv",sep="")
+	write.csv2(group.votes,file=table.file,row.names=TRUE)
 	
 	# files containing the votes details
+	doc.votes <- rep(NA,doc.nbr)
 	for(i in 1:doc.nbr)
 	{	# proba for each MEP (rows) to vote For/Against/Abstain/Absent (cols) for document i
 		probas <- t(sapply(1:mep.nbr, function(mep)
@@ -100,11 +109,17 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 			}
 		}
 		
+		# determine the rebellion/loyalty of each MEP for this document
+		rebellion <- rep(NA,mep.nbr)
+		group.lines <- group.votes[political.groups]
+		idx <- which(votes==group.lines)
+		rebellion[idx] <- votes[idx]
+		
 		# create the document vote table
 		vote.df <- data.frame(
 			"Name"=paste("Firstname",1:mep.nbr," LASTNAME",1:mep.nbr,sep=""),
 			"Member State"=member.states,
-			"Loyal / Rebel to political group"=NA,	# note: this field is ignored at processing anyway (re-processed)
+			"Loyal / Rebel to political group"=rebellion,
 			"Vote"=votes,
 			"Group"=political.groups,
 		check.names=FALSE,stringsAsFactors=FALSE)
@@ -133,4 +148,4 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 #############################################################################################
 # tests
 #############################################################################################
-generate.raw.data(mep.nbr=10, doc.nbr=15, folder="test")
+generate.raw.data(mep.nbr=30, doc.nbr=15, folder="test")

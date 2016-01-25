@@ -22,6 +22,7 @@ source("src/prepare-data/load-common.R")
 #############################################################################################
 # VoteWatch data
 VW.FOLDER <- file.path(IN.FOLDER,"votewatch")
+VW.FOLDER <- file.path(IN.FOLDER,"test") # just for debug
 	# raw data (i.e. tables)
 	VW.RAW.FOLDER <- file.path(VW.FOLDER,"raw")
 
@@ -111,6 +112,7 @@ GROUP.VW2SYMB["S&D"] <- GROUP.SD
 #############################################################################################
 vw.clean.doc.details <- function()
 {	cat("Retrieving and cleaning the document details\n",sep="")
+	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# if the file already exists, just load it
 	if(file.exists(DOC.DETAILS.FILE))
@@ -130,9 +132,9 @@ vw.clean.doc.details <- function()
 		result <- cbind(result, as.integer(data[,VW.COL.DOCID]), data[,c(VW.COL.DATE,VW.COL.DOCNAME)])
 		# clean the result values
 		doc.res <- data[,VW.COL.RESULT]
-		doc.rec[doc.res=="+"] <- VOTE.FOR
-		doc.rec[doc.res=="-"] <- VOTE.AGST
-		result <- cbind(result, doc.rec)
+		doc.res[doc.res=="+"] <- VOTE.FOR
+		doc.res[doc.res=="-"] <- VOTE.AGST
+		result <- cbind(result, doc.res)
 		# clean the domain names
 		dom.ids <- DOMAIN.VW2SYMB[data[,VW.COL.DOMAIN]]
 		result <- cbind(result, dom.ids)
@@ -176,7 +178,7 @@ vw.extract.mep.details <- function()
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
 			path <- file.path(VW.RAW.FOLDER,file)
-			data <- as.matrix(read.csv2(path,check.names=FALSE))
+			data <- as.matrix(read.csv(path,check.names=FALSE))
 			#tmp <- colnames(data)
 			f <- f + 1
 			
@@ -287,7 +289,7 @@ vw.concatenate.votes <- function(mep.details)
 		{	cat("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
 			# read the file
 			path <- file.path(VW.RAW.FOLDER,file)
-			data <- as.matrix(read.csv2(path,check.names=FALSE))
+			data <- as.matrix(read.csv(path,check.names=FALSE))
 			f <- f + 1
 			
 			# add a new column to the table
