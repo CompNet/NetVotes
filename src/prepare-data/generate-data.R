@@ -6,7 +6,17 @@
 #############################################################################################
 library("msm")	# truncated normal law
 source("src/define-constants.R")
+source("src/prepare-data/load-votewatch.R")
 
+
+
+#############################################################################################
+# Constants used only locally (to match VW)
+#############################################################################################
+V.FOR <- "For"
+V.AGAINST <- "Against"
+V.ABSTAIN <- "Abstain"
+V.ABSENT <- "Absent"
 
 
 #############################################################################################
@@ -47,14 +57,14 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	
 	# draw constant data
 	member.states <- sample(x=COUNTRY.VALUES,size=mep.nbr,replace=TRUE)
-	political.groups <- sample(x=GROUP.VALUES,size=mep.nbr,replace=TRUE)
+	political.groups <- sample(x=names(GROUP.VW2SYMB),size=mep.nbr,replace=TRUE)
 	absent.rate <- rtnorm(n=mep.nbr, mean=0, sd=0.1, lower=0, upper=1)
 	rebellion.rate <- rtnorm(n=mep.nbr, mean=0.1, sd=0.2, lower=0, upper=1)
 	
 	# draw vote outcomes for each group
-	group.votes <- matrix(sample(x=c(VOTE.FOR,VOTE.AGST,VOTE.ABST),size=length(GROUP.VALUES)*doc.nbr,replace=TRUE,prob=c(0.4,0.4,0.2)),
-			nrow=length(GROUP.VALUES),ncol=doc.nbr)
-	rownames(group.votes) <- GROUP.VALUES
+	group.votes <- matrix(sample(x=c(V.FOR,V.AGAINST,V.ABSTAIN),size=length(GROUP.VW2SYMB)*doc.nbr,replace=TRUE,prob=c(0.4,0.4,0.2)),
+			nrow=length(GROUP.VW2SYMB),ncol=doc.nbr)
+	rownames(group.votes) <- names(GROUP.VW2SYMB)
 	doc.votes <- rep(NA,doc.nbr)
 	
 	# files containing the votes details
@@ -62,17 +72,33 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	{	# proba for each MEP (rows) to vote For/Against/Abstain/Absent (cols) for document i
 		probas <- t(sapply(1:mep.nbr, function(mep)
 				{	gv <- group.votes[political.groups[mep],i]
-					if(gv==VOTE.FOR)
+					if(gv==V.FOR)
 						c((1-absent.rate[mep])*(1-rebellion.rate[mep]),(1-absent.rate[mep])*rebellion.rate[mep]/2,(1-absent.rate[mep])*rebellion.rate[mep]/2,absent.rate[mep])
-					else if(gv==VOTE.AGST)
+					else if(gv==V.AGAINST)
 						c((1-absent.rate[mep])*rebellion.rate[mep]/2,(1-absent.rate[mep])*(1-rebellion.rate[mep]),(1-absent.rate[mep])*rebellion.rate[mep]/2,absent.rate[mep])
-					else if(gv==VOTE.ABST)
+					else if(gv==V.ABSTAIN)
 						c((1-absent.rate[mep])*rebellion.rate[mep]/2,(1-absent.rate[mep])*rebellion.rate[mep]/2,(1-absent.rate[mep])*(1-rebellion.rate[mep]),absent.rate[mep])
 				}))
+		
 		# draw the vote of each MEP for document i, depending on these probas
-		votes <- apply(probas,1,function(ps) sample(x=c(VOTE.FOR,VOTE.AGST,VOTE.ABST,VOTE.ABSENT),size=1,prob=ps))
-		temp <- table(votes)
-		doc.votes[i] <- names(temp)[which.max(temp)[1]]
+		votes <- apply(probas,1,function(ps) sample(x=c(V.FOR,V.AGAINST,V.ABSTAIN,V.ABSENT),size=1,prob=ps))
+		cnts <- table(votes)
+		if(is.na(cnts[V.FOR]))
+		{	if(is.na(cnts[V.AGAINST]))
+				doc.votes[i] <- NA
+			else
+				doc.votes[i] <- "-"
+		}
+		else
+		{	if(is.na(cnts[V.AGAINST]))
+				doc.votes[i] <- "+"
+			else
+			{	if(cnts[V.FOR]>=cnts[V.AGAINST])
+					doc.votes[i] <- "+"
+				else
+					doc.votes[i] <- "-"
+			}
+		}
 		
 		# create the document vote table
 		vote.df <- data.frame(
@@ -95,7 +121,7 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 		"Name of document"=paste("Document",1:doc.nbr,sep=""),
 		"Result of vote"=doc.votes,
 		"Parliament or council"=rep("EP",doc.nbr),
-		"Policy area"=sample(x=DOMAIN.VALUES,size=doc.nbr,replace=TRUE),
+		"Policy area"=sample(x=names(DOMAIN.VW2SYMB),size=doc.nbr,replace=TRUE),
 	check.names=FALSE,stringsAsFactors=FALSE)
 
 	# record the table
