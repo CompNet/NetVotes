@@ -25,6 +25,7 @@ source("src/build-networks/process-agreement.R")
 source("src/partition-networks/compare-clusters.R")
 source("src/partition-networks/detect-clusters.R")
 source("src/partition-networks/evaluate-clusters.R")
+source("src/prepare-data/generate-data.R")
 source("src/prepare-data/load-itsyourparliament.R")
 source("src/prepare-data/load-parltrack.R")
 source("src/prepare-data/load-votewatch.R")
@@ -42,17 +43,21 @@ dataset.name <- "VW"		# VoteWatch
 
 ## filtering parameters
 #domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
-domains <- DOMAIN.AFCO
+#domains <- DOMAIN.AFCO
+domains <- DOMAIN.VW2SYMB[TEST.DOMAINS]
 #dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
-dates <- c(DATE.T7.Y1)
-#everything <- TRUE							# whether or not to process all data without distinction of country or date
-everything <- FALSE
+#dates <- c(DATE.T7.Y1)
+dates <- TEST.YEARS
+everything <- TRUE							# whether or not to process all data without distinction of country or date
+#everything <- FALSE
 #countries <- COUNTRY.VALUES				# which country to process individually
-countries <- c(COUNTRY.AT)
+#countries <- c(COUNTRY.AT)
+countries <- TEST.COUNTRIES
 #countries <- c()
 #groups <- GROUP.VALUES					# which group to process individually
 #groups <- c(GROUP.SD)
-groups <- c()
+groups <- GROUP.VW2SYMB[TEST.GROUPS]
+#groups <- c()
 
 ## score matrix used to process agreement
 score.file <- "m3"			# see folder in/score
@@ -72,11 +77,11 @@ comp.measures <- c(
 	"adjusted.rand"
 )
 
-## formats of the generated plot (NA for screen)
+## formats of the generated plot (NA for screen -- mainly for debug)
 plot.formats <- c(
 	"PDF", 
-	"PNG", 
-	NA
+	"PNG"
+#	NA
 )
 
 #############################################################################################

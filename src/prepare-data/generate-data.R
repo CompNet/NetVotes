@@ -13,10 +13,17 @@ source("src/prepare-data/load-votewatch.R")
 #############################################################################################
 # Constants used only locally (to match VW)
 #############################################################################################
+# use the VoteWatch values
 V.FOR <- "For"
 V.AGAINST <- "Against"
 V.ABSTAIN <- "Abstain"
 V.ABSENT <- "Absent"
+# only focus on certain domains, countries etc. (no need to treat them all just for testing)
+TEST.COUNTRIES <- c(COUNTRY.AT,COUNTRY.BE,COUNTRY.BG)
+TEST.GROUPS <- names(GROUP.VW2SYMB)[1:3]
+TEST.DOMAINS <- names(DOMAIN.VW2SYMB[1:3])
+TEST.DATES <- c(DATE.START.T7[[DATE.T7.Y1]],DATE.END.T7[[DATE.T7.Y2]])
+TEST.YEARS <- c(DATE.T7.Y1,DATE.T7.Y2,DATE.T7.TERM)
 
 
 #############################################################################################
@@ -56,10 +63,10 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	dir.create(path=raw.folder,showWarnings=FALSE,recursive=TRUE)
 	
 	# draw constant data
-	member.states <- sample(x=COUNTRY.VALUES,size=mep.nbr,replace=TRUE)
-	political.groups <- sample(x=names(GROUP.VW2SYMB),size=mep.nbr,replace=TRUE)
-	absent.rate <- rtnorm(n=mep.nbr, mean=0, sd=0.1, lower=0, upper=1)
-	rebellion.rate <- rtnorm(n=mep.nbr, mean=0.1, sd=0.2, lower=0, upper=1)
+	member.states <- sample(x=TEST.COUNTRIES,size=mep.nbr,replace=TRUE)
+	political.groups <- sample(x=TEST.GROUPS,size=mep.nbr,replace=TRUE)
+	absent.rate <- rtnorm(n=mep.nbr, mean=0, sd=0.15, lower=0, upper=1)
+	rebellion.rate <- rtnorm(n=mep.nbr, mean=0.2, sd=0.2, lower=0, upper=1)
 	# record them (for debug)
 	table.file <- paste(root.folder,"absent-rate.csv",sep="")
 	write.csv2(absent.rate,file=table.file,row.names=TRUE)
@@ -71,8 +78,9 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 			nrow=length(GROUP.VW2SYMB),ncol=doc.nbr)
 	colnames(group.votes) <- 1:doc.nbr
 	rownames(group.votes) <- names(GROUP.VW2SYMB)
+	group.votes[!(names(GROUP.VW2SYMB) %in% TEST.GROUPS),] <- NA
 	# record these group political lines
-	table.file <- paste(root.folder,"group-lines.csv",sep="")
+	table.file <- paste(root.folder,"polgroup-lines.csv",sep="")
 	write.csv2(group.votes,file=table.file,row.names=TRUE)
 	
 	# files containing the votes details
@@ -117,7 +125,7 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 		
 		# create the document vote table
 		vote.df <- data.frame(
-			"Name"=paste("Firstname",1:mep.nbr," LASTNAME",1:mep.nbr,sep=""),
+			"Name"=paste("Firstname",sprintf("%03d",1:mep.nbr)," LASTNAME",sprintf("%03d",1:mep.nbr),sep=""),
 			"Member State"=member.states,
 			"Loyal / Rebel to political group"=rebellion,
 			"Vote"=votes,
@@ -132,11 +140,11 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	# file containing the documents details
 	doc.df <- data.frame(
 		"Doc Id"=1:doc.nbr,
-		"Date"=format(generate.dates(doc.nbr,DATE.START.T7[[DATE.T7.TERM]],DATE.END.T7[[DATE.T7.TERM]]),"%d/%m/%Y"),
-		"Name of document"=paste("Document",1:doc.nbr,sep=""),
+		"Date"=format(generate.dates(doc.nbr,TEST.DATES[1],TEST.DATES[2]),"%d/%m/%Y"),
+		"Name of document"=paste("Document",sprintf("%03d",1:doc.nbr),sep=""),
 		"Result of vote"=doc.votes,
 		"Parliament or council"=rep("EP",doc.nbr),
-		"Policy area"=sample(x=names(DOMAIN.VW2SYMB),size=doc.nbr,replace=TRUE),
+		"Policy area"=sample(x=TEST.DOMAINS,size=doc.nbr,replace=TRUE),
 	check.names=FALSE,stringsAsFactors=FALSE)
 
 	# record the table
@@ -148,4 +156,4 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 #############################################################################################
 # tests
 #############################################################################################
-generate.raw.data(mep.nbr=30, doc.nbr=15, folder="test")
+#generate.raw.data(mep.nbr=30, doc.nbr=15, folder="test")
