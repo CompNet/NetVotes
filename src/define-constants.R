@@ -18,6 +18,8 @@ IN.FOLDER <- "in"
 OUT.FOLDER <- "out"
 	# output folder for everything not network-related
 	OVERALL.FOLDER <- file.path(OUT.FOLDER,"_overall")
+	# output folder for the domain-related overall files
+	DOMAINS.FOLDER <- file.path(OVERALL.FOLDER,"_domains")
 	# pils folder (tempary)
 	PILS.FOLDER <- file.path(OUT.FOLDER,"pils")
 	# votes folder

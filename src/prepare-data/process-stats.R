@@ -23,13 +23,12 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 {	cat("Processing the frequencies of documents by policy domain\n",sep="")
 	
 	# set folder up
-	folder <- paste(OVERALL.FOLDER,"/domains/",sep="")
-	dir.create(folder, recursive=TRUE, showWarnings=FALSE)
+	dir.create(DOMAINS.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# term domain distribution
 		# absolute counts as bars
 		title <- paste("Numbers of documents by policy domain for the whole term",sep="")
-		plot.file <- paste(folder,"term-counts",sep="")
+		plot.file <- file.path(DOMAINS.FOLDER,"term-counts")
 		data <- plot.unif.indiv.raw.bars(plot.file, 
 			bar.names=DOMAIN.VALUES, 
 			values=doc.details[,COL.DOMID],
@@ -45,7 +44,7 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 		
 		# proportions as bars
 		title <- paste("Proportions of documents by policy domain - period=term",sep="")
-		plot.file <- paste(folder,"term-proportions",sep="")
+		plot.file <- file.path(DOMAINS.FOLDER,"term-proportions")
 		data <- plot.unif.indiv.raw.bars(plot.file, 
 			bar.names=DOMAIN.VALUES, 
 			values=doc.details[,COL.DOMID],
@@ -79,7 +78,7 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 	# yearly domain distribution
 		# absolute counts as bars
 		title <- paste("Numbers of documents by policy domain - period=yearly",sep="")
-		plot.file <- paste(folder,"yearly-counts",sep="")
+		plot.file <- file.path(DOMAINS.FOLDER,"yearly-counts")
 		data <- plot.stacked.indiv.raw.bars(plot.file, 
 			bar.names=DATE.STR.T7[DATE.T7.YEARS], color.names=DOMAIN.VALUES, 
 			values=docs, 
@@ -95,7 +94,7 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 		
 		# proportions as bars
 		title <- paste("Proportions of documents by policy domain - period=yearly",sep="")
-		plot.file <- paste(folder,"yearly-proportions",sep="")
+		plot.file <- file.path(DOMAINS.FOLDER,"yearly-proportions")
 		data <- plot.stacked.indiv.raw.bars(plot.file, 
 			bar.names=DATE.STR.T7[DATE.T7.YEARS], color.names=DOMAIN.VALUES, 
 			values=docs, 

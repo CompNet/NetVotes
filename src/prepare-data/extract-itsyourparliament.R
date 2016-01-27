@@ -51,7 +51,7 @@ iyp.download.meps <- function()
 		if(length(page)==2 && page[1]=="<br>" && substr(page[2],1,9)=="Warning: ")
 			cat("WARNING: the page for MEP id ",mep.id," was empty (",url,")\n",sep="")
 		else
-		{	file <- paste(IYP.MEPS.FOLDER,"/",mep.id,".xml",sep="")
+		{	file <- file.path(IYP.MEPS.FOLDER,paste(mep.id,".xml",sep=""))
 			writeLines(page,file)
 		}
 	}
@@ -150,7 +150,7 @@ iyp.download.votes <- function()
 			}
 				
 			# record the page
-			file <- paste(IYP.VOTES.FOLDER,"/",vote.id,".xml",sep="")
+			file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
 			writeLines(page,file)
 		}
 	}
@@ -177,7 +177,7 @@ iyp.download.domains <- function()
 		if(length(page)==1 && page=="<b>No votes found</b>")
 			cat("WARNING: the page for domain id ",dom.id," contains no vote (",url,") >> domain ignored\n",sep="")
 		else
-		{	file <- paste(IYP.DOMAINS.FOLDER,"/",dom.id,".xml",sep="")
+		{	file <- file.path(IYP.DOMAINS.FOLDER,paste(dom.id,".xml",sep=""))
 			writeLines(page,file)
 		}
 	}

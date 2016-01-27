@@ -176,7 +176,7 @@ iyp.extract.mep.details <- function(mep.id)
 	result <- c()
 	
 	# retrieve XML document
-	file <- paste(IYP.MEPS.FOLDER,"/",mep.id,".xml",sep="")
+	file <- file.path(IYP.MEPS.FOLDER,paste(mep.id,".xml",sep=""))
 	doc <- readLines(file)
 	xml.data <- xmlParse(doc)
 	xml <- xmlToList(xml.data)
@@ -306,7 +306,7 @@ iyp.extract.domain <- function(domain.id)
 {	cat("Processing domain ",domain.id,"\n",sep="")
 	
 	# retrieve XML document
-	file <- paste(IYP.DOMAINS.FOLDER,"/",domain.id,".xml",sep="")
+	file <- file.path(IYP.DOMAINS.FOLDER,paste(domain.id,".xml",sep=""))
 	doc <- readLines(file)
 	xml.data <- xmlParse(doc)
 	xml <- xmlToList(xml.data)
@@ -407,7 +407,7 @@ iyp.extract.vote <- function(vote.id)
 {	cat("Processing vote ",vote.id,"\n",sep="")
 	
 	# retrieve XML document
-	file <- paste(IYP.VOTES.FOLDER,"/",vote.id,".xml",sep="")
+	file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
 	doc <- readLines(file)
 	xml.data <- xmlParse(doc)
 	xml <- xmlToList(xml.data)

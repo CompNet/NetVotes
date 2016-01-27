@@ -58,8 +58,8 @@ generate.dates <- function(date.nbr, start.date, end.date)
 # folder: folder in which to record the generated files.
 #############################################################################################
 generate.raw.data <- function(mep.nbr, doc.nbr, folder)
-{	root.folder <- paste(IN.FOLDER,"/",folder,"/",sep="")
-	raw.folder <- paste(root.folder,"raw/",sep="")
+{	root.folder <- file.path(IN.FOLDER,folder)
+	raw.folder <- file.path(root.folder,"raw")
 	dir.create(path=raw.folder,showWarnings=FALSE,recursive=TRUE)
 	
 	# draw constant data
@@ -68,9 +68,9 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	absent.rate <- rtnorm(n=mep.nbr, mean=0, sd=0.15, lower=0, upper=1)
 	rebellion.rate <- rtnorm(n=mep.nbr, mean=0.2, sd=0.2, lower=0, upper=1)
 	# record them (for debug)
-	table.file <- paste(root.folder,"absent-rate.csv",sep="")
+	table.file <- file.path(root.folder,"absent-rate.csv")
 	write.csv2(absent.rate,file=table.file,row.names=TRUE)
-	table.file <- paste(root.folder,"rebellion-rate.csv",sep="")
+	table.file <- file.path(root.folder,"rebellion-rate.csv")
 	write.csv2(rebellion.rate,file=table.file,row.names=TRUE)
 	
 	# draw vote outcomes for each group
@@ -80,7 +80,7 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	rownames(group.votes) <- names(GROUP.VW2SYMB)
 	group.votes[!(names(GROUP.VW2SYMB) %in% TEST.GROUPS),] <- NA
 	# record these group political lines
-	table.file <- paste(root.folder,"polgroup-lines.csv",sep="")
+	table.file <- file.path(root.folder,"polgroup-lines.csv")
 	write.csv2(group.votes,file=table.file,row.names=TRUE)
 	
 	# files containing the votes details
@@ -133,7 +133,7 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 		check.names=FALSE,stringsAsFactors=FALSE)
 
 		# record the table
-		table.file <- paste(raw.folder,i,".csv",sep="")
+		table.file <- file.path(raw.folder,paste(i,".csv",sep=""))
 		write.csv(vote.df,file=table.file,row.names=FALSE)
 	}
 	
@@ -148,7 +148,7 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	check.names=FALSE,stringsAsFactors=FALSE)
 
 	# record the table
-	table.file <- paste(root.folder,"list.csv",sep="")
+	table.file <- file.path(root.folder,"list.csv")
 	write.csv2(doc.df,file=table.file,row.names=FALSE)
 }
 

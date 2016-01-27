@@ -108,16 +108,16 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
-process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
-		domains, dates, everything, countries, groups, plot.formats)
+#process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
+#		domains, dates, everything, countries, groups, plot.formats)
 	
 
 
 #############################################################################################
 # Extract all the networks
 #############################################################################################
-#extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups, plot.formats)
+extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 #############################################################################################
