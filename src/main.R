@@ -100,16 +100,16 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-		domains, dates, everything, countries, groups, plot.formats)
+#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 
 #############################################################################################
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
-#process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
-#		domains, dates, everything, countries, groups, plot.formats)
+process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
+		domains, dates, everything, countries, groups, plot.formats)
 	
 
 

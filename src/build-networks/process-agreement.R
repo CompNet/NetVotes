@@ -12,16 +12,16 @@ source("src/prepare-data/filter-data.R")
 
 
 #############################################################################################
-# Loads the specified score matrix, and returns, well, this matrix.
+# Loads the specified score table, and returns, well, this table.
 #
 # Note: the agreement between a MEP and himself might not be 1, depending on how the score
-# matrix is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
-# MEP who abstained gets a score of zero when compared to himself.
+# table is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
+# MEP who abstained at a vote gets a score of zero when compared to himself (for this vote).
 #
 # file.name: name of the file containing the scores (without the .txt extension).
-# returns: the loaded matrix.
+# returns: the loaded table.
 #############################################################################################
-load.score.matrix <- function(file.name)
+load.score.table <- function(file.name)
 {	# load the file content
 	file.name <- paste(file.name,".txt",sep="")
 	file <- file.path(SCORE.FOLDER,file.name)
@@ -30,12 +30,12 @@ load.score.matrix <- function(file.name)
 	df[is.na(df[,1]),1] <- "NA"
 	df[is.na(df[,2]),2] <- "NA"
 	
-	# init the result matrix
+	# init the result table
 	result <- matrix(NA, nrow=length(VOTE.VALUES)+1, ncol=length(VOTE.VALUES)+1)
 	rownames(result) <- c(VOTE.VALUES, "NA")
 	colnames(result) <- c(VOTE.VALUES, "NA")
 	
-	# fill the matrix
+	# fill the table
 	for(i in 1:nrow(df))
 	{	result[df[i,1],df[i,2]] <- df[i,3]
 		result[df[i,2],df[i,1]] <- df[i,3]
@@ -57,12 +57,12 @@ load.score.matrix <- function(file.name)
 # matrix is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
 # MEP who abstained gets a score of zero when compared to himself.
 # 
-# votes: vector of all MEP votes for a given document.
-# agreement.matrix: matrix containing the reference scores, loaded with load.aggreement.matrix.
+# votes: vector of all MEP votes for the considered document.
+# score.table: matrix containing the reference scores, previously loaded with load.aggreement.matrix.
 # returns: a square matrix whose size is the number of MEPs, and containing all agreement scores
 #  		   for the considered document.
 #############################################################################################
-process.agreement.scores <- function(votes, agreement.matrix)
+process.agreement.scores <- function(votes, score.table)
 {	# possibly replace NA by equivalent strings
 	votes[is.na(votes)] <- "NA"
 	
@@ -73,7 +73,7 @@ process.agreement.scores <- function(votes, agreement.matrix)
 	for(i in 1:length(votes))
 	{	for(j in 1:length(votes))
 		{	#cat(i,":",j,"\n")
-			result[i,j] <- agreement.matrix[votes[i],votes[j]]
+			result[i,j] <- score.table[votes[i],votes[j]]
 		}
 	}
 	
@@ -95,12 +95,12 @@ process.agreement.scores <- function(votes, agreement.matrix)
 # matrix is defined. For instance, if Absention vs. Abstention gets a score of 0, then a
 # MEP who abstained gets a score of zero when compared to himself.
 # 
-# votes: matrix of all MEP (rows) votes for several documents (columns).
-# agreement.matrix: matrix containing the reference scores, loaded with load.aggreement.matrix.
+# votes: matrix of all MEP (rows) votes for the considered documents (columns).
+# score.table: matrix containing the reference scores, previously loaded with load.score.table.
 # returns: a square matrix whose size is the number of MEPs, and containing all agreement indices
 #  		   for the considered documents.
 #############################################################################################
-process.agreement.index <- function(votes, agreement.matrix)
+process.agreement.index <- function(votes, score.table)
 {	# init data structures
 	counts <- matrix(0,nrow=nrow(votes),ncol=nrow(votes))
 	sums <- matrix(0,nrow=nrow(votes),ncol=nrow(votes))
@@ -109,7 +109,7 @@ process.agreement.index <- function(votes, agreement.matrix)
 	for(i in 1:ncol(votes))
 	{	cat("Processing document",i,"\n")
 		# get scores
-		scores <- process.agreement.scores(votes[,i], agreement.matrix)
+		scores <- process.agreement.scores(votes[,i], score.table)
 		
 		# update counts
 		increments <- matrix(0,nrow=nrow(scores),ncol=ncol(scores))
@@ -159,17 +159,18 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 		plot.prefix <- paste("[",mode,"] ",sep="")
 	
 	# load the agreement scores
-	agreement.matrix <- load.score.matrix(score.file)
+	score.table <- load.score.table(score.file)
 	
 	# consider each domain individually (including all domains at once)
-	for(dom in domains)
-	#dom <- DOMAIN.ALL
+#	for(dom in domains)
+	dom <- DOMAIN.ALL
 	{	# setup folder
 		folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
 		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 		
 		# consider each time period (each individual year as well as the whole term)
-		for(date in dates)
+#		for(date in dates)
+		date <- DATE.T7.TERM
 		{	cat("Processing agreement data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# retain only the documents related to the selected topic and dates
@@ -185,7 +186,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, subfolde
 			{	# format data
 				cols <- match(filtered.doc.ids, colnames(all.votes))
 				votes <- all.votes[,cols]
-				agreement <- process.agreement.index(votes, agreement.matrix)
+				agreement <- process.agreement.index(votes, score.table)
 				
 				# record raw agreement index values
 				colnames(agreement) <- all.votes[,COL.MEPID]
