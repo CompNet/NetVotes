@@ -12,11 +12,10 @@
 # country: considered member state (optional).
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
-# period: considered time period (optional).
-# additional: additional folder (last position).
+# period: considered time period.
 # returns: the appropriate path for a files in the "votes" folder.
 #############################################################################################
-get.votes.path(country=NA, group=NA, domain, period=NA, additional=NA)
+get.votes.path(country=NA, group=NA, domain, period)
 {	result <- VOTES.FOLDER
 	
 	# country, group or everything (mutuall exclusive)
@@ -31,14 +30,9 @@ get.votes.path(country=NA, group=NA, domain, period=NA, additional=NA)
 	if(!(is.na(domain)))
 		result <- file.path(result,domain)
 	
-	# time period
+	# time period (should not be NA)
 	if(!is.na(period))
-		result <- file.path(result,period)
-	
-	# additional level
-	if(!is.na(additional))
-		result <- file.path(result,additional)
+		result <- file.path(result,DATE.STR.T7[period])
 	
 	return(result)
 }
-
