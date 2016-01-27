@@ -449,7 +449,7 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 				numerized[temp==target] <- 1
 				votes <- apply(numerized, 2, mean)
 				
-print(votes)				
+				#print(votes)				
 				# plot absolute counts as bars
 				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
 				plot.file <- paste(folder,file.prefix,DATE.STR.T7[date],"-counts",sep="")

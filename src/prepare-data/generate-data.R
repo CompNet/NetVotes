@@ -156,4 +156,4 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 #############################################################################################
 # tests
 #############################################################################################
-#generate.raw.data(mep.nbr=30, doc.nbr=15, folder="test")
+#generate.raw.data(mep.nbr=30, doc.nbr=50, folder="test")

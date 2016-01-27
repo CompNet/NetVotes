@@ -44,17 +44,17 @@ dataset.name <- "VW"		# VoteWatch
 ## filtering parameters
 #domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
 #domains <- DOMAIN.AFCO
-domains <- DOMAIN.VW2SYMB[TEST.DOMAINS]
+domains <- c(DOMAIN.VW2SYMB[TEST.DOMAINS],DOMAIN.ALL)
 #dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
 #dates <- c(DATE.T7.Y1)
 dates <- TEST.YEARS
-everything <- TRUE							# whether or not to process all data without distinction of country or date
+everything <- TRUE								# whether or not to process all data without distinction of country or date
 #everything <- FALSE
-#countries <- COUNTRY.VALUES				# which country to process individually
+#countries <- COUNTRY.VALUES					# which country to process individually
 #countries <- c(COUNTRY.AT)
 countries <- TEST.COUNTRIES
 #countries <- c()
-#groups <- GROUP.VALUES					# which group to process individually
+#groups <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
 groups <- GROUP.VW2SYMB[TEST.GROUPS]
 #groups <- c()
@@ -79,7 +79,7 @@ comp.measures <- c(
 
 ## formats of the generated plot (NA for screen -- mainly for debug)
 plot.formats <- c(
-	"PDF", 
+#	"PDF", 
 	"PNG"
 #	NA
 )
@@ -100,8 +100,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-#		domains, dates, everything, countries, groups, plot.formats)
+process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 
