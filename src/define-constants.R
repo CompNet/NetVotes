@@ -48,7 +48,7 @@ OUT.FOLDER <- "out"
 # graph files
 	SIGNED.FILE <- "signed"
 	POSITIVE.FILE <- "positive"
-	COMP.NEGATIVE.FILE <- "comp-negative"
+	COMP.NEGATIVE.FILE <- "compneg"
 
 
 #############################################################################################

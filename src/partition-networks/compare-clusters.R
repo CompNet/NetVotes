@@ -34,13 +34,12 @@ compare.partition.pair <- function(partition1, partition2, measures="nmi")
 # Processes the specified measures comparing all specified partitioning algorithms for the
 # data contained in the specified folder.
 #
-# folder: folder containing the partitions, and used to record the result files.
 # comdet.algos: vector of community detection algorithm names.
 # corclu.algos: vector of correlation clustering algorithm names.
 # measures: vector of comparison measures to process.
 # repetitions: number of times each algorithm must be applied.
 #############################################################################################
-compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, measures="nmi", repetitions)
+compare.partitions.measures <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain, date, country, group, comdet.algos, corclu.algos, measures="nmi", repetitions)
 {	# init the list used to process the average
 	if(repetitions>1)
 	{	avg.list <- list()
@@ -53,9 +52,11 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 	{	cat("Processing iteration ",r,"/",repetitions,"\n",sep="")
 		# setup iteration folder
 		if(repetitions>1)
-			r.folder <- paste(folder,r,"/",sep="")
+			#r.folder <- paste(folder,r,"/",sep="")
+			part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date, repetition=r)
 		else
-			r.folder <- folder
+			#r.folder <- folder
+			part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date, repetition=NA)
 		
 		# load partitions
 		partitions <- list()
@@ -64,14 +65,14 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 			
 			# partition obtained on the complementary negative subgraph
 			neg.algo.name <- comdet.algo.ncg.value(comdet.name)
-			neg.partition.file <- paste(r.folder,neg.algo.name,"-membership.txt",sep="")
+			neg.partition.file <- file.path(part.folder,paste(neg.algo.name,"-membership.txt",sep=""))
 			if(!file.exists(neg.partition.file))
 				cat("Partition file ",neg.partition.file," not found\n",sep="")
 			else
 				partitions[[neg.algo.name]] <- as.matrix(read.table(neg.partition.file))
 			
 			# partition obtained on the positive subgraph
-			pos.partition.file <- paste(r.folder,comdet.name,"-membership.txt",sep="")
+			pos.partition.file <- file.path(part.folder,paste(comdet.name,"-membership.txt",sep=""))
 			if(!file.exists(pos.partition.file))
 				cat("Partition file ",pos.partition.file," not found\n",sep="")
 			else
@@ -79,7 +80,7 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 		}
 		for(corclu.name in corclu.algos)
 		{	cat("Loading partition files for algorithm ",corclu.name,"\n",sep="")
-			signed.partition.file <- paste(r.folder,corclu.name,"-membership.txt",sep="")
+			signed.partition.file <- file.path(part.folder,paste(corclu.name,"-membership.txt",sep=""))
 			if(!file.exists(signed.partition.file))
 				cat("Partition file ",signed.partition.file," not found\n",sep="")
 			else
@@ -115,7 +116,7 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 		
 		# record iteration matrices
 		for(meas in measures)
-		{	table.file <- paste(r.folder,"comparison-",meas,".csv",sep="")
+		{	table.file <- file.path(part.folder,paste("comparison-",meas,".csv",sep=""))
 			write.csv2(mats[[meas]], file=table.file, row.names=TRUE)
 		}
 		
@@ -128,11 +129,12 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 	
 	# record the average tables
 	if(repetitions>1)
-	{	for(meas in measures)
+	{	part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date, repetition=NA)
+		for(meas in measures)
 		{	tmp <- average.matrix.list(avg.list[[meas]])
-			table.file <- paste(folder,"comparison-mean-",meas,".csv",sep="")
+			table.file <- file.path(part.folder,paste("comparison-mean-",meas,".csv",sep=""))
 			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
-			table.file <- paste(folder,"comparison-stdev-",meas,".csv",sep="")
+			table.file <- file.path(part.folder,paste("comparison-stdev-",meas,".csv",sep=""))
 			write.csv2(tmp$stev, file=table.file, row.names=TRUE)
 		}
 	}
@@ -147,15 +149,16 @@ compare.partitions.measures <- function(folder, comdet.algos, corclu.algos, meas
 # pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
 # score.file: file describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
-# folder: folder used to store the generated files.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
+# country: member state to consider separately when processing the data.
+# group: political group to consider separately when processing the data.
 # comdet.algos: community detection algorithms to apply.
 # corclu.algos: correlation clustering algorithms to apply.
 # measures: vector of comparison measures to process.
 # repetitions: number of times each algorithm must be applied.
 #############################################################################################
-compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
+compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, measures, repetitions)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
 	{	# consider each time period (each individual year as well as the whole term)
@@ -163,14 +166,14 @@ compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, folder,
 		{	cat("Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph folder
-			filtered.folder <- paste(folder,"/",score.file,
-					"/","negtr=",neg.thresh,"-postr=",pos.thresh,
-					"/",dom,"/",DATE.STR.T7[date],
-					"/",sep="")
+			#filtered.folder <- paste(folder,"/",score.file,
+			#		"/","negtr=",neg.thresh,"-postr=",pos.thresh,
+			#		"/",dom,"/",DATE.STR.T7[date],
+			#		"/",sep="")
 			
 			# compare algorithm performances
 			cat("Compare partitioning algorithm performances\n",sep="")
-			compare.partitions.measures(filtered.folder, comdet.algos, corclu.algos, measures, repetitions)
+			compare.partitions.measures(neg.thresh, pos.thresh, score.file, domain=dom, date, country, group, comdet.algos, corclu.algos, measures, repetitions)
 		}
 	}
 }
@@ -198,13 +201,11 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 {	# extract networks for all data
 	if(everything)
 	{	cat("Compare performance measures for all data","\n",sep="")
-		folder <- paste(PARTITIONS.FOLDER,"/","everything",sep="")
-		compare.partitions(neg.thresh, pos.thresh, score.file, folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
+		compare.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, measures, repetitions)
 	}
 	
 	# networks by political group
 	cat("Compare performance measures by group","\n",sep="")
-	folder <- paste(PARTITIONS.FOLDER,"/","bygroup",sep="")
 	for(group in groups)
 	{	cat("Compare performance measures for group ",group,"\n",sep="")
 		
@@ -213,16 +214,12 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
 		grp.meps <- mep.details[idx,]
 		
-		# setup folder
-		grp.folder <- paste(folder,"/",group,sep="")
-		
 		# extract networks
-		compare.partitions(neg.thresh, pos.thresh, score.file, grp.folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
+		compare.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, measures, repetitions)
 	}
 	
 	# networks by home country
 	cat("Compare performance measures by country","\n",sep="")
-	folder <- paste(PARTITIONS.FOLDER,"/","bycountry",sep="")
 	for(country in countries)
 	{	cat("Compare performance measures for country ",country,"\n",sep="")
 		
@@ -231,10 +228,7 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
 		cntr.meps <- mep.details[idx,]
 		
-		# setup folder
-		cntr.folder <- paste(folder,"/",country,sep="")
-		
 		# extract networks
-		compare.partitions(neg.thresh, pos.thresh, score.file, cntr.folder, domains, dates, comdet.algos, corclu.algos, measures, repetitions)
+		compare.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, measures, repetitions)
 	}
 }

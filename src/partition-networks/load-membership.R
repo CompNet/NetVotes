@@ -69,5 +69,3 @@ load.pils.partition <- function(file.name, algo.name)
 	
 	return(membership)
 }
-
-
