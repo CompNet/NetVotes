@@ -50,7 +50,10 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	V(result)$Country <- mep.details[,COL.STATE]
 	V(result)$Group <- mep.details[,COL.GROUP]
 	
-	graph.base <- paste(folder,SIGNED.FILE,sep="")
+	# plot graph and get spatial positions as nodal attributes
+	cat("Plotting network...\n")
+	graph.base <- file.path(folder,SIGNED.FILE)
+	g <- plot.network(g=result, plot.file=graph.base, format=plot.formats)
 	
 	# export the graph under the graphml format
 	graph.file <- paste(graph.base,".graphml",sep="")
@@ -58,11 +61,11 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	
 	# also export the positive and complementary negative graphs, as unsigned graphs
 	gp <- subgraph.edges(graph=result, eids=which(E(result)$weight>0), delete.vertices=FALSE)
-	graph.file <- paste(folder,POSITIVE.FILE,".graphml",sep="")
+	graph.file <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
 	write.graph(graph=gp, file=graph.file, format="graphml")
 	gn <- subgraph.edges(graph=result, eids=which(E(result)$weight<0), delete.vertices=FALSE)
 	gn <- graph.complementer(graph=gn, loops=FALSE)
-	graph.file <- paste(folder,COMP.NEGATIVE.FILE,".graphml",sep="")
+	graph.file <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
 	write.graph(graph=gn, file=graph.file, format="graphml")
 	
 	# export using a format compatible with pILS
@@ -72,14 +75,10 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	write.table(data.frame(nrow(mep.details),nrow(t)), file=graph.file, append=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)	# write header
 	write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)								# write proper graph
 	
-	# plot graph
-	cat("Plotting network...\n")
-#	plot.network(g=result, plot.file=graph.base, format=plot.formats)
-	
 	# process network stats
 	cat("Processing network stats...\n")
-#	process.network.stats(result, folder)
-
+	process.network.stats(result, folder)
+	
 	return(result)
 }
 
@@ -93,25 +92,28 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 # pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
 # score.file: files describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
-# subfolder: subfolder used to store the generated files.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# mode: indicates whether we are processing only a subpart of the original MEPs (used in the 
-#		plot titles).
+# country: state member currently processed (or NA if none in particular).
+# group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
 #############################################################################################
-extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, subfolder, domains, dates, mode, plot.formats)
+extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, country, group, plot.formats)
 {	# setup graph title
-	if(is.na(mode))
-		mode.str <- ""
+	if(is.na(country))
+		if(is.na(group))
+			mode.str <- ""
+		else
+			mode.str <- paste(" - group=",group,sep="")
 	else
-		mode.str <- paste(" - mode=",mode,sep="")
+		mode.str <- paste(" - country=",country,sep="")
 	base.graph.name <- paste("MEP agreement - score=",score.file,mode.str,sep="")
 	
 	# consider each domain individually (including all domains at once)
 	for(dom in domains)
 	{	# setup agreement folder
-		agr.folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
+		#agr.folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
+		agr.folder <- get.agreement.path(score=score.file,country,group,domain=dom)
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
@@ -121,9 +123,10 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 			graph.name <- paste(base.graph.name," - domain=",dom," - period=",DATE.STR.T7[date],
 					" - neg.tresh=",neg.thresh," - pos.tresh=",pos.thresh,sep="")
 			# setup graph folder
-			folder <- paste(NETWORKS.FOLDER,"/",subfolder,"/",score.file,
-					"/","negtr=",neg.thresh,"-postr=",pos.thresh,
-					"/",dom,"/",DATE.STR.T7[date],"/",sep="")
+			#folder <- paste(NETWORKS.FOLDER,"/",subfolder,"/",score.file,
+			#		"/","negtr=",neg.thresh,"-postr=",pos.thresh,
+			#		"/",dom,"/",DATE.STR.T7[date],"/",sep="")
+			folder <- get.networks.path(score=score.file,neg.thresh,pos.thresh,country,group,domain=dom,period=date)
 			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 			
 			# load agreement index file
@@ -159,13 +162,11 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 {	# extract networks for all data
 	if(everything)
 	{	cat("Extract networks for all data","\n",sep="")
-		subfolder <- "everything"
-		extract.networks(mep.details, neg.thresh, pos.thresh, score.file, subfolder, domains, dates, mode=NA, plot.formats)
+		extract.networks(mep.details, neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, plot.formats)
 	}
 	
 	# networks by political group
 	cat("Extract networks by group","\n",sep="")
-	subfolder <- "bygroup"
 	for(group in groups)
 	{	cat("Extract networks for group ",group,"\n",sep="")
 		
@@ -174,16 +175,12 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
 		grp.meps <- mep.details[idx,]
 		
-		# setup folder
-		grp.subfolder <- paste(subfolder,"/",group,sep="")
-		
 		# extract networks
-		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, grp.subfolder, domains, dates, mode=group, plot.formats)
+		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, plot.formats)
 	}
 	
 	# networks by home country
 	cat("Extract networks by country","\n",sep="")
-	subfolder <- "bycountry"
 	for(country in countries)
 	{	cat("Extract networks for country ",country,"\n",sep="")
 		
@@ -192,10 +189,7 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
 		cntr.meps <- mep.details[idx,]
 		
-		# setup folder
-		cntr.subfolder <- paste(subfolder,"/",country,sep="")
-		
 		# extract networks
-		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, cntr.subfolder, domains, dates, mode=country, plot.formats)
+		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, domains, dates, country, group=NA, plot.formats)
 	}
 }

@@ -129,8 +129,9 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 # country: state member currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
+# vote.mode: whether the processed data are votes (TRUE) or behavior (FALSE).
 #############################################################################################
-process.vote.distribution.complete <- function(all.votes, doc.details, vote.values, file.prefix, colors.label, object, domains, dates, country, group, plot.formats)
+process.vote.distribution.complete <- function(all.votes, doc.details, vote.values, file.prefix, colors.label, object, domains, dates, country, group, plot.formats, vote.mode)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -180,7 +181,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 				
 					# setup folder
 					#folder <- paste(main.folder,dom,"/",DATE.STR.T7[date],"/",sep="")
-					folder <- get.votes.path(country, group, domain=dom, period=date, additional=NA)
+					folder <- get.votes.path(vote=vote.mode, country, group, domain=dom, period=date, additional=NA)
 					dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 				
 					# absolute counts as bars
@@ -257,8 +258,9 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 # country: state member currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
+# vote.mode: whether the processed data are votes (TRUE) or behavior (FALSE).
 #############################################################################################
-process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.values, file.prefix, colors.label, object, domains, dates, country, group, plot.formats)
+process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.values, file.prefix, colors.label, object, domains, dates, country, group, plot.formats, vote.mode)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -307,17 +309,17 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 			}
 		}
 		
-		# setup folder
-		#folder <- paste(main.folder,dom,"/aggregated/",sep="")
-		folder <- get.votes.path(country, group, domain=dom, period=DATE.T7.TERM)
-		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
-	
 		# term-wise
 		if(length(votes.spe)>0)
 		{	if(all(is.na(votes.spe)))
 				cat("WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
 			else
-			{	# absolute counts as bars
+			{	# setup folder
+				#folder <- paste(main.folder,dom,"/aggregated/",sep="")
+				folder <- get.votes.path(vote=vote.mode, country, group, domain=dom, period=DATE.T7.TERM)
+				dir.create(folder, recursive=TRUE, showWarnings=FALSE)
+				
+				# absolute counts as bars
 				title <- paste(plot.prefix,"Numbers of ",object," - domain=",dom," - aggregation=term",sep="")
 				plot.file <- file.path(folder,paste("aggregated-term-",file.prefix,"counts",sep=""))
 				data <- plot.unif.indiv.raw.bars(plot.file, 
@@ -354,11 +356,16 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 		}
 		
 		# by year
-		if(length(votes[[date]])>1)
+		if(do.yearly)
 		{	if(all(is.na(votes)))
 				cat("WARNING: All yearly values are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
 			else
-			{	# absolute counts as bars
+			{	# setup folder
+				#folder <- paste(main.folder,dom,"/aggregated/",sep="")
+				folder <- get.votes.path(vote=vote.mode, country, group, domain=dom, period=DATE.T7.TERM)
+				dir.create(folder, recursive=TRUE, showWarnings=FALSE)
+				
+				# absolute counts as bars
 				title <- paste(plot.prefix,"Numbers of ",object," - domain=",dom," aggregation=yearly",sep="")
 				plot.file <- file.path(folder,paste("aggregated-yearly-",file.prefix,"counts",sep=""))
 				data <- plot.stacked.indiv.raw.bars(plot.file, 
@@ -413,8 +420,9 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 # country: state member currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
+# vote.mode: whether the processed data are votes (TRUE) or behavior (FALSE).
 #############################################################################################
-process.vote.distribution.average <- function(all.votes, doc.details, target, file.prefix, object, domains, dates, country, group, plot.formats)
+process.vote.distribution.average <- function(all.votes, doc.details, target, file.prefix, object, domains, dates, country, group, plot.formats, vote.mode)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -439,7 +447,7 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 			
 			# setup folder
 			#folder <- paste(main.folder,dom,"/averaged/",sep="")
-			folder <- get.votes.path(country, group, domain=dom, period=date)
+			folder <- get.votes.path(vote=vote.mode, country, group, domain=dom, period=date)
 			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 			
 			# retain only the documents related to the selected topic and dates
@@ -517,13 +525,13 @@ process.vote.distribution <- function(all.votes, doc.details, domains, dates, co
 	
 	# process complete vote distributions
 	cat("Plotting complete vote value distributions","\n",sep="")
-	process.vote.distribution.complete(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats)
-	process.vote.distribution.complete(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats)
+	process.vote.distribution.complete(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
+	process.vote.distribution.complete(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
 	
 	# process aggregated vote distributions
 	cat("Plotting aggregated vote values distributions","\n",sep="")
-	process.vote.distribution.aggregate(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats)
-	process.vote.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats)
+	process.vote.distribution.aggregate(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
+	process.vote.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
 }
 
 
@@ -543,15 +551,15 @@ process.vote.distribution <- function(all.votes, doc.details, domains, dates, co
 process.behavior.stats <- function(behavior.values, doc.details, domains, dates, country, group, plot.formats)
 {	# process complete behavior distributions
 	cat("Plotting complete behavior distributions","\n",sep="")
-	process.vote.distribution.complete(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats)
+	process.vote.distribution.complete(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode=FALSE)
 	
 	# process aggregated behavior distributions
 	cat("Plotting aggregated behavior distributions","\n",sep="")
-	process.vote.distribution.aggregate(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats)
+	process.vote.distribution.aggregate(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode=FALSE)
 	
 	# processed average behavior distributions
 	cat("Plotting average behavior distributions","\n",sep="")
-	process.vote.distribution.average(all.votes=behavior.values, doc.details, target=BEHAVIOR.LOYAL, file.prefix=NA, object="loyalty index", domains, dates, country, group, plot.formats)
+	process.vote.distribution.average(all.votes=behavior.values, doc.details, target=BEHAVIOR.LOYAL, file.prefix=NA, object="loyalty index", domains, dates, country, group, plot.formats, vote.mode=FALSE)
 }
 
 

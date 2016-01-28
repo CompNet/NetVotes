@@ -13,6 +13,7 @@ library("igraph")
 # g: signed graph to plot.
 # plot.file: base name (and path) of the generated files.
 # format: format(s) to handle.
+# returns: the same graph, with the spatial positions stored as nodal attributes x and y.
 #############################################################################################
 plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
 {	# setup node parameters
@@ -28,9 +29,13 @@ plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
 	}
 	
 	# setup layout
-#	lyt <- layout.kamada.kawai(graph=g)
-	lyt <- layout.fruchterman.reingold(graph=g)
-#	lyt <- layout.circle(graph=g)
+	gpos <- delete.edges(graph=g,edges=E(g)$weight<0)
+#	lyt <- layout.kamada.kawai(graph=gpos)
+	lyt <- layout.fruchterman.reingold(graph=gpos)
+#	lyt <- layout.circle(graph=gpos)
+	# store spatial positions as nodal attributes
+	V(g)$x <- lyt[,1]
+	V(g)$y <- lyt[,2]
 	
 	# process each specified format
 	for(frmt in format)
@@ -65,4 +70,6 @@ plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
 		if(!is.na(frmt))
 			dev.off()
 	}
+	
+	return(g)
 }

@@ -185,7 +185,7 @@ process.network.stats <- function(g, folder)
 	# TODO degree distribution (maybe add a special function to handle distributions and produce plots)
 		
 	# record result
-	table.file <- paste(folder,"properties",".csv",sep="")
+	table.file <- file.path(folder,"properties.csv")
 	write.csv2(result, file=table.file, row.names=TRUE)	
 	
 	return(result)
