@@ -72,6 +72,8 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 		ae <- combn(1:vcount(gn),2)
 		gn[from=ae[1,],to=ae[2,],att="weight"] <- 1
 		gn[from=m[,1],to=m[,2],att="weight"] <- w
+		if(any(E(gn)$weight==0))
+			gn <- delete.edges(graph=gn,edges=which(E(gn)$weight==0))
 	graph.file <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
 	write.graph(graph=gn, file=graph.file, format="graphml")
 	

@@ -33,7 +33,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 	{	# this implementation will use the weights and directions, if present
 		coms <- edge.betweenness.community(
 					graph=g, edge.betweenness=FALSE, merges=FALSE,
-					bridges=FALSE, modularity=FALSE, membership=TRUE)
+					bridges=FALSE, modularity=TRUE, membership=TRUE) # modularity needed (bug in igraph v0.7)
 	}
 	else if(algo.name==COMDET.ALGO.INFOMAP | algo.name==comdet.algo.ncg.value(COMDET.ALGO.INFOMAP))
 	{	# this implementation will use the weights and directions, if present
@@ -140,7 +140,7 @@ perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, dat
 			# complementary negative graph
 			if(!all(is.na(graphs$neg)))
 			{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph\n",sep="")
-				memb <- apply.partitioning.algorithm(graphs$neg, algo.name, part.folder, graph.folder)
+				memb <- apply.partitioning.algorithm(graphs$neg, neg.algo.name, part.folder, graph.folder)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=neg.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=neg.att.name, value=memb)
 				graphs$signed <- set.vertex.attribute(graph=graphs$signed, name=neg.att.name, value=memb)
