@@ -147,7 +147,7 @@ process.agreement.index <- function(votes, score.table)
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats used for the plot files.
 #############################################################################################
-process.agreement.stats <- function(all.votes, doc.details, score.file, subfolder, domains, dates, country, group, plot.formats)
+process.agreement.stats <- function(all.votes, doc.details, score.file, domains, dates, country, group, plot.formats)
 {	object <- "Agreement index"
 	x.label <- paste("Agreement index - score=",score.file,sep="")
 			

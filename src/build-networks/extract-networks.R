@@ -27,7 +27,7 @@ source("src/build-networks/process-network-stats.R")
 # plot.formats: formats of the plot files.
 #############################################################################################
 extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA, folder, graph.name, plot.formats)
-{	cat("Building network...\n")
+{	cat("Building network folder='",folder,"'\n",sep="")
 	
 	# replace NAs by zeros
 	agreement[is.na(agreement)] <- 0
@@ -39,9 +39,9 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 		agreement[agreement>0 & agreement<pos.thresh] <- 0
 	
 	# build network using igraph
-	result <- graph.adjacency(adjmatrix=agreement, 
-		mode="undirected", weighted=TRUE, diag=FALSE,
-		add.colnames=NA, add.rownames="MEPid")
+	result <- graph.adjacency(adjmatrix=agreement, 		# use the agreement as the adjacency matrix
+		mode="undirected", weighted=TRUE, diag=FALSE,	# ignore the diagonal of the agreement matrix
+		add.colnames=NA, add.rownames="MEPid")			# use the id as node names
 	result$name <- graph.name
 	
 	# add MEP attributes
@@ -130,7 +130,7 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 			
 			# load agreement index file
-			table.file <- paste(agr.folder,DATE.STR.T7[date],"-agreement.csv",sep="")
+			table.file <- file.path(agr.folder,paste(DATE.STR.T7[date],"-agreement.csv",sep=""))
 			if(!file.exists(table.file))
 				cat("WARNING: Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement","\n",sep="")
 			else

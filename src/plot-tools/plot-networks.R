@@ -24,12 +24,12 @@ plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
 	if(ecount(g)>0)
 	{	edge.colors <- rep(NA,ecount(g))
 		edge.colors[E(g)$weight<0] <- adjustcolor("RED", alpha.f=0.5)
-		edge.colors[E(g)$weight>0] <- adjustcolor("BLUE", alpha.f=0.5)
+		edge.colors[E(g)$weight>0] <- adjustcolor("GREEN", alpha.f=0.5)
 		edge.widths <- abs(E(g)$weight)*10
 	}
 	
 	# setup layout
-	gpos <- delete.edges(graph=g,edges=E(g)$weight<0)
+	gpos <- delete.edges(graph=g,edges=which(E(g)$weight<0))
 #	lyt <- layout.kamada.kawai(graph=gpos)
 	lyt <- layout.fruchterman.reingold(graph=gpos)
 #	lyt <- layout.circle(graph=gpos)

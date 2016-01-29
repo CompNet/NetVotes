@@ -20,6 +20,7 @@
 # source("src/main.R")
 #############################################################################################
 source("src/define-constants.R")
+source("src/define-paths.R")
 source("src/build-networks/extract-networks.R")
 source("src/build-networks/process-agreement.R")
 source("src/partition-networks/compare-clusters.R")

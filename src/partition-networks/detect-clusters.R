@@ -105,7 +105,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 # corclu.algos: correlation clustering algorithms to apply.
 # repetitions: number of times each algorithm must be applied.
 #############################################################################################
-perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, date, country, group, comdet.algos, corclu.algos, repetitions, comdet.algos, corclu.algos, repetitions)
+perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, date, country, group, comdet.algos, corclu.algos, repetitions)
 {	# load the graphs
 	graphs <- retrieve.graphs(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date)
 	graph.folder <- get.networks.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date)

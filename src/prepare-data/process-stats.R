@@ -181,7 +181,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 				
 					# setup folder
 					#folder <- paste(main.folder,dom,"/",DATE.STR.T7[date],"/",sep="")
-					folder <- get.votes.path(vote=vote.mode, country, group, domain=dom, period=date, additional=NA)
+					folder <- get.votes.path(vote=vote.mode, country, group, domain=dom, period=date)
 					dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 				
 					# absolute counts as bars
@@ -212,6 +212,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 					# proportions as bars
 					title <- paste(plot.prefix,"Proportions of ",object," - domain=",dom," - period=",DATE.STR.T7[date],sep="")
 					plot.file <- file.path(folder,paste(file.prefix,"proportions-bars",sep=""))
+					#print(plot.file);print(as.character(filtered.doc.ids[indices]));print(votes)
 					data <- plot.stacked.indiv.raw.bars(plot.file, 
 						bar.names=as.character(filtered.doc.ids[indices]), color.names=vote.values, 
 						values=votes, 
@@ -376,7 +377,10 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 					x.rotate=FALSE, format=plot.formats)
 				# record as a table
 				data <- t(data.frame(data))
-				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
+				temp <- matrix(NA,ncol=ncol(data),nrow=length(DATE.T7.YEARS))
+				rownames(temp) <- DATE.T7.YEARS
+				temp[rownames(data),] <- data
+				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),temp)
 				colnames(data) <- c(COL.DATE, vote.values)
 				table.file <- paste(plot.file,".csv",sep="")
 				write.csv2(data,file=table.file, row.names=FALSE)
@@ -393,7 +397,10 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				# record as a table
 				data <- lapply(data, function(v) if(all(v==0)) {return(rep(0,length(v)))} else {return(v/sum(v))})
 				data <- t(data.frame(data))
-				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),data)
+				temp <- matrix(NA,ncol=ncol(data),nrow=length(DATE.T7.YEARS))
+				rownames(temp) <- DATE.T7.YEARS
+				temp[rownames(data),] <- data
+				data <- cbind(data.frame(DATE.STR.T7[DATE.T7.YEARS]),temp)
 				colnames(data) <- c(COL.DATE, vote.values)
 				table.file <- paste(plot.file,".csv",sep="")
 				write.csv2(data,file=table.file, row.names=FALSE)
