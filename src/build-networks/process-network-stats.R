@@ -173,17 +173,17 @@ process.network.stats <- function(g, folder)
 	
 	# process original graph
 	result <- process.global.measures(g, g, result, col.name=COL.ORIGINAL.GRAPH)
-		
+	
 	# process positive graph
 	pos.g <- subgraph.edges(graph=g, eids=which(E(g)$weight>0), delete.vertices=FALSE)
 	result <- process.global.measures(pos.g, g, result, col.name=COL.POSITIVE.GRAPH)
-		
+	
 	# process negative graph
 	neg.g <- subgraph.edges(graph=g, eids=which(E(g)$weight<0), delete.vertices=FALSE)
 	result <- process.global.measures(neg.g, g, result, col.name=COL.NEGATIVE.GRAPH)
-		
+	
 	# TODO degree distribution (maybe add a special function to handle distributions and produce plots)
-		
+	
 	# record result
 	table.file <- file.path(folder,"properties.csv")
 	write.csv2(result, file=table.file, row.names=TRUE)	

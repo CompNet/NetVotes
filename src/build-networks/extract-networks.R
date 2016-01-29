@@ -53,7 +53,7 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	# plot graph and get spatial positions as nodal attributes
 	cat("Plotting network...\n")
 	graph.base <- file.path(folder,SIGNED.FILE)
-	g <- plot.network(g=result, plot.file=graph.base, format=plot.formats)
+	result <- plot.network(g=result, plot.file=graph.base, format=plot.formats)
 	
 	# export the graph under the graphml format
 	graph.file <- paste(graph.base,".graphml",sep="")
@@ -64,7 +64,14 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 	graph.file <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
 	write.graph(graph=gp, file=graph.file, format="graphml")
 	gn <- subgraph.edges(graph=result, eids=which(E(result)$weight<0), delete.vertices=FALSE)
-	gn <- graph.complementer(graph=gn, loops=FALSE)
+		# old way: no weights in the complementary negative graph (only binary values)
+		#gn <- graph.complementer(graph=gn, loops=FALSE)
+		# new way: (almost) complete graph, but with weights (only previously -1 links are absent)
+		m <- get.edgelist(gn)
+		w <- E(gn)$weight + 1
+		ae <- combn(1:vcount(gn),2)
+		gn[from=ae[1,],to=ae[2,],att="weight"] <- 1
+		gn[from=m[,1],to=m[,2],att="weight"] <- w
 	graph.file <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
 	write.graph(graph=gn, file=graph.file, format="graphml")
 	

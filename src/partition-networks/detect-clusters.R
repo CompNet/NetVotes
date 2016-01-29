@@ -169,6 +169,7 @@ perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, dat
 	}
 
 	# record graphs (Graphml only) with detected communities, in the partition folder (not the network one)
+	part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=,date, repetition=NA)
 	graph.file.neg <- file.path(part.folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
 	write.graph(graph=graphs$neg, file=graph.file.neg, format="graphml")
 	graph.file.pos <- file.path(part.folder,paste(POSITIVE.FILE,".graphml",sep=""))
