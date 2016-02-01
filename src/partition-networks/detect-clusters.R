@@ -107,7 +107,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 #############################################################################################
 perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, date, country, group, comdet.algos, corclu.algos, repetitions)
 {	# load the graphs
-	graphs <- retrieve.graphs(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date)
+	graphs <- retrieve.graphs(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date, comp=TRUE)
 	graph.folder <- get.networks.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date)
 	
 	# the process might be repeated several times

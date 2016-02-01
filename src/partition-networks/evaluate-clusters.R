@@ -64,18 +64,45 @@ process.structural.imbalance <- function(g, partition, algo.name, perf.table)
 	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.CNT.NEG] <- length(E(g)[neg.misplaced])
 	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.CNT.POS] <- length(E(g)[pos.misplaced])
 	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.CNT.TOTAL] <- length(E(g)[all.misplaced])
+	
 	# weighted counts
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.NEG] <- sum(E(g)$weight[neg.misplaced])
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.POS] <- sum(E(g)$weight[pos.misplaced])
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.TOTAL] <- sum(E(g)$weight[all.misplaced])
+	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.NEG] <- sum(abs(E(g)$weight[neg.misplaced]))
+	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.POS] <- sum(abs(E(g)$weight[pos.misplaced]))
+	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.TOTAL] <- sum(abs(E(g)$weight[all.misplaced]))
+	
 	# unweighted proportions
-	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.NEG] <- perf.table[CORCLU.MEAS.IMB.UNW.CNT.NEG]/length(E(g)$weight[E(g)$weight<0])
-	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.POS] <- perf.table[CORCLU.MEAS.IMB.UNW.CNT.POS]/length(E(g)$weight[E(g)$weight>=0])
-	perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.TOTAL] <- perf.table[CORCLU.MEAS.IMB.UNW.CNT.TOTAL]/ecount(g)
+	denominator <- length(E(g)[neg.links])
+	if(denominator==0)
+		perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.NEG] <- 0
+	else
+		perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.NEG] <- perf.table[algo.name, CORCLU.MEAS.IMB.UNW.CNT.NEG]/denominator
+	denominator <- length(E(g)[pos.links])
+	if(denominator==0)
+		perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.POS] <- 0
+	else
+		perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.POS] <- perf.table[algo.name, CORCLU.MEAS.IMB.UNW.CNT.POS]/denominator
+	denominator <- ecount(g)
+	if(denominator==0)
+		perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.TOTAL] <- 0
+	else
+		perf.table[algo.name, CORCLU.MEAS.IMB.UNW.PROP.TOTAL] <- perf.table[algo.name, CORCLU.MEAS.IMB.UNW.CNT.TOTAL]/denominator
+	
 	# weighted proportions
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.NEG] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.NEG]/sum(abs(E(g)$weight[E(g)$weight<0]))
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.POS] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.POS]/sum(abs(E(g)$weight[E(g)$weight>=0]))
-	perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.TOTAL] <- perf.table[CORCLU.MEAS.IMB.WGT.CNT.TOTAL]/sum(abs(E(g)$weight))
+	denominator <- sum(abs(E(g)$weight[neg.links]))
+	if(denominator==0)
+		perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.NEG] <- 0
+	else
+		perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.NEG] <- perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.NEG]/denominator
+	denominator <- sum(abs(E(g)$weight[pos.links]))
+	if(denominator==0)
+		perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.POS] <- 0
+	else
+		perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.POS] <- perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.POS]/denominator
+	denominator <- sum(abs(E(g)$weight))
+	if(denominator==0)
+		perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.TOTAL] <- 0
+	else
+		perf.table[algo.name, CORCLU.MEAS.IMB.WGT.PROP.TOTAL] <- perf.table[algo.name, CORCLU.MEAS.IMB.WGT.CNT.TOTAL]/denominator
 	
 	return(perf.table)
 }
@@ -104,7 +131,7 @@ process.corclu.measures <- function(g, partition, algo.name, perf.table)
 #############################################################################################
 # Processes several versions of the modularity for the specified graphs and partition.
 #
-# g.neg: complementary negative subgraph to consider.
+# g.neg: negative subgraph to consider.
 # g.pos: positive subgraph to consider.
 # partition: integer vector representing the partition to consider.
 # algo.name: name of the concerned partitioning algorithm.
@@ -112,16 +139,17 @@ process.corclu.measures <- function(g, partition, algo.name, perf.table)
 # returns: the performance table completed with the modularity values. 
 #############################################################################################
 process.modularity <- function(g.neg, g.pos, partition, algo.name, perf.table)
-{	# evaluation on the complementary negative graph
+{	# evaluation on the negative graph
 	if(!all(is.na(g.neg)))
-	{	perf.table[algo.name, COMDET.MEAS.MOD.UNW.NEG] <- modularity(x=g.neg, membership=partition, weights=NULL)
+	{	E(g.neg)$weight <- -E(g.neg)$weight
+		perf.table[algo.name, COMDET.MEAS.MOD.UNW.NEG] <- modularity(x=g.neg, membership=partition, weights=NULL)
 		perf.table[algo.name, COMDET.MEAS.MOD.WGT.NEG] <- modularity(x=g.neg, membership=partition, weights=E(g.neg)$weight)
 	}
 	
 	# evaluation on the positive graph
 	if(!all(is.na(g.pos)))
 	{	perf.table[algo.name, COMDET.MEAS.MOD.UNW.POS] <- modularity(x=g.pos, membership=partition, weights=NULL)
-		perf.table[algo.name, COMDET.MEAS.MOD.WGT.POS] <- modularity(x=g.pos, membership=partition, weights=E(g.neg)$weight)
+		perf.table[algo.name, COMDET.MEAS.MOD.WGT.POS] <- modularity(x=g.pos, membership=partition, weights=E(g.pos)$weight)
 	}
 	
 	return(perf.table)
@@ -132,7 +160,7 @@ process.modularity <- function(g.neg, g.pos, partition, algo.name, perf.table)
 #############################################################################################
 # Processes all available performance measures for unsigned networks.
 #
-# g.neg: complementary negative subgraph to consider.
+# g.neg: negative subgraph to consider.
 # g.pos: positive subgraph to consider.
 # partition: integer vector representing the partition to consider.
 # algo.name: name of the concerned partitioning algorithm.
@@ -192,7 +220,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 	
 	# process each measure separately
 	for(measure in measures)
-	{	cat("Plotting measure ",COMDET.MEAS.NAMES[measure],"\n")
+	{	cat("Plotting measure ",PART.MEAS.NAMES[measure],"\n")
 		
 		# if there was several repetitions
 		if(length(perf.list)>1)
@@ -209,7 +237,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 			}
 			
 			# generate the average perf plot (one bar for each algo)
-			plot.file <- file.path(measure,paste(folder,"-mean-performances",sep=""))
+			plot.file <- file.path(folder,paste(measure,"-mean-performances",sep=""))
 			plot.unif.indiv.count.bars(plot.file, bar.names=PART.ALGO.NAMES[algos], 
 				counts=avg.vals[[1]][,measure], dispersion=avg.vals[[2]][,measure], proportions=FALSE, areas=FALSE, 
 				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
@@ -234,6 +262,8 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 	for(i in 1:length(measure.groups))
 	{	measures <- measure.groups[[i]]
 		bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g))
+		#print(bounds)		
+		#print(c(min(bounds),max(bounds)))
 		plot.file <- file.path(folder,paste("grouped-",names(measure.groups)[i],"-performances",sep=""))
 		if(length(perf.list)>1)
 		{	data.m <- lapply(algos, function(a) avg.vals[[1]][a,measures])
@@ -332,7 +362,7 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 		# record stats
 		record.partition.stats(pos.partition, pos.base.name, plot.formats)
 		# complete perf table
-		perf.table <- process.modularity(graphs$neg, graphs$pos, pos.partition, algo.name, perf.table)
+		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, pos.partition, algo.name, perf.table)
 		perf.table <- process.corclu.measures(graphs$signed, pos.partition, algo.name, perf.table)
 	}
 }
@@ -361,7 +391,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 	for(dom in domains)
 	{	#dom.folder <- paste(subfolder,"/",score.file,"/",
 		#		"negtr=",neg.thresh,"-postr=",pos.thresh,"/",
-		#		dom,"/",sep="") #TODO the thresholds should be top-level parameters
+		#		dom,"/",sep="")
 		date.perf.list <- list()
 		
 		# consider each time period (each individual year as well as the whole term)
@@ -372,9 +402,9 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 			# setup graph subfolder
 			#date.folder <- paste(dom.folder,"/",DATE.STR.T7[date],"/",sep="")
 			#
-			# load all three versions of the graph
+			# load all three versions of the graph (but: negative graph, not complementary negative)
 			cat("Load all three versions of the graph\n",sep="")
-			graphs <- retrieve.graphs(score=score.file, neg.thresh, pos.thresh, country, group, domain=dom, period=date)
+			graphs <- retrieve.graphs(score=score.file, neg.thresh, pos.thresh, country, group, domain=dom, period=date, comp=FALSE)
 			
 			# init the list used to process the average and plots
 			if(repetitions>1)
@@ -403,20 +433,21 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 				for(algo.name in algo.names)
 				{	cat("Process algorithm ",algo.name,"\n",sep="")
 					
-					# community detection method (must treat both positive and complementary negative graphs)
+					# community detection methods
 					if(algo.name %in% COMDET.ALGO.VALUES)
 						perf.table <- evaluate.comdet.method(graphs, part.folder, algo.name, perf.table, plot.formats)
 					
-					# correlation clustering method (must treat only the signed graph)
+					# correlation clustering methods
 					else
 						perf.table <- evaluate.corclu.method(graphs, part.folder, algo.name, perf.table, plot.formats)
 				}
 				
 				# record iteration table
 				table.file <- file.path(part.folder,"performances.csv")
+				temp.table <- perf.table
+				colnames(temp.table) <- PART.MEAS.NAMES[colnames(perf.table)]
 				write.csv2(perf.table, file=table.file, 
-					row.names=c(COMDET.ALGO.NAMES[comdet.algos],comdet.algo.ncg.name(COMDET.ALGO.NAMES[comdet.algos]),CORCLU.ALGO.NAMES[corclu.algos]),
-					col.names=PART.MEAS.NAMES[col.names(perf.table)])
+					row.names=c(COMDET.ALGO.NAMES[comdet.algos],COMDET.ALGO.NAMES[comdet.algo.ncg.value(comdet.algos)],CORCLU.ALGO.NAMES[corclu.algos]))
 				
 				# update the list used to process average and plots
 				if(repetitions>1)
@@ -435,7 +466,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 				write.csv2(avg.vals$stev, file=table.file, row.names=TRUE)
 				
 				# plot all of this
-				plot.partition.perf(graphs$signed, perf.list, avg.vals, subfolder=part.folder, plot.formats)
+				plot.partition.perf(graphs$signed, perf.list, avg.vals, folder=part.folder, plot.formats)
 				
 				date.perf.list[[d]] <- avg.vals
 			}
@@ -450,6 +481,8 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 			rownames(data.m) <- c(comdet.algos,comdet.algo.ncg.value(comdet.algos),corclu.algos)
 			colnames(data.m) <- dates
 			data.sd <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(dates))
+			rownames(data.sd) <- rownames(data.m)
+			colnames(data.sd) <- colnames(data.m)
 			for(d in 1:length(dates))
 			{	if(repetitions>1)
 				{	data.m[,dates[d]] <- date.perf.list[[d]][[1]][,measure]
@@ -460,7 +493,6 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 				}
 			}
 			# record these table(s)
-			prefix <- paste(PARTITIONS.FOLDER,"/",dom.folder,sep="")
 			part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain=dom, period=NA, repetition=NA)
 			if(repetitions>1)
 			{	table.file <- file.path(part.folder,paste(measure,"-mean-performances.csv",sep=""))
@@ -476,9 +508,10 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 			# plot the table(s) as barplots whose bars represent periods and bar groups correspond to algorithms
 			# (i.e. something quite similar to Israel's plot from the ENIC paper)
 #			bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g)) # TODO should actually process the actual bounds and use "y.lim=c(min(bounds),max(bounds))" later when calling the plot function
+			algos <- rownames(data.m)
 			if(repetitions>1)
-			{	dm <- lapply(algos, function(a) data.m[[1]][a,])
-				dsd <- lapply(algos, function(a) data.sd[[2]][a,])
+			{	dm <- lapply(algos, function(a) data.m[a,])
+				dsd <- lapply(algos, function(a) data.sd[a,])
 				plot.file <- file.path(part.folder,paste(measure,"-mean-performances",sep=""))
 				plot.unif.grouped.count.bars(plot.file, group.names=PART.ALGO.NAMES[algos], bar.names=DATE.STR.T7[dates],
 					counts=dm, dispersion=dsd, proportions=FALSE,
@@ -488,7 +521,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 					x.rotate=TRUE, format=plot.formats)
 			}
 			else
-			{	dm <- lapply(algos, function(a) data.m[[1]][a,])
+			{	dm <- lapply(algos, function(a) data.m[a,])
 				plot.file <- file.path(part.folder,paste(measure,"-single-performances",sep=""))
 				plot.unif.grouped.count.bars(plot.file, group.names=PART.ALGO.NAMES[algos], bar.names=DATE.STR.T7[dates],
 					counts=dm, dispersion=NA, proportions=FALSE,
@@ -538,7 +571,7 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 		grp.meps <- mep.details[idx,]
 		
 		# process performance
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 	
 	# process performance by home country

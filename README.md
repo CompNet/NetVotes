@@ -45,6 +45,7 @@ Here are the folders composing the project:
    * [`igraph`](http://igraph.org/r/) v.0.7.1 (might not work with later versions, especially 1+)
    * [`plotrix`](https://cran.r-project.org/web/packages/plotrix/index.html)
    * [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html)
+   * [`msm`](https://cran.r-project.org/web/packages/msm/index.html)
 3. Download this project from GitHub.
 
 In order to reproduce the process from the papers, you also need to retrieve the data from Figshare. Just download and unzip the archive so that its folders match the project root. You will then have both the input raw data and the outputs resulting from the process. Apply the scripts again should therefore lead to the same results.

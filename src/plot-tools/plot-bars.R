@@ -3,6 +3,7 @@
 # three categorical variables).
 # 
 # 10/2015 Vincent Labatut
+# Note: TODO "Error in unit(x, default.units) : 'x' and 'units' must have length > 0" means a text label is out of the plot
 #############################################################################################
 source("src/plot-tools/plot-common.R")
 
@@ -78,7 +79,16 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=T
 #############################################################################################
 plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	#print(counts)
-	# possibly complete the y axis ranges
+	# possibly remove a y limit if all values are above/below
+	if(!is.na(y.lim[1]) 	# TODO this could be required by other types of plots
+		& ((proportions & all(counts/sum(counts)<y.lim[1]) 
+		  | (!proportions & all(counts<y.lim[1])))))
+		y.lim[1] <- NA
+	if(!is.na(y.lim[2] 
+		& ((proportions & all(counts/sum(counts)>y.lim[2]) 
+		  | (!proportions & all(counts>y.lim[2]))))))
+			y.lim[2] <- NA
+	# possibly complete one missing y limit
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
 	{	if(proportions)
 			y.lim[1] <- min(counts) / sum(counts)
@@ -112,7 +122,7 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 	col.label <- col.counts
 	if(proportions)
 		col.label <- round(col.label*100)
-	col.label[col.label==0] <- NA
+#	col.label[col.label==0] <- NA # for some reason, causes problem when all values are 0
 	#print(col.counts)	
 	temp <- data.frame(cats=col.names, cnts=col.counts, lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
@@ -475,7 +485,22 @@ plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
 plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, counts, dispersion=NA, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
-{	# possibly complete the y axis ranges
+{	# possibly remove a y limit if all values are above/below
+	if(!is.na(y.lim[1]))
+	{	temp <- sapply(counts, max)
+		temp2 <- sapply(counts, sum)
+		if((proportions & all(temp/temp2<y.lim[1]))
+			| (!proportions & all(temp<y.lim[1])))
+			y.lim[1] <- NA
+	}
+	if(!is.na(y.lim[2]))
+	{	temp <- sapply(counts, min)
+		temp2 <- sapply(counts, sum)
+		if((proportions & all(temp/temp2>y.lim[2]))
+			| (!proportions & all(temp>y.lim[2])))
+			y.lim[2] <- NA
+	}
+	# possibly complete one missing y limit
 	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
 	{	temp <- sapply(counts, min)
 		idx <- which.min(temp)
@@ -492,6 +517,8 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		else
 			y.lim[2] <- temp[idx] 
 	}
+	#print(plot.title)
+	#print(y.lim)
 	
 	# create the data frame
 	col.groups <- c()
@@ -524,7 +551,11 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 	col.label <- col.counts
 	if(proportions)
 		col.label <- round(col.label*100)
-	col.label[col.label==0] <- NA
+#	col.label[col.label==0] <- NA
+	if(!is.na(y.lim[1])) # TODO might be usefull elsewhere
+		col.label[col.label<y.lim[1]] <- NA
+	if(!is.na(y.lim[2]))
+		col.label[col.label>y.lim[2]] <- NA
 	temp <- data.frame(grps=col.groups, counts=col.counts, bars=col.bars, lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
 		temp[["upper"]] <- col.dispersion
@@ -547,7 +578,7 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		
 		# init the plot
 		p <- ggplot(data=temp, aes(x=factor(grps),y=counts,fill=factor(bars)))
-		p <- p + scale_x_discrete(limits=bar.names) # TODO not tested
+#		p <- p + scale_x_discrete(limits=bar.names) # TODO not tested
 		# change the theme
 		p <- p + theme_bw() + theme(
 			panel.grid.major=element_line(colour = "grey90"),

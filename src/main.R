@@ -124,16 +124,16 @@ if(dataset.name=="VW")
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions)
+#partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions)
 
 
 #############################################################################################
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
-#evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
-
+evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
+#TODO vérif nom des colonnes dans fichiers , surtout noms mesures
 
 #############################################################################################
 # Compare the detected partitions, for all the networks

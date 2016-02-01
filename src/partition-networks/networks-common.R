@@ -18,18 +18,20 @@ library("igraph")
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
 # period: considered time period.
+# comp: whether to return the complementary negative graph (for clustering) or just the
+#		negative graph (to assess partitions).
 # returns: a list containing the three graphs (named: signed, pos, neg).
 #############################################################################################
-retrieve.graphs <- function(score, neg.thresh, pos.thresh, country, group, domain, period)
+retrieve.graphs <- function(score, neg.thresh, pos.thresh, country, group, domain, period, comp)
 {	folder <- get.networks.path(score, neg.thresh, pos.thresh, country, group, domain, period)
 	
-	# load the complementary negative graph
-	graph.file.neg <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
-	g.neg <- NA
-	if(!file.exists(graph.file.neg))
-		cat("WARNING: Graph file ",graph.file.neg," not found\n",sep="")
+	# load the original graph
+	graph.file <- file.path(folder,paste(SIGNED.FILE,".graphml",sep=""))
+	g <- NA
+	if(!file.exists(graph.file))
+		cat("WARNING: Graph file ",graph.file," not found\n",sep="")
 	else
-		g.neg <- suppressWarnings(read.graph(file=graph.file.neg, format="graphml"))
+		g <- suppressWarnings(read.graph(file=graph.file, format="graphml"))
 	
 	# load the positive graph
 	graph.file.pos <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
@@ -39,13 +41,19 @@ retrieve.graphs <- function(score, neg.thresh, pos.thresh, country, group, domai
 	else
 		g.pos <- suppressWarnings(read.graph(file=graph.file.pos, format="graphml"))
 	
-	# load the original graph
-	graph.file <- file.path(folder,paste(SIGNED.FILE,".graphml",sep=""))
-	g <- NA
-	if(!file.exists(graph.file))
-		cat("WARNING: Graph file ",graph.file," not found\n",sep="")
+	if(comp)
+	{	# load the complementary negative graph
+		graph.file.neg <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
+		g.neg <- NA
+		if(!file.exists(graph.file.neg))
+			cat("WARNING: Graph file ",graph.file.neg," not found\n",sep="")
+		else
+			g.neg <- suppressWarnings(read.graph(file=graph.file.neg, format="graphml"))
+	}
 	else
-		g <- suppressWarnings(read.graph(file=graph.file, format="graphml"))
+	{	# build the negative graph
+		g.neg <- subgraph.edges(graph=g, eids=which(E(g)$weight<0), delete.vertices=FALSE)
+	}
 	
 	# build and return the result list
 	result <- list(neg=g.neg, pos=g.pos, signed=g)
