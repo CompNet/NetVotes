@@ -14,11 +14,12 @@ source("src/plot-tools/plot-bars.R")
 #############################################################################################
 # Records the size of the clusters from the specified partition, and plot them as a barplot.
 #
+# algo.name: name of the concerned partitioning algorithm.
 # partition: membership vector.
 # folder: start of the file name used when recording values and plots.
 # plot.formats: formats of the plot files.
 #############################################################################################
-record.partition.stats <- function(partition, folder, plot.formats)
+record.partition.stats <- function(algo.name, partition, folder, plot.formats)
 {	# record the community sizes
 	comsz <- table(partition)
 	coms <- rownames(comsz)
@@ -28,11 +29,11 @@ record.partition.stats <- function(partition, folder, plot.formats)
 	
 	# plot them
 	plot.file <- paste(folder,"-comsizes",sep="")
-	plot.unif.indiv.count.bars(plot.file, bar.names=coms, 
-		counts=comsz, dispersion=NA, proportions=FALSE, areas=FALSE, 
+	plot.unif.indiv.count.bars(plot.file, bar.names=coms[order(comsz)], 
+		counts=sort(comsz), dispersion=NA, proportions=FALSE, areas=FALSE, 
 		y.lim=c(0,NA), 
 		x.label="Community", y.label="Count", 
-		plot.title="Community sizes", 
+		plot.title=paste("Community sizes for ",PART.ALGO.NAMES[algo.name],sep=""), 
 		x.rotate=FALSE, format=plot.formats)
 }
 
@@ -213,7 +214,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 		wIc="Weighted Imbalance (counts)",
 		uIc="Unweighted Imbalance (counts)",
 		wIp="Weighted Imbalance (prop.)",
-		uIp="Unweighted Imbalance (counts)",
+		uIp="Unweighted Imbalance (prop.)",
 		uM="Weighted Modularity",
 		wM="Unweighted Modularity"
 	)
@@ -258,7 +259,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 		}
 	}
 	
-	# compare imbalance values for all algos
+	# compare groups of measures for all algos
 	for(i in 1:length(measure.groups))
 	{	measures <- measure.groups[[i]]
 		bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g))
@@ -312,7 +313,7 @@ evaluate.corclu.method <- function(graphs, part.folder, algo.name, perf.table, p
 		partition <- as.matrix(read.table(partition.file))
 		
 		# record stats
-		record.partition.stats(partition, base.name, plot.formats)
+		record.partition.stats(algo.name, partition, base.name, plot.formats)
 		
 		# complete perf table
 		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, partition, algo.name, perf.table)
@@ -344,7 +345,7 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 		# load partition
 		neg.partition <- as.matrix(read.table(neg.partition.file))
 		# record stats
-		record.partition.stats(neg.partition, neg.base.name, plot.formats)
+		record.partition.stats(neg.algo.name, neg.partition, neg.base.name, plot.formats)
 		# complete perf table
 		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, neg.partition, neg.algo.name, perf.table)
 		perf.table <- process.corclu.measures(graphs$signed, neg.partition, neg.algo.name, perf.table)
@@ -360,7 +361,7 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 		# load partition
 		pos.partition <- as.matrix(read.table(pos.partition.file))
 		# record stats
-		record.partition.stats(pos.partition, pos.base.name, plot.formats)
+		record.partition.stats(algo.name, pos.partition, pos.base.name, plot.formats)
 		# complete perf table
 		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, pos.partition, algo.name, perf.table)
 		perf.table <- process.corclu.measures(graphs$signed, pos.partition, algo.name, perf.table)
@@ -555,24 +556,24 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 #############################################################################################
 evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# process performance for all data
-	if(everything)
-	{	cat("Process performance measures for all data","\n",sep="")
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
-	}
+#	if(everything)
+#	{	cat("Process performance measures for all data","\n",sep="")
+#		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+#	}
 	
 	# process performance by political group
-	cat("Process performance measures by group","\n",sep="")
-	for(group in groups)
-	{	cat("Process performance measures for group ",group,"\n",sep="")
-		
-		# select data
-		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
-		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
-		grp.meps <- mep.details[idx,]
-		
-		# process performance
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
-	}
+#	cat("Process performance measures by group","\n",sep="")
+#	for(group in groups)
+#	{	cat("Process performance measures for group ",group,"\n",sep="")
+#		
+#		# select data
+#		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
+#		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
+#		grp.meps <- mep.details[idx,]
+#		
+#		# process performance
+#		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+#	}
 	
 	# process performance by home country
 	cat("Process performance measures by country","\n",sep="")

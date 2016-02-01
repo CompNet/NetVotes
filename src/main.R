@@ -134,6 +134,10 @@ if(dataset.name=="VW")
 evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
 		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
 #TODO vérif nom des colonnes dans fichiers , surtout noms mesures
+#TODO plots:
+# - si <1 : deux chiffres après la virgule
+# - manque les légendes pr grouped plots
+# - com size: ordonner par taille décroissante (y compris numérotation sur axe x)
 
 #############################################################################################
 # Compare the detected partitions, for all the networks

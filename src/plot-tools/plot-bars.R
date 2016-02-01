@@ -3,7 +3,11 @@
 # three categorical variables).
 # 
 # 10/2015 Vincent Labatut
-# Note: TODO "Error in unit(x, default.units) : 'x' and 'units' must have length > 0" means a text label is out of the plot
+#
+# Note: TODO "Error in unit(x, default.units) : 'x' and 'units' must have length > 0" 
+# - means a text label is out of the plot
+# - or all values are removed because off limits (ylim)
+# - or same thing, but for a single facet (not the whole plot)
 #############################################################################################
 source("src/plot-tools/plot-common.R")
 
@@ -79,7 +83,7 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=T
 #############################################################################################
 plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	#print(counts)
-	# possibly remove a y limit if all values are above/below
+	# possibly remove a y-limit if all values are above/below
 	if(!is.na(y.lim[1]) 	# TODO this could be required by other types of plots
 		& ((proportions & all(counts/sum(counts)<y.lim[1]) 
 		  | (!proportions & all(counts<y.lim[1])))))
@@ -89,13 +93,13 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 		  | (!proportions & all(counts>y.lim[2]))))))
 			y.lim[2] <- NA
 	# possibly complete one missing y limit
-	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
+	if(is.na(y.lim[1]))
 	{	if(proportions)
 			y.lim[1] <- min(counts) / sum(counts)
 		else
 			y.lim[1] <- min(counts)
 	}
-	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
+	if(is.na(y.lim[2]))
 	{	if(proportions)
 			y.lim[2] <- max(counts) / sum(counts)
 		else
@@ -121,7 +125,11 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 	}
 	col.label <- col.counts
 	if(proportions)
-		col.label <- round(col.label*100)
+		col.label <- sprintf("%.2f", round(col.label*100)/100)
+	else
+	{	if(!all(col.label-as.integer(col.label)==0))
+			col.label <- sprintf("%.2f", round(col.label*100)/100)
+	}
 #	col.label[col.label==0] <- NA # for some reason, causes problem when all values are 0
 	#print(col.counts)	
 	temp <- data.frame(cats=col.names, cnts=col.counts, lbl=col.label)
@@ -281,15 +289,15 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 #############################################################################################
 plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, colors.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	# possibly complete the y axis ranges
-	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
+	if(is.na(y.lim[1]))
 	{	if(proportions)
-			y.lim[1] <- 0 # TODO not tested
+			y.lim[1] <- 0
 		else
 			y.lim[1] <- min(sapply(counts, sum)) 
 	}
-	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
+	if(is.na(y.lim[2]))
 	{	if(proportions)
-			y.lim[2] <- 1 # TODO not tested
+			y.lim[2] <- 1
 		else
 			y.lim[2] <- max(sapply(counts, sum))
 	}
@@ -326,7 +334,11 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 	#print(col.names);print(col.counts);print(col.colors)
 	col.label <- col.counts
 	if(proportions)
-		col.label <- round(col.label*100)
+		col.label <- sprintf("%.2f", round(col.label*100)/100)
+	else
+	{	if(!all(col.label-as.integer(col.label)==0))
+			col.label <- sprintf("%.2f", round(col.label*100)/100)
+	}
 	col.label[col.label==0] <- NA
 	temp <- data.frame(cats=col.names, cnts=col.counts, clrs=col.colors, cumul=col.cumul, lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
@@ -398,7 +410,6 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 			p <- p + geom_errorbar(mapping=aes(ymin=cumul, ymax=upper), width=.2)
 		print(p)
 		#print(ggplot_build(p)$data[[1]])
-		
 		
 		# finalize plot file
 		if(!is.na(frmt))
@@ -485,7 +496,7 @@ plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
 plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, counts, dispersion=NA, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
-{	# possibly remove a y limit if all values are above/below
+{	# possibly remove a y-limit if all values are above/below
 	if(!is.na(y.lim[1]))
 	{	temp <- sapply(counts, max)
 		temp2 <- sapply(counts, sum)
@@ -501,7 +512,7 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 			y.lim[2] <- NA
 	}
 	# possibly complete one missing y limit
-	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
+	if(is.na(y.lim[1]))
 	{	temp <- sapply(counts, min)
 		idx <- which.min(temp)
 		if(proportions)
@@ -509,7 +520,7 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		else
 			y.lim[1] <- temp[idx] 
 	}
-	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
+	if(is.na(y.lim[2]))
 	{	temp <- sapply(counts, max)
 		idx <- which.max(temp)
 		if(proportions)
@@ -517,8 +528,8 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		else
 			y.lim[2] <- temp[idx] 
 	}
-	#print(plot.title)
-	#print(y.lim)
+	print(plot.title)
+	print(y.lim)
 	
 	# create the data frame
 	col.groups <- c()
@@ -537,8 +548,7 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 			{	td <- dispersion[[s]] / sum(counts[[s]])
 				td[is.infinite(td) | is.nan(td)] <- 0
 			}
-		}
-		else
+		}else
 		{	tc <- counts[[s]]
 			if(length(dispersion)>0 && !is.na(dispersion))
 				td <- dispersion[[s]]
@@ -547,20 +557,26 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		if(length(dispersion)>0 && !is.na(dispersion))
 			col.dispersion <- c(col.dispersion, tc + td)
 	}
-	#print(col.groups);print(col.counts);print(col.bars)
+#print("-----------------")	
+#if(!is.na(dispersion))
+#	print(col.groups);print(col.counts);print(col.bars)
 	col.label <- col.counts
 	if(proportions)
-		col.label <- round(col.label*100)
+		col.label <- sprintf("%.2f", round(col.label*100)/100)
+	else
+	{	if(!all(col.label-as.integer(col.label)==0))
+			col.label <- sprintf("%.2f", round(col.label*100)/100)
+	}
 #	col.label[col.label==0] <- NA
 	if(!is.na(y.lim[1])) # TODO might be usefull elsewhere
-		col.label[col.label<y.lim[1]] <- NA
+		col.label[col.counts<y.lim[1]] <- NA
 	if(!is.na(y.lim[2]))
-		col.label[col.label>y.lim[2]] <- NA
+		col.label[col.counts>y.lim[2]] <- NA
 	temp <- data.frame(grps=col.groups, counts=col.counts, bars=col.bars, lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
 		temp[["upper"]] <- col.dispersion
 	#print(counts)
-	#print(temp)
+	print(temp)
 	
 	# process each specified format
 	for(frmt in format)
@@ -577,8 +593,8 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		}
 		
 		# init the plot
-		p <- ggplot(data=temp, aes(x=factor(grps),y=counts,fill=factor(bars)))
-#		p <- p + scale_x_discrete(limits=bar.names) # TODO not tested
+		p <- ggplot(data=temp, aes(x=factor(bars),y=counts,fill=factor(bars)))
+#		p <- p + scale_x_discrete(breaks=factor(bar.names),limits=bar.names) # apparently not needed here...
 		# change the theme
 		p <- p + theme_bw() + theme(
 			panel.grid.major=element_line(colour = "grey90"),
@@ -592,6 +608,7 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 			p <- p + theme(axis.text.x=element_text(angle=90,hjust=1))
 		# add the bars
 		p <- p + geom_bar(stat="identity", color="black", position=position_dodge())
+		p <- p + facet_grid(~ grps)
 		p <- p + geom_text(aes(y=counts, label=lbl), vjust=1.6, color="white", size=3.5, position=position_dodge(.9))
 		# set up the y limits
 		if(proportions)
@@ -718,17 +735,17 @@ plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, col
 #############################################################################################
 plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label="Count", colors.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
 {	# possibly complete the y axis ranges
-	if(is.na(y.lim[1]) & !is.na(y.lim[2]))
+	if(is.na(y.lim[1]))
 	{	if(proportions)
-			y.lim[1] <- 0 # TODO not tested
+			y.lim[1] <- 0
 		else
 			y.lim[1] <- min(sapply(counts, function(l) min(sapply(l, sum)))) # TODO not tested  
 	}
 	
 	
-	else if(!is.na(y.lim[1]) & is.na(y.lim[2]))
+	if(is.na(y.lim[2]))
 	{	if(proportions)
-			y.lim[2] <- 1 # TODO not tested
+			y.lim[2] <- 1
 		else
 			y.lim[2] <- max(sapply(counts, function(l) max(sapply(l, sum)))) # TODO not tested
 	}
@@ -773,7 +790,11 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 	#print(col.names);print(col.counts);print(col.colors)
 	col.label <- col.counts
 	if(proportions)
-		col.label <- round(col.label*100)
+		col.label <- sprintf("%.2f", round(col.label*100)/100)
+	else
+	{	if(!all(col.label-as.integer(col.label)==0))
+			col.label <- sprintf("%.2f", round(col.label*100)/100)
+	}
 	col.label[col.label==0] <- NA
 	temp <- data.frame(grps=col.groups, bars=col.bars, counts=col.counts, clrs=col.colors, cumul=col.cumul, lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
@@ -853,7 +874,7 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 #format <- c("PDF","PNG", NA)
 #plot.title <- "Graph Title"
 #proportions <- FALSE
-#areas <- TRUE
+#areas <- FALSE
 #y.lim <- c(NA,NA)
 ##y.lim <- c(-10,40)
 #x.rotate <- FALSE
@@ -925,20 +946,20 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 #bar.names <- c("x", "y", "z")
 #counts <- list(
 #	c(10, 0, 4),
-#	c(1, 10, 3),
+#	c(1.02983, 10, 3),
 #	c(1, 0, 4),
 #	c(6, 2, 4)
 #)
-##dispersion <- NA
-#dispersion <- list(
-#	c(0.8,0,2),
-#	c(0.5,0.5,3),
-#	c(0.2,0,0.75),
-#	c(0.5,1,2)
-#)
+#dispersion <- NA
+##dispersion <- list(
+##	c(0.8,0,2),
+##	c(0.5,0.5,3),
+##	c(0.2,0,0.75),
+##	c(0.5,1,2)
+##)
 #x.label <- "Categories"
 #y.label <- "Values"
-##plot.unif.grouped.count.bars(plot.file, group.names, bar.names, counts, dispersion, proportions, y.lim, x.label, y.label, plot.title, x.rotate, format)
+#plot.unif.grouped.count.bars(plot.file, group.names, bar.names, counts, dispersion, proportions, y.lim, x.label, y.label, plot.title, x.rotate, format)
 ##### test uniform grouped plot from raw data
 #values <- list()
 #values[[1]] <- c("x", "x", "x", "x", "y", "y", "y", "z", "z", "z", NA, "x")
