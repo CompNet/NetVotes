@@ -556,24 +556,24 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 #############################################################################################
 evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# process performance for all data
-#	if(everything)
-#	{	cat("Process performance measures for all data","\n",sep="")
-#		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
-#	}
+	if(everything)
+	{	cat("Process performance measures for all data","\n",sep="")
+		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+	}
 	
 	# process performance by political group
-#	cat("Process performance measures by group","\n",sep="")
-#	for(group in groups)
-#	{	cat("Process performance measures for group ",group,"\n",sep="")
-#		
-#		# select data
-#		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
-#		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
-#		grp.meps <- mep.details[idx,]
-#		
-#		# process performance
-#		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
-#	}
+	cat("Process performance measures by group","\n",sep="")
+	for(group in groups)
+	{	cat("Process performance measures for group ",group,"\n",sep="")
+		
+		# select data
+		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
+		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
+		grp.meps <- mep.details[idx,]
+		
+		# process performance
+		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+	}
 	
 	# process performance by home country
 	cat("Process performance measures by country","\n",sep="")
