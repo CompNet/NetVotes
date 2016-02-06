@@ -15,7 +15,7 @@ library("igraph")
 # format: format(s) to handle.
 # returns: the same graph, with the spatial positions stored as nodal attributes x and y.
 #############################################################################################
-plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
+plot.network <- function(g, membership=NA, plot.file, format=c("PDF","PNG",NA))
 {	# setup node parameters
 	vertex.sizes <- 10
 	vertex.label <- V(g)$MEPid
@@ -28,14 +28,27 @@ plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
 		edge.widths <- abs(E(g)$weight)*10
 	}
 	
-	# setup layout
-	gpos <- delete.edges(graph=g,edges=which(E(g)$weight<0))
-#	lyt <- layout.kamada.kawai(graph=gpos)
-	lyt <- layout.fruchterman.reingold(graph=gpos)
-#	lyt <- layout.circle(graph=gpos)
-	# store spatial positions as nodal attributes
-	V(g)$x <- lyt[,1]
-	V(g)$y <- lyt[,2]
+	# set up node colors
+	if(all(is.na(membership)))
+		vertex.colors <- "SkyBlue2" # default igraph color
+	else
+	{	palette <- rainbow(length(unique(membership)))
+		vertex.colors <- palette[membership]
+	}
+	
+	# setup layout (only if the graph doesn't already have one)
+	v.att <- list.vertex.attributes(graph=g)
+	if(!("x" %in% v.att) | !("y" %in% v.att)) 
+	{	gpos <- delete.edges(graph=g,edges=which(E(g)$weight<0))
+#		lyt <- layout.kamada.kawai(graph=gpos)
+		lyt <- layout.fruchterman.reingold(graph=gpos)
+#		lyt <- layout.circle(graph=gpos)
+		# store spatial positions as nodal attributes
+		V(g)$x <- lyt[,1]
+		V(g)$y <- lyt[,2]
+	}
+	else
+		lyt <- cbind(V(g)$x,V(g)$y)
 	
 	# process each specified format
 	for(frmt in format)
@@ -54,14 +67,14 @@ plot.network <- function(g, plot.file, format=c("PDF","PNG",NA))
 		# create the plot
 		if(ecount(g)>0)
 		{	plot(g, layout=lyt, #main=g$name,
-				vertex.size=vertex.sizes, vertex.label=vertex.label,
+				vertex.size=vertex.sizes, vertex.label=vertex.label, vertex.color=vertex.colors,
 				edge.color=edge.colors, edge.width=edge.widths
 #				asp=1
 			)
 		}
 		else
 		{	plot(g, layout=lyt,
-				vertex.size=vertex.sizes, vertex.label=vertex.label
+				vertex.size=vertex.sizes, vertex.label=vertex.label, vertex.color=vertex.colors,
 			)
 		}
 		title(g$name, cex.main=0.5)

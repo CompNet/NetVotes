@@ -69,7 +69,7 @@ pos.thresh <- +0.34			# same thing, but for positive values
 comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
 #corclst.algos <- CORCLST.ALGO.VALUES	# correlation clustering algorithms
 corclst.algos <- c()
-repetitions <- 10						# number of times each algorithm must be applied
+repetitions <- 5						# number of times each algorithm must be applied
 
 ## measures used to compare partitions
 comp.measures <- c(
@@ -125,7 +125,7 @@ if(dataset.name=="VW")
 # Detect communities for all the networks
 #############################################################################################
 #partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions)
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
 
 
 #############################################################################################
@@ -133,11 +133,7 @@ if(dataset.name=="VW")
 #############################################################################################
 evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
 		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
-#TODO vérif nom des colonnes dans fichiers , surtout noms mesures
-#TODO plots:
-# - si <1 : deux chiffres après la virgule
-# - manque les légendes pr grouped plots
-# - com size: ordonner par taille décroissante (y compris numérotation sur axe x)
+
 
 #############################################################################################
 # Compare the detected partitions, for all the networks
@@ -155,11 +151,6 @@ evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
 # Problèmes
 # - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable
 #   note: might be due to small numbers of expressed votes (i.e. non-NA)
-
-# test
-# - définir de petits fichiers pour retester tout ça à fond
-# TODO to test the scripts, define probas on mep-to-mep voting similarity, 
-# then generate very small data set and see if it is recovered when extracting the network
 
 # Extraction de réseaux
 # - on peut extraire des réseaux au niveau des partis politiques
