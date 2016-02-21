@@ -138,9 +138,8 @@ evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
-#compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
-
+compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 
 

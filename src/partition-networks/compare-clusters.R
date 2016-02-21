@@ -60,31 +60,30 @@ compare.partitions.measures <- function(neg.thresh=NA, pos.thresh=NA, score.file
 		
 		# load partitions
 		partitions <- list()
-		for(comdet.name in comdet.algos)
-		{	cat("Loading partition files for algorithm ",comdet.name,"\n",sep="")
-			
-			# partition obtained on the complementary negative subgraph
-			neg.algo.name <- comdet.algo.ncg.value(comdet.name)
-			neg.partition.file <- file.path(part.folder,paste(neg.algo.name,"-membership.txt",sep=""))
-			if(!file.exists(neg.partition.file))
-				cat("Partition file ",neg.partition.file," not found\n",sep="")
-			else
-				partitions[[neg.algo.name]] <- as.matrix(read.table(neg.partition.file))
-			
-			# partition obtained on the positive subgraph
-			pos.partition.file <- file.path(part.folder,paste(comdet.name,"-membership.txt",sep=""))
-			if(!file.exists(pos.partition.file))
-				cat("Partition file ",pos.partition.file," not found\n",sep="")
-			else
-				partitions[[comdet.name]] <- as.matrix(read.table(pos.partition.file))
-		}
 		for(corclu.name in corclu.algos)
 		{	cat("Loading partition files for algorithm ",corclu.name,"\n",sep="")
-			signed.partition.file <- file.path(part.folder,paste(corclu.name,"-membership.txt",sep=""))
-			if(!file.exists(signed.partition.file))
-				cat("Partition file ",signed.partition.file," not found\n",sep="")
+			partition.file <- file.path(part.folder,paste(corclu.name,"-membership.txt",sep=""))
+			if(!file.exists(partition.file))
+				cat("Partition file ",partition.file," not found\n",sep="")
 			else
-				partitions[[corclu.name]] <- as.matrix(read.table(signed.partition.file))
+				partitions[[corclu.name]] <- as.matrix(read.table(partition.file))
+		}
+		for(comdet.name in comdet.algos)
+		{	cat("Loading partition files for algorithm ",comdet.name,"\n",sep="")
+			partition.file <- file.path(part.folder,paste(comdet.name,"-membership.txt",sep=""))
+			if(!file.exists(partition.file))
+				cat("Partition file ",partition.file," not found\n",sep="")
+			else
+				partitions[[comdet.name]] <- as.matrix(read.table(partition.file))
+		}
+		for(comdet.name in comdet.algos)
+		{	neg.algo.name <- comdet.algo.ncg.value(comdet.name)
+			cat("Loading partition files for algorithm ",neg.algo.name,"\n",sep="")
+			partition.file <- file.path(part.folder,paste(neg.algo.name,"-membership.txt",sep=""))
+			if(!file.exists(partition.file))
+				cat("Partition file ",partition.file," not found\n",sep="")
+			else
+				partitions[[neg.algo.name]] <- as.matrix(read.table(partition.file))
 		}
 		
 		# init iteration matrices
@@ -135,7 +134,7 @@ compare.partitions.measures <- function(neg.thresh=NA, pos.thresh=NA, score.file
 			table.file <- file.path(part.folder,paste("comparison-mean-",meas,".csv",sep=""))
 			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
 			table.file <- file.path(part.folder,paste("comparison-stdev-",meas,".csv",sep=""))
-			write.csv2(tmp$stev, file=table.file, row.names=TRUE)
+			write.csv2(tmp$stdev, file=table.file, row.names=TRUE)
 		}
 	}
 }

@@ -202,22 +202,6 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 {	# init
 	algos <- rownames(perf.list[[1]])
 	measures <- colnames(perf.list[[1]])
-	measure.groups <- list(
-		wIc=c(CORCLU.MEAS.IMB.UNW.CNT.NEG,CORCLU.MEAS.IMB.UNW.CNT.POS,CORCLU.MEAS.IMB.UNW.CNT.TOTAL),
-		uIc=c(CORCLU.MEAS.IMB.WGT.CNT.NEG,CORCLU.MEAS.IMB.WGT.CNT.POS,CORCLU.MEAS.IMB.WGT.CNT.TOTAL),
-		wIp=c(CORCLU.MEAS.IMB.UNW.PROP.NEG,CORCLU.MEAS.IMB.UNW.PROP.POS,CORCLU.MEAS.IMB.UNW.PROP.TOTAL),
-		uIp=c(CORCLU.MEAS.IMB.WGT.PROP.NEG,CORCLU.MEAS.IMB.WGT.PROP.POS,CORCLU.MEAS.IMB.WGT.PROP.TOTAL),
-		uM=c(COMDET.MEAS.MOD.UNW.NEG,COMDET.MEAS.MOD.UNW.POS),
-		wM=c(COMDET.MEAS.MOD.WGT.NEG,COMDET.MEAS.MOD.WGT.POS)
-	)
-	measure.group.names <- list(
-		wIc="Weighted Imbalance (counts)",
-		uIc="Unweighted Imbalance (counts)",
-		wIp="Weighted Imbalance (prop.)",
-		uIp="Unweighted Imbalance (prop.)",
-		uM="Unweighted Modularity",
-		wM="Weighted Modularity"
-	)
 	
 	# process each measure separately
 	for(measure in measures)
@@ -260,12 +244,12 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 	}
 	
 	# compare groups of measures for all algos
-	for(i in 1:length(measure.groups))
-	{	measures <- measure.groups[[i]]
+	for(measure.group in GROUP.MEAS.VALUES)
+	{	measures <- GROUP.MEAS.MEAS[[measure.group]]
 		bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g))
 		#print(bounds)		
 		#print(c(min(bounds),max(bounds)))
-		plot.file <- file.path(folder,paste("grouped-",names(measure.groups)[i],"-performances",sep=""))
+		plot.file <- file.path(folder,paste("grouped-",measure.group,"-performances",sep=""))
 		if(length(perf.list)>1)
 		{	data.m <- lapply(algos, function(a) avg.vals[[1]][a,measures])
 			data.sd <- lapply(algos, function(a) avg.vals[[2]][a,measures])
@@ -273,7 +257,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 				counts=data.m, dispersion=data.sd, proportions=FALSE,
 				y.lim=c(min(bounds),max(bounds)),
 				x.label="Algorithm", y.label="Performance", 
-				plot.title=paste("Average ", measure.group.names[[i]]," values for all algorithms",sep=""), 
+				plot.title=paste("Average ", GROUP.MEAS.NAMES[measure.group]," values for all algorithms",sep=""), 
 				x.rotate=TRUE, format=plot.formats)
 		}
 		else
@@ -282,7 +266,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 				counts=data, dispersion=NA, proportions=FALSE,
 				y.lim=c(min(bounds),max(bounds)),
 				x.label="Algorithm", y.label="Performance", 
-				plot.title=paste(measure.group.names[[i]]," values for all algorithms",sep=""), 
+				plot.title=paste(GROUP.MEAS.NAMES[measure.group]," values for all algorithms",sep=""), 
 				x.rotate=TRUE, format=plot.formats)
 		}
 	}
@@ -412,7 +396,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 				perf.list <- list()
 			
 			# merge the vectors of algos
-			algo.names <- c(comdet.algos, corclu.algos)
+			algo.names <- c(corclu.algos, comdet.algos)
 			
 			# the process might be repeated several times
 			for(r in 1:repetitions)
@@ -427,7 +411,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 				
 				# init the iteration performance table
 				perf.table <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(PART.MEAS.VALUES))
-				rownames(perf.table) <- c(comdet.algos,comdet.algo.ncg.value(comdet.algos),corclu.algos)
+				rownames(perf.table) <- c(corclu.algos,comdet.algos,comdet.algo.ncg.value(comdet.algos))
 				colnames(perf.table) <- PART.MEAS.VALUES
 				
 				# process measures
@@ -448,7 +432,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 				temp.table <- perf.table
 				colnames(temp.table) <- PART.MEAS.NAMES[colnames(perf.table)]
 				write.csv2(temp.table, file=table.file, 
-					row.names=c(COMDET.ALGO.NAMES[comdet.algos],COMDET.ALGO.NAMES[comdet.algo.ncg.value(comdet.algos)],CORCLU.ALGO.NAMES[corclu.algos]))
+					row.names=c(CORCLU.ALGO.NAMES[corclu.algos],COMDET.ALGO.NAMES[comdet.algos],COMDET.ALGO.NAMES[comdet.algo.ncg.value(comdet.algos)]))
 				
 				# update the list used to process average and plots
 				if(repetitions>1)
@@ -483,7 +467,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 		for(measure in PART.MEAS.VALUES)
 		{	# build tables representing how each algorithm behaved on each considered period
 			data.m <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(dates))
-			rownames(data.m) <- c(comdet.algos,comdet.algo.ncg.value(comdet.algos),corclu.algos)
+			rownames(data.m) <- c(corclu.algos,comdet.algos,comdet.algo.ncg.value(comdet.algos))
 			colnames(data.m) <- dates
 			data.sd <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(dates))
 			rownames(data.sd) <- rownames(data.m)

@@ -901,24 +901,24 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 #############################################################################################
 ## Tests
 #############################################################################################
-plot.file <- "temp"
-format <- NA#c("PDF","PNG", NA)
-plot.title <- "Graph Title"
-proportions <- FALSE
-areas <- FALSE
-y.lim <- c(NA,NA)
-#y.lim <- c(-10,40)
-x.rotate <- FALSE
-#############################################################################################
-### test uniform individual plot from count
-bar.names <- c("A", "D", "C", "B")
-#bar.names <- 1:4
-counts <- c(10, 20, 0, -4)
-dispersion <- NA
-dispersion <- c(1,0,0.5,4)
-x.label <- "Categories"
-y.label <- "Values"
-plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, plot.title, x.rotate, format)
+#plot.file <- "temp"
+#format <- NA#c("PDF","PNG", NA)
+#plot.title <- "Graph Title"
+#proportions <- FALSE
+#areas <- FALSE
+#y.lim <- c(NA,NA)
+##y.lim <- c(-10,40)
+#x.rotate <- FALSE
+##############################################################################################
+#### test uniform individual plot from count
+#bar.names <- c("A", "D", "C", "B")
+##bar.names <- 1:4
+#counts <- c(10, 20, 0, -4)
+#dispersion <- NA
+#dispersion <- c(1,0,0.5,4)
+#x.label <- "Categories"
+#y.label <- "Values"
+#plot.unif.indiv.count.bars(plot.file, bar.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, plot.title, x.rotate, format)
 # test uniform individual plot from raw data
 #values <- c("A", "D", "D", "C", "C", "D", "D", "D", "B", "B", NA, "D", "D", "D", "D")
 #values <- c("1", "4", "4", "3", "3", "4", "4", "4", "2", "2", NA, "4", "4", "4", "4")
