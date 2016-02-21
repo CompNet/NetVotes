@@ -1,5 +1,6 @@
 #############################################################################################
-#  
+# This script processes the raw data exported from the ParlTrack website, in order to 
+# extract some tables the main script can then use.
 # 
 # 10/2015 Vincent Labatut
 #############################################################################################
@@ -17,9 +18,9 @@ PT.FOLDER <- file.path(IN.FOLDER,"itsyourparliament")
 #############################################################################################
 # File names
 #############################################################################################
-# TODO
+# TODO didn't need Parltrack in the end, IYP was enough
 
 #############################################################################################
 # Column names 
 #############################################################################################
-# TODO
+# TODO didn't need Parltrack in the end, IYP was enough

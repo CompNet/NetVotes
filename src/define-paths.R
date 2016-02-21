@@ -161,10 +161,3 @@ get.partitions.path <- function(score, neg.thresh=NA, pos.thresh=NA, country=NA,
 	
 	return(result)
 }
-
-# TODO
-# deux trucs à faire : 
-# 1) utiliser file.path
-# 2) automatiser la construction des chemins.
-#		- passer les paramètres nécessaires à toutes les fonctions concernées, au lieu de construire le chemin progressivement
-#		- ne plus passer le chemin partiel

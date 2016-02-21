@@ -67,7 +67,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 		# external invocation (pILS is coded in C++)
 			# TODO add the external invocation of the application
 		# load the resulting partition file
-		part.file <- file.path(part.folder,"cc-result.txt") # TODO possibly necessary to fix the file name
+		part.file <- file.path(part.folder,"cc-result.txt") # TODO possibly necessary to fix the external file name
 		mbrshp <- load.external.partition(part.folder, algo.name)
 	}
 	
