@@ -43,21 +43,21 @@ dataset.name <- "VW"		# VoteWatch
 #dataset.name <- "PT"		# Parltrack
 
 ## filtering parameters
-#domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
+domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
 #domains <- DOMAIN.AFCO
-domains <- c(DOMAIN.VW2SYMB[TEST.DOMAINS],DOMAIN.ALL)
-#dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
+#domains <- c(DOMAIN.VW2SYMB[TEST.DOMAINS],DOMAIN.ALL)
+dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
 #dates <- c(DATE.T7.Y1)
-dates <- TEST.YEARS
+#dates <- TEST.YEARS
 everything <- TRUE								# whether or not to process all data without distinction of country or date
 #everything <- FALSE
-#countries <- COUNTRY.VALUES					# which country to process individually
+countries <- COUNTRY.VALUES					# which country to process individually
 #countries <- c(COUNTRY.AT)
-countries <- TEST.COUNTRIES
+#countries <- TEST.COUNTRIES
 #countries <- c()
-#groups <- GROUP.VALUES							# which group to process individually
+groups <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
-groups <- GROUP.VW2SYMB[TEST.GROUPS]
+#groups <- GROUP.VW2SYMB[TEST.GROUPS]
 #groups <- c()
 
 ## score matrix used to process agreement
@@ -101,16 +101,16 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-#		domains, dates, everything, countries, groups, plot.formats)
+process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 
 #############################################################################################
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
-#process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
-#		domains, dates, everything, countries, groups, plot.formats)
+process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
+		domains, dates, everything, countries, groups, plot.formats)
 	
 
 
@@ -131,15 +131,15 @@ if(dataset.name=="VW")
 #############################################################################################
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
-evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
+#evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
 
 
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
-compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
+#compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 
 

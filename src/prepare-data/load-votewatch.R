@@ -22,7 +22,7 @@ source("src/prepare-data/load-common.R")
 #############################################################################################
 # VoteWatch data
 VW.FOLDER <- file.path(IN.FOLDER,"votewatch")
-VW.FOLDER <- file.path(IN.FOLDER,"test") # just for debug
+#VW.FOLDER <- file.path(IN.FOLDER,"test") # just for debug
 	# raw data (i.e. tables)
 	VW.RAW.FOLDER <- file.path(VW.FOLDER,"raw")
 

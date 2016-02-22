@@ -275,8 +275,8 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 		y.label <- "Count"
 	
 	# use the other function to perfom the actual plot
-	#print(plot.title)
-	#print(counts)
+	print(plot.title)
+	print(counts)
 	plot.stacked.indiv.count.bars(plot.file, bar.names, color.names, counts, dispersion, proportions, areas, y.lim, x.label, y.label, colors.label, plot.title, x.rotate, format)
 	return(counts)
 }

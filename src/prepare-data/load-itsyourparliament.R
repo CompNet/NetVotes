@@ -131,7 +131,7 @@ DOMAIN.IYP2SYMB["EP Delegation to Conciliation"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["Climate Change"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["The enlarged Union for 2007-2013"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["Resolutions/not categorized"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["Inquiry  on the Equitable Life Assurance Society"] <- DOMAIN.AUTR
+DOMAIN.IYP2SYMB["Inquiry on the Equitable Life Assurance Society"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["The financial, economic and social crisis"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["Parliament delegation to Conciliation"] <- DOMAIN.AUTR
 DOMAIN.IYP2SYMB["EU policy challenges and budgetary resources after 2013"] <- DOMAIN.AUTR
@@ -297,7 +297,7 @@ iyp.extract.meps.details <- function()
 
 #############################################################################################
 # Read the XML file corresponding to the specified domain id, and returns the corresponding
-# vector vote ids.
+# vector of vote ids.
 #
 # domain.id: ID of the domain (in IYP).
 # returns: vector of vote ids.
@@ -325,8 +325,8 @@ iyp.extract.domain <- function(domain.id)
 
 
 #############################################################################################
-# Read the XML file listing the domains, then process each domain, and returns a table representing
-# the domains as well as a list of vectors of vote ids (one for each domain).
+# Read the XML file listing the domains, then process each domain, and returns a vector representing
+# the policy domain associated to each voted document.
 #
 # returns: a vector associating a vote id to the corresponding policy domain.
 #############################################################################################
@@ -375,8 +375,8 @@ iyp.extract.domains <- function()
 			
 			# update vote list
 			if(dom.id %in% dom.ids)
-			{	vote.ids <- iyp.extract.domain(domains[i,IYP.ELT.ID])
-				domain.code <- DOMAIN.IYP2SYMB[domains[i,IYP.ELT.ID]]
+			{	vote.ids <- iyp.extract.domain(domains[i,IYP.ELT.ID]) # TODO
+				domain.code <- DOMAIN.IYP2SYMB[domains[i,IYP.ELT.POLICY.NAME]]
 				result <- rbind(result,
 					cbind(vote.ids, rep(domain.code,length(vote.ids))))
 			}
@@ -460,7 +460,7 @@ cat(" >> ",dom.id,"\n",sep="")
 	date <- str_trim(xml[[IYP.ELT.VOTE.DATE]])	
 	if(!is.na(date) & date=="")
 		date <- NA
-	details[COL.DATE] <- date
+	details[COL.DATE] <- format(as.Date(date,"%Y-%m-%d"),"%d/%m/%Y")
 	
 	# extract vote values
 	votes <- c()
@@ -497,20 +497,20 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	result <- list()
 	
-#	# check if the files already exist, load everything
-#	if(file.exists(ALL.VOTES.FILE) & file.exists(DOC.DETAILS.FILE))
-#	{	# vote values
-#		temp <- as.matrix(read.csv2(ALL.VOTES.FILE,check.names=FALSE))
-#		temp[,COL.MEPID] <- as.integer(temp[,COL.MEPID])
-#		result$all.votes <- temp
-#		# document details
-#		temp <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
-#		temp[,COL.DOCID] <- as.integer(temp[,COL.DOCID])
-#		result$doc.details <- temp
-#	}
-#	
-#	# otherwise, process everything
-#	else
+	# check if the files already exist, load everything
+	if(file.exists(ALL.VOTES.FILE) & file.exists(DOC.DETAILS.FILE))
+	{	# vote values
+		temp <- as.matrix(read.csv2(ALL.VOTES.FILE,check.names=FALSE))
+		temp[,COL.MEPID] <- as.integer(temp[,COL.MEPID])
+		result$all.votes <- temp
+		# document details
+		temp <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
+		temp[,COL.DOCID] <- as.integer(temp[,COL.DOCID])
+		result$doc.details <- temp
+	}
+	
+	# otherwise, process everything
+	else
 	{	# retrieve the list of vote ids
 		files <- list.files(path=IYP.VOTES.FOLDER, full.names=FALSE, no..=TRUE)
 		vote.ids <- c()
@@ -539,9 +539,12 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		
 		# fill both matrices
 		for(i in 1:length(vote.ids))
-		{	temp <- iyp.extract.vote(vote.ids[i])
+		{	temp <- iyp.extract.vote(vote.ids[i]) # TODO 
 			# update details matrix
 			temp$details[COL.DOCID] <- i
+			#print(temp$details)			
+			#print(is.na(temp$details[COL.DOMID]))
+			#print(doc.domains[i,COL.DOMID])
 			if(is.na(temp$details[COL.DOMID]))
 				temp$details[COL.DOMID] <- doc.domains[i,COL.DOMID]
 			else if(temp$details[COL.DOMID]!=doc.domains[i,COL.DOMID])
@@ -569,7 +572,7 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 
 
 # TODO vérif les valeurs des votes dans la table all.votes
-# TODO tous les votes ne sont pas répertoriés dans les document domains
+# TODO tous les votes ne sont pas répertoriés dans les documents domains >> faut vraiment parser les fichiers votes
 
 #############################################################################################
 # Load all the tables and returns them as a list.
