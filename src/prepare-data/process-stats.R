@@ -314,6 +314,8 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 		if(length(votes.spe)>0)
 		{	if(all(is.na(votes.spe)))
 				cat("WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+			else if(all(unlist(votes.spe[!is.na(unlist(votes.spe))])==0))
+				cat("WARNING: All votes are 0s (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
 			else
 			{	# setup folder
 				#folder <- paste(main.folder,dom,"/aggregated/",sep="")
@@ -360,6 +362,8 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 		if(do.yearly)
 		{	if(all(is.na(votes)))
 				cat("WARNING: All yearly values are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+			else if(all(unlist(votes)[!is.na(unlist(votes))]==0))
+				cat("WARNING: All yearly values are 0s (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
 			else
 			{	# setup folder
 				#folder <- paste(main.folder,dom,"/aggregated/",sep="")

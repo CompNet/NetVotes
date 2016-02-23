@@ -38,8 +38,8 @@ source("src/prepare-data/process-stats.R")
 # Init parameters
 #############################################################################################
 ## raw data
-dataset.name <- "VW"		# VoteWatch
-#dataset.name <- "IYP"		# It's your Parliament
+#dataset.name <- "VW"		# VoteWatch
+dataset.name <- "IYP"		# It's your Parliament
 #dataset.name <- "PT"		# Parltrack
 
 ## filtering parameters
@@ -73,8 +73,8 @@ repetitions <- 5						# number of times each algorithm must be applied
 
 ## measures used to compare partitions
 comp.measures <- c(
-	"nmi", 
-	"rand", 
+	"nmi",
+	"rand",
 	"adjusted.rand"
 )
 
