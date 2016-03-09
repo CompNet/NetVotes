@@ -591,31 +591,31 @@ process.behavior.stats <- function(behavior.values, doc.details, domains, dates,
 #############################################################################################
 process.stats <- function(all.votes, behavior.values, doc.details, mep.details, domains, dates, everything, countries, groups, plot.formats)
 {	# domain stats
-	process.domain.frequencies(doc.details, plot.formats)
-	
-	# process stats for all data
-	if(everything)
-	{	cat("Process stats for all data","\n",sep="")
-		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
-		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
-	}
-	
-	# stats by political group
-	cat("Process stats by group","\n",sep="")
-	for(group in groups)
-	{	cat("Process stats for group ",group,"\n",sep="")
-		
-		# select data
-		mepids <- filter.meps.by.group(mep.details,group)
-		idx <- match(mepids,all.votes[,COL.MEPID])
-		group.votes <- all.votes[idx,]
-		group.behavior <- behavior.values[idx,]
-		
-		# process vote (for, against...) stats
-		process.vote.distribution(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
-		# process behavior (loyalty vs. rebel) stats
-		process.behavior.stats(group.behavior, doc.details, domains, dates, country=NA, group, plot.formats)
-	}
+#	process.domain.frequencies(doc.details, plot.formats)
+#	
+#	# process stats for all data
+#	if(everything)
+#	{	cat("Process stats for all data","\n",sep="")
+#		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
+#		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
+#	}
+#	
+#	# stats by political group
+#	cat("Process stats by group","\n",sep="")
+#	for(group in groups)
+#	{	cat("Process stats for group ",group,"\n",sep="")
+#		
+#		# select data
+#		mepids <- filter.meps.by.group(mep.details,group)
+#		idx <- match(mepids,all.votes[,COL.MEPID])
+#		group.votes <- all.votes[idx,]
+#		group.behavior <- behavior.values[idx,]
+#		
+#		# process vote (for, against...) stats
+#		process.vote.distribution(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
+#		# process behavior (loyalty vs. rebel) stats
+#		process.behavior.stats(group.behavior, doc.details, domains, dates, country=NA, group, plot.formats)
+#	}
 	
 	# stats by home country
 	cat("Process stats by country","\n",sep="")
