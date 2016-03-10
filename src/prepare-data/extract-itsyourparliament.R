@@ -60,12 +60,92 @@ iyp.download.meps <- function()
 
 
 #############################################################################################
+# Retrieves the policy domain of a document thanks to the Europarl website (official website
+# of the European Parliament).
+#
+# title: IYP title of the document (which includes its Europarl ID).
+# returns: the domain retrieved from the Europarl website, or NA if none could be found.
+#############################################################################################
+ep.retrieve.domain <- function(title)
+{	domain <- NA
+	
+	# extract the document Europarl ID from the title
+	cat("..title='",title,"'\n",sep="")
+	prefix <- substr(title,1,2)
+	cat("....prefix='",prefix,"'\n",sep="")
+	# known Europarl ID
+	if(prefix %in% c("A7","B7","RC"))
+	{	# build the appropriate request URL for A7- or B7-type ids
+		title <- gsub(" - ", "-", title)
+		if(prefix=="A7" | prefix=="B7") # A7-0144/2014
+		{	number <- substr(title,4,7)
+			cat("....number='",number,"'\n",sep="")
+			year <- substr(title,9,12)
+			cat("....year='",year,"'\n",sep="")
+			reference <- paste(prefix,"-",year,"-",number,sep="")
+			cat("..reference='",reference,"'\n",sep="")
+			if(prefix=="A7")
+				ep.url <- paste(IYP.URL.REPORTS,reference,IYP.URL.LANG.SUFFIX,sep="")
+			else if(prefix=="B7")
+				ep.url <- paste(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX,sep="")
+			cat("..url='",ep.url,"'\n",sep="")
+		}
+		# build the appropriate request URL for RC-type ids
+		else #if(prefix=="RC") # RC-B7-0693/2011
+		{	prefix2 <- substr(title,4,5)
+			cat("....prefix2='",prefix2,"'\n",sep="")
+			number <- substr(title,7,10)
+			cat("....number='",number,"'\n",sep="")
+			year <- substr(title,12,15)
+			cat("....year='",year,"'\n",sep="")
+			reference <- paste("P7","-",prefix,"-",year,"-",number,sep="")
+			cat("..reference='",reference,"'\n",sep="")
+			ep.url <- paste(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX,sep="")
+			cat("..url='",ep.url,"'\n",sep="")
+		}
+		# request the Europarl server
+		ep.page <- readLines(ep.url)
+		# identify the associated parliamentary committee
+		idx <- str_locate(ep.page, fixed("Committee on "))
+		idx2 <- which(apply(idx,1,function(v) !all(is.na(v))))
+		# a committee could be found
+		if(length(idx2)>0)
+		{	# extract domain from committee name
+			com.line <- ep.page[idx2[1]]
+			cat("..com.line='",com.line,"'\n",sep="")
+			start.pos <- idx[idx2[1],2] + 1
+			the <- substr(com.line, start=start.pos,stop=start.pos+nchar("the ")-1)
+			cat("..the='",the,"'\n",sep="")
+			if(the=="the ")
+				start.pos <- start.pos + nchar("the ")
+			tag.pos <- str_locate(substr(com.line,start=start.pos,stop=nchar(com.line)),"<")[1]
+			if(!is.na(tag.pos))
+				end.pos <- start.pos + tag.pos - 2
+			else
+				end.pos <- nchar(com.line)
+			# init the result variable
+			domain <- str_trim(substr(com.line,start=start.pos,stop=end.pos))
+			cat("..domain='",domain,"'\n",sep="")
+		}
+		# no committee found
+		else
+			cat("..WARNING: could not find the committee name\n",sep="")
+	}
+	# unknown Europarl ID
+	else
+	{	cat("..WARNING: prefix not recognized, skipping this one\n",sep="")
+	}
+	
+	return(domain)
+}
+
+
+#############################################################################################
 # Retrieves the list of all votes from the website from www.itsyourparliament.eu, and record
 # them as XML files for later use.
 #############################################################################################
 iyp.download.votes <- function()
-{	
-	for(i in 1:length(IYP.VOTE.IDS))
+{	for(i in 1:length(IYP.VOTE.IDS))
 #i <- 6263
 	{	vote.id <- IYP.VOTE.IDS[i]
 		cat("Retrieving XML file for vote id ",vote.id," (",i,"/",length(IYP.VOTE.IDS),")\n",sep="")
@@ -88,71 +168,76 @@ iyp.download.votes <- function()
 			domain <- str_trim(xml[[IYP.ELT.POLICY.AREA]])
 			if(domain=="")
 			{	cat("No policy domain, trying to get it from europal (domain='",domain,"')\n",sep="")
+				# try to get the domain from the official website 
 				title <- str_trim(xml[[IYP.ELT.VOTE.TITLE]])
-				cat("..title='",title,"'\n",sep="")
-				prefix <- substr(title,1,2)
-				cat("....prefix='",prefix,"'\n",sep="")
-				if(prefix %in% c("A7","B7","RC"))
-				{	title <- gsub(" - ", "-", title)
-					if(prefix=="A7" | prefix=="B7") # A7-0144/2014
-					{	number <- substr(title,4,7)
-						cat("....number='",number,"'\n",sep="")
-						year <- substr(title,9,12)
-						cat("....year='",year,"'\n",sep="")
-						reference <- paste(prefix,"-",year,"-",number,sep="")
-						cat("..reference='",reference,"'\n",sep="")
-						if(prefix=="A7")
-							ep.url <- paste(IYP.URL.REPORTS,reference,IYP.URL.LANG.SUFFIX,sep="")
-						else if(prefix=="B7")
-							ep.url <- paste(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX,sep="")
-						cat("..url='",ep.url,"'\n",sep="")
-					}
-					else #if(prefix=="RC") # RC-B7-0693/2011
-					{	prefix2 <- substr(title,4,5)
-						cat("....prefix2='",prefix2,"'\n",sep="")
-						number <- substr(title,7,10)
-						cat("....number='",number,"'\n",sep="")
-						year <- substr(title,12,15)
-						cat("....year='",year,"'\n",sep="")
-						reference <- paste("P7","-",prefix,"-",year,"-",number,sep="")
-						cat("..reference='",reference,"'\n",sep="")
-						ep.url <- paste(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX,sep="")
-						cat("..url='",ep.url,"'\n",sep="")
-					}
-					ep.page <- readLines(ep.url)
-					idx <- str_locate(ep.page, fixed("Committee on "))
+				domain <- ep.retrieve.domain(title)
+				# update the xml document
+				if(!is.na(domain) && domain!="")
+				{	idx <- str_locate(page, fixed(IYP.ELT.POLICY.AREA))
 					idx2 <- which(apply(idx,1,function(v) !all(is.na(v))))
-					if(length(idx2)>0)
-					{	com.line <- ep.page[idx2[1]]
-						cat("..com.line='",com.line,"'\n",sep="")
-						start.pos <- idx[idx2[1],2] + 1
-						the <- substr(com.line, start=start.pos,stop=start.pos+nchar("the ")-1)
-						cat("..the='",the,"'\n",sep="")
-						if(the=="the ")
-							start.pos <- start.pos + nchar("the ")
-						tag.pos <- str_locate(substr(com.line,start=start.pos,stop=nchar(com.line)),"<")[1]
-						if(!is.na(tag.pos))
-							end.pos <- start.pos + tag.pos - 2
-						else
-							end.pos <- nchar(com.line)
-						domain <- str_trim(substr(com.line,start=start.pos,stop=end.pos))
-						cat("..domain='",domain,"'\n",sep="")
-						idx <- str_locate(page, fixed(IYP.ELT.POLICY.AREA))
-						idx2 <- which(apply(idx,1,function(v) !all(is.na(v))))
-						page[idx2[1]] <- paste(page[idx2[1]], domain)
-					}
-					else
-						cat("..could not find the committee name\n",sep="")
-				}
-				else
-				{	cat("..prefix not recognized, skipping this one\n",sep="")
+					page[idx2[1]] <- paste(page[idx2[1]], domain)
 				}
 			}
-				
+			
 			# record the page
 			file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
 			writeLines(page,file)
 		}
+	}
+}
+
+
+
+#############################################################################################
+# Load the existing XML files reprenting votes, and possibly complete them by adding
+# a policy domain when missing. This domaib is retrieved from Europarl, the official website
+# of the European Parliament.
+#############################################################################################
+iyp.complete.votes <- function()
+{	# retrieve the list of vote ids
+	files <- list.files(path=IYP.VOTES.FOLDER, full.names=FALSE, no..=TRUE)
+	vote.ids <- c()
+	for(file in files)
+		vote.ids <- c(vote.ids,substr(file,1,str_locate(file,".xml")-1))
+	vote.ids <- sort(as.integer(vote.ids))
+	
+	for(i in 5800:length(vote.ids))
+	{	vote.id <- vote.ids[i]
+		cat("Processing the XML file for vote id ",vote.id," (",i,"/",length(vote.ids),")\n",sep="")
+		
+		# load the page
+		file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
+		cat("file=",file,"\n",sep="")
+		page <- readLines(file)
+		# parse the XML code
+		xml.data <- xmlParse(page)
+		xml <- xmlToList(xml.data)
+		
+		# possibly look for the policy domain
+		changed <- FALSE
+		domain <- str_trim(xml[[IYP.ELT.POLICY.AREA]])
+		cat("domain=",domain,"\n",sep="")
+		if(domain=="")
+		{	cat("No policy domain, trying to get it from europal (domain='",domain,"')\n",sep="")
+			# try to get the domain from the official website 
+			title <- str_trim(xml[[IYP.ELT.VOTE.TITLE]])
+			domain <- ep.retrieve.domain(title)
+			# update the xml document
+			if(!is.na(domain) && domain!="")
+			{	idx <- str_locate(page, fixed(IYP.ELT.POLICY.AREA))
+				idx2 <- which(apply(idx,1,function(v) !all(is.na(v))))
+				page[idx2[1]] <- paste(page[idx2[1]], domain)
+				changed <- TRUE
+			}
+		}
+		
+		# possibly re-record the page
+		if(changed)
+		{	cat("!!!!!!! Domain changed: updating the file\n\n")
+			writeLines(page,file)
+		}
+		else
+			cat("Nothing changed for this document\n\n")
 	}
 }
 
