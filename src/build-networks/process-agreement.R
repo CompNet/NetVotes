@@ -210,7 +210,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 					plot.file <- file.path(folder,paste(DATE.STR.T7[date],"-counts",sep=""))
 					data <- plot.histo(plot.file, values=agr.vals,
 						x.label, 
-						proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA, 
+						proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA,
 						plot.title=title, format=plot.formats)
 					# record as a table
 					data <- data[,c("y","xmin","xmax")]

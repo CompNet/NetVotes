@@ -90,20 +90,6 @@ DOMAIN.IYP2SYMB["Petitions"] <- DOMAIN.PETI
 DOMAIN.IYP2SYMB["Regional Development"] <- DOMAIN.REGI
 DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE
 DOMAIN.IYP2SYMB["Transport and Tourism"] <- DOMAIN.TRAN
-#DOMAIN.IYP2SYMB["Conciliation"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["The use of European countries by the CIA"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["EP Delegation to Conciliation"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["Climate Change"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["The enlarged Union for 2007-2013"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["Resolutions/not categorized"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["Inquiry on the Equitable Life Assurance Society"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["The financial, economic and social crisis"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["Parliament delegation to Conciliation"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["EU policy challenges and budgetary resources after 2013"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["European Parliament delegation to the Budgetary Conciliation"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["Organised crime, corruption and money laundering"] <- DOMAIN.AUTR
-# TODO vérifier les docs qui n'ont pas du tout de domaine
-# TODO vérifier les domaines présents dans les xml mais ne correspondant pas à des noms normalisés
 
 
 

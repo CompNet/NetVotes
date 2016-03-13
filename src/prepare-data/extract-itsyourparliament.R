@@ -201,7 +201,7 @@ iyp.complete.votes <- function()
 		vote.ids <- c(vote.ids,substr(file,1,str_locate(file,".xml")-1))
 	vote.ids <- sort(as.integer(vote.ids))
 	
-	for(i in 5800:length(vote.ids))
+	for(i in 1:length(vote.ids))
 	{	vote.id <- vote.ids[i]
 		cat("Processing the XML file for vote id ",vote.id," (",i,"/",length(vote.ids),")\n",sep="")
 		

@@ -12,8 +12,7 @@ library("igraph")
 # and complementary negative.
 #
 # score: name of the score table used to process the agreement index.
-# neg.thresh: negative threshold for network extraction.
-# pos.thresh: positive threshold for network extraction.
+# thresh: thresholds used for network extraction (vector of two values).
 # country: considered member state (optional).
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
@@ -22,8 +21,8 @@ library("igraph")
 #		negative graph (to assess partitions).
 # returns: a list containing the three graphs (named: signed, pos, neg).
 #############################################################################################
-retrieve.graphs <- function(score, neg.thresh, pos.thresh, country, group, domain, period, comp)
-{	folder <- get.networks.path(score, neg.thresh, pos.thresh, country, group, domain, period)
+retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
+{	folder <- get.networks.path(score, thresh, country, group, domain, period)
 	
 	# load the original graph
 	graph.file <- file.path(folder,paste(SIGNED.FILE,".graphml",sep=""))

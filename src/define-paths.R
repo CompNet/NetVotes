@@ -79,15 +79,14 @@ get.agreement.path <- function(score, country=NA, group=NA, domain)
 # Builds a path for a file located in the "networks" folder.
 #
 # score: name of the score table used to process the agreement index.
-# neg.thresh: negative threshold for network extraction (can be NA if no negative threshold).
-# pos.thresh: positive threshold for network extraction (can be NA if no positive threshold).
+# thresh: thresholds used for network extraction (vector of two values).
 # country: considered member state (optional).
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
 # period: considered time period.
 # returns: the appropriate path for a files in the "networks" folder.
 #############################################################################################
-get.networks.path <- function(score, neg.thresh=NA, pos.thresh=NA, country=NA, group=NA, domain, period)
+get.networks.path <- function(score, thresh=NA, country=NA, group=NA, domain, period)
 {	result <- NETWORKS.FOLDER
 	
 	# score table (should not be NA)
@@ -95,7 +94,7 @@ get.networks.path <- function(score, neg.thresh=NA, pos.thresh=NA, country=NA, g
 	result <- file.path(result,score)
 	
 	# positive and negative thresholds (can be NA if no threhsold)
-	result <- file.path(result,paste("negtr=",neg.thresh,"_postr=",pos.thresh,sep=""))
+	result <- file.path(result,paste("negtr=",thresh[1],"_postr=",thresh[2],sep=""))
 	
 	# country, group or everything (mutuall exclusive)
 	if(!is.na(country))
@@ -120,8 +119,7 @@ get.networks.path <- function(score, neg.thresh=NA, pos.thresh=NA, country=NA, g
 # Builds a path for a file located in the "partitions" folder.
 #
 # score: name of the score table used to process the agreement index (compulsory).
-# neg.thresh: negative threshold for network extraction (can be NA if no negative threshold).
-# pos.thresh: positive threshold for network extraction (can be NA if no positive threshold).
+# thresh: thresholds used for network extraction (vector of two values).
 # country: considered member state (optional).
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
@@ -129,7 +127,7 @@ get.networks.path <- function(score, neg.thresh=NA, pos.thresh=NA, country=NA, g
 # repetition: repetition number for the partitioning algorithm (NA for no repetition at all).
 # returns: the appropriate path for a files in the "networks" folder.
 #############################################################################################
-get.partitions.path <- function(score, neg.thresh=NA, pos.thresh=NA, country=NA, group=NA, domain, period=NA, repetition=NA)
+get.partitions.path <- function(score, thresh=NA, country=NA, group=NA, domain, period=NA, repetition=NA)
 {	result <- PARTITIONS.FOLDER
 	
 	# score table (should not be NA)
@@ -137,7 +135,7 @@ get.partitions.path <- function(score, neg.thresh=NA, pos.thresh=NA, country=NA,
 	result <- file.path(result,score)
 	
 	# positive and negative thresholds (can be NA if no threhsold)
-	result <- file.path(result,paste("negtr=",neg.thresh,"_postr=",pos.thresh,sep=""))
+	result <- file.path(result,paste("negtr=",thresh[1],"_postr=",thresh[2],sep=""))
 	
 	# country, group or everything (mutuall exclusive)
 	if(!is.na(country))
