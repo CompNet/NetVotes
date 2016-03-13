@@ -217,30 +217,30 @@ extract.all.networks <- function(mep.details, thresh=NA, score.file, domains, da
 	}
 	
 	# networks by political group
-#	cat("Extract networks by group","\n",sep="")
-#	for(group in groups)
-#	{	cat("Extract networks for group ",group,"\n",sep="")
-#		
-#		# select data
-#		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
-#		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
-#		grp.meps <- mep.details[idx,]
-#		
-#		# extract networks
-#		extract.networks(grp.meps, thresh, score.file, domains, dates, country=NA, group, plot.formats)
-#	}
+	cat("Extract networks by group","\n",sep="")
+	for(group in groups)
+	{	cat("Extract networks for group ",group,"\n",sep="")
+		
+		# select data
+		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
+		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
+		grp.meps <- mep.details[idx,]
+		
+		# extract networks
+		extract.networks(grp.meps, thresh, score.file, domains, dates, country=NA, group, plot.formats)
+	}
 	
 	# networks by home country
-#	cat("Extract networks by country","\n",sep="")
-#	for(country in countries)
-#	{	cat("Extract networks for country ",country,"\n",sep="")
-#		
-#		# select data
-#		filtered.mep.ids <- filter.meps.by.country(mep.details,country)
-#		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
-#		cntr.meps <- mep.details[idx,]
-#		
-#		# extract networks
-#		extract.networks(cntr.meps, thresh, score.file, domains, dates, country, group=NA, plot.formats)
-#	}
+	cat("Extract networks by country","\n",sep="")
+	for(country in countries)
+	{	cat("Extract networks for country ",country,"\n",sep="")
+		
+		# select data
+		filtered.mep.ids <- filter.meps.by.country(mep.details,country)
+		idx <- match(filtered.mep.ids,mep.details[,COL.MEPID])
+		cntr.meps <- mep.details[idx,]
+		
+		# extract networks
+		extract.networks(cntr.meps, thresh, score.file, domains, dates, country, group=NA, plot.formats)
+	}
 }
