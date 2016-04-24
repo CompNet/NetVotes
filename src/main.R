@@ -46,34 +46,42 @@ dataset.name <- "IYP"		# It's your Parliament
 domains <- c(DOMAIN.ALL, DOMAIN.VALUES)			# which domains to process individually
 #domains <- DOMAIN.AFCO
 #domains <- c(DOMAIN.VW2SYMB[TEST.DOMAINS],DOMAIN.ALL)
-dates <- c(DATE.T7.TERM, DATE.T7.YEARS)			# which time period to process individually
-#dates <- c(DATE.T7.Y1)
+#dates <- c(DATE.T7.TERM, DATE.T7.YEARS)			# which time period to process individually
+dates <- c(
+#		DATE.T7.Y1
+#		DATE.T7.Y2
+#		DATE.T7.Y3
+#		DATE.T7.Y4
+#		DATE.T7.Y5
+		DATE.T7.TERM
+)
 #dates <- TEST.YEARS
 everything <- TRUE								# whether or not to process all data without distinction of country or date
 #everything <- FALSE
-countries <- COUNTRY.VALUES						# which country to process individually
+#countries <- COUNTRY.VALUES						# which country to process individually
 #countries <- c(COUNTRY.AT)
 #countries <- TEST.COUNTRIES
 #countries <- c()
-#countries <- c(
+countries <- c(
 #		COUNTRY.AT,COUNTRY.BE,COUNTRY.BG,COUNTRY.HR,COUNTRY.CY,COUNTRY.CZ,COUNTRY.DK
 #		COUNTRY.EE,COUNTRY.FI,COUNTRY.FR,COUNTRY.DE,COUNTRY.GR,COUNTRY.HU,COUNTRY.IE
 #		COUNTRY.IT,COUNTRY.LV,COUNTRY.LT,COUNTRY.LU,COUNTRY.MT,COUNTRY.NL,COUNTRY.PL
 #		COUNTRY.PT,COUNTRY.RO,COUNTRY.SK,COUNTRY.SI,COUNTRY.ES,COUNTRY.SE,COUNTRY.UK
-#)
-groups <- GROUP.VALUES							# which group to process individually
+)
+#groups <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
 #groups <- GROUP.VW2SYMB[TEST.GROUPS]
 #groups <- c()
-#groups <- c(
+groups <- c(
 #	GROUP.ALDE,GROUP.ECR,GROUP.EFD,GROUP.EPP
 #	GROUP.GREENS,GROUP.GUENGL,GROUP.NI,GROUP.SD
-#)
+)
 
 ## score matrix used to process agreement
 score.file <- "m3"					# see folder in/score
+thresh <- c(0,0)					# no thresholding at all
 #thresh <- c(-0.34,+0.34)			# thresholds applied to agreement index values during network extraction (use c(0,0) for no filtering)
-thresh <- NA						# both thresholds automatically estimated (through k-means)
+#thresh <- NA						# both thresholds automatically estimated (through k-means)
 
 ## partitioning algorithms
 comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
@@ -157,7 +165,11 @@ extract.all.networks(data$mep.details, thresh, score.file,
 #############################################################################################
 #############################################################################################
 #############################################################################################
-# Problèmes
+# Notes
+# - when dealing with filtered nodes (countries, groups): shouldn't we record only the concerned nodes (in the networks)?
+
+# Problems
+# - Pb with IYP: absence not explicitly represented >> peaks of zero agreement for yearly votes.
 # - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable
 #   note: might be due to small numbers of expressed votes (i.e. non-NA)
 

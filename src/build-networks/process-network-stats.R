@@ -128,10 +128,10 @@ process.global.measures <- function(g, g.ref, result, col.name)
 		result[ROW.COMPONENT.SIZE,col.name] <- max(tmp$csize)
 		result[ROW.COMPONENT.PROP,col.name] <- max(tmp$csize) / vcount(g.clean)
 		
-		# connectivity
-		cat("Processing connectivity\n")
-		result[ROW.CONNECTIVITY.LINK,col.name] <- graph.adhesion(g.clean,checks=FALSE)
-		result[ROW.CONNECTIVITY.NODE,col.name] <- graph.cohesion(g.clean,checks=FALSE)
+#		# connectivity
+#		cat("Processing connectivity\n")
+#		result[ROW.CONNECTIVITY.LINK,col.name] <- graph.adhesion(g.clean,checks=FALSE)
+#		result[ROW.CONNECTIVITY.NODE,col.name] <- graph.cohesion(g.clean,checks=FALSE)
 		
 		# degree
 		cat("Processing degree\n")
