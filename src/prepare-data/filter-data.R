@@ -8,7 +8,7 @@
 # - Geographic: their home state.
 # - Political: their european political group.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
 source("src/define-constants.R")

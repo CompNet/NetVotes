@@ -2,7 +2,7 @@
 # This script allows defining all the file constants used by the other scripts and functions.
 # This include both file names and folder names.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
 
@@ -249,10 +249,10 @@ GROUP.EPP <- "EPP"
 	GROUP.FULLNAMES[GROUP.EPP] <- "European People's Party"
 GROUP.GREENS <- "Greens"
 	GROUP.VALUES <- c(GROUP.VALUES, GROUP.GREENS)
-	GROUP.FULLNAMES[GROUP.GREENS] <- "The Greens–European Free Alliance"
+	GROUP.FULLNAMES[GROUP.GREENS] <- "The Greensï¿½European Free Alliance"
 GROUP.GUENGL <- "GUENGL"
 	GROUP.VALUES <- c(GROUP.VALUES, GROUP.GUENGL)
-	GROUP.FULLNAMES[GROUP.GUENGL] <- "European United Left–Nordic Green Left"
+	GROUP.FULLNAMES[GROUP.GUENGL] <- "European United Leftï¿½Nordic Green Left"
 GROUP.NI <- "NI"
 	GROUP.VALUES <- c(GROUP.VALUES, GROUP.NI)
 	GROUP.FULLNAMES[GROUP.NI] <- "Non-Inscrits"

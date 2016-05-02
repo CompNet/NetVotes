@@ -2,7 +2,7 @@
 # Generates plots and data files for various statistics processed on the raw data.
 # Some of them concern the votes, other concern the rebellion index.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 10/2015 Vincent Labatut (v2)
 #############################################################################################
 source("src/define-constants.R")

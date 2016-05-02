@@ -11,7 +11,7 @@
 # - Documented Absence: the MEP was not present and justified his absence.
 # - NA: the MEP was not holding a mandate when voting the considered text.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 09/2015 Vincent Labatut (v2)
 #############################################################################################
 source("src/prepare-data/load-common.R")
