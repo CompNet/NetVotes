@@ -13,10 +13,10 @@
 # allow to control it, and to restrict the focus to certain topics/years, or control certain 
 # points of the network extraction.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 09/2015 Vincent Labatut (v2)
 #
-# setwd("C:/Eclipse/workspaces/Networks/NetVotes")
+# setwd("D:/Eclipse/workspaces/Networks/NetVotes")
 # source("src/main.R")
 #############################################################################################
 source("src/define-constants.R")
@@ -43,27 +43,45 @@ dataset.name <- "IYP"		# It's your Parliament
 #dataset.name <- "PT"		# Parltrack
 
 ## filtering parameters
-domains <- c(DOMAIN.ALL, DOMAIN.VALUES)		# which domains to process individually
+domains <- c(DOMAIN.ALL, DOMAIN.VALUES)			# which domains to process individually
 #domains <- DOMAIN.AFCO
 #domains <- c(DOMAIN.VW2SYMB[TEST.DOMAINS],DOMAIN.ALL)
-dates <- c(DATE.T7.TERM, DATE.T7.YEARS)		# which time period to process individually
-#dates <- c(DATE.T7.Y1)
+#dates <- c(DATE.T7.TERM, DATE.T7.YEARS)			# which time period to process individually
+dates <- c(
+#		DATE.T7.Y1
+#		DATE.T7.Y2
+#		DATE.T7.Y3
+#		DATE.T7.Y4
+#		DATE.T7.Y5
+		DATE.T7.TERM
+)
 #dates <- TEST.YEARS
 everything <- TRUE								# whether or not to process all data without distinction of country or date
 #everything <- FALSE
-countries <- COUNTRY.VALUES					# which country to process individually
+#countries <- COUNTRY.VALUES						# which country to process individually
 #countries <- c(COUNTRY.AT)
 #countries <- TEST.COUNTRIES
 #countries <- c()
-groups <- GROUP.VALUES							# which group to process individually
+countries <- c(
+#		COUNTRY.AT,COUNTRY.BE,COUNTRY.BG,COUNTRY.HR,COUNTRY.CY,COUNTRY.CZ,COUNTRY.DK
+#		COUNTRY.EE,COUNTRY.FI,COUNTRY.FR,COUNTRY.DE,COUNTRY.GR,COUNTRY.HU,COUNTRY.IE
+#		COUNTRY.IT,COUNTRY.LV,COUNTRY.LT,COUNTRY.LU,COUNTRY.MT,COUNTRY.NL,COUNTRY.PL
+#		COUNTRY.PT,COUNTRY.RO,COUNTRY.SK,COUNTRY.SI,COUNTRY.ES,COUNTRY.SE,COUNTRY.UK
+)
+#groups <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
 #groups <- GROUP.VW2SYMB[TEST.GROUPS]
 #groups <- c()
+groups <- c(
+#	GROUP.ALDE,GROUP.ECR,GROUP.EFD,GROUP.EPP
+#	GROUP.GREENS,GROUP.GUENGL,GROUP.NI,GROUP.SD
+)
 
 ## score matrix used to process agreement
-score.file <- "m3"			# see folder in/score
-neg.thresh <- -0.34			# threshold applied to negative agreement index values (during network extraction)
-pos.thresh <- +0.34			# same thing, but for positive values
+score.file <- "m3"					# see folder in/score
+thresh <- c(0,0)					# no thresholding at all
+#thresh <- c(-0.34,+0.34)			# thresholds applied to agreement index values during network extraction (use c(0,0) for no filtering)
+#thresh <- NA						# both thresholds automatically estimated (through k-means)
 
 ## partitioning algorithms
 comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
@@ -80,7 +98,7 @@ comp.measures <- c(
 
 ## formats of the generated plot (NA for screen -- mainly for debug)
 plot.formats <- c(
-#	"PDF", 
+	"PDF", 
 	"PNG"
 #	NA
 )
@@ -101,44 +119,44 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-		domains, dates, everything, countries, groups, plot.formats)
+#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 
 #############################################################################################
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
-process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
-		domains, dates, everything, countries, groups, plot.formats)
-	
+#process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
+#		domains, dates, everything, countries, groups, plot.formats)
+
 
 
 #############################################################################################
 # Extract all the networks
 #############################################################################################
-#extract.all.networks(data$mep.details, neg.thresh, pos.thresh, score.file,
-#		domains, dates, everything, countries, groups, plot.formats)
+extract.all.networks(data$mep.details, thresh, score.file,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-#partition.all.graphs(data$mep.details, neg.thresh, pos.thresh, score.file,
+#partition.all.graphs(data$mep.details, thresh, score.file,
 #		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
 
 
 #############################################################################################
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
-#evaluate.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+#evaluate.all.partitions(data$mep.details, thresh, score.file,
 #		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
 
 
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
-#compare.all.partitions(data$mep.details, neg.thresh, pos.thresh, score.file,
+#compare.all.partitions(data$mep.details, thresh, score.file,
 #		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 
@@ -147,14 +165,18 @@ process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file
 #############################################################################################
 #############################################################################################
 #############################################################################################
-# Problèmes
+# Notes
+# - when dealing with filtered nodes (countries, groups): shouldn't we record only the concerned nodes (in the networks)?
+
+# Problems
+# - Pb with IYP: absence not explicitly represented >> peaks of zero agreement for yearly votes.
 # - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable
 #   note: might be due to small numbers of expressed votes (i.e. non-NA)
 
-# Extraction de réseaux
-# - on peut extraire des réseaux au niveau des partis politiques
-# - peut être aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 
+# Extraction de rï¿½seaux
+# - on peut extraire des rï¿½seaux au niveau des partis politiques
+# - peut ï¿½tre aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 
 
-# Stats sur données brutes
+# Stats sur donnï¿½es brutes
 # - on pourrait aussi voir le comportement individuel: nombre de votes de chaque type pour une personne.
-#   ça peut être complet, agrégé par année, par législature... 
+#   ï¿½a peut ï¿½tre complet, agrï¿½gï¿½ par annï¿½e, par lï¿½gislature... 

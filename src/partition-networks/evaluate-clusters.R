@@ -2,7 +2,7 @@
 # Estimates the quality of the detected partitions, using various measures designed for
 # community detection and for correlation clustering.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 11/2015 Vincent Labatut (v2)
 #############################################################################################
 source("src/define-constants.R")
@@ -358,8 +358,7 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 # Evaluates the partitions for the specified partitioning algorithms, for all possible networks, 
 # for all time periods and domains, for the specified thresholds and agreement scores. 
 #
-# neg.thresh: agreement negative threshold used during cluster detection.
-# pos.thresh: agreement positive threshold used during cluster detection.
+# thresh: thresholds used for network extraction (vector of two values).
 # score.file: file describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # domains: political domains to consider when processing the data.
@@ -371,11 +370,11 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 # repetitions: number of times each algorithm has been applied.
 # plot.formats: formats of the plot files.
 #############################################################################################
-evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
 	{	#dom.folder <- paste(subfolder,"/",score.file,"/",
-		#		"negtr=",neg.thresh,"-postr=",pos.thresh,"/",
+		#		"negtr=",thresh[1],"-postr=",thresh[2],"/",
 		#		dom,"/",sep="")
 		date.perf.list <- list()
 		
@@ -389,7 +388,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 			#
 			# load all three versions of the graph (but: negative graph, not complementary negative)
 			cat("Load all three versions of the graph\n",sep="")
-			graphs <- retrieve.graphs(score=score.file, neg.thresh, pos.thresh, country, group, domain=dom, period=date, comp=TRUE)
+			graphs <- retrieve.graphs(score=score.file, thresh, country, group, domain=dom, period=date, comp=TRUE)
 			
 			# init the list used to process the average and plots
 			if(repetitions>1)
@@ -404,10 +403,10 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 				# setup iteration folder
 				if(repetitions>1)
 					#r.subfolder <- paste(date.folder,r,"/",sep="")
-					part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain=dom, period=date, repetition=r)
+					part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain=dom, period=date, repetition=r)
 				else
 					#r.subfolder <- date.folder
-					part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain=dom, period=date, repetition=NA)
+					part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain=dom, period=date, repetition=NA)
 				
 				# init the iteration performance table
 				perf.table <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(PART.MEAS.VALUES))
@@ -441,7 +440,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 			
 			# record the average (over repetitions) tables and generate the plots
 			if(repetitions>1)
-			{	part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain=dom, period=date, repetition=NA)
+			{	part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain=dom, period=date, repetition=NA)
 				
 				# record average table
 				avg.vals <- average.matrix.list(perf.list)
@@ -482,7 +481,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 				}
 			}
 			# record these table(s)
-			part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain=dom, period=NA, repetition=NA)
+			part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain=dom, period=NA, repetition=NA)
 			if(repetitions>1)
 			{	table.file <- file.path(part.folder,paste(measure,"-mean-performances.csv",sep=""))
 				temp.table <- data.m
@@ -536,8 +535,7 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 # agreement scores. 
 #
 # mep.details: description of each MEP.
-# neg.thresh: agreement negative threshold used during cluster detection.
-# pos.thresh: agreement positive threshold used during cluster detection.
+# thresh: thresholds used for network extraction (vector of two values).
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
 # everything: whether to process all data without distinction of country or political group.
@@ -548,11 +546,11 @@ evaluate.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain
 # repetitions: number of times each algorithm has been applied.
 # plot.formats: formats of the plot files.
 #############################################################################################
-evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
+evaluate.all.partitions <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# process performance for all data
 	if(everything)
 	{	cat("Process performance measures for all data","\n",sep="")
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+		evaluate.partitions(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 	
 	# process performance by political group
@@ -566,7 +564,7 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 		grp.meps <- mep.details[idx,]
 		
 		# process performance
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+		evaluate.partitions(thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 	
 	# process performance by home country
@@ -580,6 +578,6 @@ evaluate.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, s
 		cntr.meps <- mep.details[idx,]
 		
 		# process performance
-		evaluate.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+		evaluate.partitions(thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 }

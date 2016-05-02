@@ -1,7 +1,7 @@
 #############################################################################################
 # Loads membership vectors processed using external tools.
 # 
-# 01/2016 Vincent Labatut (v2)
+# 01/2016 Vincent Labatut
 #############################################################################################
 source("src/define-constants.R")
 

@@ -2,7 +2,7 @@
 # Processes the agreement between MEPs, and generate plots and statistics.
 # These scripts directly make use of the "score matrices" stored in in/score as lists. 
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 10/2015 Vincent Labatut (v2)
 #############################################################################################
 source("src/define-constants.R")
@@ -210,7 +210,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 					plot.file <- file.path(folder,paste(DATE.STR.T7[date],"-counts",sep=""))
 					data <- plot.histo(plot.file, values=agr.vals,
 						x.label, 
-						proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA, 
+						proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA,
 						plot.title=title, format=plot.formats)
 					# record as a table
 					data <- data[,c("y","xmin","xmax")]

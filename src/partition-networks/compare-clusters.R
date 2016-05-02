@@ -1,7 +1,7 @@
 #############################################################################################
 # Set of function in charge for comparing previously detected partitions.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 11/2015 Vincent Labatut (v2)
 #############################################################################################
 source("src/partition-networks/networks-common.R")
@@ -34,12 +34,19 @@ compare.partition.pair <- function(partition1, partition2, measures="nmi")
 # Processes the specified measures comparing all specified partitioning algorithms for the
 # data contained in the specified folder.
 #
+# thresh: thresholds used for network extraction (vector of two values).
+# score.file: file describing the scores to use when processing the inter-MEP agreement
+#			  (without the .txt extension).
+# domains: political domains to consider when processing the data.
+# dates: time periods to consider when processing the data.
+# country: member state to consider separately when processing the data.
+# group: political group to consider separately when processing the data.
 # comdet.algos: vector of community detection algorithm names.
 # corclu.algos: vector of correlation clustering algorithm names.
 # measures: vector of comparison measures to process.
 # repetitions: number of times each algorithm must be applied.
 #############################################################################################
-compare.partitions.measures <- function(neg.thresh=NA, pos.thresh=NA, score.file, domain, date, country, group, comdet.algos, corclu.algos, measures="nmi", repetitions)
+compare.partitions.measures <- function(thresh=NA, score.file, domain, date, country, group, comdet.algos, corclu.algos, measures="nmi", repetitions)
 {	# init the list used to process the average
 	if(repetitions>1)
 	{	avg.list <- list()
@@ -53,10 +60,10 @@ compare.partitions.measures <- function(neg.thresh=NA, pos.thresh=NA, score.file
 		# setup iteration folder
 		if(repetitions>1)
 			#r.folder <- paste(folder,r,"/",sep="")
-			part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date, repetition=r)
+			part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=date, repetition=r)
 		else
 			#r.folder <- folder
-			part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date, repetition=NA)
+			part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=date, repetition=NA)
 		
 		# load partitions
 		partitions <- list()
@@ -128,7 +135,7 @@ compare.partitions.measures <- function(neg.thresh=NA, pos.thresh=NA, score.file
 	
 	# record the average tables
 	if(repetitions>1)
-	{	part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date, repetition=NA)
+	{	part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=date, repetition=NA)
 		for(meas in measures)
 		{	tmp <- average.matrix.list(avg.list[[meas]])
 			table.file <- file.path(part.folder,paste("comparison-mean-",meas,".csv",sep=""))
@@ -144,8 +151,7 @@ compare.partitions.measures <- function(neg.thresh=NA, pos.thresh=NA, score.file
 # Compare the partitions for the specified partitioning algorithms, for all possible networks, 
 # for all time periods and domains, for the specified thresholds and agreement scores. 
 #
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# thresh: thresholds used for network extraction (vector of two values).
 # score.file: file describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # domains: political domains to consider when processing the data.
@@ -157,7 +163,7 @@ compare.partitions.measures <- function(neg.thresh=NA, pos.thresh=NA, score.file
 # measures: vector of comparison measures to process.
 # repetitions: number of times each algorithm must be applied.
 #############################################################################################
-compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, measures, repetitions)
+compare.partitions <- function(thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, measures, repetitions)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
 	{	# consider each time period (each individual year as well as the whole term)
@@ -166,13 +172,13 @@ compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains
 			
 			# setup graph folder
 			#filtered.folder <- paste(folder,"/",score.file,
-			#		"/","negtr=",neg.thresh,"-postr=",pos.thresh,
+			#		"/","negtr=",thresh[1],"-postr=",thresh[2],
 			#		"/",dom,"/",DATE.STR.T7[date],
 			#		"/",sep="")
 			
 			# compare algorithm performances
 			cat("Compare partitioning algorithm performances\n",sep="")
-			compare.partitions.measures(neg.thresh, pos.thresh, score.file, domain=dom, date, country, group, comdet.algos, corclu.algos, measures, repetitions)
+			compare.partitions.measures(thresh, score.file, domain=dom, date, country, group, comdet.algos, corclu.algos, measures, repetitions)
 		}
 	}
 }
@@ -184,8 +190,7 @@ compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains
 # agreement scores. 
 #
 # mep.details: description of each MEP.
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# thresh: thresholds used for network extraction (vector of two values).
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
 # everything: whether to process all data without distinction of country or political group.
@@ -196,11 +201,11 @@ compare.partitions <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains
 # measures: vector of comparison measures to process.
 # repetitions: number of times each algorithm must be applied.
 #############################################################################################
-compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, measures, repetitions)
+compare.all.partitions <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, measures, repetitions)
 {	# extract networks for all data
 	if(everything)
 	{	cat("Compare performance measures for all data","\n",sep="")
-		compare.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, measures, repetitions)
+		compare.partitions(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, measures, repetitions)
 	}
 	
 	# networks by political group
@@ -214,7 +219,7 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		grp.meps <- mep.details[idx,]
 		
 		# extract networks
-		compare.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, measures, repetitions)
+		compare.partitions(thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, measures, repetitions)
 	}
 	
 	# networks by home country
@@ -228,6 +233,6 @@ compare.all.partitions <- function(mep.details, neg.thresh=NA, pos.thresh=NA, sc
 		cntr.meps <- mep.details[idx,]
 		
 		# extract networks
-		compare.partitions(neg.thresh, pos.thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, measures, repetitions)
+		compare.partitions(thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, measures, repetitions)
 	}
 }

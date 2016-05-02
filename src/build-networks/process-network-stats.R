@@ -2,7 +2,7 @@
 # Process various stats on the signed networks extracted from the vote data. All stats are
 # recorded in text files, some of them are also plotted.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 11/2015 Vincent Labatut (v2)
 #############################################################################################
 library("igraph")
@@ -128,10 +128,10 @@ process.global.measures <- function(g, g.ref, result, col.name)
 		result[ROW.COMPONENT.SIZE,col.name] <- max(tmp$csize)
 		result[ROW.COMPONENT.PROP,col.name] <- max(tmp$csize) / vcount(g.clean)
 		
-		# connectivity
-		cat("Processing connectivity\n")
-		result[ROW.CONNECTIVITY.LINK,col.name] <- graph.adhesion(g.clean,checks=FALSE)
-		result[ROW.CONNECTIVITY.NODE,col.name] <- graph.cohesion(g.clean,checks=FALSE)
+#		# connectivity
+#		cat("Processing connectivity\n")
+#		result[ROW.CONNECTIVITY.LINK,col.name] <- graph.adhesion(g.clean,checks=FALSE)
+#		result[ROW.CONNECTIVITY.NODE,col.name] <- graph.cohesion(g.clean,checks=FALSE)
 		
 		# degree
 		cat("Processing degree\n")

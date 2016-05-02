@@ -2,7 +2,7 @@
 # Functions to apply various community detection methods on the positive and complementary 
 # negative networks, and various correlation clustering methods to the signed networks.
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 11/2015 Vincent Labatut (v2)
 #############################################################################################
 source("src/define-constants.R")
@@ -100,8 +100,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 # files and record a new graph file (Graphml format only) containing nodal attributes corresponding 
 # to the detected communities, for each considered algorithm.
 #
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# thresh: thresholds used for network extraction (vector of two values).
 # score.file: file describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # domain: political domain currently processed.
@@ -113,10 +112,10 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 # repetitions: number of times each algorithm must be applied.
 # plot.formats: formats of the plot files.
 #############################################################################################
-perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+perform.partitioning <- function(thresh, score.file, domain, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# load the graphs
-	graphs <- retrieve.graphs(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date, comp=TRUE)
-	graph.folder <- get.networks.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=date)
+	graphs <- retrieve.graphs(score=score.file, thresh, country, group, domain, period=date, comp=TRUE)
+	graph.folder <- get.networks.path(score=score.file, thresh, country, group, domain, period=date)
 	
 	# the process might be repeated several times
 	for(r in 1:repetitions)
@@ -126,9 +125,9 @@ perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, dat
 		#r.folder <- paste(folder,r,"/",sep="")
 		#dir.create(r.folder, recursive=TRUE, showWarnings=FALSE)
 		if(repetitions>1)
-			part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=,date, repetition=r)
+			part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=,date, repetition=r)
 		else
-			part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=,date, repetition=NA)
+			part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=,date, repetition=NA)
 		dir.create(part.folder, recursive=TRUE, showWarnings=FALSE)
 		
 		# apply all community detection algorithms
@@ -177,7 +176,7 @@ perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, dat
 	}
 
 	# record graphs (Graphml only) with detected communities, in the partition folder (not the network one)
-	part.folder <- get.partitions.path(score=score.file, neg.thresh, pos.thresh, country, group, domain, period=,date, repetition=NA)
+	part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=,date, repetition=NA)
 	graph.file.neg <- file.path(part.folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
 	write.graph(graph=graphs$neg, file=graph.file.neg, format="graphml")
 	graph.file.pos <- file.path(part.folder,paste(POSITIVE.FILE,".graphml",sep=""))
@@ -192,8 +191,7 @@ perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, dat
 # Applies the selected partitioning algorithms for all time periods and domains, for the specified 
 # thresholds and agreement scores. 
 #
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# thresh: thresholds used for network extraction (vector of two values).
 # score.file: file describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # domains: political domains to consider when processing the data.
@@ -205,7 +203,7 @@ perform.partitioning <- function(neg.thresh, pos.thresh, score.file, domain, dat
 # repetitions: number of times each algorithm must be applied.
 # plot.formats: formats of the plot files.
 #############################################################################################
-partition.graphs <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+partition.graphs <- function(thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# consider each domain individually (including all domains at once)
 	for(dom in domains)
 	{	# consider each time period (each individual year as well as the whole term)
@@ -214,11 +212,11 @@ partition.graphs <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains, 
 			
 			# setup graph subfolder
 			#folder <- paste(subfolder,"/",score.file,
-			#		"/","negtr=",neg.thresh,"-postr=",pos.thresh,
+			#		"/","negtr=",thresh[1],"-postr=",thresh[2],
 			#		"/",dom,"/",DATE.STR.T7[date],"/",sep="")
 			
 			# perform community detection
-			perform.partitioning(neg.thresh, pos.thresh, score.file, dom, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+			perform.partitioning(thresh, score.file, dom, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
 		}
 	}
 }
@@ -229,8 +227,7 @@ partition.graphs <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains, 
 # group, for the specified thresholds and agreement scores. 
 #
 # mep.details: description of each MEP.
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# thresh: thresholds used for network extraction (vector of two values).
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
 # everything: whether to process all data without distinction of country or political group.
@@ -241,11 +238,11 @@ partition.graphs <- function(neg.thresh=NA, pos.thresh=NA, score.file, domains, 
 # repetitions: number of times each algorithm must be applied (to assess the stability of the results).
 # plot.formats: formats of the plot files.
 #############################################################################################
-partition.all.graphs <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
+partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
 {	# extract networks for all data
 	if(everything)
 	{	cat("Detect communities for all data","\n",sep="")
-		partition.graphs(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+		partition.graphs(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 	
 	# networks by political group
@@ -259,7 +256,7 @@ partition.all.graphs <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		grp.meps <- mep.details[idx,]
 		
 		# extract networks
-		partition.graphs(neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+		partition.graphs(thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 	
 	# networks by home country
@@ -273,6 +270,6 @@ partition.all.graphs <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		cntr.meps <- mep.details[idx,]
 		
 		# extract networks
-		partition.graphs(neg.thresh, pos.thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+		partition.graphs(thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 }

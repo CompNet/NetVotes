@@ -67,41 +67,6 @@ IYP.DOMAIN.LIST.FILE <- file.path(IYP.DOMAINS.FOLDER,"_domains.xml")
 #############################################################################################
 # map used to convert official domain names into VoteWatch ones
 DOMAIN.IYP2SYMB <- c()
-#DOMAIN.IYP2SYMB["41"] <- DOMAIN.AFCO
-#DOMAIN.IYP2SYMB["34"] <- DOMAIN.AFET
-#DOMAIN.IYP2SYMB["37"] <- DOMAIN.AGRI
-#DOMAIN.IYP2SYMB["44"] <- DOMAIN.BUDG
-#DOMAIN.IYP2SYMB["42"] <- DOMAIN.CONT
-#DOMAIN.IYP2SYMB["40"] <- DOMAIN.CULT
-#DOMAIN.IYP2SYMB["48"] <- DOMAIN.DEVE
-#DOMAIN.IYP2SYMB["32"] <- DOMAIN.FEMM
-#DOMAIN.IYP2SYMB["53"] <- DOMAIN.FEMM
-#DOMAIN.IYP2SYMB["28"] <- DOMAIN.ECON
-#DOMAIN.IYP2SYMB["31"] <- DOMAIN.EMPL
-#DOMAIN.IYP2SYMB["38"] <- DOMAIN.ENVI
-#DOMAIN.IYP2SYMB["43"] <- DOMAIN.IMCO
-#DOMAIN.IYP2SYMB["29"] <- DOMAIN.INTA
-#DOMAIN.IYP2SYMB["33"] <- DOMAIN.ITRE
-#DOMAIN.IYP2SYMB["39"] <- DOMAIN.JURI
-#DOMAIN.IYP2SYMB["35"] <- DOMAIN.LIBE
-#DOMAIN.IYP2SYMB["26"] <- DOMAIN.PECH
-#DOMAIN.IYP2SYMB["47"] <- DOMAIN.PETI
-#DOMAIN.IYP2SYMB["27"] <- DOMAIN.REGI
-##DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE # TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
-#DOMAIN.IYP2SYMB["30"] <- DOMAIN.TRAN
-#DOMAIN.IYP2SYMB["36"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["45"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["46"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["49"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["50"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["51"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["52"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["54"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["55"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["56"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["57"] <- DOMAIN.AUTR
-#DOMAIN.IYP2SYMB["58"] <- DOMAIN.AUTR
-#####################################
 DOMAIN.IYP2SYMB["Constitutional Affairs"] <- DOMAIN.AFCO
 DOMAIN.IYP2SYMB["Foreign Affairs"] <- DOMAIN.AFET
 DOMAIN.IYP2SYMB["Agriculture and Rural Development"] <- DOMAIN.AGRI
@@ -123,22 +88,10 @@ DOMAIN.IYP2SYMB["Civil Liberties, Justice and Home Affairs"] <- DOMAIN.LIBE
 DOMAIN.IYP2SYMB["Fisheries"] <- DOMAIN.PECH
 DOMAIN.IYP2SYMB["Petitions"] <- DOMAIN.PETI
 DOMAIN.IYP2SYMB["Regional Development"] <- DOMAIN.REGI
-#DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE # TODO à compléter en recherchant la catégorie où ces docs là se retrouvent avec IYP
+DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE
 DOMAIN.IYP2SYMB["Transport and Tourism"] <- DOMAIN.TRAN
-DOMAIN.IYP2SYMB["Conciliation"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["The use of European countries by the CIA"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["EP Delegation to Conciliation"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["Climate Change"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["The enlarged Union for 2007-2013"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["Resolutions/not categorized"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["Inquiry on the Equitable Life Assurance Society"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["The financial, economic and social crisis"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["Parliament delegation to Conciliation"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["EU policy challenges and budgetary resources after 2013"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["European Parliament delegation to the Budgetary Conciliation"] <- DOMAIN.AUTR
-DOMAIN.IYP2SYMB["Organised crime, corruption and money laundering"] <- DOMAIN.AUTR
 
-		
+
 
 #############################################################################################
 # Vote mapping
@@ -538,17 +491,27 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		colnames(votes.mat) <- 1:length(vote.ids)
 		
 		# fill both matrices
+#vote.ids <- vote.ids[vote.ids>=7065]		
 		for(i in 1:length(vote.ids))
-		{	temp <- iyp.extract.vote(vote.ids[i]) # TODO 
+		{	temp <- iyp.extract.vote(vote.ids[i]) # TODO
 			# update details matrix
 			temp$details[COL.DOCID] <- i
-			#print(temp$details)			
-			#print(is.na(temp$details[COL.DOMID]))
-			#print(doc.domains[i,COL.DOMID])
-			if(is.na(temp$details[COL.DOMID]))
-				temp$details[COL.DOMID] <- doc.domains[i,COL.DOMID]
-			else if(temp$details[COL.DOMID]!=doc.domains[i,COL.DOMID])
-				cat("WARNING: domain is different in vote (",temp$details[COL.DOMID],") and domain (",doc.domains[i,COL.DOMID],") files\n",sep="")
+#			print(temp$details)			
+#			print(temp$details[COL.DOMID])
+#			print(doc.domains[i,COL.DOMID])
+			#if(is.na(temp$details[COL.DOMID]))
+			#	temp$details[COL.DOMID] <- doc.domains[i,COL.DOMID]
+			#else if(temp$details[COL.DOMID]!=doc.domains[i,COL.DOMID])
+			#	cat("WARNING: domain is different in vote (",temp$details[COL.DOMID],") and domain (",doc.domains[i,COL.DOMID],") files\n",sep="")
+			if(!is.na(doc.domains[i,COL.DOMID]))
+			{	if(is.na(temp$details[COL.DOMID]))
+					temp$details[COL.DOMID] <- doc.domains[i,COL.DOMID]
+				else if(temp$details[COL.DOMID]!=doc.domains[i,COL.DOMID])
+					cat("WARNING: domain is different in vote (",temp$details[COL.DOMID],") and domain (",doc.domains[i,COL.DOMID],") files\n",sep="")
+			}
+			else if(is.na(temp$details[COL.DOMID]))
+				cat("WARNING: both domains in vote and domain table are missing\n",sep="")
+				
 			details.mat[i,details.cols] <- temp$details[details.cols]
 			# update vote matrix
 			idx <- match(as.integer(names(temp$votes)), mep.details[,IYP.ELT.MEPID])
@@ -572,7 +535,6 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 
 
 # TODO vérif les valeurs des votes dans la table all.votes
-# TODO tous les votes ne sont pas répertoriés dans les documents domains >> faut vraiment parser les fichiers votes
 
 #############################################################################################
 # Load all the tables and returns them as a list.

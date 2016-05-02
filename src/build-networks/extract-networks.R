@@ -1,7 +1,7 @@
 #############################################################################################
 # Generate graph objects and files using the agreement index values processed separately. 
 # 
-# 07/2015 Israel Mendonça (v1)
+# 07/2015 Israel MendonÃ§a (v1)
 # 11/2015 Vincent Labatut (v2)
 #############################################################################################
 library("igraph")
@@ -19,24 +19,80 @@ source("src/build-networks/process-network-stats.R")
 # 
 # agreement: agreement indices for the considered MEPs.
 # mep.details: MEP details, only for the considered MEPs.
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# thresh: vector containing a inf and a sup thresholds. All agreement values between them are
+#		  set to zero (i.e. ignored). A value NA for one threshold means it is estimated automatically.
+#		  Value (0,0) means no thresholding at all.
 # folder: folder (and beginning of the filename) for the produced graph files.
 # graph.name: name of the graph in the graphml file.
-# returns: the generate graph, as an igraph object.
 # plot.formats: formats of the plot files.
 #############################################################################################
-extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA, folder, graph.name, plot.formats)
+extract.network <- function(agreement, mep.details, thresh=NA, folder, graph.name, plot.formats)
 {	cat("Building network folder='",folder,"'\n",sep="")
 	
 	# replace NAs by zeros
 	agreement[is.na(agreement)] <- 0
 	
-	# possibly apply thresholds
-	if(!is.na(neg.thresh))
-		agreement[agreement<0 & agreement>neg.thresh] <- 0
-	if(!is.na(pos.thresh))
-		agreement[agreement>0 & agreement<pos.thresh] <- 0
+	# plot agreement distribution before filtering
+	agr.vals <- agreement[upper.tri(agreement,diag=FALSE)]
+	plot.file <- file.path(folder,"histo-before")
+	#print(plot.file)
+	data <- plot.histo(plot.file, values=agr.vals,
+		x.label="Agreement index", 
+		proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA,
+		plot.title="Agreement before filtering", format=plot.formats)
+	
+	# possibly estimate thresholds using k-means
+	if(length(thresh)==1)
+		thresh <- c(NA,NA)
+# old version: split in 3 parts and put the midle one to zero
+# >> problem when zero is not inside the midle part
+#	if(all(is.na(thresh)))
+#	{	agr.vals <- agreement[upper.tri(agreement,diag=FALSE)]
+#		km <- kmeans(agr.vals,centers=3)
+#		bnds <- sapply(1:3, function(c) c(min(agr.vals[km$cluster==c]),max(agr.vals[km$cluster==c])))
+#		middle <- 1:3
+#		middle <- middle[-which.min(bnds[1,])]
+#		middle <- middle[-which.max(bnds[1,])]
+#		thresh <- bnds[,middle]
+#	}
+	# splitting the negative weights
+	if(is.na(thresh[1]))
+	{	agr.vals <- agreement[upper.tri(agreement,diag=FALSE)]
+		agr.vals <- agr.vals[agr.vals<0]
+		if(length(unique(agr.vals))>2)
+		{	#print(agr.vals)
+			km <- kmeans(agr.vals,centers=2)
+			bnds <- sapply(1:2, function(c) min(agr.vals[km$cluster==c]))
+			thresh[1] <- max(bnds)
+		}
+		else
+			thresh[1] <- 0
+	}
+	# splitting the positive weights
+	if(is.na(thresh[2]))
+	{	agr.vals <- agreement[upper.tri(agreement,diag=FALSE)]
+		agr.vals <- agr.vals[agr.vals>0]
+		if(length(unique(agr.vals))>2)
+		{	#print(agr.vals)
+			km <- kmeans(agr.vals,centers=2)
+			bnds <- sapply(1:2, function(c) max(agr.vals[km$cluster==c]))
+			thresh[2] <- min(bnds)
+		}
+		else
+			thresh[2] <- 0
+	}
+	
+	# filter agreement values
+	agreement[agreement>=thresh[1] & agreement<=thresh[2]] <- 0
+	
+	# plot agreement distribution after filtering
+	agr.vals <- agreement[upper.tri(agreement,diag=FALSE)]
+	plot.file <- file.path(folder,"histo-after")
+	#print(plot.file)
+	data <- plot.histo(plot.file, values=agr.vals,
+		x.label="Agreement index", 
+		proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA,
+		plot.title=paste("Agreement after filtering [",thresh[1],";",thresh[2],"]",sep=""), format=plot.formats)
 	
 	# build network using igraph
 	result <- graph.adjacency(adjmatrix=agreement, 		# use the agreement as the adjacency matrix
@@ -44,51 +100,63 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 		add.colnames=NA, add.rownames="MEPid")			# use the id as node names
 	result$name <- graph.name
 	
-	# add MEP attributes
-	V(result)$Firstname <- mep.details[,COL.FIRSTNAME]
-	V(result)$Lastname <- mep.details[,COL.LASTNAME]
-	V(result)$Country <- mep.details[,COL.STATE]
-	V(result)$Group <- mep.details[,COL.GROUP]
+	# check if network is empty
+	if(ecount(result)==0)
+		cat("WARNING: the signed graph contains no links >> not recorded\n")
 	
-	# plot graph and get spatial positions as nodal attributes
-	cat("Plotting network...\n")
-	graph.base <- file.path(folder,SIGNED.FILE)
-	result <- plot.network(g=result, plot.file=graph.base, format=plot.formats)
-	
-	# export the graph under the graphml format
-	graph.file <- paste(graph.base,".graphml",sep="")
-	write.graph(graph=result, file=graph.file, format="graphml")
-	
-	# also export the positive and complementary negative graphs, as unsigned graphs
-	gp <- subgraph.edges(graph=result, eids=which(E(result)$weight>0), delete.vertices=FALSE)
-	graph.file <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
-	write.graph(graph=gp, file=graph.file, format="graphml")
-	gn <- subgraph.edges(graph=result, eids=which(E(result)$weight<0), delete.vertices=FALSE)
-		# old way: no weights in the complementary negative graph (only binary values)
-		#gn <- graph.complementer(graph=gn, loops=FALSE)
-		# new way: (almost) complete graph, but with weights (only previously -1 links are absent)
-		m <- get.edgelist(gn)
-		w <- E(gn)$weight + 1
-		ae <- combn(1:vcount(gn),2)
-		gn[from=ae[1,],to=ae[2,],att="weight"] <- 1
-		gn[from=m[,1],to=m[,2],att="weight"] <- w
-		if(any(E(gn)$weight==0))
-			gn <- delete.edges(graph=gn,edges=which(E(gn)$weight==0))
-	graph.file <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
-	write.graph(graph=gn, file=graph.file, format="graphml")
-	
-	# export using a format compatible with pILS
-	t <- get.edgelist(graph=result) - 1	# start numbering nodes at zero
-	t <- cbind(t,E(result)$weight)		# add weights as the third column
-	graph.file <- paste(graph.base,".G",sep="")
-	write.table(data.frame(nrow(mep.details),nrow(t)), file=graph.file, append=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)	# write header
-	write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)								# write proper graph
-	
-	# process network stats
-	cat("Processing network stats...\n")
-	process.network.stats(result, folder)
-	
-	return(result)
+	# if not empty (i.e. contains links)
+	else
+	{	# add MEP attributes
+		V(result)$Firstname <- mep.details[,COL.FIRSTNAME]
+		V(result)$Lastname <- mep.details[,COL.LASTNAME]
+		V(result)$Country <- mep.details[,COL.STATE]
+		V(result)$Group <- mep.details[,COL.GROUP]
+		
+		# plot graph and get spatial positions as nodal attributes
+		cat("Plotting network...\n")
+		graph.base <- file.path(folder,SIGNED.FILE)
+		result <- plot.network(g=result, plot.file=graph.base, format=plot.formats)
+		
+		# export the graph under the graphml format
+		graph.file <- paste(graph.base,".graphml",sep="")
+		write.graph(graph=result, file=graph.file, format="graphml")
+		
+		# also export the positive graph as an unsigned graph
+		gp <- subgraph.edges(graph=result, eids=which(E(result)$weight>0), delete.vertices=FALSE)
+		if(ecount(gp)==0)
+			cat("WARNING: the positive graph does not contain any link >> not recorded")
+		else
+		{	graph.file <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
+			write.graph(graph=gp, file=graph.file, format="graphml")
+		}
+		
+		# also export the complementary negative graph as an unsigned graph
+		gn <- subgraph.edges(graph=result, eids=which(E(result)$weight<0), delete.vertices=FALSE)
+			# old way: no weights in the complementary negative graph (only binary values)
+			#gn <- graph.complementer(graph=gn, loops=FALSE)
+			# new way: (almost) complete graph, but with weights (only links with -1 original weight are absent)
+			m <- get.edgelist(gn)	#;print(m)
+			w <- E(gn)$weight + 1	#;print(w)
+			ae <- combn(1:vcount(gn),2)
+			gn[from=ae[1,],to=ae[2,],att="weight"] <- 1
+			if(length(m)>0)
+				gn[from=m[,1],to=m[,2],att="weight"] <- w
+			if(any(E(gn)$weight==0))
+				gn <- delete.edges(graph=gn,edges=which(E(gn)$weight==0))
+		graph.file <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
+		write.graph(graph=gn, file=graph.file, format="graphml")
+		
+		# export using a format compatible with pILS
+		t <- get.edgelist(graph=result) - 1	# start numbering nodes at zero
+		t <- cbind(t,E(result)$weight)		# add weights as the third column
+		graph.file <- paste(graph.base,".G",sep="")
+		write.table(data.frame(nrow(mep.details),nrow(t)), file=graph.file, append=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)	# write header
+		write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)								# write proper graph
+		
+		# process network stats
+		cat("Processing network stats...\n")
+		process.network.stats(result, folder)
+	}
 }
 
 
@@ -97,8 +165,9 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 # and agreement scores. 
 #
 # mep.details: description of each MEP.
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# thresh: vector containing a inf and a sup thresholds. All agreement values between them are
+#		  set to zero (i.e. ignored). A value NA for one threshold means it is estimated automatically.
+#		  Value (0,0) means no thresholding at all.
 # score.file: files describing the scores to use when processing the inter-MEP agreement
 #			  (without the .txt extension).
 # domains: political domains to consider when processing the data.
@@ -107,7 +176,7 @@ extract.network <- function(agreement, mep.details, neg.thresh=NA, pos.thresh=NA
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
 #############################################################################################
-extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, country, group, plot.formats)
+extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates, country, group, plot.formats)
 {	# setup graph title
 	if(is.na(country))
 		if(is.na(group))
@@ -130,12 +199,12 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 			
 			# setup graph title
 			graph.name <- paste(base.graph.name," - domain=",dom," - period=",DATE.STR.T7[date],
-					" - neg.tresh=",neg.thresh," - pos.tresh=",pos.thresh,sep="")
+					" - neg.tresh=",thresh[1]," - pos.tresh=",thresh[2],sep="")
 			# setup graph folder
 			#folder <- paste(NETWORKS.FOLDER,"/",subfolder,"/",score.file,
-			#		"/","negtr=",neg.thresh,"-postr=",pos.thresh,
+			#		"/","negtr=",thresh[1],"-postr=",thresh[2],
 			#		"/",dom,"/",DATE.STR.T7[date],"/",sep="")
-			folder <- get.networks.path(score=score.file,neg.thresh,pos.thresh,country,group,domain=dom,period=date)
+			folder <- get.networks.path(score=score.file,thresh,country,group,domain=dom,period=date)
 			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 			
 			# load agreement index file
@@ -146,7 +215,7 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 			{	# retrieve agreement
 				agreement <- as.matrix(read.csv2(file=table.file, row.names=1))
 				# build and record network
-				g <- extract.network(agreement, mep.details, neg.thresh, pos.thresh, folder, graph.name, plot.formats)
+				extract.network(agreement, mep.details, thresh, folder, graph.name, plot.formats)
 			}
 		}
 	}
@@ -158,8 +227,9 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 # specified thresholds and agreement scores. 
 #
 # mep.details: description of each MEP.
-# neg.thresh: negative agreement values above this threshold are set to zero (i.e. ignored).
-# pos.thresh: positive agreement values below this threshold are set to zero (i.e. ignored).
+# thresh: vector containing a inf and a sup thresholds. All agreement values between them are
+#		  set to zero (i.e. ignored). A value NA for one threshold means it is estimated automatically.
+#		  Value (0,0) means no thresholding at all.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
 # everything: whether to process all data without distinction of country or political group.
@@ -167,11 +237,11 @@ extract.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.fi
 # groups: political groups to consider separately when processing the data.
 # plot.formats: formats of the plot files.
 #############################################################################################
-extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, score.file, domains, dates, everything, countries, groups, plot.formats)
+extract.all.networks <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, plot.formats)
 {	# extract networks for all data
 	if(everything)
 	{	cat("Extract networks for all data","\n",sep="")
-		extract.networks(mep.details, neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group=NA, plot.formats)
+		extract.networks(mep.details, thresh, score.file, domains, dates, country=NA, group=NA, plot.formats)
 	}
 	
 	# networks by political group
@@ -185,7 +255,7 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		grp.meps <- mep.details[idx,]
 		
 		# extract networks
-		extract.networks(grp.meps, neg.thresh, pos.thresh, score.file, domains, dates, country=NA, group, plot.formats)
+		extract.networks(grp.meps, thresh, score.file, domains, dates, country=NA, group, plot.formats)
 	}
 	
 	# networks by home country
@@ -199,6 +269,6 @@ extract.all.networks <- function(mep.details, neg.thresh=NA, pos.thresh=NA, scor
 		cntr.meps <- mep.details[idx,]
 		
 		# extract networks
-		extract.networks(cntr.meps, neg.thresh, pos.thresh, score.file, domains, dates, country, group=NA, plot.formats)
+		extract.networks(cntr.meps, thresh, score.file, domains, dates, country, group=NA, plot.formats)
 	}
 }
