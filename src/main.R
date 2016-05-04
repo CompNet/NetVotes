@@ -170,13 +170,16 @@ extract.all.networks(data$mep.details, thresh, score.file,
 
 # Problems
 # - Pb with IYP: absence not explicitly represented >> peaks of zero agreement for yearly votes.
+#	>> get official dates for each MEP and check with that
+#	>> check that, when filtering, MEPs voting NA (i.e. not absent) are not taken into account.
 # - agreement: for complete dataset, some nodes such as 599 have only 1s: possible, but improbable
 #   note: might be due to small numbers of expressed votes (i.e. non-NA)
+#	note2: version from a long time ago. check again now.
 
-# Extraction de r�seaux
-# - on peut extraire des r�seaux au niveau des partis politiques
-# - peut �tre aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 
+# Extraction de réseaux
+# - on peut extraire des réseaux au niveau des partis politiques
+# - peut étre aussi pour chaque vote ? mais les clusters seront triviaux (pr vs ctr) 
 
-# Stats sur donn�es brutes
+# Stats sur données brutes
 # - on pourrait aussi voir le comportement individuel: nombre de votes de chaque type pour une personne.
-#   �a peut �tre complet, agr�g� par ann�e, par l�gislature... 
+#   ça peut être complet, agrégé par année, par législature... 
