@@ -34,8 +34,7 @@ IYP.DOMAIN.IDS	<- 26:58#[-c(32,45,49,50,52)]
 	IYP.URL.MOTIONS	<- "http://www.europarl.europa.eu/sides/getDoc.do?type=MOTION&reference="
 	# language suffix for the official europarl website
 	IYP.URL.LANG.SUFFIX	<- "&language=EN"
-# strings
-#IYP.STRING.COMMITTEE <- '<p style=\"margin: 0pt; \">Committee on '
+
 
 
 #############################################################################################

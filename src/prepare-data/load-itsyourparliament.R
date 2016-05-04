@@ -29,6 +29,19 @@ IYP.FOLDER <- file.path(IN.FOLDER,"itsyourparliament")
 #############################################################################################
 # XML list of domains
 IYP.DOMAIN.LIST.FILE <- file.path(IYP.DOMAINS.FOLDER,"_domains.xml")
+# Official Europarl XML list of MEPs
+IYP.EP.MEP.LIST.FILE <- file.path(IYP.MEPS.FOLDER,"_meps.xml")
+# Activity periods associated to the MEPs
+IYP.MEP.PERIODS.FILE <- file.path(OVERALL.FOLDER,"mep-periods.csv")
+
+
+#############################################################################################
+# Web-relates constants
+#############################################################################################
+# offical europarl URL for MEP individual pages
+IYP.URL.MEP	<- "http://www.europarl.europa.eu/meps/en/"
+# suffix for "history of parliamentary service"
+IYP.URL.HIST.SUFFIX	<- "_history.html"
 
 
 #############################################################################################
@@ -60,8 +73,11 @@ IYP.DOMAIN.LIST.FILE <- file.path(IYP.DOMAINS.FOLDER,"_domains.xml")
 	IYP.ELT.ID			<- "id"
 	IYP.ELT.POLICY.NAME	<- "policyarea_name"
 	IYP.ELT.VOTEID		<- "voteid"
-	
-	
+# others
+	IYP.ELT.EPURL		<- "epurl"
+	IYP.ELT.PERIODS		<- "periods"
+
+
 #############################################################################################
 # Domain mapping
 #############################################################################################
@@ -75,7 +91,7 @@ DOMAIN.IYP2SYMB["Budgetary Control"] <- DOMAIN.CONT
 DOMAIN.IYP2SYMB["Culture and Education"] <- DOMAIN.CULT
 DOMAIN.IYP2SYMB["Development"] <- DOMAIN.DEVE
 DOMAIN.IYP2SYMB["Women\\'s Rights and Gender Equality"] <- DOMAIN.FEMM
-DOMAIN.IYP2SYMB["Women’s Rights and Gender Equality"] <- DOMAIN.FEMM
+DOMAIN.IYP2SYMB["Womenâ€™s Rights and Gender Equality"] <- DOMAIN.FEMM
 DOMAIN.IYP2SYMB["Women's Rights and Gender Equality"] <- DOMAIN.FEMM
 DOMAIN.IYP2SYMB["Economic and Monetary Affairs"] <- DOMAIN.ECON
 DOMAIN.IYP2SYMB["Employment and Social Affairs"] <- DOMAIN.EMPL
@@ -90,7 +106,6 @@ DOMAIN.IYP2SYMB["Petitions"] <- DOMAIN.PETI
 DOMAIN.IYP2SYMB["Regional Development"] <- DOMAIN.REGI
 DOMAIN.IYP2SYMB["Internal regulations of the EP"] <- DOMAIN.RIPE
 DOMAIN.IYP2SYMB["Transport and Tourism"] <- DOMAIN.TRAN
-
 
 
 #############################################################################################
@@ -118,6 +133,95 @@ GROUP.IYP2SYMB["SD"] <- GROUP.SD
 
 
 #############################################################################################
+# Retrieves details regarding the MEPs thanks to the Europarl website (official website of the 
+# European Parliament). In particular, the returned list contains the official MEP id (not the 
+# one internal to IYP) and the list of periods during which the considered person was in office
+# (i.e. actually in charge of a MEP position). 
+#
+# returns: table describing the MEPs and their activity periods.
+#############################################################################################
+ep.retrieve.periods <- function()
+{	cat("Retrieving the MEPs activity periods\n",sep="")
+	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
+	
+	# if the file already exists, just load it
+	if(file.exists(IYP.MEP.PERIODS.FILE))
+	{	result <- as.matrix(read.csv2(IYP.MEP.PERIODS.FILE,check.names=FALSE))
+		result[,IYP.ELT.EP_ID] <- as.integer(result[,IYP.ELT.EP_ID])
+	}
+	
+	# otherwise, build the table and record it
+	else
+	{	# retrieve the official list of MEPs, with their Europarl ids
+		doc <- readLines(IYP.EP.MEP.LIST.FILE)
+		xml.data <- xmlParse(doc)
+		xml <- xmlToList(xml.data)
+		
+		# put that in a table
+		ep.table <- matrix(NA,nrow=length(xml),ncol=4)
+		colnames(ep.table) <- c(IYP.ELT.FULLNAME,IYP.ELT.EP_ID,IYP.ELT.PERIODS,IYP.ELT.EPURL)
+		for(i in 1:length(xml))
+			ep.table[i,] <- c(xml[[i]]$fullName,xml[[i]]$id,NA,NA)
+		
+		# retrieve the periods for each MEP
+		for(i in 1:nrow(ep.table))
+		{	cat("Processing MEP ",i,"/",nrow(ep.table),"\n",sep="")
+			# set up the Europarl URL 
+			name <- gsub(" ","_",toupper(ep.table[i,IYP.ELT.FULLNAME]))
+			ep.url <- paste(IYP.URL.MEP,ep.table[i,IYP.ELT.EP_ID],"/",name,IYP.URL.HIST.SUFFIX,sep="")
+			ep.table[i,IYP.ELT.EPURL] <- ep.url
+			print(ep.url)
+			# test "http://www.europarl.europa.eu/meps/en/96933/MILAN_ZVER_history.html"
+			
+			# get the web page
+			ep.page <- readLines(ep.url)
+			html.data <- htmlParse(ep.page)
+			
+			# extract the part containing the dates
+			bullets <- xpathApply(html.data, '//div//div//div[@id="content_left"]//div[h4="Political groups"][1]//ul[1]//li', xmlValue)
+			dates <- matrix(as.Date(NA),nrow=1,ncol=2)	# 2-column table (start/end date), 1 row = 1 period 
+			di <- 1
+			# process each bullet of the corresponding list
+			for(bullet in bullets)
+			{	line <- str_trim(bullet)
+				print(line)
+				date.start <- as.Date(substr(line,1,10), "%d.%m.%Y")
+				if(is.na(dates[di,1]))
+					dates[di,1] <- format(date.start,"%d/%m/%Y")
+				# check if the start of a period is adjacent to the end of the previous one
+				# (in which case they must be merged)
+				else if(date.start>as.Date(dates[di,2],"%d/%m/%Y")+1)
+				{	dates <- rbind(dates,c(NA,NA))
+					di <- di + 1
+					dates[di,1] <- format(date.start,"%d/%m/%Y")
+				}
+				line <- str_trim(substr(line,11,nchar(line)))
+				if(substr(line,1,1)=="/")
+				{	line <- str_trim(substr(line,2,nchar(line)))
+					date.end <- as.Date(substr(line,1,10), "%d.%m.%Y")
+					dates[di,2] <- format(date.end,"%d/%m/%Y")
+				}
+				# if there is no end date to the period
+				else
+					dates[di,2] <- NA
+			}
+			
+			# add to the table
+			periods <- paste(apply(dates,1,function(r) paste(r,collapse=":")),collapse="::")
+			ep.table[i,IYP.ELT.PERIODS] <- periods
+		}
+		
+		# record the table for later use
+		write.csv2(ep.table,file=IYP.MEP.PERIODS.FILE,row.names=FALSE)
+		print(ep.table)
+	}
+	
+	return(ep.table)
+}
+
+
+
+#############################################################################################
 # Read the XML file corresponding to the specified MEP id, and returns the corresponding
 # vector of strings.
 #
@@ -142,7 +246,6 @@ iyp.extract.mep.details <- function(mep.id)
 	lastname <- str_trim(xml[[IYP.ELT.MEPNAME]])
 #	idx <- str_locate(fullname,fixed(lastname,ignore_case=TRUE))[1]-2
 	idx <- str_locate(fullname,ignore.case(lastname))[1]-2
-	
 	firstname <- substr(fullname,1,idx)
 	if(!is.na(lastname) & lastname=="")
 		lastname <- NA
@@ -534,7 +637,6 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 }
 
 
-# TODO vérif les valeurs des votes dans la table all.votes
 
 #############################################################################################
 # Load all the tables and returns them as a list.
@@ -547,6 +649,7 @@ load.itsyourparliament.data <- function()
 	result <- list()
 	
 	doc.domains <- iyp.extract.domains()
+	mep.periods <- ep.retrieve.periods()
 	result$mep.details <- iyp.extract.meps.details()
 	temp <- iyp.extract.votes(doc.domains, result$mep.details)
 	result$doc.details <- temp$doc.details
