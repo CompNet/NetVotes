@@ -297,17 +297,17 @@ ep.retrieve.periods <- function()
 	
 	# put that in a table
 	ep.table <- matrix(NA,nrow=length(xml),ncol=4)
-	colnames(ep.table) <- c(IYP.ELT.FULLNAME,IYP.ELT.EP_ID,IYP.ELT.PERIODS,IYP.ELT.EPURL)
+	colnames(ep.table) <- c(COL.FULLNAME,COL.EP.ID,COL.PERIODS,COL.EP.URL)
 	for(i in 1:length(xml))
 		ep.table[i,] <- c(xml[[i]]$fullName,xml[[i]]$id,NA,NA)
 	
 	# retrieve the periods for each MEP
-	for(i in 2110:nrow(ep.table))
+	for(i in 1:nrow(ep.table))
 	{	cat("Processing MEP ",i,"/",nrow(ep.table),"\n",sep="")
 		# set up the Europarl URL 
-		name <- gsub(" ","_",toupper(ep.table[i,IYP.ELT.FULLNAME]))
-		ep.url <- paste(IYP.URL.MEP,ep.table[i,IYP.ELT.EP_ID],"/",name,IYP.URL.HIST.SUFFIX,sep="")
-		ep.table[i,IYP.ELT.EPURL] <- ep.url
+		name <- gsub(" ","_",toupper(ep.table[i,COL.FULLNAME]))
+		ep.url <- paste(IYP.URL.MEP,ep.table[i,COL.EP.ID],"/",name,IYP.URL.HIST.SUFFIX,sep="")
+		ep.table[i,COL.EP.URL] <- ep.url
 		print(ep.url)
 		# test "http://www.europarl.europa.eu/meps/en/96933/MILAN_ZVER_history.html"
 		
@@ -317,7 +317,7 @@ ep.retrieve.periods <- function()
 		
 		# extract the part containing the dates
 		bullets <- xpathApply(html.data, '//div//div//div[@id="content_left"]//div[h4="Political groups"][1]//ul[1]//li', xmlValue)
-		dates <- matrix(as.Date(NA),nrow=1,ncol=2)	# 2-column table (start/end date), 1 row = 1 period 
+		dates <- matrix(NA,nrow=1,ncol=2)	# 2-column table (start/end date), 1 row = 1 period 
 		di <- 1
 		# process each bullet of the corresponding list
 		for(bullet in bullets)
@@ -346,11 +346,13 @@ ep.retrieve.periods <- function()
 		
 		# add to the table
 		periods <- paste(apply(dates,1,function(r) paste(r,collapse=":")),collapse="::")
-		ep.table[i,IYP.ELT.PERIODS] <- periods
+		ep.table[i,COL.PERIODS] <- periods
+		write.table(ep.table,file=IYP.MEP.PERIODS.FILE,row.names=FALSE,col.names=TRUE,sep=";",fileEncoding="UTF-8")
 	}
 	
 	# record the table for later use
-	write.csv2(ep.table,file=IYP.MEP.PERIODS.FILE,row.names=FALSE)
+	#write.csv2(ep.table,file=IYP.MEP.PERIODS.FILE,row.names=FALSE)
+	write.table(ep.table,file=IYP.MEP.PERIODS.FILE,row.names=FALSE,col.names=TRUE,sep=";",fileEncoding="UTF-8")
 	print(ep.table)
 }
 

@@ -62,9 +62,6 @@ IYP.MEP.PERIODS.FILE <- file.path(IYP.MEPS.FOLDER,"_mep-periods.csv")
 	IYP.ELT.ID			<- "id"
 	IYP.ELT.POLICY.NAME	<- "policyarea_name"
 	IYP.ELT.VOTEID		<- "voteid"
-# others
-	IYP.ELT.EPURL		<- "epurl"
-	IYP.ELT.PERIODS		<- "periods"
 
 
 #############################################################################################
@@ -119,6 +116,54 @@ GROUP.IYP2SYMB["Verts/ALE"] <- GROUP.GREENS
 GROUP.IYP2SYMB["GUE/NGL"] <- GROUP.GUENGL
 GROUP.IYP2SYMB["NI"] <- GROUP.NI
 GROUP.IYP2SYMB["SD"] <- GROUP.SD
+
+
+
+#############################################################################################
+# Checks if the specified date belongs to one of the periods represented in the specified
+# string. The format of this string is xx/xx/xxxx:xx/xx/xxxx::yy/yy/yyyy:yy/yy/yyyy. A NA for
+# the end date represents no limit.
+#
+# periods: string representing a list of temporal period, using the above format.
+# date: date of interest (a date object, not a string)
+# returns: TRUE iff the date belongs to at list one period.
+#############################################################################################
+iyp.check.date <- function(periods, date)
+{	# possible convert the date parameter to an actual date object
+	if(is.character(date))
+		date <- as.Date(date,"%d/%m/%Y")
+	#print(date)
+	
+	# init variables
+	result <- FALSE
+	rest <- gsub("NA", "00/00/0000", periods)
+	
+	# process each period
+	while(nchar(rest)>0 && !result)
+	{	# get the period
+		period <- substr(rest,1,21)
+		if(nchar(rest)>=23)
+			rest <- substr(rest,24,nchar(rest))
+		else
+			rest <- ""
+		#cat("Period: ",period," rest=",rest,"\n",sep="")
+		
+		# get the dates
+		start.date.str <- substr(period,1,10)
+		end.date.str <- substr(period,12,21)
+		#print(start.date.str);print(end.date.str)
+		start.date <- as.Date(start.date.str,"%d/%m/%Y")
+		if(end.date.str=="00/00/0000")
+			result <- date>=start.date
+		else
+		{	end.date <- as.Date(end.date.str,"%d/%m/%Y")
+			# check if the considered date belongs to the period
+			result <- date>=start.date && date<=end.date
+		}
+	}
+	
+	return(result)
+}
 
 
 
@@ -221,6 +266,7 @@ iyp.extract.meps.details <- function()
 	{	result <- as.matrix(read.csv2(MEP.DETAILS.FILE,check.names=FALSE))
 		result[,COL.MEPID] <- as.integer(result[,COL.MEPID])
 		result[,IYP.ELT.MEPID] <- as.integer(result[,IYP.ELT.MEPID])
+		result[,COL.EP.ID] <- as.integer(result[,COL.EP.ID])
 	}
 	
 	# otherwise, build the table and record it
@@ -235,7 +281,8 @@ iyp.extract.meps.details <- function()
 		# build the matrix
 		cols <- c(COL.MEPID, COL.LASTNAME, COL.FIRSTNAME,
 			COL.FULLNAME, COL.STATE, COL.GROUP, COL.TITLE,
-			COL.PARTY, COL.BIRTHDATE, COL.BIRTHPLACE, COL.EP.ID, IYP.ELT.MEPID)
+			COL.PARTY, COL.BIRTHDATE, COL.BIRTHPLACE, COL.EP.ID,
+			IYP.ELT.MEPID, COL.PERIODS)
 		result <- matrix(NA,nrow=length(mep.ids),ncol=length(cols))
 		colnames(result) <- cols
 		for(i in 1:length(mep.ids))
@@ -246,8 +293,15 @@ iyp.extract.meps.details <- function()
 		
 		# retrieve the official list of MEPs activity periods
 		ep.table <- as.matrix(read.csv2(IYP.MEP.PERIODS.FILE,check.names=FALSE))
-		ep.table[,IYP.ELT.EP_ID] <- as.integer(ep.table[,IYP.ELT.EP_ID])
-		# TODO add it to the current table (also MEP official ids)
+		ep.table[,COL.EP.ID] <- as.integer(ep.table[,COL.EP.ID])
+		Encoding(ep.table[,COL.FULLNAME]) <- "UTF-8"
+		ep.table[,COL.FULLNAME] <- toupper(ep.table[,COL.FULLNAME])
+		# for each MEP in the IYP table, add the official info from the second table
+		fullnames <- toupper(paste(result[,COL.FIRSTNAME],result[,COL.LASTNAME]))
+		idx  <- match(fullnames,ep.table[,COL.FULLNAME])
+		#print(cbind(result[,COL.EP.ID],ep.table[idx,COL.EP.ID],result[,COL.EP.ID]==ep.table[idx,COL.EP.ID]))
+		result[,COL.EP.ID] <- ep.table[idx,COL.EP.ID]
+		result[,COL.PERIODS] <- ep.table[idx,COL.PERIODS]
 		
 		# record matrix
 		write.csv2(result,file=MEP.DETAILS.FILE,row.names=FALSE)
@@ -256,6 +310,24 @@ iyp.extract.meps.details <- function()
 	return(result)
 }
 
+
+#comp.chr <- function(str1, str2)
+#{	cat(str1," vs. ",str2,"\n",sep="")
+#	i <- 0
+#	if(nchar(str1)==nchar(str2))
+#	{	stop <- FALSE
+#		while(i<+nchar(str1) && !stop)
+#		{	i <- i + 1
+#			c1 <- substr(str1,i,i)
+#			c2 <- substr(str2,i,i)
+#			if(c1!=c2)
+#			{	stop <- TRUE
+#				cat(c1," vs. ",c2,"\n",sep="")
+#			}
+#		}
+#	}
+#	return(i)
+#}
 
 
 #############################################################################################

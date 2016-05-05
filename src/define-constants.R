@@ -79,6 +79,8 @@ COL.DOC.REF		<- "Document Reference"
 COL.FULL.TITLE	<- "Full title"
 COL.EP.REF		<- "EP reference"
 COL.REPORTER.ID	<- "Reporter ID"
+COL.EP.URL		<- "EP URL"
+COL.PERIODS		<- "Periods"
 
 
 
