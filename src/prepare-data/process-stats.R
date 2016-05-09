@@ -148,8 +148,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 	
 	# consider each time period (each individual year as well as the whole term)
 	for(date in dates)
-	{	
-		# consider each domain individually (including all domains at once)
+	{	# consider each domain individually (including all domains at once)
 		for(dom in domains)
 		{	cat("Processing ",file.prefix," data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
@@ -172,12 +171,14 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 				# get the corresponding votes from the complete table
 				cols <- match(filtered.doc.ids, colnames(all.votes))
 				cols <- cols[indices]
+				# remove the MEP who were inactive for the considered votes
+				active.idx <- which(apply(all.votes[,cols],1,function(v) !all(is.na(v))))
 				# convert to list of column-vectors
-				votes.temp <- all.votes[,cols]
-				if(all(is.na(votes.temp)))
+				if(length(active.idx)==0)
 					cat("WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
 				else
-				{	votes <- split(votes.temp, rep(1:ncol(votes.temp), each=nrow(votes.temp)))
+				{	votes.temp <- all.votes[active.idx,cols]
+					votes <- split(votes.temp, rep(1:ncol(votes.temp), each=nrow(votes.temp)))
 				
 					# setup folder
 					#folder <- paste(main.folder,dom,"/",DATE.STR.T7[date],"/",sep="")
@@ -191,7 +192,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 					data <- plot.stacked.indiv.raw.bars(plot.file, 
 						bar.names=as.character(filtered.doc.ids[indices]), color.names=vote.values, 
 						values=votes, 
-						proportions=FALSE, areas=FALSE, y.lim=c(0,nrow(all.votes)), 
+						proportions=FALSE, areas=FALSE, y.lim=c(0,length(active.idx)), 
 						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
 						x.rotate=TRUE, format=plot.formats)
 					# absolute counts as areas
@@ -199,7 +200,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 					data <- plot.stacked.indiv.raw.bars(plot.file, 
 						bar.names=1:length(filtered.doc.ids), color.names=vote.values, 
 						values=votes, 
-						proportions=FALSE, areas=TRUE, y.lim=c(0,nrow(all.votes)), 
+						proportions=FALSE, areas=TRUE, y.lim=c(0,length(active.idx)), 
 						x.label="Documents (sorted by date)", colors.label, plot.title=title, 
 						x.rotate=FALSE, format=plot.formats)
 					# record as a table
@@ -297,10 +298,15 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 				domains=domval)
 			if(length(filtered.doc.ids)>0)
 			{	cols <- match(filtered.doc.ids, colnames(all.votes))
-				if(date==DATE.T7.TERM)
-					votes.spe <- c(all.votes[,cols])
+				if(length(cols)==1)
+					active.idx <- which(!is.na(all.votes[,cols]))
 				else
-				{	votes[[date]] <- c(all.votes[,cols])
+					active.idx <- which(apply(all.votes[,cols],1,function(v) !all(is.na(v))))
+				if(date==DATE.T7.TERM)
+				{	votes.spe <- c(all.votes[active.idx,cols])
+				}
+				else
+				{	votes[[date]] <- c(all.votes[active.idx,cols])
 					do.yearly <- TRUE
 				}
 			}
@@ -473,36 +479,40 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 			if(length(filtered.doc.ids)>1)
 			{	# format data
 				cols <- match(filtered.doc.ids, colnames(all.votes))
-				temp <- all.votes[,cols]
-				#print(temp)
-				numerized <- matrix(0,nrow=nrow(temp), ncol=ncol(temp))
-				numerized[temp==target] <- 1
-				votes <- apply(numerized, 2, mean)
-				
-				#print(votes)				
-				# plot absolute counts as bars
-				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
-				plot.file <- file.path(folder,paste("averaged-",file.prefix,"counts",sep=""))
-				data <- plot.histo(plot.file, values=votes,
-					x.label=object, 
-					proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
-					plot.title=title, format=plot.formats)
-				# record as a table
-				data <- data[,c("y","xmin","xmax")]
-				table.file <- paste(plot.file,".csv",sep="")
-				write.csv2(data,file=table.file, row.names=FALSE)
-				
-				# plot proportions as bars
-				title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
-				plot.file <- file.path(folder,paste("averaged-",file.prefix,"proportions",sep=""))
-				data <- plot.histo(plot.file, values=votes,
-					x.label=object, 
-					proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
-					plot.title=title, format=plot.formats)
-				# record as a table
-				data <- data[,c("y","xmin","xmax")]
-				table.file <- paste(plot.file,".csv",sep="")
-				write.csv2(data,file=table.file, row.names=FALSE)
+				active.idx <- which(apply(all.votes[,cols],1,function(v) !all(is.na(v))))
+				if(length(active.idx)>0)
+				{	temp <- all.votes[active.idx,cols]
+					numerized <- matrix(0,nrow=nrow(temp), ncol=ncol(temp))
+					numerized[temp==target] <- 1
+					votes <- apply(numerized, 2, mean)
+					
+					#print(votes)				
+					# plot absolute counts as bars
+					title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
+					plot.file <- file.path(folder,paste("averaged-",file.prefix,"counts",sep=""))
+					data <- plot.histo(plot.file, values=votes,
+						x.label=object, 
+						proportions=FALSE, x.lim=c(0,1), y.max=NA, break.nbr=NA, 
+						plot.title=title, format=plot.formats)
+					# record as a table
+					data <- data[,c("y","xmin","xmax")]
+					table.file <- paste(plot.file,".csv",sep="")
+					write.csv2(data,file=table.file, row.names=FALSE)
+					
+					# plot proportions as bars
+					title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
+					plot.file <- file.path(folder,paste("averaged-",file.prefix,"proportions",sep=""))
+					data <- plot.histo(plot.file, values=votes,
+						x.label=object, 
+						proportions=TRUE, x.lim=c(0,1), y.max=0.5, break.nbr=NA, 
+						plot.title=title, format=plot.formats)
+					# record as a table
+					data <- data[,c("y","xmin","xmax")]
+					table.file <- paste(plot.file,".csv",sep="")
+					write.csv2(data,file=table.file, row.names=FALSE)
+				}
+				else
+					cat("WARNING: Only ",length(active.idx)," active MEPs after filtering >> not processing these data\n",sep="")
 			}
 			else
 				cat("WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")

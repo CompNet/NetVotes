@@ -131,3 +131,35 @@ process.behavior.values <- function(all.votes, mep.details, group.lines)
 	
 	return(result)
 }
+
+
+
+#############################################################################################
+# Compares two strings character by character, and indicates first pair of different ones.
+# Sometimes, two characacters look similar but are actually not.
+#
+# This function was used mainly for debugging purposes, especially when cleaning raw data.
+# 
+# str1: first string.
+# str2: second string.
+# returns: position of the first pair of different characters.
+#############################################################################################
+#comp.chr <- function(str1, str2)
+#{	cat(str1," vs. ",str2,"\n",sep="")
+#	i <- 0
+#	if(nchar(str1)==nchar(str2))
+#	{	stop <- FALSE
+#		while(i<+nchar(str1) && !stop)
+#		{	i <- i + 1
+#			c1 <- substr(str1,i,i)
+#			c2 <- substr(str2,i,i)
+#			if(c1!=c2)
+#			{	stop <- TRUE
+#				cat(c1," vs. ",c2,"\n",sep="")
+#			}
+#		}
+#	}
+#	return(i)
+#}
+
+

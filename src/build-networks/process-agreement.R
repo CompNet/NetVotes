@@ -69,6 +69,9 @@ process.agreement.scores <- function(votes, score.table)
 	# init matrix
 	result <- matrix(NA,nrow=length(votes), ncol=length(votes))
 	
+	#print(votes)
+	#print(score.table)
+	
 	# fill matrix
 	for(i in 1:length(votes))
 	{	for(j in 1:length(votes))
@@ -107,7 +110,7 @@ process.agreement.index <- function(votes, score.table)
 		
 	# process each document in the vote matrix
 	for(i in 1:ncol(votes))
-	{	cat("Processing document",i,"\n")
+	{	cat("Processing document",i,"/",ncol(votes),"\n")
 		# get scores
 		scores <- process.agreement.scores(votes[,i], score.table)
 		
@@ -188,47 +191,52 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 			if(length(filtered.doc.ids)>1)
 			{	# format data
 				cols <- match(filtered.doc.ids, colnames(all.votes))
-				votes <- all.votes[,cols]
-				agreement <- process.agreement.index(votes, score.table)
-				
-				# record raw agreement index values
-				colnames(agreement) <- all.votes[,COL.MEPID]
-				rownames(agreement) <- all.votes[,COL.MEPID]
-				table.file <- file.path(folder,paste(DATE.STR.T7[date],"-agreement.csv",sep=""))
-				write.csv2(agreement,file=table.file, row.names=TRUE)
-				
-				# keep only the triangular part of the matrix (w/o the diagonal)
-				#print(agreement)				
-				agr.vals <- agreement[upper.tri(agreement,diag=FALSE)]
-				
-				# check there are enough agreement values
-				if(all(is.na(agr.vals)))
-					cat("WARNING: All agreement values are NAs >> not processing these data\n",sep="")
-				else
-				{	# plot absolute counts as bars
-					title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
-					plot.file <- file.path(folder,paste(DATE.STR.T7[date],"-counts",sep=""))
-					data <- plot.histo(plot.file, values=agr.vals,
-						x.label, 
-						proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA,
-						plot.title=title, format=plot.formats)
-					# record as a table
-					data <- data[,c("y","xmin","xmax")]
-					table.file <- paste(plot.file,".csv",sep="")
-					write.csv2(data,file=table.file, row.names=FALSE)
+				active.idx <- which(apply(all.votes[,cols],1,function(v) !all(is.na(v))))
+				if(length(active.idx)>1)
+				{	votes <- all.votes[active.idx,cols]
+					agreement <- process.agreement.index(votes, score.table)
 					
-					# plot proportions as bars
-					title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
-					plot.file <- file.path(folder,paste(DATE.STR.T7[date],"-proportions",sep=""))
-					data <- plot.histo(plot.file, values=agr.vals,
-						x.label, 
-						proportions=TRUE, x.lim=c(-1,1), y.max=0.5, break.nbr=NA, 
-						plot.title=title, format=plot.formats)
-					# record as a table
-					data <- data[,c("y","xmin","xmax")]
-					table.file <- paste(plot.file,".csv",sep="")
-					write.csv2(data,file=table.file, row.names=FALSE)
+					# record raw agreement index values
+					colnames(agreement) <- all.votes[active.idx,COL.MEPID]
+					rownames(agreement) <- all.votes[active.idx,COL.MEPID]
+					table.file <- file.path(folder,paste(DATE.STR.T7[date],"-agreement.csv",sep=""))
+					write.csv2(agreement,file=table.file, row.names=TRUE)
+					
+					# keep only the triangular part of the matrix (w/o the diagonal)
+					#print(agreement)				
+					agr.vals <- agreement[upper.tri(agreement,diag=FALSE)]
+					
+					# check there are enough agreement values
+					if(all(is.na(agr.vals)))
+						cat("WARNING: All agreement values are NAs >> not processing these data\n",sep="")
+					else
+					{	# plot absolute counts as bars
+						title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
+						plot.file <- file.path(folder,paste(DATE.STR.T7[date],"-counts",sep=""))
+						data <- plot.histo(plot.file, values=agr.vals,
+							x.label, 
+							proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA,
+							plot.title=title, format=plot.formats)
+						# record as a table
+						data <- data[,c("y","xmin","xmax")]
+						table.file <- paste(plot.file,".csv",sep="")
+						write.csv2(data,file=table.file, row.names=FALSE)
+						
+						# plot proportions as bars
+						title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
+						plot.file <- file.path(folder,paste(DATE.STR.T7[date],"-proportions",sep=""))
+						data <- plot.histo(plot.file, values=agr.vals,
+							x.label, 
+							proportions=TRUE, x.lim=c(-1,1), y.max=0.5, break.nbr=NA, 
+							plot.title=title, format=plot.formats)
+						# record as a table
+						data <- data[,c("y","xmin","xmax")]
+						table.file <- paste(plot.file,".csv",sep="")
+						write.csv2(data,file=table.file, row.names=FALSE)
+					}
 				}
+				else
+					cat("WARNING: Only ",length(active.idx)," active MEPs after filtering >> not processing these data\n",sep="")
 			}
 			else
 				cat("WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")

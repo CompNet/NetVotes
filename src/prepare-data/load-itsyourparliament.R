@@ -311,24 +311,6 @@ iyp.extract.meps.details <- function()
 }
 
 
-#comp.chr <- function(str1, str2)
-#{	cat(str1," vs. ",str2,"\n",sep="")
-#	i <- 0
-#	if(nchar(str1)==nchar(str2))
-#	{	stop <- FALSE
-#		while(i<+nchar(str1) && !stop)
-#		{	i <- i + 1
-#			c1 <- substr(str1,i,i)
-#			c2 <- substr(str2,i,i)
-#			if(c1!=c2)
-#			{	stop <- TRUE
-#				cat(c1," vs. ",c2,"\n",sep="")
-#			}
-#		}
-#	}
-#	return(i)
-#}
-
 
 #############################################################################################
 # Read the XML file corresponding to the specified domain id, and returns the corresponding
@@ -439,9 +421,7 @@ iyp.extract.domains <- function()
 # returns: a list containing the vote information (details) and the MEP vote values (votes).
 #############################################################################################
 iyp.extract.vote <- function(vote.id)
-{	cat("Processing vote ",vote.id,"\n",sep="")
-	
-	# retrieve XML document
+{	# retrieve XML document
 	file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
 	doc <- readLines(file)
 	xml.data <- xmlParse(doc)
@@ -553,7 +533,7 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 			vote.ids <- c(vote.ids,substr(file,1,str_locate(file,".xml")-1))
 		vote.ids <- sort(as.integer(vote.ids))
 		
-		# complete the list of document domains (some docs are missing)
+		# complete the list of document domains (some docs were missing)
 		doc.domains0 <- doc.domains
 		doc.domains <- cbind(vote.ids,DOMAIN.AUTR)
 		colnames(doc.domains) <- c(IYP.ELT.VOTEID, COL.DOMID)
@@ -575,7 +555,9 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		# fill both matrices
 #vote.ids <- vote.ids[vote.ids>=7065]		
 		for(i in 1:length(vote.ids))
-		{	temp <- iyp.extract.vote(vote.ids[i])
+		{	cat("Processing vote ",vote.ids[i]," (",i,"/",length(vote.ids),")\n",sep="")
+			
+			temp <- iyp.extract.vote(vote.ids[i])
 			# update details matrix
 			temp$details[COL.DOCID] <- i
 #			print(temp$details)			
@@ -593,11 +575,16 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 			}
 			else if(is.na(temp$details[COL.DOMID]))
 				cat("WARNING: both domains in vote and domain table are missing\n",sep="")
-				
 			details.mat[i,details.cols] <- temp$details[details.cols]
+			
 			# update vote matrix
 			idx <- match(as.integer(names(temp$votes)), mep.details[,IYP.ELT.MEPID])
 			votes.mat[idx,i] <- temp$votes
+			# differentiate absent MEPs and inactive ones (i.e. persons not holding a MEP position at the time of the vote)
+			vote.date <- temp$details[COL.DATE]
+			active <- sapply(mep.details[,COL.PERIODS],function(periods) iyp.check.date(periods,vote.date))
+			nas <- is.na(votes.mat[,i])
+			votes.mat[active & nas,i] <- VOTE.ABSENT # we consider active MEP who didn't vote as absent
 		}
 
 		# record details matrix
