@@ -56,11 +56,11 @@ IYP.EP.MEP.LIST.FILE <- file.path(IYP.MEPS.FOLDER,"_meps.xml")
 iyp.download.meps <- function()
 {	for(i in 1:length(IYP.MEP.IDS))
 	{	mep.id <- IYP.MEP.IDS[i]
-		cat("Retrieving XML file for MEP id ",mep.id," (",i,"/",length(IYP.MEP.IDS),")\n",sep="")
+		cat("..Retrieving XML file for MEP id ",mep.id," (",i,"/",length(IYP.MEP.IDS),")\n",sep="")
 		url <- paste(IYP.URL.MEP,IYP.URL.ID,mep.id,sep="")
 		page <- readLines(url)
 		if(length(page)==2 && page[1]=="<br>" && substr(page[2],1,9)=="Warning: ")
-			cat("WARNING: the page for MEP id ",mep.id," was empty (",url,")\n",sep="")
+			cat("....WARNING: the page for MEP id ",mep.id," was empty (",url,")\n",sep="")
 		else
 		{	file <- file.path(IYP.MEPS.FOLDER,paste(mep.id,".xml",sep=""))
 			writeLines(page,file)
@@ -159,16 +159,16 @@ iyp.download.votes <- function()
 {	for(i in 1:length(IYP.VOTE.IDS))
 #i <- 6263
 	{	vote.id <- IYP.VOTE.IDS[i]
-		cat("Retrieving XML file for vote id ",vote.id," (",i,"/",length(IYP.VOTE.IDS),")\n",sep="")
+		cat("..Retrieving XML file for vote id ",vote.id," (",i,"/",length(IYP.VOTE.IDS),")\n",sep="")
 		
 		# load the page
 		url <- paste(IYP.URL.VOTE,IYP.URL.ID,vote.id,sep="")
-		cat("..url=",url,"\n",sep="")
+		cat("....url=",url,"\n",sep="")
 		page <- readLines(url)
 		
 		#if(length(page)==1 && page=="ERROR: invalid arguments")
 		if(length(page)==2 && page[1]=="<br>" && substr(page[2],1,9)=="Warning: ")
-			cat("WARNING: the page for vote id ",vote.id," was empty (",url,")\n",sep="")
+			cat("....WARNING: the page for vote id ",vote.id," was empty (",url,")\n",sep="")
 		else
 		{	# clean the page (the presence of "&" prevents the later XML parsing
 			page <- gsub(" & ", " &amp; ", page)
@@ -178,7 +178,7 @@ iyp.download.votes <- function()
 			xml <- xmlToList(xml.data)
 			domain <- str_trim(xml[[IYP.ELT.POLICY.AREA]])
 			if(domain=="")
-			{	cat("No policy domain, trying to get it from europal (domain='",domain,"')\n",sep="")
+			{	cat("....No policy domain, trying to get it from europal (domain='",domain,"')\n",sep="")
 				# try to get the domain from the official website 
 				title <- str_trim(xml[[IYP.ELT.VOTE.TITLE]])
 				domain <- ep.retrieve.domain(title)
@@ -201,7 +201,7 @@ iyp.download.votes <- function()
 
 #############################################################################################
 # Load the existing XML files reprenting votes, and possibly complete them by adding
-# a policy domain when missing. This domaib is retrieved from Europarl, the official website
+# a policy domain when missing. This domain is retrieved from Europarl, the official website
 # of the European Parliament.
 #############################################################################################
 iyp.complete.votes <- function()
@@ -260,18 +260,18 @@ iyp.complete.votes <- function()
 #############################################################################################
 iyp.download.domains <- function()
 {	# get the list of domains
-	cat("Retrieving XML file for domain list\n",sep="")
+	cat("..Retrieving XML file for domain list\n",sep="")
 	page <- readLines(IYP.URL.DOMAINS)
 	writeLines(page,IYP.DOMAIN.LIST.FILE)
 	
 	# get the list of votes for each domain
 	for(i in 1:length(IYP.DOMAIN.IDS))
 	{	dom.id <- IYP.DOMAIN.IDS[i]
-		cat("Retrieving XML file for domain id ",dom.id," (",i,"/",length(IYP.DOMAIN.IDS),")\n",sep="")
+		cat("....Retrieving XML file for domain id ",dom.id," (",i,"/",length(IYP.DOMAIN.IDS),")\n",sep="")
 		url <- paste(IYP.URL.DOMAIN,IYP.URL.ID,dom.id,sep="")
 		page <- readLines(url)
 		if(length(page)==1 && page=="<b>No votes found</b>")
-			cat("WARNING: the page for domain id ",dom.id," contains no vote (",url,") >> domain ignored\n",sep="")
+			cat("....WARNING: the page for domain id ",dom.id," contains no vote (",url,") >> domain ignored\n",sep="")
 		else
 		{	file <- file.path(IYP.DOMAINS.FOLDER,paste(dom.id,".xml",sep=""))
 			writeLines(page,file)
@@ -288,7 +288,7 @@ iyp.download.domains <- function()
 # (i.e. actually in charge of a MEP position). 
 #############################################################################################
 ep.retrieve.periods <- function()
-{	cat("Retrieving the MEPs activity periods\n",sep="")
+{	cat("..Retrieving the MEPs activity periods\n",sep="")
 	
 	# retrieve the official list of MEPs, with their Europarl ids
 	doc <- readLines(IYP.EP.MEP.LIST.FILE)
@@ -303,7 +303,7 @@ ep.retrieve.periods <- function()
 	
 	# retrieve the periods for each MEP
 	for(i in 1:nrow(ep.table))
-	{	cat("Processing MEP ",i,"/",nrow(ep.table),"\n",sep="")
+	{	cat("....Processing MEP ",i,"/",nrow(ep.table),"\n",sep="")
 		# set up the Europarl URL 
 		name <- gsub(" ","_",toupper(ep.table[i,COL.FULLNAME]))
 		ep.url <- paste(IYP.URL.MEP,ep.table[i,COL.EP.ID],"/",name,IYP.URL.HIST.SUFFIX,sep="")
@@ -363,7 +363,11 @@ ep.retrieve.periods <- function()
 # files for later use.
 #############################################################################################
 iyp.download.all <- function()
-{	iyp.download.meps()
+{	cat("***************************************************\n")
+	cat("****** DOWNLOAD IYP DATA\n")
+	cat("***************************************************\n")
+	
+	iyp.download.meps()
 	iyp.download.votes()
 	iyp.download.domains()
 	ep.retrieve.periods()

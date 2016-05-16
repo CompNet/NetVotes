@@ -110,7 +110,7 @@ process.agreement.index <- function(votes, score.table)
 		
 	# process each document in the vote matrix
 	for(i in 1:ncol(votes))
-	{	cat("Processing document",i,"/",ncol(votes),"\n")
+	{	cat("..........Processing document",i,"/",ncol(votes),"\n")
 		# get scores
 		scores <- process.agreement.scores(votes[,i], score.table)
 		
@@ -177,7 +177,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
 		#date <- DATE.T7.TERM
-		{	cat("Processing agreement data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+		{	cat("......Processing agreement data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# retain only the documents related to the selected topic and dates
 			if(dom==DOMAIN.ALL)
@@ -208,7 +208,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 					
 					# check there are enough agreement values
 					if(all(is.na(agr.vals)))
-						cat("WARNING: All agreement values are NAs >> not processing these data\n",sep="")
+						cat("........WARNING: All agreement values are NAs >> not processing these data\n",sep="")
 					else
 					{	# plot absolute counts as bars
 						title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
@@ -236,10 +236,10 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 					}
 				}
 				else
-					cat("WARNING: Only ",length(active.idx)," active MEPs after filtering >> not processing these data\n",sep="")
+					cat("........WARNING: Only ",length(active.idx)," active MEPs after filtering >> not processing these data\n",sep="")
 			}
 			else
-				cat("WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")
+				cat("........WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")
 		}
 	}
 }
@@ -265,16 +265,20 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 # plot.formats: formats used for the plot files.
 #############################################################################################
 process.agreement <- function(all.votes, doc.details, mep.details, score.file, domains, dates, everything, countries, groups, plot.formats)
-{	# process agreement for all data
+{	cat("***************************************************\n")
+	cat("****** PROCESSING AGREEMENT\n")
+	cat("***************************************************\n")
+	
+	# process agreement for all data
 	if(everything)
-	{	cat("Process agreement for all data","\n",sep="")
+	{	cat("..Process agreement for all data","\n",sep="")
 		process.agreement.stats(all.votes, doc.details, score.file, domains, dates, country=NA, group=NA, plot.formats)
 	}
 	
 	# process agreement by political group
-	cat("Process stats by group","\n",sep="")
+	cat("..Process stats by group","\n",sep="")
 	for(group in groups)
-	{	cat("Process stats for group ",group,"\n",sep="")
+	{	cat("....Process stats for group ",group,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
@@ -286,10 +290,10 @@ process.agreement <- function(all.votes, doc.details, mep.details, score.file, d
 	}
 	
 	# process agreement by home country
-	cat("Process stats by country","\n",sep="")
+	cat("..Process stats by country","\n",sep="")
 	for(country in countries)
 	#country <- COUNTRY.HR
-	{	cat("Process stats for country ",country,"\n",sep="")
+	{	cat("....Process stats for country ",country,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)

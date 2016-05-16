@@ -73,7 +73,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 	
 	# record the result
 	if(all(is.na(coms)))
-		cat("WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder,"\n")
+		cat("............WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder,"\n")
 	else
 	{	if(is.na(mbrshp))
 			mbrshp <- membership(coms)
@@ -119,7 +119,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 	
 	# the process might be repeated several times
 	for(r in 1:repetitions)
-	{	cat("Processing iteration ",r,"/",repetitions,"\n",sep="")
+	{	cat("........Processing iteration ",r,"/",repetitions,"\n",sep="")
 		# setup iteration folder
 		#folder <- paste(PARTITIONS.FOLDER,"/",subfolder,sep="")
 		#r.folder <- paste(folder,r,"/",sep="")
@@ -146,7 +146,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# complementary negative graph
 			if(!all(is.na(graphs$neg)))
-			{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph\n",sep="")
+			{	cat("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph\n",sep="")
 				memb <- apply.partitioning.algorithm(graphs$neg, neg.algo.name, part.folder, graph.folder, plot.formats)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=neg.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=neg.att.name, value=memb)
@@ -155,7 +155,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# positive graph
 			if(!all(is.na(graphs$pos)))
-			{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph\n",sep="")
+			{	cat("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph\n",sep="")
 				memb <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder, graph.folder, plot.formats)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=pos.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=pos.att.name, value=memb)
@@ -166,7 +166,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 		# apply all correlation clustering algorithms
 		for(algo.name in corclu.algos)
 		{	if(!all(is.na(graphs$signed)))
-			{	cat("Applying ",COMDET.ALGO.NAMES[algo.name]," to the signed graph\n",sep="")
+			{	cat("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the signed graph\n",sep="")
 				memb <- apply.partitioning.algorithm(graphs$signed, algo.name, part.folder, graph.folder, plot.formats)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=att.name, value=memb)
@@ -177,12 +177,18 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 
 	# record graphs (Graphml only) with detected communities, in the partition folder (not the network one)
 	part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=,date, repetition=NA)
-	graph.file.neg <- file.path(part.folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
-	write.graph(graph=graphs$neg, file=graph.file.neg, format="graphml")
-	graph.file.pos <- file.path(part.folder,paste(POSITIVE.FILE,".graphml",sep=""))
-	write.graph(graph=graphs$pos, file=graph.file.pos, format="graphml")
-	graph.file <- file.path(part.folder,paste(SIGNED.FILE,".graphml",sep=""))
-	write.graph(graph=graphs$signed, file=graph.file, format="graphml")
+	if(!all(is.na(graphs$neg)))
+	{	graph.file.neg <- file.path(part.folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
+		write.graph(graph=graphs$neg, file=graph.file.neg, format="graphml")
+	}
+	if(!all(is.na(graphs$pos)))
+	{	graph.file.pos <- file.path(part.folder,paste(POSITIVE.FILE,".graphml",sep=""))
+		write.graph(graph=graphs$pos, file=graph.file.pos, format="graphml")
+	}
+	if(!all(is.na(graphs$signed)))
+	{	graph.file <- file.path(part.folder,paste(SIGNED.FILE,".graphml",sep=""))
+		write.graph(graph=graphs$signed, file=graph.file, format="graphml")
+	}
 }
 
 
@@ -208,7 +214,7 @@ partition.graphs <- function(thresh=NA, score.file, domains, dates, country, gro
 	for(dom in domains)
 	{	# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	cat("Detect communities for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+		{	cat("......Detect communities for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph subfolder
 			#folder <- paste(subfolder,"/",score.file,
@@ -239,16 +245,20 @@ partition.graphs <- function(thresh=NA, score.file, domains, dates, country, gro
 # plot.formats: formats of the plot files.
 #############################################################################################
 partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
-{	# extract networks for all data
+{	cat("***************************************************\n")
+	cat("****** PARTITIONING NETWORKS\n")
+	cat("***************************************************\n")
+	
+	# extract networks for all data
 	if(everything)
-	{	cat("Detect communities for all data","\n",sep="")
+	{	cat("..Detect communities for all data","\n",sep="")
 		partition.graphs(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 	
 	# networks by political group
-	cat("Detect communities by group","\n",sep="")
+	cat("..Detect communities by group","\n",sep="")
 	for(group in groups)
-	{	cat("Detect communities for group ",group,"\n",sep="")
+	{	cat("....Detect communities for group ",group,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
@@ -260,9 +270,9 @@ partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, da
 	}
 	
 	# networks by home country
-	cat("Detect communities by country","\n",sep="")
+	cat("..Detect communities by country","\n",sep="")
 	for(country in countries)
-	{	cat("Detect communities for country ",country,"\n",sep="")
+	{	cat("....Detect communities for country ",country,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)

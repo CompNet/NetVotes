@@ -56,26 +56,25 @@ dates <- c(DATE.T7.TERM, DATE.T7.YEARS)			# which time period to process individ
 #		DATE.T7.TERM
 #)
 #dates <- TEST.YEARS
-everything <- TRUE								# whether or not to process all data without distinction of country or date
-#everything <- FALSE
-countries <- COUNTRY.VALUES						# which country to process individually
+#everything <- TRUE								# whether or not to process all data without distinction of country or date
+everything <- FALSE
+#countries <- COUNTRY.VALUES						# which country to process individually
 #countries <- c(COUNTRY.HR)
 #countries <- TEST.COUNTRIES
-#countries <- c()
-#countries <- c(
+countries <- c(
 #		COUNTRY.AT,COUNTRY.BE,COUNTRY.BG,COUNTRY.HR,COUNTRY.CY,COUNTRY.CZ,COUNTRY.DK
 #		COUNTRY.EE,COUNTRY.FI,COUNTRY.FR,COUNTRY.DE,COUNTRY.GR,COUNTRY.HU,COUNTRY.IE
 #		COUNTRY.IT,COUNTRY.LV,COUNTRY.LT,COUNTRY.LU,COUNTRY.MT,COUNTRY.NL,COUNTRY.PL
 #		COUNTRY.PT,COUNTRY.RO,COUNTRY.SK,COUNTRY.SI,COUNTRY.ES,COUNTRY.SE,COUNTRY.UK
-#)
-groups <- GROUP.VALUES							# which group to process individually
+)
+#groups <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
 #groups <- GROUP.VW2SYMB[TEST.GROUPS]
-#groups <- c()
-#groups <- c(
+groups <- c(
 #	GROUP.ALDE,GROUP.ECR,GROUP.EFD,GROUP.EPP
-#	GROUP.GREENS,GROUP.GUENGL,GROUP.NI,GROUP.SD
-#)
+#	GROUP.GREENS,GROUP.GUENGL,GROUP.NI,
+		GROUP.SD
+)
 
 ## score matrix used to process agreement
 score.file <- "m3"					# see folder in/score
@@ -127,16 +126,16 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process agreement and related stats (this might also take a while)
 #############################################################################################
-process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
-		domains, dates, everything, countries, groups, plot.formats)
+#process.agreement(data$all.votes, data$doc.details, data$mep.details, score.file,
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 
 #############################################################################################
 # Extract all the networks (just a bit faster)
 #############################################################################################
-#extract.all.networks(data$mep.details, thresh, score.file,
-#		domains, dates, everything, countries, groups, plot.formats)
+extract.all.networks(data$mep.details, thresh, score.file,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 #############################################################################################

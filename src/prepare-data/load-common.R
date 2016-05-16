@@ -16,7 +16,7 @@ source("src/define-constants.R")
 # returns: a matrix describing the political line of each group for each vote.
 #############################################################################################
 extract.group.lines <- function(all.votes, mep.details)
-{	cat("Retrieving the group political lines\n",sep="")
+{	cat("..Retrieving the group political lines\n",sep="")
 	
 	# if the file already exists, just load it
 	if(file.exists(GROUP.LINES.FILE))
@@ -38,7 +38,7 @@ extract.group.lines <- function(all.votes, mep.details)
 		
 		# process the group political lines for each vote
 		for(i in 2:ncol(all.votes))
-		{	cat("Processing document ",i-1,"/",ncol(all.votes)-1,"\n",sep="")
+		{	cat("....Processing document ",i-1,"/",ncol(all.votes)-1,"\n",sep="")
 			votes <- all.votes[,i]
 			groups <- sort(unique(mep.details[,COL.GROUP]))
 			
@@ -84,7 +84,7 @@ extract.group.lines <- function(all.votes, mep.details)
 # group.lines: the way each group voted for each document, in majority.
 #############################################################################################
 process.behavior.values <- function(all.votes, mep.details, group.lines)
-{	cat("Processing the behavior values\n",sep="")
+{	cat("..Processing the behavior values\n",sep="")
 	
 	# if the file already exists, just load it
 	if(file.exists(MEP.BEHAVIOR.FILE))
@@ -111,7 +111,7 @@ process.behavior.values <- function(all.votes, mep.details, group.lines)
 		
 		# process each MEP
 		for(i in 1:nrow(all.votes))
-		{	cat("Processing MEP ",i,"/",nrow(all.votes),"\n",sep="")
+		{	cat("....Processing MEP ",i,"/",nrow(all.votes),"\n",sep="")
 			
 			group <- mep.details[i,COL.GROUP]
 			idx <- which(group.lines[,COL.GROUP]==group)

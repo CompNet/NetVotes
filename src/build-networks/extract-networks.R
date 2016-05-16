@@ -27,7 +27,7 @@ source("src/build-networks/process-network-stats.R")
 # plot.formats: formats of the plot files.
 #############################################################################################
 extract.network <- function(agreement, mep.details, thresh=NA, folder, graph.name, plot.formats)
-{	cat("Building network folder='",folder,"'\n",sep="")
+{	cat("......Building network folder='",folder,"'\n",sep="")
 	
 	# replace NAs by zeros
 	agreement[is.na(agreement)] <- 0
@@ -102,18 +102,22 @@ extract.network <- function(agreement, mep.details, thresh=NA, folder, graph.nam
 	
 	# check if network is empty
 	if(ecount(result)==0)
-		cat("WARNING: the signed graph contains no links >> not recorded\n")
+		cat("........WARNING: the signed graph contains no links >> not recorded\n")
 	
 	# if not empty (i.e. contains links)
 	else
 	{	# add MEP attributes
-		V(result)$Firstname <- mep.details[,COL.FIRSTNAME]
-		V(result)$Lastname <- mep.details[,COL.LASTNAME]
+#		V(result)$Firstname <- mep.details[,COL.FIRSTNAME]
+firstnames <- iconv(mep.details[,COL.FIRSTNAME], to='ASCII//TRANSLIT')
+V(result)$Firstname <- firstnames		
+#		V(result)$Lastname <- mep.details[,COL.LASTNAME]
+lastnames <- iconv(mep.details[,COL.LASTNAME], to='ASCII//TRANSLIT')
+V(result)$Lastname <- lastnames
 		V(result)$Country <- mep.details[,COL.STATE]
 		V(result)$Group <- mep.details[,COL.GROUP]
 		
 		# plot graph and get spatial positions as nodal attributes
-		cat("Plotting network...\n")
+		cat("........Plotting network...\n")
 		graph.base <- file.path(folder,SIGNED.FILE)
 		result <- plot.network(g=result, plot.file=graph.base, format=plot.formats)
 		
@@ -124,7 +128,7 @@ extract.network <- function(agreement, mep.details, thresh=NA, folder, graph.nam
 		# also export the positive graph as an unsigned graph
 		gp <- subgraph.edges(graph=result, eids=which(E(result)$weight>0), delete.vertices=FALSE)
 		if(ecount(gp)==0)
-			cat("WARNING: the positive graph does not contain any link >> not recorded")
+			cat("........WARNING: the positive graph does not contain any link >> not recorded")
 		else
 		{	graph.file <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
 			write.graph(graph=gp, file=graph.file, format="graphml")
@@ -154,7 +158,7 @@ extract.network <- function(agreement, mep.details, thresh=NA, folder, graph.nam
 		write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)								# write proper graph
 		
 		# process network stats
-		cat("Processing network stats...\n")
+		cat("........Processing network stats...\n")
 		process.network.stats(result, folder)
 	}
 }
@@ -195,7 +199,7 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	cat("Extracting network for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+		{	cat("....Extracting network for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph title
 			graph.name <- paste(base.graph.name," - domain=",dom," - period=",DATE.STR.T7[date],
@@ -210,7 +214,7 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 			# load agreement index file
 			table.file <- file.path(agr.folder,paste(DATE.STR.T7[date],"-agreement.csv",sep=""))
 			if(!file.exists(table.file))
-				cat("WARNING: Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement","\n",sep="")
+				cat("......WARNING: Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement","\n",sep="")
 			else
 			{	# retrieve agreement
 				agreement <- as.matrix(read.csv2(file=table.file, row.names=1))
@@ -238,16 +242,20 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 # plot.formats: formats of the plot files.
 #############################################################################################
 extract.all.networks <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, plot.formats)
-{	# extract networks for all data
+{	cat("***************************************************\n")
+	cat("****** EXTRACTING NETWORKS\n")
+	cat("***************************************************\n")
+	
+	# extract networks for all data
 	if(everything)
-	{	cat("Extract networks for all data","\n",sep="")
+	{	cat("..Extract networks for all data","\n",sep="")
 		extract.networks(mep.details, thresh, score.file, domains, dates, country=NA, group=NA, plot.formats)
 	}
 	
 	# networks by political group
-	cat("Extract networks by group","\n",sep="")
+	cat("..Extract networks by group","\n",sep="")
 	for(group in groups)
-	{	cat("Extract networks for group ",group,"\n",sep="")
+	{	cat("....Extract networks for group ",group,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
@@ -259,9 +267,9 @@ extract.all.networks <- function(mep.details, thresh=NA, score.file, domains, da
 	}
 	
 	# networks by home country
-	cat("Extract networks by country","\n",sep="")
+	cat("..Extract networks by country","\n",sep="")
 	for(country in countries)
-	{	cat("Extract networks for country ",country,"\n",sep="")
+	{	cat("....Extract networks for country ",country,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)

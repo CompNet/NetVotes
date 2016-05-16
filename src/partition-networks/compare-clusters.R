@@ -56,7 +56,7 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 	
 	# the process might be repeated several times
 	for(r in 1:repetitions)
-	{	cat("Processing iteration ",r,"/",repetitions,"\n",sep="")
+	{	cat("......Processing iteration ",r,"/",repetitions,"\n",sep="")
 		# setup iteration folder
 		if(repetitions>1)
 			#r.folder <- paste(folder,r,"/",sep="")
@@ -68,27 +68,27 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 		# load partitions
 		partitions <- list()
 		for(corclu.name in corclu.algos)
-		{	cat("Loading partition files for algorithm ",corclu.name,"\n",sep="")
+		{	cat("........Loading partition files for algorithm ",corclu.name,"\n",sep="")
 			partition.file <- file.path(part.folder,paste(corclu.name,"-membership.txt",sep=""))
 			if(!file.exists(partition.file))
-				cat("Partition file ",partition.file," not found\n",sep="")
+				cat("........Partition file ",partition.file," not found\n",sep="")
 			else
 				partitions[[corclu.name]] <- as.matrix(read.table(partition.file))
 		}
 		for(comdet.name in comdet.algos)
-		{	cat("Loading partition files for algorithm ",comdet.name,"\n",sep="")
+		{	cat("........Loading partition files for algorithm ",comdet.name,"\n",sep="")
 			partition.file <- file.path(part.folder,paste(comdet.name,"-membership.txt",sep=""))
 			if(!file.exists(partition.file))
-				cat("Partition file ",partition.file," not found\n",sep="")
+				cat("........Partition file ",partition.file," not found\n",sep="")
 			else
 				partitions[[comdet.name]] <- as.matrix(read.table(partition.file))
 		}
 		for(comdet.name in comdet.algos)
 		{	neg.algo.name <- comdet.algo.ncg.value(comdet.name)
-			cat("Loading partition files for algorithm ",neg.algo.name,"\n",sep="")
+			cat("........Loading partition files for algorithm ",neg.algo.name,"\n",sep="")
 			partition.file <- file.path(part.folder,paste(neg.algo.name,"-membership.txt",sep=""))
 			if(!file.exists(partition.file))
-				cat("Partition file ",partition.file," not found\n",sep="")
+				cat("........Partition file ",partition.file," not found\n",sep="")
 			else
 				partitions[[neg.algo.name]] <- as.matrix(read.table(partition.file))
 		}
@@ -107,12 +107,12 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 		{	#print(i);print(length(partitions))
 			partition1 <- partitions[[i]]
 			for(j in (i+1):length(partitions))
-			{	cat("Processing ",names(partitions)[i]," vs ",names(partitions)[j],"\n",sep="")
+			{	cat("........Processing ",names(partitions)[i]," vs ",names(partitions)[j],"\n",sep="")
 				partition2 <- partitions[[j]]
 				vals <- compare.partition.pair(partition1, partition2, measures)
 				#print(vals)
 				if(any(is.nan(vals)))
-					cat("WARNING: some measures returned NaN, which will appear as NA in the recorded file","\n",sep="")
+					cat("..........WARNING: some measures returned NaN, which will appear as NA in the recorded file","\n",sep="")
 				for(meas in measures)
 				{	mats[[meas]][i,j] <- vals[meas]
 					mats[[meas]][j,i] <- vals[meas]
@@ -168,7 +168,8 @@ compare.partitions <- function(thresh=NA, score.file, domains, dates, country, g
 	for(dom in domains)
 	{	# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	cat("Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+		{	
+			#cat("......Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# setup graph folder
 			#filtered.folder <- paste(folder,"/",score.file,
@@ -177,7 +178,7 @@ compare.partitions <- function(thresh=NA, score.file, domains, dates, country, g
 			#		"/",sep="")
 			
 			# compare algorithm performances
-			cat("Compare partitioning algorithm performances\n",sep="")
+			cat("......Compare partitioning algorithm performances\n",sep="")
 			compare.partitions.measures(thresh, score.file, domain=dom, date, country, group, comdet.algos, corclu.algos, measures, repetitions)
 		}
 	}
@@ -202,16 +203,20 @@ compare.partitions <- function(thresh=NA, score.file, domains, dates, country, g
 # repetitions: number of times each algorithm must be applied.
 #############################################################################################
 compare.all.partitions <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, measures, repetitions)
-{	# extract networks for all data
+{	cat("***************************************************\n")
+	cat("****** COMPARING PARTITIONS\n")
+	cat("***************************************************\n")
+	
+	# extract networks for all data
 	if(everything)
-	{	cat("Compare performance measures for all data","\n",sep="")
+	{	cat("..Compare performance measures for all data","\n",sep="")
 		compare.partitions(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, measures, repetitions)
 	}
 	
 	# networks by political group
-	cat("Compare performance measures by group","\n",sep="")
+	cat("..Compare performance measures by group","\n",sep="")
 	for(group in groups)
-	{	cat("Compare performance measures for group ",group,"\n",sep="")
+	{	cat("....Compare performance measures for group ",group,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
@@ -223,9 +228,9 @@ compare.all.partitions <- function(mep.details, thresh=NA, score.file, domains, 
 	}
 	
 	# networks by home country
-	cat("Compare performance measures by country","\n",sep="")
+	cat("..Compare performance measures by country","\n",sep="")
 	for(country in countries)
-	{	cat("Compare performance measures for country ",country,"\n",sep="")
+	{	cat("....Compare performance measures for country ",country,"\n",sep="")
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)
