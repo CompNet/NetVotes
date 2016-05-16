@@ -20,7 +20,7 @@ source("src/prepare-data/filter-data.R")
 # plot.formats: formats of the plot files.
 #############################################################################################
 process.domain.frequencies <- function(doc.details, plot.formats)
-{	cat("Processing the frequencies of documents by policy domain\n",sep="")
+{	cat("..Processing the frequencies of documents by policy domain\n",sep="")
 	
 	# set folder up
 	dir.create(DOMAINS.FOLDER, recursive=TRUE, showWarnings=FALSE)
@@ -63,7 +63,7 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 	# process the list of documents by year
 	docs <- list()
 	for(date in DATE.T7.YEARS)
-	{	cat("..Processing period ",DATE.STR.T7[date],"\n",sep="")
+	{	cat("....Processing period ",DATE.STR.T7[date],"\n",sep="")
 		
 		# retain only the documents related to the selected dates
 		docids <- filter.docs.by.date(doc.details, 
@@ -149,8 +149,10 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 	# consider each time period (each individual year as well as the whole term)
 	for(date in dates)
 	{	# consider each domain individually (including all domains at once)
-		for(dom in domains)
-		{	cat("........Processing ",file.prefix," data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+#		for(dom in domains)
+		foreach(dom=domains) %dopar% 
+		{	source("src/define-imports.R")
+			cat("........Processing ",file.prefix," data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
 			
 			# retain only the documents related to the selected topic and dates
 			if(dom==DOMAIN.ALL)
@@ -279,8 +281,10 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 	
 	# consider each domain individually (including all domains at once)
 	do.yearly <- FALSE
-	for(dom in domains)
-	{	cat("........Processing ",file.prefix," data for domain ",dom,"\n",sep="")
+#	for(dom in domains)
+	foreach(dom=domains) %dopar% 
+	{	source("src/define-imports.R")
+		cat("........Processing ",file.prefix," data for domain ",dom,"\n",sep="")
 		
 		# consider each time period (each individual year as well as the whole term)
 		votes <- list()
@@ -455,8 +459,10 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 		plot.prefix <- paste("[",country,"] ",sep="")
 	
 	# consider each domain individually (including all domains at once)
-	for(dom in domains)
-	{	cat("........Processing ",file.prefix," data for domain ",dom,"\n",sep="")
+#	for(dom in domains)
+	foreach(dom=domains) %dopar% 
+	{	source("src/define-imports.R")
+		cat("........Processing ",file.prefix," data for domain ",dom,"\n",sep="")
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)

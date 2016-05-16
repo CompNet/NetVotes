@@ -19,18 +19,11 @@
 # setwd("D:/Eclipse/workspaces/Networks/NetVotes")
 # source("src/main.R")
 #############################################################################################
-source("src/define-constants.R")
-source("src/define-paths.R")
-source("src/build-networks/extract-networks.R")
-source("src/build-networks/process-agreement.R")
-source("src/partition-networks/compare-clusters.R")
-source("src/partition-networks/detect-clusters.R")
-source("src/partition-networks/evaluate-clusters.R")
-source("src/prepare-data/generate-data.R")
-source("src/prepare-data/load-itsyourparliament.R")
-source("src/prepare-data/load-parltrack.R")
-source("src/prepare-data/load-votewatch.R")
-source("src/prepare-data/process-stats.R")
+# libraries for parallel processing
+library(foreach)
+library(doParallel)
+
+source("src/define-imports.R")
 
 
 
@@ -56,25 +49,24 @@ dates <- c(DATE.T7.TERM, DATE.T7.YEARS)			# which time period to process individ
 #		DATE.T7.TERM
 #)
 #dates <- TEST.YEARS
-#everything <- TRUE								# whether or not to process all data without distinction of country or date
-everything <- FALSE
-#countries <- COUNTRY.VALUES						# which country to process individually
+everything <- TRUE								# whether or not to process all data without distinction of country or date
+#everything <- FALSE
+countries <- COUNTRY.VALUES						# which country to process individually
 #countries <- c(COUNTRY.HR)
 #countries <- TEST.COUNTRIES
-countries <- c(
+#countries <- c(
 #		COUNTRY.AT,COUNTRY.BE,COUNTRY.BG,COUNTRY.HR,COUNTRY.CY,COUNTRY.CZ,COUNTRY.DK
 #		COUNTRY.EE,COUNTRY.FI,COUNTRY.FR,COUNTRY.DE,COUNTRY.GR,COUNTRY.HU,COUNTRY.IE
 #		COUNTRY.IT,COUNTRY.LV,COUNTRY.LT,COUNTRY.LU,COUNTRY.MT,COUNTRY.NL,COUNTRY.PL
 #		COUNTRY.PT,COUNTRY.RO,COUNTRY.SK,COUNTRY.SI,COUNTRY.ES,COUNTRY.SE,COUNTRY.UK
-)
-#groups <- GROUP.VALUES							# which group to process individually
+#)
+groups <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
 #groups <- GROUP.VW2SYMB[TEST.GROUPS]
-groups <- c(
+#groups <- c(
 #	GROUP.ALDE,GROUP.ECR,GROUP.EFD,GROUP.EPP
-#	GROUP.GREENS,GROUP.GUENGL,GROUP.NI,
-		GROUP.SD
-)
+#	GROUP.GREENS,GROUP.GUENGL,GROUP.NI,GROUP.SD
+#)
 
 ## score matrix used to process agreement
 score.file <- "m3"					# see folder in/score
@@ -102,6 +94,11 @@ plot.formats <- c(
 #	NA
 )
 
+## configure parallel processing
+cl <- makeCluster(4)	# number of processors to use
+registerDoParallel(cl)
+
+
 #############################################################################################
 # Load raw data
 #############################################################################################
@@ -118,8 +115,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-#		domains, dates, everything, countries, groups, plot.formats)
+process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 
@@ -134,8 +131,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Extract all the networks (just a bit faster)
 #############################################################################################
-extract.all.networks(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, groups, plot.formats)
+#extract.all.networks(data$mep.details, thresh, score.file,
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 #############################################################################################

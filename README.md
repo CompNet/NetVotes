@@ -2,7 +2,7 @@ NetVotes v.2
 =======
 *Extraction and analysis of vote-based networks*
 
-* Copyright 2015 Israel Mendonça (v1) & Vincent Labatut (v2). 
+* Copyright 2015 Israel Mendonï¿½a (v1) & Vincent Labatut (v2). 
 
 NetVotes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation. For source availability and license information see `licence.txt`
 
@@ -46,6 +46,8 @@ Here are the folders composing the project:
    * [`plotrix`](https://cran.r-project.org/web/packages/plotrix/index.html)
    * [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html)
    * [`msm`](https://cran.r-project.org/web/packages/msm/index.html)
+   * [`foreach`](https://cran.r-project.org/web/packages/foreach/index.html)
+   * [`doParallel`](https://cran.r-project.org/web/packages/doParallel/index.html)
 3. Download this project from GitHub.
 
 In order to reproduce the process from the papers, you also need to retrieve the data from Figshare. Just download and unzip the archive so that its folders match the project root. You will then have both the input raw data and the outputs resulting from the process. Apply the scripts again should therefore lead to the same results.
@@ -91,6 +93,8 @@ For different data, you may have to adapt the functions used to load the tabular
 
 # Dependencies
 * [`igraph`](http://igraph.org/r/) package: used to build and handle graphs.
+* [`plotrix`](https://cran.r-project.org/web/packages/plotrix/index.html) and [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) packages: plot generation.
+* [`foreach`](https://cran.r-project.org/web/packages/foreach/index.html) and [`doParallel`](https://cran.r-project.org/web/packages/doParallel/index.html) packages: parallel processing.
 
 
 # To-do List
@@ -98,5 +102,5 @@ For different data, you may have to adapt the functions used to load the tabular
 
 
 # References
-* **[MFLM'15]** Mendonça, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015.
+* **[MFLM'15]** Mendonï¿½a, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015.
 http://arxiv.org/abs/1507.04215
