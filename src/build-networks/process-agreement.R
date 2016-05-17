@@ -167,9 +167,11 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 	score.table <- load.score.table(score.file)
 	
 	# consider each domain individually (including all domains at once)
-	for(dom in domains)
-	#dom <- DOMAIN.ALL
-	{	# setup folder
+#	for(dom in domains)
+	foreach(dom=domains) %dopar% 
+	{	source("src/define-imports.R")
+		
+		# setup folder
 		#folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
 		folder <- get.agreement.path(score=score.file, country, group, domain=dom)
 		dir.create(folder, recursive=TRUE, showWarnings=FALSE)

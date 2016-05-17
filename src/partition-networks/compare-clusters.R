@@ -165,8 +165,11 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 #############################################################################################
 compare.partitions <- function(thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, measures, repetitions)
 {	# consider each domain individually (including all domains at once)
-	for(dom in domains)
-	{	# consider each time period (each individual year as well as the whole term)
+#	for(dom in domains)
+	foreach(dom=domains) %dopar%
+	{	source("src/define-imports.R")
+		
+		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
 		{	
 			#cat("......Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")

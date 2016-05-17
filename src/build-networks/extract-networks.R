@@ -192,8 +192,11 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 	base.graph.name <- paste("MEP agreement - score=",score.file,mode.str,sep="")
 	
 	# consider each domain individually (including all domains at once)
-	for(dom in domains)
-	{	# setup agreement folder
+#	for(dom in domains)
+	foreach(dom=domains) %dopar% 
+	{	source("src/define-imports.R")
+		
+		# setup agreement folder
 		#agr.folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
 		agr.folder <- get.agreement.path(score=score.file,country,group,domain=dom)
 		
