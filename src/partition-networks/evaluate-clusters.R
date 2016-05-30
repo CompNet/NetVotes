@@ -205,7 +205,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 	
 	# process each measure separately
 	for(measure in measures)
-	{	tlog("..........Plotting measure ",PART.MEAS.NAMES[measure],"\n")
+	{	tlog("..........Plotting measure ",PART.MEAS.NAMES[measure])
 		
 		# if there was several repetitions
 		if(length(perf.list)>1)
@@ -291,7 +291,7 @@ evaluate.corclu.method <- function(graphs, part.folder, algo.name, perf.table, p
 	base.name <- file.path(part.folder,algo.name)
 	partition.file <- paste(base.name,"-membership.txt",sep="")
 	if(!file.exists(partition.file))
-		tlog("..........WARNING: Partition file '",partition.file,"' not found\n",sep="")
+		tlog("..........WARNING: Partition file '",partition.file,"' not found")
 	else
 	{	# load partition
 		partition <- as.matrix(read.table(partition.file))
@@ -323,9 +323,9 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 	neg.base.name <- file.path(part.folder,neg.algo.name)
 	neg.partition.file <- paste(neg.base.name,"-membership.txt",sep="")
 	if(!file.exists(neg.partition.file))
-		tlog("............WARNING: Partition file '",neg.partition.file,"' not found\n",sep="")
+		tlog("............WARNING: Partition file '",neg.partition.file,"' not found")
 	else
-	{	tlog("............Process complementary negative partition\n",sep="")
+	{	tlog("............Process complementary negative partition")
 		# load partition
 		neg.partition <- as.matrix(read.table(neg.partition.file))
 		# record stats
@@ -339,9 +339,9 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 	pos.base.name <- file.path(part.folder,algo.name)
 	pos.partition.file <- paste(pos.base.name,"-membership.txt",sep="")
 	if(!file.exists(pos.partition.file))
-		tlog("............WARNING: Partition file '",pos.partition.file,"' not found\n",sep="")
+		tlog("............WARNING: Partition file '",pos.partition.file,"' not found")
 	else
-	{	tlog("............Process positive partition\n",sep="")
+	{	tlog("............Process positive partition")
 		# load partition
 		pos.partition <- as.matrix(read.table(pos.partition.file))
 		# record stats
@@ -384,13 +384,13 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 		# consider each time period (each individual year as well as the whole term)
 		for(d in 1:length(dates))
 		{	date <- dates[d]
-			tlog("......Process performance measures for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+			tlog("......Process performance measures for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# setup graph subfolder
 			#date.folder <- paste(dom.folder,"/",DATE.STR.T7[date],"/",sep="")
 			#
 			# load all three versions of the graph (but: negative graph, not complementary negative)
-					tlog("......Load all three versions of the graph\n",sep="")
+					tlog("......Load all three versions of the graph")
 			graphs <- retrieve.graphs(score=score.file, thresh, country, group, domain=dom, period=date, comp=TRUE)
 			
 			# init the list used to process the average and plots
@@ -402,7 +402,7 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 			
 			# the process might be repeated several times
 			for(r in 1:repetitions)
-			{	tlog("........Processing iteration ",r,"/",repetitions,"\n",sep="")
+			{	tlog("........Processing iteration ",r,"/",repetitions)
 				# setup iteration folder
 				if(repetitions>1)
 					#r.subfolder <- paste(date.folder,r,"/",sep="")
@@ -418,7 +418,7 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 				
 				# process measures
 				for(algo.name in algo.names)
-				{	tlog("..........Process algorithm ",algo.name,"\n",sep="")
+				{	tlog("..........Process algorithm ",algo.name)
 					
 					# community detection methods
 					if(algo.name %in% COMDET.ALGO.VALUES)
@@ -550,14 +550,14 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 # plot.formats: formats of the plot files.
 #############################################################################################
 evaluate.all.partitions <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
-{	tlog("***************************************************\n")
-	tlog("****** EVALUATING PARTITIONS\n")
-	tlog("***************************************************\n")
+{	tlog("***************************************************")
+	tlog("****** EVALUATING PARTITIONS")
+	tlog("***************************************************")
 	
 	# process performance by political group
-	tlog("..Process performance measures by group","\n",sep="")
+	tlog("..Process performance measures by group")
 	for(group in groups)
-	{	tlog("....Process performance measures for group ",group,"\n",sep="")
+	{	tlog("....Process performance measures for group ",group)
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
@@ -569,9 +569,9 @@ evaluate.all.partitions <- function(mep.details, thresh=NA, score.file, domains,
 	}
 	
 	# process performance by home country
-	tlog("..Process performance measures by country","\n",sep="")
+	tlog("..Process performance measures by country")
 	for(country in countries)
-	{	tlog("....Process performance measures for country ",country,"\n",sep="")
+	{	tlog("....Process performance measures for country ",country)
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)
@@ -584,7 +584,7 @@ evaluate.all.partitions <- function(mep.details, thresh=NA, score.file, domains,
 	
 	# process performance for all data
 	if(everything)
-	{	tlog("..Process performance measures for all data","\n",sep="")
+	{	tlog("..Process performance measures for all data")
 		evaluate.partitions(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 }

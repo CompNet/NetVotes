@@ -23,9 +23,8 @@ source("src/partition-networks/load-membership.R")
 # plot.formats: formats of the plot files.
 #############################################################################################
 apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder, plot.formats)
-{	#tlog("n=",vcount(g), " m=",ecount(g), " d=",graph.density(g), sep="")
-	#tlog(" connected=", is.connected(g,mode="weak"), sep="")
-	#tlog("\n", sep="")
+{	#tlog("n=",vcount(g), " m=",ecount(g), " d=",graph.density(g))
+	#tlog(" connected=", is.connected(g,mode="weak"))
 	
 	# apply the community detection algorithm
 	coms <- NA
@@ -73,7 +72,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 	
 	# record the result
 	if(all(is.na(coms)))
-		tlog("............WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder,"\n")
+		tlog("............WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder)
 	else
 	{	if(is.na(mbrshp))
 			mbrshp <- membership(coms)
@@ -119,7 +118,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 	
 	# the process might be repeated several times
 	for(r in 1:repetitions)
-	{	tlog("........Processing iteration ",r,"/",repetitions,"\n",sep="")
+	{	tlog("........Processing iteration ",r,"/",repetitions)
 		# setup iteration folder
 		#folder <- paste(PARTITIONS.FOLDER,"/",subfolder,sep="")
 		#r.folder <- paste(folder,r,"/",sep="")
@@ -146,7 +145,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# complementary negative graph
 			if(!all(is.na(graphs$neg)))
-			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph\n",sep="")
+			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph")
 				memb <- apply.partitioning.algorithm(graphs$neg, neg.algo.name, part.folder, graph.folder, plot.formats)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=neg.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=neg.att.name, value=memb)
@@ -155,7 +154,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# positive graph
 			if(!all(is.na(graphs$pos)))
-			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph\n",sep="")
+			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph")
 				memb <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder, graph.folder, plot.formats)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=pos.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=pos.att.name, value=memb)
@@ -166,7 +165,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 		# apply all correlation clustering algorithms
 		for(algo.name in corclu.algos)
 		{	if(!all(is.na(graphs$signed)))
-			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the signed graph\n",sep="")
+			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the signed graph")
 				memb <- apply.partitioning.algorithm(graphs$signed, algo.name, part.folder, graph.folder, plot.formats)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=att.name, value=memb)
@@ -217,7 +216,7 @@ partition.graphs <- function(thresh=NA, score.file, domains, dates, country, gro
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	tlog("......Detect communities for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+		{	tlog("......Detect communities for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# setup graph subfolder
 			#folder <- paste(subfolder,"/",score.file,
@@ -248,14 +247,14 @@ partition.graphs <- function(thresh=NA, score.file, domains, dates, country, gro
 # plot.formats: formats of the plot files.
 #############################################################################################
 partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
-{	tlog("***************************************************\n")
-	tlog("****** PARTITIONING NETWORKS\n")
-	tlog("***************************************************\n")
+{	tlog("***************************************************")
+	tlog("****** PARTITIONING NETWORKS")
+	tlog("***************************************************")
 	
 	# networks by political group
-	tlog("..Detect communities by group","\n",sep="")
+	tlog("..Detect communities by group")
 	for(group in groups)
-	{	tlog("....Detect communities for group ",group,"\n",sep="")
+	{	tlog("....Detect communities for group ",group)
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
@@ -267,9 +266,9 @@ partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, da
 	}
 	
 	# networks by home country
-	tlog("..Detect communities by country","\n",sep="")
+	tlog("..Detect communities by country")
 	for(country in countries)
-	{	tlog("....Detect communities for country ",country,"\n",sep="")
+	{	tlog("....Detect communities for country ",country)
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)
@@ -282,7 +281,7 @@ partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, da
 
 	# extract networks for all data
 	if(everything)
-	{	tlog("..Detect communities for all data","\n",sep="")
+	{	tlog("..Detect communities for all data")
 		partition.graphs(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
 	}
 }

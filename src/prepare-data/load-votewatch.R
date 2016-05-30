@@ -111,7 +111,7 @@ GROUP.VW2SYMB["S&D"] <- GROUP.SD
 # returns: a table containing the document details.
 #############################################################################################
 vw.clean.doc.details <- function()
-{	tlog("..Retrieving and cleaning the document details\n",sep="")
+{	tlog("..Retrieving and cleaning the document details")
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# if the file already exists, just load it
@@ -156,7 +156,7 @@ vw.clean.doc.details <- function()
 # returns: a table containing the MEPs and their details.
 #############################################################################################
 vw.extract.mep.details <- function()
-{	tlog("..Retrieving the MEPs' details\n",sep="")
+{	tlog("..Retrieving the MEPs' details")
 	
 	# if the file already exists, just load it
 	if(file.exists(MEP.DETAILS.FILE))
@@ -175,7 +175,7 @@ vw.extract.mep.details <- function()
 		# process each one of them
 		f <- 1
 		for(file in file.list)
-		{	tlog("....Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
+		{	tlog("....Processing file ", file, " (",f,"/",length(file.list),")")
 			# read the file
 			path <- file.path(VW.RAW.FOLDER,file)
 			data <- as.matrix(read.csv(path,check.names=FALSE))
@@ -262,7 +262,7 @@ vw.split.name <- function(name)
 # returns: the complete vote matrix.
 #############################################################################################
 vw.concatenate.votes <- function(mep.details)
-{	tlog("..Concatenating all the MEPs' votes\n",sep="")
+{	tlog("..Concatenating all the MEPs' votes")
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# if the file already exists, just load it
@@ -286,7 +286,7 @@ vw.concatenate.votes <- function(mep.details)
 		# process each one of them
 		f <- 1
 		for(file in file.list)
-		{	tlog("....Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
+		{	tlog("....Processing file ", file, " (",f,"/",length(file.list),")")
 			# read the file
 			path <- file.path(VW.RAW.FOLDER,file)
 			data <- as.matrix(read.csv(path,check.names=FALSE))
@@ -317,7 +317,7 @@ vw.concatenate.votes <- function(mep.details)
 # returns: the complete behavior matrix.
 #############################################################################################
 #concatenate.behavior.values <- function(mep.details)
-#{	tlog("Concatenating all the MEPs' behavior values\n",sep="")
+#{	tlog("Concatenating all the MEPs' behavior values")
 #	
 #	# if the file already exists, just load it
 #	if(file.exists(MEP.BEHAVIOR.FILE))
@@ -338,7 +338,7 @@ vw.concatenate.votes <- function(mep.details)
 #		# process each one of them
 #		f <- 1
 #		for(file in file.list)
-#		{	tlog("Processing file ", file, " (",f,"/",length(file.list),")\n",sep="")
+#		{	tlog("Processing file ", file, " (",f,"/",length(file.list),")")
 #			# read the file
 #			path <- file.path(VW.RAW.FOLDER,file)
 #			data <- as.matrix(read.csv2(path,check.names=FALSE))
@@ -367,9 +367,9 @@ vw.concatenate.votes <- function(mep.details)
 # returns: a list containing all the loaded tables.
 #############################################################################################
 load.votewatch.data <- function()
-{	tlog("***************************************************\n")
-	tlog("****** LOAD VW DATA\n")
-	tlog("***************************************************\n")
+{	tlog("***************************************************")
+	tlog("****** LOAD VW DATA")
+	tlog("***************************************************")
 	
 	result <- list()
 	

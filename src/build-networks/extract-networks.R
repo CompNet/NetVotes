@@ -27,7 +27,7 @@ source("src/build-networks/process-network-stats.R")
 # plot.formats: formats of the plot files.
 #############################################################################################
 extract.network <- function(agreement, mep.details, thresh=NA, folder, graph.name, plot.formats)
-{	tlog("......Building network folder='",folder,"'\n",sep="")
+{	tlog("......Building network folder='",folder,"'")
 	
 	# replace NAs by zeros
 	agreement[is.na(agreement)] <- 0
@@ -102,7 +102,7 @@ extract.network <- function(agreement, mep.details, thresh=NA, folder, graph.nam
 	
 	# check if network is empty
 	if(ecount(result)==0)
-		tlog("........WARNING: the signed graph contains no links >> not recorded\n")
+		tlog("........WARNING: the signed graph contains no links >> not recorded")
 	
 	# if not empty (i.e. contains links)
 	else
@@ -117,7 +117,7 @@ V(result)$Lastname <- lastnames
 		V(result)$Group <- mep.details[,COL.GROUP]
 		
 		# plot graph and get spatial positions as nodal attributes
-		tlog("........Plotting network...\n")
+		tlog("........Plotting network...")
 		graph.base <- file.path(folder,SIGNED.FILE)
 		result <- plot.network(g=result, plot.file=graph.base, format=plot.formats)
 		
@@ -158,7 +158,7 @@ V(result)$Lastname <- lastnames
 		write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)								# write proper graph
 		
 		# process network stats
-		tlog("........Processing network stats...\n")
+		tlog("........Processing network stats...")
 		process.network.stats(result, folder)
 	}
 }
@@ -202,7 +202,7 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	tlog("....Extracting network for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+		{	tlog("....Extracting network for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# setup graph title
 			graph.name <- paste(base.graph.name," - domain=",dom," - period=",DATE.STR.T7[date],
@@ -217,7 +217,7 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 			# load agreement index file
 			table.file <- file.path(agr.folder,paste(DATE.STR.T7[date],"-agreement.csv",sep=""))
 			if(!file.exists(table.file))
-				tlog("......WARNING: Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement","\n",sep="")
+				tlog("......WARNING: Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement")
 			else
 			{	# retrieve agreement
 				agreement <- as.matrix(read.csv2(file=table.file, row.names=1))
@@ -245,20 +245,20 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 # plot.formats: formats of the plot files.
 #############################################################################################
 extract.all.networks <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, plot.formats)
-{	tlog("***************************************************\n")
-	tlog("****** EXTRACTING NETWORKS\n")
-	tlog("***************************************************\n")
+{	tlog("***************************************************")
+	tlog("****** EXTRACTING NETWORKS")
+	tlog("***************************************************")
 	
 	# extract networks for all data
 	if(everything)
-	{	tlog("..Extract networks for all data","\n",sep="")
+	{	tlog("..Extract networks for all data")
 		extract.networks(mep.details, thresh, score.file, domains, dates, country=NA, group=NA, plot.formats)
 	}
 	
 	# networks by political group
-	tlog("..Extract networks by group","\n",sep="")
+	tlog("..Extract networks by group")
 	for(group in groups)
-	{	tlog("....Extract networks for group ",group,"\n",sep="")
+	{	tlog("....Extract networks for group ",group)
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.group(mep.details,group)
@@ -270,9 +270,9 @@ extract.all.networks <- function(mep.details, thresh=NA, score.file, domains, da
 	}
 	
 	# networks by home country
-	tlog("..Extract networks by country","\n",sep="")
+	tlog("..Extract networks by country")
 	for(country in countries)
-	{	tlog("....Extract networks for country ",country,"\n",sep="")
+	{	tlog("....Extract networks for country ",country)
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)

@@ -92,7 +92,7 @@ ROW.NAMES <- c()
 #############################################################################################
 process.global.measures <- function(g, g.ref, result, col.name)
 {	if(vcount(g)==0 | ecount(g)==0)
-		tlog("..........WARNING: empty graph (",col.name,") >> cannot process any topological measure.\n",sep="")
+		tlog("..........WARNING: empty graph (",col.name,") >> cannot process any topological measure.")
 	else
 	{	# common processing
 		deg <- degree(g)
@@ -101,26 +101,26 @@ process.global.measures <- function(g, g.ref, result, col.name)
 		str.clean <- graph.strength(g.clean)
 		
 		# numbers of nodes
-		tlog("..........Processing number of nodes\n")
+		tlog("..........Processing number of nodes")
 		result[ROW.NODE.COUNT,col.name] <- vcount(g)
 		result[ROW.ISOLATE.COUNT,col.name] <- length(which(deg==0))
 		result[ROW.ISOLATE.PROP,col.name] <- length(which(deg==0))/vcount(g)
 		
 		# numbers of links
-		tlog("..........Processing number of links\n")
+		tlog("..........Processing number of links")
 		result[ROW.LINK.COUNT,col.name] <- ecount(g)
 		result[ROW.LINK.PROP,col.name] <- ecount(g)/ecount(g.ref)
 			
 		### from now on, we ignore isolates
 		
 		# densities
-		tlog("..........Processing densities\n")
+		tlog("..........Processing densities")
 		result[ROW.DENSITY,col.name] <- graph.density(g.clean)
 		result[ROW.TRANSITIVITY.GLOBAL,col.name] <- transitivity(g.clean, type="globalundirected")
 		result[ROW.TRANSITIVITY.LOCAL,col.name] <- transitivity(g.clean, type="localaverageundirected")
 		
 		# components
-		tlog("..........Processing components\n")
+		tlog("..........Processing components")
 		tmp <- clusters(g.clean)
 		#print(g.clean)		
 		#print(tmp)		
@@ -129,12 +129,12 @@ process.global.measures <- function(g, g.ref, result, col.name)
 		result[ROW.COMPONENT.PROP,col.name] <- max(tmp$csize) / vcount(g.clean)
 		
 #		# connectivity
-#		tlog("..........Processing connectivity\n")
+#		tlog("..........Processing connectivity")
 #		result[ROW.CONNECTIVITY.LINK,col.name] <- graph.adhesion(g.clean,checks=FALSE)
 #		result[ROW.CONNECTIVITY.NODE,col.name] <- graph.cohesion(g.clean,checks=FALSE)
 		
 		# degree
-		tlog("..........Processing degree\n")
+		tlog("..........Processing degree")
 		result[ROW.DEGREE.AVERAGE,col.name] <- mean(deg.clean)
 		result[ROW.DEGREE.STDEV,col.name] <- sd(deg.clean)
 		result[ROW.DEGREE.MIN,col.name] <- min(deg.clean)
@@ -142,7 +142,7 @@ process.global.measures <- function(g, g.ref, result, col.name)
 		result[ROW.DEGREE.CORRELATION,col.name] <- assortativity.degree(g.clean)
 		
 		# strength
-		tlog("..........Processing strength\n")
+		tlog("..........Processing strength")
 		result[ROW.STRENGTH.AVERAGE,col.name] <- mean(str.clean)
 		result[ROW.STRENGTH.STDEV,col.name] <- sd(str.clean)
 		result[ROW.STRENGTH.MIN,col.name] <- min(str.clean)

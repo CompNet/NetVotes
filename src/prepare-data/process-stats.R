@@ -20,7 +20,7 @@ source("src/prepare-data/filter-data.R")
 # plot.formats: formats of the plot files.
 #############################################################################################
 process.domain.frequencies <- function(doc.details, plot.formats)
-{	tlog("..Processing the frequencies of documents by policy domain\n",sep="")
+{	tlog("..Processing the frequencies of documents by policy domain")
 	
 	# set folder up
 	dir.create(DOMAINS.FOLDER, recursive=TRUE, showWarnings=FALSE)
@@ -63,7 +63,7 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 	# process the list of documents by year
 	docs <- list()
 	for(date in DATE.T7.YEARS)
-	{	tlog("....Processing period ",DATE.STR.T7[date],"\n",sep="")
+	{	tlog("....Processing period ",DATE.STR.T7[date])
 		
 		# retain only the documents related to the selected dates
 		docids <- filter.docs.by.date(doc.details, 
@@ -152,7 +152,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 #		for(dom in domains)
 		foreach(dom=domains) %dopar% 
 		{	source("src/define-imports.R")
-			tlog("........Processing ",file.prefix," data for domain ",dom," and period ",DATE.STR.T7[date],"\n",sep="")
+			tlog("........Processing ",file.prefix," data for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# retain only the documents related to the selected topic and dates
 			if(dom==DOMAIN.ALL)
@@ -164,7 +164,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 				domains=domval)
 			idx <- match(filtered.doc.ids,doc.details[,COL.DOCID])
 			if(length(idx)<=1)
-				tlog("........WARNING: Only ",length(idx)," documents remaining after filtering >> not processing these data\n",sep="")
+				tlog("........WARNING: Only ",length(idx)," documents remaining after filtering >> not processing these data")
 			else
 			{	# order the votes by date
 				filtered.doc.details <- doc.details[idx,]
@@ -177,7 +177,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 				active.idx <- which(apply(all.votes[,cols],1,function(v) !all(is.na(v))))
 				# convert to list of column-vectors
 				if(length(active.idx)==0)
-					tlog("........WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+					tlog("........WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data")
 				else
 				{	votes.temp <- all.votes[active.idx,cols]
 					votes <- split(votes.temp, rep(1:ncol(votes.temp), each=nrow(votes.temp)))
@@ -284,13 +284,13 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 #	for(dom in domains)
 	foreach(dom=domains) %dopar% 
 	{	source("src/define-imports.R")
-		tlog("........Processing ",file.prefix," data for domain ",dom,"\n",sep="")
+		tlog("........Processing ",file.prefix," data for domain ",dom)
 		
 		# consider each time period (each individual year as well as the whole term)
 		votes <- list()
 		votes.spe <- list()
 		for(date in dates)
-		{	tlog("..........Processing period ",DATE.STR.T7[date],"\n",sep="")
+		{	tlog("..........Processing period ",DATE.STR.T7[date])
 			
 			# retain only the documents related to the selected topic and dates
 			if(dom==DOMAIN.ALL)
@@ -316,16 +316,16 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 			}
 			else
 			{	votes[[date]] <- NA
-				tlog("..........WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")
+				tlog("..........WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data")
 			}
 		}
 		
 		# term-wise
 		if(length(votes.spe)>0)
 		{	if(all(is.na(votes.spe)))
-				tlog("..........WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+				tlog("..........WARNING: All votes are NAs (this can be correct, not necessarily a problem) >> not processing these data")
 			else if(all(unlist(votes.spe[!is.na(unlist(votes.spe))])==0))
-				tlog("..........WARNING: All votes are 0s (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+				tlog("..........WARNING: All votes are 0s (this can be correct, not necessarily a problem) >> not processing these data")
 			else
 			{	# setup folder
 				#folder <- paste(main.folder,dom,"/aggregated/",sep="")
@@ -371,9 +371,9 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 		# by year
 		if(do.yearly)
 		{	if(all(is.na(votes)))
-				tlog("..........WARNING: All yearly values are NAs (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+				tlog("..........WARNING: All yearly values are NAs (this can be correct, not necessarily a problem) >> not processing these data")
 			else if(all(unlist(votes)[!is.na(unlist(votes))]==0))
-				tlog("..........WARNING: All yearly values are 0s (this can be correct, not necessarily a problem) >> not processing these data\n",sep="")
+				tlog("..........WARNING: All yearly values are 0s (this can be correct, not necessarily a problem) >> not processing these data")
 			else
 			{	# setup folder
 				#folder <- paste(main.folder,dom,"/aggregated/",sep="")
@@ -462,11 +462,11 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 #	for(dom in domains)
 	foreach(dom=domains) %dopar% 
 	{	source("src/define-imports.R")
-		tlog("........Processing ",file.prefix," data for domain ",dom,"\n",sep="")
+		tlog("........Processing ",file.prefix," data for domain ",dom)
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	tlog("..........Processing period ",DATE.STR.T7[date],"\n",sep="")
+		{	tlog("..........Processing period ",DATE.STR.T7[date])
 			
 			# setup folder
 			#folder <- paste(main.folder,dom,"/averaged/",sep="")
@@ -518,10 +518,10 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 					write.csv2(data,file=table.file, row.names=FALSE)
 				}
 				else
-					tlog("..........WARNING: Only ",length(active.idx)," active MEPs after filtering >> not processing these data\n",sep="")
+					tlog("..........WARNING: Only ",length(active.idx)," active MEPs after filtering >> not processing these data")
 			}
 			else
-				tlog("..........WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data\n",sep="")
+				tlog("..........WARNING: Only ",length(filtered.doc.ids)," documents remaining after filtering >> not processing these data")
 		}
 	}
 }
@@ -551,15 +551,15 @@ process.vote.distribution <- function(all.votes, doc.details, domains, dates, co
 	colors.label <- "Votes"
 	
 	# process complete vote distributions
-	tlog("......Plotting complete vote value distributions (raw votes)\n",sep="")
+	tlog("......Plotting complete vote value distributions (raw votes)")
 	process.vote.distribution.complete(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
-	tlog("......Plotting complete vote value distributions (simplified votes)\n",sep="")
+	tlog("......Plotting complete vote value distributions (simplified votes)")
 	process.vote.distribution.complete(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
 	
 	# process aggregated vote distributions
-	tlog("......Plotting aggregated vote values distributions (raw votes)\n",sep="")
+	tlog("......Plotting aggregated vote values distributions (raw votes)")
 	process.vote.distribution.aggregate(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
-	tlog("......Plotting aggregated vote values distributions (simplified votes)\n",sep="")
+	tlog("......Plotting aggregated vote values distributions (simplified votes)")
 	process.vote.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
 }
 
@@ -579,15 +579,15 @@ process.vote.distribution <- function(all.votes, doc.details, domains, dates, co
 #############################################################################################
 process.behavior.stats <- function(behavior.values, doc.details, domains, dates, country, group, plot.formats)
 {	# process complete behavior distributions
-	tlog("......Plotting complete behavior distributions","\n",sep="")
+	tlog("......Plotting complete behavior distributions")
 	process.vote.distribution.complete(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode=FALSE)
 	
 	# process aggregated behavior distributions
-	tlog("......Plotting aggregated behavior distributions","\n",sep="")
+	tlog("......Plotting aggregated behavior distributions")
 	process.vote.distribution.aggregate(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode=FALSE)
 	
 	# processed average behavior distributions
-	tlog("......Plotting average behavior distributions","\n",sep="")
+	tlog("......Plotting average behavior distributions")
 	process.vote.distribution.average(all.votes=behavior.values, doc.details, target=BEHAVIOR.LOYAL, file.prefix=NA, object="loyalty index", domains, dates, country, group, plot.formats, vote.mode=FALSE)
 }
 
@@ -608,17 +608,17 @@ process.behavior.stats <- function(behavior.values, doc.details, domains, dates,
 # plot.formats: formats of the plot files.
 #############################################################################################
 process.stats <- function(all.votes, behavior.values, doc.details, mep.details, domains, dates, everything, countries, groups, plot.formats)
-{	tlog("***************************************************\n")
-	tlog("****** PROCESSING STATS\n")
-	tlog("***************************************************\n")
+{	tlog("***************************************************")
+	tlog("****** PROCESSING STATS")
+	tlog("***************************************************")
 	
 	# domain stats
 	process.domain.frequencies(doc.details, plot.formats)
 	
 	# stats by political group
-	tlog("..Process stats by group","\n",sep="")
+	tlog("..Process stats by group")
 	for(group in groups)
-	{	tlog("....Process stats for group ",group,"\n",sep="")
+	{	tlog("....Process stats for group ",group)
 		
 		# select data
 		mepids <- filter.meps.by.group(mep.details,group)
@@ -633,10 +633,10 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	}
 	
 	# stats by home country
-	tlog("..Process stats by country","\n",sep="")
+	tlog("..Process stats by country")
 	for(country in countries)
 	#country <- COUNTRY.HR
-	{	tlog("....Process stats for country ",country,"\n",sep="")
+	{	tlog("....Process stats for country ",country)
 		
 		# select data
 		mepids <- filter.meps.by.country(mep.details,country)
@@ -652,7 +652,7 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	
 	# process stats for all data
 	if(everything)
-	{	tlog("..Process stats for all data","\n",sep="")
+	{	tlog("..Process stats for all data")
 		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
 		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
 	}

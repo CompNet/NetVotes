@@ -17,6 +17,7 @@
 # 09/2015 Vincent Labatut (v2)
 #
 # setwd("D:/Eclipse/workspaces/Networks/NetVotes")
+# setwd("~/eclipse/workspaces/Networks/NetVotes")
 # source("src/main.R")
 #############################################################################################
 # libraries for parallel processing

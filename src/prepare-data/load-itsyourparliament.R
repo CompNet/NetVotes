@@ -146,7 +146,7 @@ iyp.check.date <- function(periods, date)
 			rest <- substr(rest,24,nchar(rest))
 		else
 			rest <- ""
-		#tlog("Period: ",period," rest=",rest,"\n",sep="")
+		#tlog("Period: ",period," rest=",rest)
 		
 		# get the dates
 		start.date.str <- substr(period,1,10)
@@ -175,7 +175,7 @@ iyp.check.date <- function(periods, date)
 # returns: string vector representing the MEP details.
 #############################################################################################
 iyp.extract.mep.details <- function(mep.id)
-{	tlog("....Processing MEP ",mep.id,"\n",sep="")
+{	tlog("....Processing MEP ",mep.id)
 	result <- c()
 	
 	# retrieve XML document
@@ -258,7 +258,7 @@ iyp.extract.mep.details <- function(mep.id)
 # returns: string array representing the MEP details.
 #############################################################################################
 iyp.extract.meps.details <- function()
-{	tlog("..Retrieving the MEPs details\n",sep="")
+{	tlog("..Retrieving the MEPs details")
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# if the file already exists, just load it
@@ -320,7 +320,7 @@ iyp.extract.meps.details <- function()
 # returns: vector of vote ids.
 #############################################################################################
 iyp.extract.domain <- function(domain.id)
-{	tlog("....Processing domain ",domain.id,"\n",sep="")
+{	tlog("....Processing domain ",domain.id)
 	
 	# retrieve XML document
 	file <- file.path(IYP.DOMAINS.FOLDER,paste(domain.id,".xml",sep=""))
@@ -348,7 +348,7 @@ iyp.extract.domain <- function(domain.id)
 # returns: a vector associating a vote id to the corresponding policy domain.
 #############################################################################################
 iyp.extract.domains <- function()
-{	tlog("..Retrieving the domain details\n",sep="")
+{	tlog("..Retrieving the domain details")
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
 	# if the file already exists, just load it
@@ -445,13 +445,12 @@ iyp.extract.vote <- function(vote.id)
 	
 	# id of the policy domain
 	dom.id <- str_trim(xml[[IYP.ELT.POLICY.AREA]])
-tlog("'",dom.id,"'",sep="")
 #	if(!is.na(dom.id) & dom.id=="")
 #		dom.id <- DOMAIN.AUTR
 #	else
 		dom.id <- DOMAIN.IYP2SYMB[dom.id]
 	details[COL.DOMID] <- dom.id
-tlog(" >> ",dom.id,"\n",sep="")
+tlog("'",dom.id,"' >> ",dom.id)
 	
 	# document reference
 	doc.ref <- str_trim(xml[[IYP.ELT.DOC.REF]])
@@ -508,7 +507,7 @@ tlog(" >> ",dom.id,"\n",sep="")
 # returns: a list containing the document details (doc.details) annd the vote values (all.votes).
 #############################################################################################
 iyp.extract.votes <- function(doc.domains, mep.details)
-{	tlog("..Extract vote-related data\n",sep="")
+{	tlog("..Extract vote-related data")
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	result <- list()
 	
@@ -555,7 +554,7 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		# fill both matrices
 #vote.ids <- vote.ids[vote.ids>=7065]		
 		for(i in 1:length(vote.ids))
-		{	tlog("....Processing vote ",vote.ids[i]," (",i,"/",length(vote.ids),")\n",sep="")
+		{	tlog("....Processing vote ",vote.ids[i]," (",i,"/",length(vote.ids),")")
 			
 			temp <- iyp.extract.vote(vote.ids[i])
 			# update details matrix
@@ -566,15 +565,15 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 			#if(is.na(temp$details[COL.DOMID]))
 			#	temp$details[COL.DOMID] <- doc.domains[i,COL.DOMID]
 			#else if(temp$details[COL.DOMID]!=doc.domains[i,COL.DOMID])
-			#	tlog("WARNING: domain is different in vote (",temp$details[COL.DOMID],") and domain (",doc.domains[i,COL.DOMID],") files\n",sep="")
+			#	tlog("WARNING: domain is different in vote (",temp$details[COL.DOMID],") and domain (",doc.domains[i,COL.DOMID],") files")
 			if(!is.na(doc.domains[i,COL.DOMID]))
 			{	if(is.na(temp$details[COL.DOMID]))
 					temp$details[COL.DOMID] <- doc.domains[i,COL.DOMID]
 				else if(temp$details[COL.DOMID]!=doc.domains[i,COL.DOMID])
-					tlog("....WARNING: domain is different in vote (",temp$details[COL.DOMID],") and domain (",doc.domains[i,COL.DOMID],") files\n",sep="")
+					tlog("....WARNING: domain is different in vote (",temp$details[COL.DOMID],") and domain (",doc.domains[i,COL.DOMID],") files")
 			}
 			else if(is.na(temp$details[COL.DOMID]))
-				tlog("....WARNING: both domains in vote and domain table are missing\n",sep="")
+				tlog("....WARNING: both domains in vote and domain table are missing")
 			details.mat[i,details.cols] <- temp$details[details.cols]
 			
 			# update vote matrix
@@ -610,9 +609,9 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 # returns: a list containing all the loaded tables.
 #############################################################################################
 load.itsyourparliament.data <- function()
-{	tlog("***************************************************\n")
-	tlog("****** LOAD IYP DATA\n")
-	tlog("***************************************************\n")
+{	tlog("***************************************************")
+	tlog("****** LOAD IYP DATA")
+	tlog("***************************************************")
 	
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	

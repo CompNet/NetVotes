@@ -28,7 +28,7 @@ retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
 	graph.file <- file.path(folder,paste(SIGNED.FILE,".graphml",sep=""))
 	g <- NA
 	if(!file.exists(graph.file))
-		tlog("........WARNING: Graph file ",graph.file," not found\n",sep="")
+		tlog("........WARNING: Graph file ",graph.file," not found")
 	else
 		g <- suppressWarnings(read.graph(file=graph.file, format="graphml"))
 	
@@ -36,7 +36,7 @@ retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
 	graph.file.pos <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
 	g.pos <- NA
 	if(!file.exists(graph.file.pos))
-		tlog("........WARNING: Graph file ",graph.file.pos," not found\n",sep="")
+		tlog("........WARNING: Graph file ",graph.file.pos," not found")
 	else
 		g.pos <- suppressWarnings(read.graph(file=graph.file.pos, format="graphml"))
 	
@@ -45,7 +45,7 @@ retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
 		graph.file.neg <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
 		g.neg <- NA
 		if(!file.exists(graph.file.neg))
-			tlog("........WARNING: Graph file ",graph.file.neg," not found\n",sep="")
+			tlog("........WARNING: Graph file ",graph.file.neg," not found")
 		else
 			g.neg <- suppressWarnings(read.graph(file=graph.file.neg, format="graphml"))
 	}
