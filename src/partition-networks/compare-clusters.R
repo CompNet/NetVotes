@@ -13,6 +13,7 @@ source("src/partition-networks/networks-common.R")
 # partition1: first partition.
 # partition2: second partition.
 # measures: vector of measure names: c("vi", "nmi", "split.join", "rand", "adjusted.rand").
+#
 # returns: vector of values corresponding to each specified measures.
 #############################################################################################
 compare.partition.pair <- function(partition1, partition2, measures="nmi")

@@ -13,6 +13,7 @@ source("src/define-constants.R")
 #
 # file.name: the path and name of the file to load.
 # algo.name: code representing the concerned (external) partitioning algorithm.
+#
 # returns: the corresponding partition as a membership vector.
 #############################################################################################
 load.external.partition <- function(file.name, algo.name)
@@ -31,6 +32,7 @@ load.external.partition <- function(file.name, algo.name)
 # Loads the partition estimated by the pILS tool.
 # 
 # file.name: the path and name of the file to load.
+#
 # returns: the corresponding partition as a membership vector.
 #############################################################################################
 load.pils.partition <- function(file.name, algo.name)

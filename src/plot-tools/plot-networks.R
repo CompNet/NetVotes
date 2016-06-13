@@ -13,6 +13,7 @@ library("igraph")
 # g: signed graph to plot.
 # plot.file: base name (and path) of the generated files.
 # format: format(s) to handle.
+#
 # returns: the same graph, with the spatial positions stored as nodal attributes x and y.
 #############################################################################################
 plot.network <- function(g, membership=NA, plot.file, format=c("PDF","PNG",NA))

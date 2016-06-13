@@ -88,6 +88,7 @@ ROW.NAMES <- c()
 # g.ref: reference graph (the signed graph).
 # result: the table which will be completed by this function.
 # col.name: name of the column corresponding to g, in the result table.
+#
 # returns: the modified table.
 #############################################################################################
 process.global.measures <- function(g, g.ref, result, col.name)
@@ -163,6 +164,7 @@ process.global.measures <- function(g, g.ref, result, col.name)
 #
 # g: the graphe to process.
 # folder: folder in which to place the produced files.
+#
 # returns: the property table.
 #############################################################################################
 process.network.stats <- function(g, folder)

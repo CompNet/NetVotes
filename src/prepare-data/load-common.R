@@ -13,6 +13,7 @@ source("src/define-constants.R")
 # 
 # all.votes: the complete vote matrix, as created by the function concatenate.votes.
 # mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
+#
 # returns: a matrix describing the political line of each group for each vote.
 #############################################################################################
 extract.group.lines <- function(all.votes, mep.details)
@@ -142,6 +143,7 @@ process.behavior.values <- function(all.votes, mep.details, group.lines)
 # 
 # str1: first string.
 # str2: second string.
+#
 # returns: position of the first pair of different characters.
 #############################################################################################
 #comp.chr <- function(str1, str2)

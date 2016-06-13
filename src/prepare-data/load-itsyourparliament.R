@@ -126,6 +126,7 @@ GROUP.IYP2SYMB["SD"] <- GROUP.SD
 #
 # periods: string representing a list of temporal period, using the above format.
 # date: date of interest (a date object, not a string)
+#
 # returns: TRUE iff the date belongs to at list one period.
 #############################################################################################
 iyp.check.date <- function(periods, date)
@@ -172,6 +173,7 @@ iyp.check.date <- function(periods, date)
 # vector of strings.
 #
 # mep.id: ID of the MEP (in IYP).
+#
 # returns: string vector representing the MEP details.
 #############################################################################################
 iyp.extract.mep.details <- function(mep.id)
@@ -317,6 +319,7 @@ iyp.extract.meps.details <- function()
 # vector of vote ids.
 #
 # domain.id: ID of the domain (in IYP).
+#
 # returns: vector of vote ids.
 #############################################################################################
 iyp.extract.domain <- function(domain.id)
@@ -418,6 +421,7 @@ iyp.extract.domains <- function()
 # details and MEP vote values.
 #
 # vote.id: ID of the vote (in IYP).
+#
 # returns: a list containing the vote information (details) and the MEP vote values (votes).
 #############################################################################################
 iyp.extract.vote <- function(vote.id)

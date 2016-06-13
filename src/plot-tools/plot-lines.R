@@ -142,6 +142,7 @@ plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TR
 #
 # axes: same as in the plot.lines function.
 # series: same as in the plot.lines function.
+#
 # returns: a list containing updated variables.
 #############################################################################################
 clean.symbolic.data <- function(axes, series)
@@ -188,6 +189,7 @@ clean.symbolic.data <- function(axes, series)
 #
 # axes: same as in the plot.lines function.
 # series: same as in the plot.lines function.
+#
 # returns: an updated axes list.
 #############################################################################################
 init.x.range <- function(axes, series)
@@ -213,6 +215,7 @@ init.x.range <- function(axes, series)
 # axes: same as in the plot.lines function.
 # series: same as in the plot.lines function.
 # consider.stdev: same as in the plot.lines function.
+#
 # returns: an updated axes list.
 #############################################################################################
 init.y.range <- function(axes, series, consider.stdev)
@@ -244,6 +247,7 @@ init.y.range <- function(axes, series, consider.stdev)
 # Determines where the legend should go in a plot. More precisely: which quadrant of the plot.
 # 
 # series: same as in the plot.lines function.
+#
 # returns: position of the legend.
 #############################################################################################
 determine.legend.position <- function(series, axes)
