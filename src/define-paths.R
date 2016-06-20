@@ -14,6 +14,7 @@
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
 # period: considered time period.
+#
 # returns: the appropriate path for a files in the "votes" or "behavior" folders.
 #############################################################################################
 get.votes.path <- function(vote, country=NA, group=NA, domain, period)
@@ -51,6 +52,7 @@ get.votes.path <- function(vote, country=NA, group=NA, domain, period)
 # country: considered member state (optional).
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
+#
 # returns: the appropriate path for a files in the "votes" folder.
 #############################################################################################
 get.agreement.path <- function(score, country=NA, group=NA, domain)
@@ -84,6 +86,7 @@ get.agreement.path <- function(score, country=NA, group=NA, domain)
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
 # period: considered time period.
+#
 # returns: the appropriate path for a files in the "networks" folder.
 #############################################################################################
 get.networks.path <- function(score, thresh=NA, country=NA, group=NA, domain, period)
@@ -125,6 +128,7 @@ get.networks.path <- function(score, thresh=NA, country=NA, group=NA, domain, pe
 # domain: considered domain of activity (compulsory).
 # period: considered time period (optional).
 # repetition: repetition number for the partitioning algorithm (NA for no repetition at all).
+#
 # returns: the appropriate path for a files in the "networks" folder.
 #############################################################################################
 get.partitions.path <- function(score, thresh=NA, country=NA, group=NA, domain, period=NA, repetition=NA)

@@ -19,8 +19,9 @@ source("src/partition-networks/load-membership.R")
 # algo.name: (normalized) name of the community detection algorithm.
 # part.folder: folder in which to write the result (partition) files.
 # graph.folder: folder of the processed network (for external tools).
-# returns: membership vector, i.e. cluster/community number for each node.
 # plot.formats: formats of the plot files.
+#
+# returns: membership vector, i.e. cluster/community number for each node.
 #############################################################################################
 apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder, plot.formats)
 {	#tlog("n=",vcount(g), " m=",ecount(g), " d=",graph.density(g))

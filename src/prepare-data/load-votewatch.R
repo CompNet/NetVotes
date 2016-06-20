@@ -227,6 +227,7 @@ vw.extract.mep.details <- function()
 # the firstname(s) and lastname(s).
 # 
 # name: a string containing both firstname(s) and lastname(s).
+#
 # returns: a vector whose first element is the firstname(s) and second is the lastname(s).
 #############################################################################################
 vw.split.name <- function(name)
@@ -259,6 +260,7 @@ vw.split.name <- function(name)
 # a single, more convenient matrix.
 #
 # mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
+#
 # returns: the complete vote matrix.
 #############################################################################################
 vw.concatenate.votes <- function(mep.details)
@@ -314,6 +316,7 @@ vw.concatenate.votes <- function(mep.details)
 # a single, more convenient matrix.
 #
 # mep.details: details describing the MEPs, as loaded by the function extract.mep.details.
+#
 # returns: the complete behavior matrix.
 #############################################################################################
 #concatenate.behavior.values <- function(mep.details)

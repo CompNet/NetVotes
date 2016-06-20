@@ -13,6 +13,7 @@ library("scales")
 # Adds missing values to a list reprenting plot axes.
 #
 # axes: same as in the plot.lines function.
+#
 # returns: an updated axes list, with all necessary vectors and possibly NA values.
 #############################################################################################
 complete.axes <- function(axes)
@@ -36,6 +37,7 @@ complete.axes <- function(axes)
 # vectors of values.
 #
 # series: same as in the plot.lines function.
+#
 # returns: a list containing updated variables.
 #############################################################################################
 clean.numerical.data <- function(series)
@@ -55,6 +57,7 @@ clean.numerical.data <- function(series)
 # vector of values.
 #
 # values: vector of numerical values.
+#
 # returns: an updated vector.
 #############################################################################################
 clean.numerical.data.sec <- function(values)

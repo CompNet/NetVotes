@@ -31,6 +31,8 @@ IYP.FOLDER <- file.path(IN.FOLDER,"itsyourparliament")
 IYP.DOMAIN.LIST.FILE <- file.path(IYP.DOMAINS.FOLDER,"_domains.xml")
 # Activity periods associated to the MEPs
 IYP.MEP.PERIODS.FILE <- file.path(IYP.MEPS.FOLDER,"_mep-periods.csv")
+# Duplicate MEPs (IYT contains certain MEPs twice, we need to merge them)
+IYP.MEP.DUPLICATES.FILE <- file.path(IYP.MEPS.FOLDER,"_duplicates.csv")
 
 
 #############################################################################################
@@ -76,8 +78,6 @@ DOMAIN.IYP2SYMB["Budgets"] <- DOMAIN.BUDG
 DOMAIN.IYP2SYMB["Budgetary Control"] <- DOMAIN.CONT
 DOMAIN.IYP2SYMB["Culture and Education"] <- DOMAIN.CULT
 DOMAIN.IYP2SYMB["Development"] <- DOMAIN.DEVE
-DOMAIN.IYP2SYMB["Women\\'s Rights and Gender Equality"] <- DOMAIN.FEMM
-DOMAIN.IYP2SYMB["Women’s Rights and Gender Equality"] <- DOMAIN.FEMM
 DOMAIN.IYP2SYMB["Women's Rights and Gender Equality"] <- DOMAIN.FEMM
 DOMAIN.IYP2SYMB["Economic and Monetary Affairs"] <- DOMAIN.ECON
 DOMAIN.IYP2SYMB["Employment and Social Affairs"] <- DOMAIN.EMPL
@@ -126,6 +126,7 @@ GROUP.IYP2SYMB["SD"] <- GROUP.SD
 #
 # periods: string representing a list of temporal period, using the above format.
 # date: date of interest (a date object, not a string)
+#
 # returns: TRUE iff the date belongs to at list one period.
 #############################################################################################
 iyp.check.date <- function(periods, date)
@@ -172,6 +173,7 @@ iyp.check.date <- function(periods, date)
 # vector of strings.
 #
 # mep.id: ID of the MEP (in IYP).
+#
 # returns: string vector representing the MEP details.
 #############################################################################################
 iyp.extract.mep.details <- function(mep.id)
@@ -255,9 +257,12 @@ iyp.extract.mep.details <- function(mep.id)
 # string table. Also adds some information retrieved from Europarl, the official European
 # Parliament website.
 #
+# duplicate.meps: matrix describing the duplicate MEPs (id of the original on the 1st column
+#				  id of the copy on the 2nd one).
+#
 # returns: string array representing the MEP details.
 #############################################################################################
-iyp.extract.meps.details <- function()
+iyp.extract.meps.details <- function(duplicate.meps)
 {	tlog("..Retrieving the MEPs details")
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	
@@ -278,17 +283,52 @@ iyp.extract.meps.details <- function()
 			mep.ids <- c(mep.ids,substr(file,1,str_locate(file,".xml")-1))
 		mep.ids <- sort(as.integer(mep.ids))
 		
+		duplicate.meps <- cbind(duplicate.meps, rep(NA,nrow(duplicate.meps)))
+		
 		# build the matrix
 		cols <- c(COL.MEPID, COL.LASTNAME, COL.FIRSTNAME,
 			COL.FULLNAME, COL.STATE, COL.GROUP, COL.TITLE,
 			COL.PARTY, COL.BIRTHDATE, COL.BIRTHPLACE, COL.EP.ID,
 			IYP.ELT.MEPID, COL.PERIODS)
-		result <- matrix(NA,nrow=length(mep.ids),ncol=length(cols))
+		result <- matrix(NA,nrow=length(mep.ids)-nrow(duplicate.meps),ncol=length(cols))
 		colnames(result) <- cols
+		idx <- 1
 		for(i in 1:length(mep.ids))
-		{	data <- iyp.extract.mep.details(mep.ids[i])
-			data[COL.MEPID] <- i
-			result[i,cols] <- data[cols]
+		{	# get the MEP data
+			data <- iyp.extract.mep.details(mep.ids[i])
+			# if second occurrence of a duplicate
+			if(mep.ids[i] %in% duplicate.meps[,2])
+			{	r <- which(duplicate.meps[,2]==mep.ids[i])
+				tlog("Duplicate detected: ",mep.ids[i]," vs. ",duplicate.meps[r,1])
+				for(c in colnames(result))
+				{	if(is.na(result[duplicate.meps[r,3],c]))
+					{	if(is.na(data[c]))
+							tlog(c,": both fields are NA >> no change")
+						else
+						{	result[duplicate.meps[r,3],c] <- data[c]
+							tlog(c,": NA vs. ",data[c]," >> ",data[c])
+						}
+					}
+					else
+					{	if(is.na(data[c]))
+							tlog(c,": ",result[duplicate.meps[r,3],c]," vs. NA >> no change")
+						else
+							tlog(c,": ",result[duplicate.meps[r,3],c]," vs. ",data[c]," >> no change")
+					}
+				}
+			}
+			# otherwise
+			else
+			{	# if first occurrence of a duplicate
+				if(mep.ids[i] %in% duplicate.meps[,1])
+				{	r <- which(duplicate.meps[,1]==mep.ids[i])
+					duplicate.meps[r,3] <- idx
+				}
+				# and in any case
+				data[COL.MEPID] <- idx
+				result[idx,cols] <- data[cols]
+				idx <- idx + 1
+			}
 		}
 		
 		# retrieve the official list of MEPs activity periods
@@ -317,6 +357,7 @@ iyp.extract.meps.details <- function()
 # vector of vote ids.
 #
 # domain.id: ID of the domain (in IYP).
+#
 # returns: vector of vote ids.
 #############################################################################################
 iyp.extract.domain <- function(domain.id)
@@ -418,14 +459,18 @@ iyp.extract.domains <- function()
 # details and MEP vote values.
 #
 # vote.id: ID of the vote (in IYP).
+# duplicate.meps: matrix describing the duplicate MEPs (id of the original on the 1st column
+#				  id of the copy on the 2nd one).
+#
 # returns: a list containing the vote information (details) and the MEP vote values (votes).
 #############################################################################################
-iyp.extract.vote <- function(vote.id)
+iyp.extract.vote <- function(vote.id, duplicate.meps)
 {	# retrieve XML document
 	file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
 	doc <- readLines(file)
 	xml.data <- xmlParse(doc)
 	xml <- xmlToList(xml.data)
+#	print(xml)	
 	
 	# extract vote information
 	details <- c()
@@ -482,7 +527,25 @@ tlog("'",dom.id,"' >> ",dom.id)
 	{	v <- xml[[IYP.ELT.VOTES]][[i]]
 		mep.id <- str_trim(v[[IYP.ELT.MEPID]])
 		vote.value <- VOTE.IYP2SYMB[str_trim(v[[IYP.ELT.MEP.VOTE]])]
-		votes[as.character(mep.id)] <- vote.value
+		r <- which(duplicate.meps[,2]==as.integer(mep.id))
+		# not a duplicate MEP, or first occurrence of a duplicate
+		if(length(r)==0)
+			votes[as.character(mep.id)] <- vote.value
+		# second occurrence of a duplicate MEP
+		else
+		{	if(!is.na(vote.value))
+			{	fst <- as.character(duplicate.meps[r,1])
+				if(length(votes[fst])==0)
+					votes[fst] <- vote.value
+				else if(is.na(votes[fst]))
+					votes[fst] <- vote.value
+				else
+				{	tlog("Problem: conflicting votes when merging duplicate MEPs (",fst,"vs. ",mep.id,"): ",votes[fst]," vs. ",vote.value)
+					votes[fst] <- vote.value
+				}
+			}
+			
+		}
 	}
 	
 	# process vote total result
@@ -504,9 +567,14 @@ tlog("'",dom.id,"' >> ",dom.id)
 # Read the XML files corresponding to all the vote ids, and returns the corresponding
 # vote data, as two tables: document details and vote values.
 #
+# doc.domains: table containing the domains of the voted documents.
+# mep.details: table with the information descriving the MEPs.
+# duplicate.meps: matrix describing the duplicate MEPs (id of the original on the 1st column
+#				  id of the copy on the 2nd one).
+#
 # returns: a list containing the document details (doc.details) annd the vote values (all.votes).
 #############################################################################################
-iyp.extract.votes <- function(doc.domains, mep.details)
+iyp.extract.votes <- function(doc.domains, mep.details, duplicate.meps)
 {	tlog("..Extract vote-related data")
 	dir.create(OVERALL.FOLDER, recursive=TRUE, showWarnings=FALSE)
 	result <- list()
@@ -538,7 +606,7 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		colnames(doc.domains) <- c(IYP.ELT.VOTEID, COL.DOMID)
 		idx <- match(doc.domains0[,IYP.ELT.VOTEID],vote.ids)
 		doc.domains[idx,] <- doc.domains0
-		print(doc.domains)
+#		print(doc.domains)
 		
 		# build details matrix
 		details.cols <- c(COL.DOCID, IYP.ELT.VOTEID,
@@ -552,11 +620,13 @@ iyp.extract.votes <- function(doc.domains, mep.details)
 		colnames(votes.mat) <- 1:length(vote.ids)
 		
 		# fill both matrices
-#vote.ids <- vote.ids[vote.ids>=7065]		
+#vote.ids <- vote.ids[vote.ids>=7065]
+#i <- 4633
 		for(i in 1:length(vote.ids))
 		{	tlog("....Processing vote ",vote.ids[i]," (",i,"/",length(vote.ids),")")
 			
-			temp <- iyp.extract.vote(vote.ids[i])
+			temp <- iyp.extract.vote(vote.ids[i], duplicate.meps)
+#			print(temp)			
 			# update details matrix
 			temp$details[COL.DOCID] <- i
 #			print(temp$details)			
@@ -617,9 +687,10 @@ load.itsyourparliament.data <- function()
 	
 	result <- list()
 	
+	duplicate.meps <- as.matrix(read.csv2(IYP.MEP.DUPLICATES.FILE,check.names=FALSE))
 	doc.domains <- iyp.extract.domains()
-	result$mep.details <- iyp.extract.meps.details()
-	temp <- iyp.extract.votes(doc.domains, result$mep.details)
+	result$mep.details <- iyp.extract.meps.details(duplicate.meps)
+	temp <- iyp.extract.votes(doc.domains, result$mep.details, duplicate.meps)
 	result$doc.details <- temp$doc.details
 	result$all.votes <- temp$all.votes
 	result$group.lines <- extract.group.lines(result$all.votes, result$mep.details)

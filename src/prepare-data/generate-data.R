@@ -35,6 +35,7 @@ TEST.YEARS <- c(DATE.T7.Y1,DATE.T7.Y2,DATE.T7.TERM)
 # date.nbr: number of dates to generate.
 # start.date: date object representing the beginning of the considered period.
 # end.date: date object representing the end of the considered period.
+#
 # returns: a (sorted) vector containing date.nbr dates between start.date and end.date.
 #############################################################################################
 generate.dates <- function(date.nbr, start.date, end.date)

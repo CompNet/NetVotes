@@ -76,6 +76,7 @@ iyp.download.meps <- function()
 # of the European Parliament).
 #
 # title: IYP title of the document (which includes its Europarl ID).
+#
 # returns: the domain retrieved from the Europarl website, or NA if none could be found.
 #############################################################################################
 ep.retrieve.domain <- function(title)

@@ -46,6 +46,7 @@ record.partition.stats <- function(algo.name, partition, folder, plot.formats)
 # partition: integer vector representing the partition to consider.
 # algo.name: name of the concerned partitioning algorithm.
 # perf.table: the previously created table of performances.
+#
 # returns: the performance table completed with the imbalance values. 
 #############################################################################################
 process.structural.imbalance <- function(g, partition, algo.name, perf.table)
@@ -116,6 +117,7 @@ process.structural.imbalance <- function(g, partition, algo.name, perf.table)
 # partition: integer vector representing the partition to consider.
 # algo.name: name of the concerned partitioning algorithm.
 # perf.table: the previously created table of performances.
+#
 # returns: the updated result table containing the measured performance values. 
 #############################################################################################
 process.corclu.measures <- function(g, partition, algo.name, perf.table)
@@ -137,6 +139,7 @@ process.corclu.measures <- function(g, partition, algo.name, perf.table)
 # partition: integer vector representing the partition to consider.
 # algo.name: name of the concerned partitioning algorithm.
 # perf.table: the previously created table of performances.
+#
 # returns: the performance table completed with the modularity values. 
 #############################################################################################
 process.modularity <- function(g.neg, g.pos, partition, algo.name, perf.table)
@@ -166,6 +169,7 @@ process.modularity <- function(g.neg, g.pos, partition, algo.name, perf.table)
 # partition: integer vector representing the partition to consider.
 # algo.name: name of the concerned partitioning algorithm.
 # perf.table: the previously created table of performances.
+#
 # returns: the updated result table containing the measured performance values. 
 #############################################################################################
 process.comdet.measures <- function(g.neg, g.pos, partition, algo.name, perf.table)

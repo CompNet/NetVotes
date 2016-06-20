@@ -19,6 +19,7 @@ library("igraph")
 # period: considered time period.
 # comp: whether to return the complementary negative graph (for clustering) or just the
 #		negative graph (to assess partitions).
+#
 # returns: a list containing the three graphs (named: signed, pos, neg).
 #############################################################################################
 retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
@@ -66,6 +67,7 @@ retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
 # and standard deviation of each matrix term.
 # 
 # l: list of same-sized matrices.
+#
 # returns: a list containing an "avg" and an "stdev" matrices, corresponding to the average
 #          and standard deviation of each list of matrix elements, respectively.
 #############################################################################################

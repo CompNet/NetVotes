@@ -28,8 +28,9 @@ source("src/plot-tools/plot-common.R")
 # y.lim: limits for the y axis (optional).
 # x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
-# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
+# x.rotate: whether the x axis labels should be rotated by 90ï¿½, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+#
 # returns: the counts processed in this function from the original values.
 #############################################################################################
 plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
@@ -78,7 +79,7 @@ plot.unif.indiv.raw.bars <- function(plot.file, bar.names, values, proportions=T
 # x.label: general title of the bars. 
 # y.label: general title of the bar heights. 
 # plot.title: general title of the plot (NA for no title at all).
-# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
+# x.rotate: whether the x axis labels should be rotated by 90ï¿½, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
 plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
@@ -244,8 +245,9 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 # x.label: general title of the bars. 
 # colors.label: title of the color legend.
 # plot.title: general title of the plot (NA for no title at all).
-# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
+# x.rotate: whether the x axis labels should be rotated by 90ï¿½, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+#
 # returns: the counts processed in this function from the original values.
 #############################################################################################
 plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, values, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, colors.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
@@ -302,7 +304,7 @@ plot.stacked.indiv.raw.bars <- function(plot.file, bar.names, color.names, value
 # y.label: title of the bar heights. 
 # colors.label: title of the color legend 
 # plot.title: general title of the plot (NA for no title at all).
-# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
+# x.rotate: whether the x axis labels should be rotated by 90ï¿½, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
 plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, counts, dispersion=NA, proportions=TRUE, areas=FALSE, y.lim=c(NA,NA), x.label, y.label, colors.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
@@ -454,8 +456,9 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 # y.lim: limits for the y axis (optional).
 # x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
-# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
+# x.rotate: whether the x axis labels should be rotated by 90ï¿½, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+#
 # returns: the counts processed in this function from the original values.
 #############################################################################################
 plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values, proportions, y.lim=c(NA,NA), x.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
@@ -510,7 +513,7 @@ plot.unif.grouped.raw.bars <- function(plot.file, group.names, bar.names, values
 # y.label: title of the bar heights. 
 # colors.label: title of the color legend 
 # plot.title: general title of the plot (NA for no title at all).
-# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
+# x.rotate: whether the x axis labels should be rotated by 90ï¿½, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
 plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, counts, dispersion=NA, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
@@ -697,8 +700,9 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 # y.lim: limits for the y axis (optional).
 # x.label: general title of the bars. 
 # plot.title: general title of the plot (NA for no title at all).
-# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
+# x.rotate: whether the x axis labels should be rotated by 90ï¿½, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
+#
 # returns: the counts processed in this function from the original values.
 #############################################################################################
 plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, color.names, values, proportions=TRUE, y.lim=c(NA,NA), x.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))
@@ -766,7 +770,7 @@ plot.stacked.grouped.raw.bars <- function(plot.file, group.names, bar.names, col
 # y.label: title of the bar heights. 
 # colors.label: title of the color legend 
 # plot.title: general title of the plot (NA for no title at all).
-# x.rotate: whether the x axis labels should be rotated by 90°, or not. 
+# x.rotate: whether the x axis labels should be rotated by 90ï¿½, or not. 
 # format: vector of formats of the generated files (PDF and/or PNG, NA for the screen).
 #############################################################################################
 plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, color.names, counts, dispersion, proportions=TRUE, y.lim=c(NA,NA), x.label, y.label="Count", colors.label, plot.title, x.rotate=FALSE, format=c("PDF","PNG",NA))

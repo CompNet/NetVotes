@@ -23,6 +23,7 @@ source("src/define-constants.R")
 # doc.details: table containing the details of the voted documents.
 # start.date: starting date.
 # end.date: ending date.
+#
 # returns: a vector of document ids, corresponding to the document matching the dates.
 #############################################################################################
 filter.docs.by.date <- function(doc.details, start.date=NA, end.date=NA)
@@ -56,6 +57,7 @@ filter.docs.by.date <- function(doc.details, start.date=NA, end.date=NA)
 #
 # doc.details: table containing the details of the voted documents.
 # domains: a vector of domains, or NA to use all keep domains.
+#
 # returns: a vector of document ids, corresponding to the document matching the domains.
 #############################################################################################
 filter.docs.by.domain <- function(doc.details, domains=c())
@@ -90,6 +92,7 @@ filter.docs.by.domain <- function(doc.details, domains=c())
 # start.date: starting date.
 # end.date: ending date.
 # domains: a vector of domains, or NA to use all keep domains.
+#
 # returns: a vector of document ids, corresponding to the document matching the criteria.
 #############################################################################################
 filter.docs.by.date.and.domain <- function(doc.details, start.date, end.date, domains)
@@ -111,6 +114,7 @@ filter.docs.by.date.and.domain <- function(doc.details, start.date, end.date, do
 #
 # mep.details: table containing the details of the MEPs.
 # countries: a vector of countries, or NA to use all keep countries.
+#
 # returns: a vector of MEP ids, corresponding to the those matching the countries.
 #############################################################################################
 filter.meps.by.country <- function(mep.details, countries)
@@ -139,6 +143,7 @@ filter.meps.by.country <- function(mep.details, countries)
 #
 # mep.details: table containing the details of the MEPs.
 # groups: a vector of groups, or NA to use all keep groups.
+#
 # returns: a vector of MEP ids, corresponding to the those matching the groups.
 #############################################################################################
 filter.meps.by.group <- function(mep.details, groups)
@@ -170,6 +175,7 @@ filter.meps.by.group <- function(mep.details, groups)
 # mep.details: table containing the details of the MEPs.
 # countries: a vector of countries, or NA to use all keep countries.
 # groups: a vector of groups, or NA to use all keep groups.
+#
 # returns: a vector of MEP ids, corresponding to those matching the criteria.
 #############################################################################################
 filter.meps.by.country.and.group <- function(mep.details, countries, groups)

@@ -19,6 +19,7 @@ source("src/prepare-data/filter-data.R")
 # MEP who abstained at a vote gets a score of zero when compared to himself (for this vote).
 #
 # file.name: name of the file containing the scores (without the .txt extension).
+#
 # returns: the loaded table.
 #############################################################################################
 load.score.table <- function(file.name)
@@ -59,6 +60,7 @@ load.score.table <- function(file.name)
 # 
 # votes: vector of all MEP votes for the considered document.
 # score.table: matrix containing the reference scores, previously loaded with load.aggreement.matrix.
+#
 # returns: a square matrix whose size is the number of MEPs, and containing all agreement scores
 #  		   for the considered document.
 #############################################################################################
@@ -100,6 +102,7 @@ process.agreement.scores <- function(votes, score.table)
 # 
 # votes: matrix of all MEP (rows) votes for the considered documents (columns).
 # score.table: matrix containing the reference scores, previously loaded with load.score.table.
+#
 # returns: a square matrix whose size is the number of MEPs, and containing all agreement indices
 #  		   for the considered documents.
 #############################################################################################
