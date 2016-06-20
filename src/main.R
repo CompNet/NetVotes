@@ -37,11 +37,11 @@ dataset.name <- "IYP"		# It's your Parliament
 #dataset.name <- "PT"		# Parltrack
 
 ##################### domains
-domains <- c(DOMAIN.ALL, DOMAIN.VALUES)			# which domains to process individually
+domains <- c(DOMAIN.VALUES, DOMAIN.ALL)			# which domains to process individually
 #domains <- DOMAIN.CULT
 #domains <- c(DOMAIN.VW2SYMB[TEST.DOMAINS],DOMAIN.ALL)
 ##################### dates
-dates <- c(DATE.T7.TERM, DATE.T7.YEARS)			# which time period to process individually
+dates <- c(DATE.T7.YEARS, DATE.T7.TERM)			# which time periods to process individually
 #dates <- c(
 #		DATE.T7.Y1
 #		DATE.T7.Y2

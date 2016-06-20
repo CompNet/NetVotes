@@ -19,7 +19,7 @@ tlog <- function(offset=NA, ...)
 			prefix <- paste(prefix, os, sep="")
 		}
 		else
-			prefix <- offset
+			prefix <- paste(prefix, offset, sep="")
 	}
 	cat(prefix, ..., "\n", sep="")
 }

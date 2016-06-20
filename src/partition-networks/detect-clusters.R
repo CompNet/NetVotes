@@ -75,7 +75,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 		tlog("............WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder)
 	else
 	{	if(is.na(mbrshp))
-			mbrshp <- membership(coms)
+			mbrshp <- as.vector(membership(coms))
 		while(min(mbrshp)==0)
 			mbrshp <- mbrshp + 1
 		# record the membership vector
