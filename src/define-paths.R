@@ -7,9 +7,9 @@
 
 
 #############################################################################################
-# Builds a path for a file located in the "votes" or "behavior" folders.
+# Builds a path for a file located in the "votes", "behavior" or "turnout" folders.
 #
-# vote: whether to consider the "votes" of "behavior" folder.
+# vote: whether to consider the "votes", "behavior", or "turnout" folder.
 # country: considered member state (optional).
 # group: considered political group (optional).
 # domain: considered domain of activity (compulsory).
@@ -19,12 +19,14 @@
 #############################################################################################
 get.votes.path <- function(vote, country=NA, group=NA, domain, period)
 {	# main folder
-	if(vote)
+	if(vote=="Vote")
 		result <- VOTES.FOLDER
-	else
+	else if(vote="Behavior")
 		result <- BEHAVIOR.FOLDER
-	
-	# country, group or everything (mutuall exclusive)
+	else if(vote="Turnout")
+		result <- TURNOUT.FOLDER
+		
+	# country, group or everything (mutually exclusive)
 	if(!is.na(country))
 		result <- file.path(result,"bycountry",country)
 	else if(!is.na(group))

@@ -149,7 +149,7 @@ process.agreement.index <- function(votes, score.table)
 #			  (without the .txt extension).
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats used for the plot files.
 #############################################################################################

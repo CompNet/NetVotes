@@ -105,7 +105,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 #			  (without the .txt extension).
 # domain: political domain currently processed.
 # date: time period currently processed.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # comdet.algos: community detection algorithms to apply.
 # corclu.algos: correlation clustering algorithms to apply.
@@ -202,7 +202,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 #			  (without the .txt extension).
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # comdet.algos: community detection algorithms to apply.
 # corclu.algos: correlation clustering algorithms to apply.

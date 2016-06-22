@@ -20,15 +20,17 @@ OUT.FOLDER <- "out"
 	OVERALL.FOLDER <- file.path(OUT.FOLDER,"_overall")
 	# output folder for the domain-related overall files
 	DOMAINS.FOLDER <- file.path(OVERALL.FOLDER,"_domains")
-	# pils folder (tempary)
+	# PILS folder (temporary)
 	PILS.FOLDER <- file.path(OUT.FOLDER,"pils")
-	# votes folder
+	# folder containing the vote stats
 	VOTES.FOLDER <- file.path(OUT.FOLDER,"votes")
-	# behavior folder
+	# folder containing the MEP behavior stats
 	BEHAVIOR.FOLDER <- file.path(OUT.FOLDER,"behavior")
-	# agreement folder
+	# folder containing the turnout stats
+	TURNOUT.FOLDER <- file.path(OUT.FOLDER,"turnout")
+	# folder containing the agreement measures
 	AGREEMENT.FOLDER <- file.path(OUT.FOLDER,"agreement")
-	# networks folder
+	# folder containing the extracted networks
 	NETWORKS.FOLDER <- file.path(OUT.FOLDER,"networks")
 	# folder containing the estimated partitions
 	PARTITIONS.FOLDER <- file.path(OUT.FOLDER,"partitions")

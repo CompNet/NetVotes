@@ -113,10 +113,8 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 
 #############################################################################################
 # Generate all plots and tables for the complete vote value distributions (FOR, AGAINST, etc.).
-# This means a folder is created for each domain, and it contains a folder for each considered
-# period (each year and the whole term). Four different plots and two table are generated, 
-# corresponding to the distributions of vote values represented as bars vs. areas, for the
-# absolute counts vs. proportions.
+# The distributions of vote values are represented as bars vs. areas, for the absolute counts 
+# vs. proportions, for each document.
 #
 # all.votes: raw vote data, including how each MEP voted.
 # doc.details: description of each voted document.
@@ -126,12 +124,13 @@ process.domain.frequencies <- function(doc.details, plot.formats)
 # object: counted object (votes, loyal votes, etc.).
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
-# vote.mode: whether the processed data are votes (TRUE) or behavior (FALSE).
+# vote.mode: whether the processed data are votes ("Vote"), behavior ("Behavior") or 
+#			 participation ("Turnout").
 #############################################################################################
-process.vote.distribution.complete <- function(all.votes, doc.details, vote.values, file.prefix, colors.label, object, domains, dates, country, group, plot.formats, vote.mode)
+process.stat.distribution.complete <- function(all.votes, doc.details, vote.values, file.prefix, colors.label, object, domains, dates, country, group, plot.formats, vote.mode)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -247,7 +246,7 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 #############################################################################################
 # Generate all plots and tables for the aggregated vote value distributions (FOR, AGAINST, etc.).
 # Unlike the "complete" variant, this function integrates data on various dimensions (temporal
-# or topical). For each domain (including all domains), we aggregate the votes by year and for
+# or topical). For each domain (including all domains at once), we aggregate the votes by year and for
 # the whole term. The results are represented as bar plots, for both absolute counts and
 # proportions.
 #
@@ -259,12 +258,13 @@ process.vote.distribution.complete <- function(all.votes, doc.details, vote.valu
 # object: counted object (votes, loyal votes, etc.).
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
-# vote.mode: whether the processed data are votes (TRUE) or behavior (FALSE).
+# vote.mode: whether the processed data are votes ("Vote"), behavior ("Behavior") or 
+#			 participation ("Turnout").
 #############################################################################################
-process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.values, file.prefix, colors.label, object, domains, dates, country, group, plot.formats, vote.mode)
+process.stat.distribution.aggregate <- function(all.votes, doc.details, vote.values, file.prefix, colors.label, object, domains, dates, country, group, plot.formats, vote.mode)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -438,12 +438,13 @@ process.vote.distribution.aggregate <- function(all.votes, doc.details, vote.val
 # object: counted object (votes, loyal votes, etc.).
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
-# vote.mode: whether the processed data are votes (TRUE) or behavior (FALSE).
+# vote.mode: whether the processed data are votes ("Vote"), behavior ("Behavior") or 
+#			 participation ("Turnout").
 #############################################################################################
-process.vote.distribution.average <- function(all.votes, doc.details, target, file.prefix, object, domains, dates, country, group, plot.formats, vote.mode)
+process.stat.distribution.average <- function(all.votes, doc.details, target, file.prefix, object, domains, dates, country, group, plot.formats, vote.mode)
 {	# setup file prefix
 	if(is.na(file.prefix))
 		file.prefix <- ""
@@ -534,7 +535,7 @@ process.vote.distribution.average <- function(all.votes, doc.details, target, fi
 # doc.details: description of each voted document.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
 #############################################################################################
@@ -546,21 +547,21 @@ process.vote.distribution <- function(all.votes, doc.details, domains, dates, co
 	all.votes.smpl[all.votes.smpl==VOTE.DOCABSENT] <- VOTE.OTHER
 	all.votes.smpl[all.votes.smpl==VOTE.NONE] <- VOTE.OTHER
 	
-	# setup folder
+	# setup parameters
 	object <- "votes"
 	colors.label <- "Votes"
 	
 	# process complete vote distributions
 	tlog("......Plotting complete vote value distributions (raw votes)")
-	process.vote.distribution.complete(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
+	process.stat.distribution.complete(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode="Vote")
 	tlog("......Plotting complete vote value distributions (simplified votes)")
-	process.vote.distribution.complete(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
+	process.stat.distribution.complete(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode="Vote")
 	
 	# process aggregated vote distributions
 	tlog("......Plotting aggregated vote values distributions (raw votes)")
-	process.vote.distribution.aggregate(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
+	process.stat.distribution.aggregate(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode="Vote")
 	tlog("......Plotting aggregated vote values distributions (simplified votes)")
-	process.vote.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
+	process.stat.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode="Vote")
 }
 
 
@@ -573,22 +574,22 @@ process.vote.distribution <- function(all.votes, doc.details, domains, dates, co
 # doc.details: description of each voted document.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
 #############################################################################################
 process.behavior.stats <- function(behavior.values, doc.details, domains, dates, country, group, plot.formats)
 {	# process complete behavior distributions
 	tlog("......Plotting complete behavior distributions")
-	process.vote.distribution.complete(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode=FALSE)
+	process.stat.distribution.complete(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode="Behavior")
 	
 	# process aggregated behavior distributions
 	tlog("......Plotting aggregated behavior distributions")
-	process.vote.distribution.aggregate(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode=FALSE)
+	process.stat.distribution.aggregate(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode="Behavior")
 	
-	# processed average behavior distributions
+	# process average behavior distributions
 	tlog("......Plotting average behavior distributions")
-	process.vote.distribution.average(all.votes=behavior.values, doc.details, target=BEHAVIOR.LOYAL, file.prefix=NA, object="loyalty index", domains, dates, country, group, plot.formats, vote.mode=FALSE)
+	process.stat.distribution.average(all.votes=behavior.values, doc.details, target=BEHAVIOR.LOYAL, file.prefix=NA, object="loyalty index", domains, dates, country, group, plot.formats, vote.mode="Behavior")
 }
 
 
@@ -598,43 +599,51 @@ process.behavior.stats <- function(behavior.values, doc.details, domains, dates,
 #
 # all.votes: raw vote data, including how each MEP voted.
 # doc.details: description of each voted document.
+# mep.details: description of each MEP.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
-# country: state member currently processed (or NA if none in particular).
+# country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
 #############################################################################################
-process.participation <- function(all.votes, doc.details, domains, dates, country, group, plot.formats)
-{	# process a simplified version of the data
-	all.votes.smpl <- all.votes
-	all.votes.smpl[all.votes.smpl==VOTE.AGST] <- VOTE.OTHER
-	all.votes.smpl[all.votes.smpl==VOTE.FOR] <- VOTE.OTHER
-	all.votes.smpl[all.votes.smpl==VOTE.ABST] <- VOTE.OTHER
-	all.votes.smpl[all.votes.smpl==VOTE.DOCABSENT] <- VOTE.ABSENT
-	all.votes.smpl[all.votes.smpl==VOTE.NONE] <- VOTE.OTHER
-	
-	# setup folder
-	object <- "votes"
-	colors.label <- "Votes"
+process.turnout <- function(all.votes, doc.details, mep.details, domains, dates, country, group, plot.formats)
+{	# prepare the participation data
+	idx <- all.votes==VOTE.ABSENT | all.votes==VOTE.DOCABSENT
+	part.doc.details <- doc.details[idx]
+	absent.meps <- all.votes[idx,COL.MEPID]
+	part.group.votes <- mep.details[absent.meps,COL.GROUP]
+	part.country.votes <- mep.details[absent.meps,COL.STATE]
+	# prepare the abstention data
+	idx <- all.votes==VOTE.ABST
+	abst.doc.details <- doc.details[idx]
+	abst.meps <- all.votes[idx,COL.MEPID]
+	abst.group.votes <- mep.details[abst.meps,COL.GROUP]
+	abst.country.votes <- mep.details[abst.meps,COL.STATE]
 	
 	# process complete vote distributions
-	tlog("......Plotting complete vote value distributions (simplified votes)")
-	process.vote.distribution.complete(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
+	if(all(is.na(groups)))
+	{	tlog("......Plotting complete turnout distributions for groups")
+		process.stat.distribution.complete(all.votes=part.group.votes, part.doc.details, vote.values=GROUP.VALUES, file.prefix="participation", colors.label="Groups", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=abst.group.votes, abst.doc.details, vote.values=GROUP.VALUES, file.prefix="abstention",    colors.label="Groups", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+	}
+	if(all(is.na(country)))
+	{	tlog("......Plotting complete turnout distributions for countries")
+		process.stat.distribution.complete(all.votes=part.country.votes, part.doc.details, vote.values=COUNTRY.VALUES, file.prefix="participation", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=abst.country.votes, abst.doc.details, vote.values=COUNTRY.VALUES, file.prefix="abstention",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+	}
 	
 	# process aggregated vote distributions
-	tlog("......Plotting aggregated vote values distributions (raw votes)")
-	process.vote.distribution.aggregate(all.votes=all.votes, doc.details, vote.values=VOTE.VALUES, file.prefix="detailed", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
-	tlog("......Plotting aggregated vote values distributions (simplified votes)")
-	process.vote.distribution.aggregate(all.votes=all.votes.smpl, doc.details, vote.values=VOTE.VALUES.SMPL, file.prefix="simplified", colors.label, object, domains, dates, country, group, plot.formats, vote.mode=TRUE)
+	if(all(is.na(groups)))
+	{	tlog("......Plotting aggregated turnout distributions for groups")
+		process.stat.distribution.aggregate(all.votes=part.group.votes, part.doc.details, vote.values=GROUP.VALUES, file.prefix="participation", colors.label="Groups", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=abst.group.votes, abst.doc.details, vote.values=GROUP.VALUES, file.prefix="abstention",    colors.label="Groups", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+	}
+	if(all(is.na(country)))
+	{	tlog("......Plotting aggregated turnout distributions for countries")
+		process.stat.distribution.aggregate(all.votes=part.country.votes, part.doc.details, vote.values=COUNTRY.VALUES, file.prefix="participation", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=abst.country.votes, abst.doc.details, vote.values=COUNTRY.VALUES, file.prefix="abstention",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+	}
 }
-# TODO attention: faut faire apparaître les groupes/pays dans les couleurs des barres
-#		>> donc ne peut pas être dans dossier par pays ou par groupe 
-# 	- à faire pour chaque vote. donc aires + barres.
-# 	- on peut aussi faire évolution par année
-# 	  et aussi pour le terme (décomposer par groupe/pays=barre, comme d'hab)
-#   - ou stocker tout ça ? dans everything ? (puis sous dossier approprié)
-# procéder de même pour l'abstention.
-
 
 
 #############################################################################################
@@ -675,8 +684,8 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		process.vote.distribution(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
 		process.behavior.stats(group.behavior, doc.details, domains, dates, country=NA, group, plot.formats)
-		# process participation (vote vs. absence)
-		process.participation(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
+		# process turnout (vote vs. absence) stats
+		process.turnout(group.votes, doc.details, mep.details, domains, dates, country=NA, group, plot.formats)
 	}
 	
 	# stats by home country
@@ -695,8 +704,8 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		process.vote.distribution(country.votes, doc.details, domains, dates, country, group=NA, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
 		process.behavior.stats(country.behavior, doc.details, domains, dates, country, group=NA, plot.formats)
-		# process participation (vote vs. absence)
-		process.participation(country.votes, doc.details, domains, dates, country, group=NA, plot.formats)
+		# process turnout (vote vs. absence) stats
+		process.turnout(country.votes, doc.details, mep.details, domains, dates, country, group=NA, plot.formats)
 	}
 	
 	# process stats for all data
@@ -704,6 +713,6 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	{	tlog("..Process stats for all data")
 		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
 		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
-		process.participation(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
+		process.turnout(all.votes, doc.details, mep.details, domains, dates, country=NA, group=NA, plot.formats)
 	}
 }
