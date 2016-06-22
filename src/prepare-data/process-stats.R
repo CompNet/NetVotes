@@ -13,6 +13,54 @@ source("src/prepare-data/filter-data.R")
 
 
 #############################################################################################
+# Processes basic statistics regarding the numbers of MEPs in each political group and for
+# each member state.
+#
+# mep.details: informartion describing each MEP.
+#############################################################################################
+process.basic.stats <- function(mep.details)
+{	# MEPs by member state
+		# absolute counts as bars
+		title <- paste("Number of MEPs by member state for the whole term",sep="")
+		plot.file <- file.path(OVERALL.FOLDER,"mep-counts-state")
+		data <- plot.unif.indiv.raw.bars(plot.file, 
+			bar.names=DOMAIN.VALUES, 
+			values=doc.details[,COL.DOMID],
+			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
+			x.label="Domains", plot.title=title, 
+			x.rotate=FALSE, format=plot.formats)
+		# record as a table
+		data <- data.frame(data)
+		data <- cbind(data.frame(DOMAIN.VALUES),data)
+		colnames(data) <- c(COL.DOMID, COL.COUNT)
+		table.file <- paste(plot.file,".csv",sep="")
+		write.csv2(data, file=table.file, row.names=FALSE)
+		
+		# proportions as bars
+		title <- paste("Proportion of MEPs by member state group for the whole term",sep="")
+		plot.file <- file.path(DOMAINS.FOLDER,"term-proportions-state")
+		data <- plot.unif.indiv.raw.bars(plot.file, 
+			bar.names=DOMAIN.VALUES, 
+			values=doc.details[,COL.DOMID],
+			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
+			x.label="Domains", plot.title=title, 
+			x.rotate=FALSE, format=plot.formats)
+		# record as a table
+		data <- data / sum(data)
+		data[is.na(data)] <- 0		# remove possible /0 outcomes
+		data <- data.frame(data)
+		data <- cbind(data.frame(DOMAIN.VALUES),data)
+		colnames(data) <- c(COL.DOMID, COL.COUNT)
+		table.file <- paste(plot.file,".csv",sep="")
+		write.csv2(data,file=table.file, row.names=FALSE)
+	
+	# MEPs by political group
+	# TODO
+		
+}
+
+
+#############################################################################################
 # Counts the occurrences of policy domains among the voted documents. Generates the corresponding
 # plots: distribution for the whole term and for each year.
 #
@@ -594,8 +642,8 @@ process.behavior.stats <- function(behavior.values, doc.details, domains, dates,
 
 
 #############################################################################################
-# Deals with the generation of stats and plots related to the distribution of vote values 
-# (FOR, AGAINST, etc.)
+# Deals with the generation of stats and plots related to the participation of MEPs, more
+# precisely vote turnout and abstention.
 #
 # all.votes: raw vote data, including how each MEP voted.
 # doc.details: description of each voted document.
@@ -701,6 +749,8 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	
 	# domain stats
 	process.domain.frequencies(doc.details, plot.formats)
+	# group and country stats
+	process.basic.stats(mep.details)
 	
 	# stats by political group
 	tlog("..Process stats by group")
