@@ -21,9 +21,9 @@ get.votes.path <- function(vote, country=NA, group=NA, domain, period)
 {	# main folder
 	if(vote=="Vote")
 		result <- VOTES.FOLDER
-	else if(vote="Behavior")
+	else if(vote=="Behavior")
 		result <- BEHAVIOR.FOLDER
-	else if(vote="Turnout")
+	else if(vote=="Turnout")
 		result <- TURNOUT.FOLDER
 		
 	# country, group or everything (mutually exclusive)

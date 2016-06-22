@@ -2,7 +2,7 @@ NetVotes v.2
 =======
 *Extraction and analysis of vote-based networks*
 
-* Copyright 2015 Israel Mendon�a (v1) & Vincent Labatut (v2). 
+* Copyright 2015 Israel Mendonça (v1) & Vincent Labatut (v2). 
 
 NetVotes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation. For source availability and license information see `licence.txt`
 
@@ -87,8 +87,8 @@ In order to generate the plots from the paper, you additionally need to run the 
 
 
 # Extension
-You may want to apply the scripts to other raw data: this is possible, provided the they take the same form. For other VoteWatch data (e.g. a different term), this should not be a problem.
-For different data, you may have to adapt the functions used to load the tabular data, in particular the ones using column names to identify the relevant information (see `src/`prepare-rawdata.R` and `src/filter-rawdata.R`). 
+You may want to apply the scripts to other raw data: this is possible, provided the they take the same form. For other *VoteWatch* or *It's Your Parliament* data (e.g. a different term), this should not be a problem.
+For different data sources, you may have to adapt the functions used to load the tabular data, in particular the ones using column names to identify the relevant information (see `src/`prepare-rawdata.R` and `src/filter-rawdata.R`). 
 
 
 # Dependencies
@@ -102,5 +102,5 @@ For different data, you may have to adapt the functions used to load the tabular
 
 
 # References
-* **[MFLM'15]** Mendon�a, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015.
+* **[MFLM'15]** Mendonça, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015.
 http://arxiv.org/abs/1507.04215
