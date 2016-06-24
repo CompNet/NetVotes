@@ -75,9 +75,9 @@ groups <- GROUP.VALUES							# which group to process individually
 
 ##################### score matrix used to process agreement
 score.file <- "m3"					# see folder in/score
-thresh <- c(0,0)					# no thresholding at all
+#thresh <- c(0,0)					# no thresholding at all
 #thresh <- c(-0.34,+0.34)			# thresholds applied to agreement index values during network extraction (use c(0,0) for no filtering)
-#thresh <- NA						# both thresholds automatically estimated (through k-means)
+thresh <- NA						# both thresholds automatically estimated (through k-means)
 
 ##################### partitioning algorithms
 comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
@@ -124,8 +124,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-#		domains, dates, everything, countries, groups, plot.formats)
+process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 
@@ -140,8 +140,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Extract all the networks (just a bit faster)
 #############################################################################################
-extract.all.networks(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, groups, plot.formats)
+#extract.all.networks(data$mep.details, thresh, score.file,
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 #############################################################################################

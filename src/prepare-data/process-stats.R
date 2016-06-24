@@ -17,18 +17,21 @@ source("src/prepare-data/filter-data.R")
 # each member state.
 #
 # mep.details: informartion describing each MEP.
+# plot.formats: formats of the plot files.
 #############################################################################################
-process.basic.stats <- function(mep.details)
-{	# MEPs by member state
+process.basic.stats <- function(mep.details, plot.formats)
+{	tlog("..Processing MEPs distribution over groups and member states")
+	
+	# MEPs by member state
 		# absolute counts as bars
 		title <- paste("Number of MEPs by member state for the whole term",sep="")
-		plot.file <- file.path(OVERALL.FOLDER,"mep-counts-state")
+		plot.file <- file.path(MEPS.FOLDER,"mep-counts-state")
 		data <- plot.unif.indiv.raw.bars(plot.file, 
 			bar.names=COUNTRY.VALUES, 
-			values=doc.details[,COL.STATE],
+			values=mep.details[,COL.STATE],
 			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
 			x.label="States", plot.title=title, 
-			x.rotate=FALSE, format=plot.formats)
+			x.rotate=TRUE, format=plot.formats)
 		# record as a table
 		data <- data.frame(data)
 		data <- cbind(data.frame(COUNTRY.VALUES),data)
@@ -38,13 +41,13 @@ process.basic.stats <- function(mep.details)
 		
 		# proportions as bars
 		title <- paste("Proportion of MEPs by member state for the whole term",sep="")
-		plot.file <- file.path(OVERALL.FOLDER,"mep-proportions-state")
+		plot.file <- file.path(MEPS.FOLDER,"mep-proportions-state")
 		data <- plot.unif.indiv.raw.bars(plot.file, 
 			bar.names=COUNTRY.VALUES, 
-			values=doc.details[,COL.STATE],
+			values=mep.details[,COL.STATE],
 			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
 			x.label="States", plot.title=title, 
-			x.rotate=FALSE, format=plot.formats)
+			x.rotate=TRUE, format=plot.formats)
 		# record as a table
 		data <- data / sum(data)
 		data[is.na(data)] <- 0		# remove possible /0 outcomes
@@ -57,10 +60,10 @@ process.basic.stats <- function(mep.details)
 	# MEPs by political group
 		# absolute counts as bars
 		title <- paste("Number of MEPs by political group for the whole term",sep="")
-		plot.file <- file.path(OVERALL.FOLDER,"mep-counts-group")
+		plot.file <- file.path(MEPS.FOLDER,"mep-counts-group")
 		data <- plot.unif.indiv.raw.bars(plot.file, 
 			bar.names=GROUP.VALUES, 
-			values=doc.details[,COL.GROUP],
+			values=mep.details[,COL.GROUP],
 			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
 			x.label="Groups", plot.title=title, 
 			x.rotate=FALSE, format=plot.formats)
@@ -73,10 +76,10 @@ process.basic.stats <- function(mep.details)
 		
 		# proportions as bars
 		title <- paste("Proportion of MEPs by political group for the whole term",sep="")
-		plot.file <- file.path(OVERALL.FOLDER,"mep-proportions-group")
+		plot.file <- file.path(MEPS.FOLDER,"mep-proportions-group")
 		data <- plot.unif.indiv.raw.bars(plot.file, 
 			bar.names=GROUP.VALUES, 
-			values=doc.details[,COL.GROUP],
+			values=mep.details[,COL.GROUP],
 			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
 			x.label="Groups", plot.title=title, 
 			x.rotate=FALSE, format=plot.formats)
@@ -704,7 +707,7 @@ process.turnout <- function(all.votes, doc.details, mep.details, domains, dates,
 	part.country.votes <- apply(part.votes, 2, function(r) 
 			{	idx <- which(r==VOTE.ABSENT)
 				if(length(idx)>0)
-					r[idx] <- mep.details[idx,COL.STATE]
+					r[idx] <- COUNTRY.SHORTNAMES[mep.details[idx,COL.STATE]]
 				return(r)
 			})
 	colnames(part.country.votes) <- colnames(all.votes)
@@ -727,7 +730,7 @@ process.turnout <- function(all.votes, doc.details, mep.details, domains, dates,
 	abst.country.votes <- apply(abst.votes, 2, function(r) 
 			{	idx <- which(r==VOTE.ABST)
 				if(length(idx)>0)
-					r[idx] <- mep.details[idx,COL.STATE]
+					r[idx] <- COUNTRY.SHORTNAMES[mep.details[idx,COL.STATE]]
 				return(r)
 			})
 	colnames(abst.country.votes) <- colnames(all.votes)
@@ -740,8 +743,8 @@ process.turnout <- function(all.votes, doc.details, mep.details, domains, dates,
 	}
 	if(all(is.na(country)))
 	{	tlog("......Plotting complete turnout distributions for countries")
-		process.stat.distribution.complete(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="country-part", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
-		process.stat.distribution.complete(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="country-abst",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-part", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-abst",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 	
 	# process aggregated vote distributions
@@ -752,8 +755,8 @@ process.turnout <- function(all.votes, doc.details, mep.details, domains, dates,
 	}
 	if(all(is.na(country)))
 	{	tlog("......Plotting aggregated turnout distributions for countries")
-		process.stat.distribution.aggregate(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="country-part", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
-		process.stat.distribution.aggregate(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="country-abst",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-part", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-abst",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 }
 
@@ -779,9 +782,9 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	tlog("***************************************************")
 	
 	# domain stats
-	process.domain.frequencies(doc.details, plot.formats)
+#	process.domain.frequencies(doc.details, plot.formats)
 	# group and country stats
-	process.basic.stats(mep.details)
+#	process.basic.stats(mep.details, plot.formats)
 	
 	# stats by political group
 	tlog("..Process stats by group")
@@ -796,9 +799,9 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		group.details <- mep.details[idx,]
 		
 		# process vote (for, against...) stats
-		process.vote.distribution(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
+#		process.vote.distribution(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
-		process.behavior.stats(group.behavior, doc.details, domains, dates, country=NA, group, plot.formats)
+#		process.behavior.stats(group.behavior, doc.details, domains, dates, country=NA, group, plot.formats)
 		# process turnout (vote vs. absence) stats
 		process.turnout(group.votes, doc.details, group.details, domains, dates, country=NA, group, plot.formats)
 	}
@@ -817,9 +820,9 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		country.details <- mep.details[idx,]
 		
 		# process vote (for, against...) stats
-		process.vote.distribution(country.votes, doc.details, domains, dates, country, group=NA, plot.formats)
+#		process.vote.distribution(country.votes, doc.details, domains, dates, country, group=NA, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
-		process.behavior.stats(country.behavior, doc.details, domains, dates, country, group=NA, plot.formats)
+#		process.behavior.stats(country.behavior, doc.details, domains, dates, country, group=NA, plot.formats)
 		# process turnout (vote vs. absence) stats
 		process.turnout(country.votes, doc.details, country.details, domains, dates, country, group=NA, plot.formats)
 	}
@@ -827,8 +830,8 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	# process stats for all data
 	if(everything)
 	{	tlog("..Process stats for all data")
-		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
-		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
+#		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
+#		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
 		process.turnout(all.votes, doc.details, mep.details, domains, dates, country=NA, group=NA, plot.formats)
 	}
 }
