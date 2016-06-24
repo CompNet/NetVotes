@@ -15,12 +15,15 @@ NetVotes is free software: you can redistribute it and/or modify it under the te
 -----------------------------------------------------------------------
 
 # Description
-This set of R scripts was designed for two purposes:
+This set of R scripts was designed for three purposes:
 
-1. Extract so-called *vote networks* from raw data describing the voting activity of a population.
-2. Perform various analyses on these data, in particular: estimate good partitions of the network, according to different measures.
+1. Generate a variety of plots and statistics based on some raw data describing the voting activity of a population.
+2. Extract so-called *vote networks* from these data.
+3. Perform various analyses on these networks, in particular: estimate good partitions of the network, according to different measures.
 
-Our tool was applied to data representing the activity of the members of the European Parliament (MEPs) during the 7th term (from June 2009 to June 2014), as described in [MFLM'15]. The raw data describing this activity comes from the [VoteWatch](http://www.votewatch.eu/) website.
+
+# Data
+Our tool was applied to data representing the activity of the members of the European Parliament (MEPs) during the 7th term (from June 2009 to June 2014), as described in [MFLM'15]. The raw data describing this activity were first retrieved from the [VoteWatch](http://www.votewatch.eu/) website. However, these data were incomplete, so we later switched to another source: the [It's Your Parliament](http://www.itsyourparliament.eu/) website. There were also some minor issues with these data, which we had to correct: some MEPs were represented twice, some profiles were incomplete, the policy domains were not defined for all vote texts, etc. These cleaned data are available on [FigShare](to be completed...).
 
 
 # Organization
@@ -104,3 +107,4 @@ For different data sources, you may have to adapt the functions used to load the
 # References
 * **[MFLM'15]** Mendonça, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015.
 http://arxiv.org/abs/1507.04215
+

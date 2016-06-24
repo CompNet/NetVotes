@@ -733,27 +733,27 @@ process.turnout <- function(all.votes, doc.details, mep.details, domains, dates,
 	colnames(abst.country.votes) <- colnames(all.votes)
 	
 	# process complete vote distributions
-	if(all(is.na(groups)))
+	if(all(is.na(group)))
 	{	tlog("......Plotting complete turnout distributions for groups")
-		process.stat.distribution.complete(all.votes=part.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="participation", colors.label="Groups", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
-		process.stat.distribution.complete(all.votes=abst.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="abstention",    colors.label="Groups", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=part.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-part", colors.label="Groups", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=abst.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-abst",    colors.label="Groups", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 	if(all(is.na(country)))
 	{	tlog("......Plotting complete turnout distributions for countries")
-		process.stat.distribution.complete(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="participation", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
-		process.stat.distribution.complete(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="abstention",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="country-part", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="country-abst",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 	
 	# process aggregated vote distributions
-	if(all(is.na(groups)))
+	if(all(is.na(group)))
 	{	tlog("......Plotting aggregated turnout distributions for groups")
-		process.stat.distribution.aggregate(all.votes=part.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="participation", colors.label="Groups", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
-		process.stat.distribution.aggregate(all.votes=abst.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="abstention",    colors.label="Groups", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=part.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-part", colors.label="Groups", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=abst.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-abst",    colors.label="Groups", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 	if(all(is.na(country)))
 	{	tlog("......Plotting aggregated turnout distributions for countries")
-		process.stat.distribution.aggregate(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="participation", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
-		process.stat.distribution.aggregate(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="abstention",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="country-part", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.VALUES, file.prefix="country-abst",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 }
 
@@ -832,3 +832,4 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		process.turnout(all.votes, doc.details, mep.details, domains, dates, country=NA, group=NA, plot.formats)
 	}
 }
+
