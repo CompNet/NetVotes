@@ -24,39 +24,70 @@ process.basic.stats <- function(mep.details)
 		title <- paste("Number of MEPs by member state for the whole term",sep="")
 		plot.file <- file.path(OVERALL.FOLDER,"mep-counts-state")
 		data <- plot.unif.indiv.raw.bars(plot.file, 
-			bar.names=DOMAIN.VALUES, 
-			values=doc.details[,COL.DOMID],
+			bar.names=COUNTRY.VALUES, 
+			values=doc.details[,COL.STATE],
 			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
-			x.label="Domains", plot.title=title, 
+			x.label="States", plot.title=title, 
 			x.rotate=FALSE, format=plot.formats)
 		# record as a table
 		data <- data.frame(data)
-		data <- cbind(data.frame(DOMAIN.VALUES),data)
-		colnames(data) <- c(COL.DOMID, COL.COUNT)
+		data <- cbind(data.frame(COUNTRY.VALUES),data)
+		colnames(data) <- c(COL.STATE, COL.COUNT)
 		table.file <- paste(plot.file,".csv",sep="")
 		write.csv2(data, file=table.file, row.names=FALSE)
 		
 		# proportions as bars
-		title <- paste("Proportion of MEPs by member state group for the whole term",sep="")
-		plot.file <- file.path(DOMAINS.FOLDER,"term-proportions-state")
+		title <- paste("Proportion of MEPs by member state for the whole term",sep="")
+		plot.file <- file.path(OVERALL.FOLDER,"mep-proportions-state")
 		data <- plot.unif.indiv.raw.bars(plot.file, 
-			bar.names=DOMAIN.VALUES, 
-			values=doc.details[,COL.DOMID],
+			bar.names=COUNTRY.VALUES, 
+			values=doc.details[,COL.STATE],
 			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
-			x.label="Domains", plot.title=title, 
+			x.label="States", plot.title=title, 
 			x.rotate=FALSE, format=plot.formats)
 		# record as a table
 		data <- data / sum(data)
 		data[is.na(data)] <- 0		# remove possible /0 outcomes
 		data <- data.frame(data)
-		data <- cbind(data.frame(DOMAIN.VALUES),data)
-		colnames(data) <- c(COL.DOMID, COL.COUNT)
+		data <- cbind(data.frame(COUNTRY.VALUES),data)
+		colnames(data) <- c(COL.STATE, COL.COUNT)
 		table.file <- paste(plot.file,".csv",sep="")
 		write.csv2(data,file=table.file, row.names=FALSE)
 	
 	# MEPs by political group
-	# TODO
+		# absolute counts as bars
+		title <- paste("Number of MEPs by political group for the whole term",sep="")
+		plot.file <- file.path(OVERALL.FOLDER,"mep-counts-group")
+		data <- plot.unif.indiv.raw.bars(plot.file, 
+			bar.names=GROUP.VALUES, 
+			values=doc.details[,COL.GROUP],
+			proportions=FALSE, areas=FALSE, y.lim=c(0,NA), 
+			x.label="Groups", plot.title=title, 
+			x.rotate=FALSE, format=plot.formats)
+		# record as a table
+		data <- data.frame(data)
+		data <- cbind(data.frame(GROUP.VALUES),data)
+		colnames(data) <- c(COL.GROUP, COL.COUNT)
+		table.file <- paste(plot.file,".csv",sep="")
+		write.csv2(data, file=table.file, row.names=FALSE)
 		
+		# proportions as bars
+		title <- paste("Proportion of MEPs by political group for the whole term",sep="")
+		plot.file <- file.path(OVERALL.FOLDER,"mep-proportions-group")
+		data <- plot.unif.indiv.raw.bars(plot.file, 
+			bar.names=GROUP.VALUES, 
+			values=doc.details[,COL.GROUP],
+			proportions=TRUE, areas=FALSE, y.lim=c(0,1), 
+			x.label="Groups", plot.title=title, 
+			x.rotate=FALSE, format=plot.formats)
+		# record as a table
+		data <- data / sum(data)
+		data[is.na(data)] <- 0		# remove possible /0 outcomes
+		data <- data.frame(data)
+		data <- cbind(data.frame(GROUP.VALUES),data)
+		colnames(data) <- c(COL.GROUP, COL.COUNT)
+		table.file <- paste(plot.file,".csv",sep="")
+		write.csv2(data,file=table.file, row.names=FALSE)
 }
 
 
