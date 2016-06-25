@@ -22,6 +22,9 @@ source("src/prepare-data/filter-data.R")
 process.basic.stats <- function(mep.details, plot.formats)
 {	tlog("..Processing MEPs distribution over groups and member states")
 	
+	# set folder up
+	dir.create(MEPS.FOLDER, recursive=TRUE, showWarnings=FALSE)
+	
 	# MEPs by member state
 		# absolute counts as bars
 		title <- paste("Number of MEPs by member state for the whole term",sep="")
@@ -782,9 +785,9 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	tlog("***************************************************")
 	
 	# domain stats
-#	process.domain.frequencies(doc.details, plot.formats)
+	process.domain.frequencies(doc.details, plot.formats)
 	# group and country stats
-#	process.basic.stats(mep.details, plot.formats)
+	process.basic.stats(mep.details, plot.formats)
 	
 	# stats by political group
 	tlog("..Process stats by group")
@@ -799,9 +802,9 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		group.details <- mep.details[idx,]
 		
 		# process vote (for, against...) stats
-#		process.vote.distribution(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
+		process.vote.distribution(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
-#		process.behavior.stats(group.behavior, doc.details, domains, dates, country=NA, group, plot.formats)
+		process.behavior.stats(group.behavior, doc.details, domains, dates, country=NA, group, plot.formats)
 		# process turnout (vote vs. absence) stats
 		process.turnout(group.votes, doc.details, group.details, domains, dates, country=NA, group, plot.formats)
 	}
@@ -820,9 +823,9 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		country.details <- mep.details[idx,]
 		
 		# process vote (for, against...) stats
-#		process.vote.distribution(country.votes, doc.details, domains, dates, country, group=NA, plot.formats)
+		process.vote.distribution(country.votes, doc.details, domains, dates, country, group=NA, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
-#		process.behavior.stats(country.behavior, doc.details, domains, dates, country, group=NA, plot.formats)
+		process.behavior.stats(country.behavior, doc.details, domains, dates, country, group=NA, plot.formats)
 		# process turnout (vote vs. absence) stats
 		process.turnout(country.votes, doc.details, country.details, domains, dates, country, group=NA, plot.formats)
 	}
@@ -830,8 +833,8 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	# process stats for all data
 	if(everything)
 	{	tlog("..Process stats for all data")
-#		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
-#		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
+		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
+		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
 		process.turnout(all.votes, doc.details, mep.details, domains, dates, country=NA, group=NA, plot.formats)
 	}
 }
