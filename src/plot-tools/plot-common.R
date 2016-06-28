@@ -9,6 +9,12 @@ library("scales")
 
 
 
+# enables/disables PDF compression
+# (compression causes problems on some multicore machines)
+COMPRESS <- FALSE
+
+
+
 #############################################################################################
 # Adds missing values to a list reprenting plot axes.
 #

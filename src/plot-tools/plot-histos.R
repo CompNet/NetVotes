@@ -8,7 +8,6 @@ source("src/plot-tools/plot-common.R")
 
 
 
-
 #############################################################################################
 # Plots the specified series as a histogram. The y axis corresponds to absolute values 
 # or proportions depending on the selected option. Each x bar corresponds to one discrete value
@@ -49,7 +48,7 @@ plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,
 			{	png(filename=plot.filename,width=800,height=800,units="px",pointsize=20,bg="white")
 			}
 			else if(frmt=="PDF")
-			{	pdf(file=plot.filename,bg="white")
+			{	pdf(file=plot.filename,bg="white",compress=COMPRESS)
 			}
 		}
 		

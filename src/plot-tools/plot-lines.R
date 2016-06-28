@@ -86,7 +86,7 @@ plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TR
 			{	png(filename=plot.filename,width=800,height=800,units="px",pointsize=20,bg="white")
 			}
 			else if(frmt=="PDF")
-			{	pdf(file=plot.filename,bg="white")
+			{	pdf(file=plot.filename,bg="white",compress=COMPRESS)
 			}
 		}
 		
