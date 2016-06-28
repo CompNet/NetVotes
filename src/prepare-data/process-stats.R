@@ -657,13 +657,14 @@ process.vote.distribution <- function(all.votes, doc.details, domains, dates, co
 # behavior.values: individual behavior data, i.e. how each MEP voted relatively to his political 
 #				   group (loyal or rebel).
 # doc.details: description of each voted document.
+# mep.details: description of each MEP.
 # domains: political domains to consider when processing the data.
 # dates: time periods to consider when processing the data.
 # country: member state currently processed (or NA if none in particular).
 # group: political gorup currently processed (or NA if none in particular).
 # plot.formats: formats of the plot files.
 #############################################################################################
-process.behavior.stats <- function(behavior.values, doc.details, domains, dates, country, group, plot.formats)
+process.behavior.stats <- function(behavior.values, doc.details, mep.details, domains, dates, country, group, plot.formats)
 {	# process complete behavior distributions
 	tlog("......Plotting complete behavior distributions")
 	process.stat.distribution.complete(all.votes=behavior.values, doc.details, vote.values=BEHAVIOR.VALUES, file.prefix=NA, colors.label="Behavior", object="loyal votes", domains, dates, country, group, plot.formats, vote.mode="Behavior")
@@ -675,6 +676,44 @@ process.behavior.stats <- function(behavior.values, doc.details, domains, dates,
 	# process average behavior distributions
 	tlog("......Plotting average behavior distributions")
 	process.stat.distribution.average(all.votes=behavior.values, doc.details, target=BEHAVIOR.LOYAL, file.prefix=NA, object="loyalty index", domains, dates, country, group, plot.formats, vote.mode="Behavior")
+	
+	# prepare the rebellion data
+	behav.values <- behavior.values
+	behav.values[behav.values==BEHAVIOR.LOYAL] <- NA
+	group.behav.values <- apply(behav.values, 2, function(r) 
+		{	idx <- which(r==BEHAVIOR.REBEL)
+			if(length(idx)>0)
+				r[idx] <- mep.details[idx,COL.GROUP]
+			return(r)
+		})
+	colnames(group.behav.values) <- colnames(behavior.values)
+	country.behav.values <- apply(behav.values, 2, function(r) 
+		{	idx <- which(r==BEHAVIOR.REBEL)
+			if(length(idx)>0)
+				r[idx] <- COUNTRY.SHORTNAMES[mep.details[idx,COL.STATE]]
+			return(r)
+		})
+	colnames(country.behav.values) <- colnames(behavior.values)
+	
+	# process complete rebellion distributions
+	if(all(is.na(group)))
+	{	tlog("......Plotting complete rebellion distributions for groups")
+		process.stat.distribution.complete(all.votes=group.behav.values,    doc.details, vote.values=GROUP.VALUES,       file.prefix="group-rebellion",   colors.label="Groups", object="rebel votes", domains, dates, country, group, plot.formats, vote.mode="Behavior")
+	}
+	if(all(is.na(country)))
+	{	tlog("......Plotting complete rebellion distributions for countries")
+		process.stat.distribution.complete(all.votes=country.behav.values,  doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-rebellion", colors.label="States", object="rebel votes", domains, dates, country, group, plot.formats, vote.mode="Behavior")
+	}
+	
+	# process aggregated rebellion distributions
+	if(all(is.na(group)))
+	{	tlog("......Plotting aggregated rebellion distributions for groups")
+		process.stat.distribution.aggregate(all.votes=group.behav.values,   doc.details, vote.values=GROUP.VALUES,       file.prefix="group-rebellion",   colors.label="Groups", object="rebel votes", domains, dates, country, group, plot.formats, vote.mode="Behavior")
+	}
+	if(all(is.na(country)))
+	{	tlog("......Plotting aggregated rebellion distributions for countries")
+		process.stat.distribution.aggregate(all.votes=country.behav.values, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-rebellion", colors.label="States", object="rebel votes", domains, dates, country, group, plot.formats, vote.mode="Behavior")
+	}
 }
 
 
@@ -741,24 +780,24 @@ process.turnout <- function(all.votes, doc.details, mep.details, domains, dates,
 	# process complete vote distributions
 	if(all(is.na(group)))
 	{	tlog("......Plotting complete turnout distributions for groups")
-		process.stat.distribution.complete(all.votes=part.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-part", colors.label="Groups", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=part.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-part", colors.label="Groups", object="absences", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 		process.stat.distribution.complete(all.votes=abst.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-abst",    colors.label="Groups", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 	if(all(is.na(country)))
 	{	tlog("......Plotting complete turnout distributions for countries")
-		process.stat.distribution.complete(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-part", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.complete(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-part", colors.label="States", object="absences", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 		process.stat.distribution.complete(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-abst",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 	
 	# process aggregated vote distributions
 	if(all(is.na(group)))
 	{	tlog("......Plotting aggregated turnout distributions for groups")
-		process.stat.distribution.aggregate(all.votes=part.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-part", colors.label="Groups", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=part.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-part", colors.label="Groups", object="absences", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 		process.stat.distribution.aggregate(all.votes=abst.group.votes, doc.details, vote.values=GROUP.VALUES, file.prefix="group-abst",    colors.label="Groups", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 	if(all(is.na(country)))
 	{	tlog("......Plotting aggregated turnout distributions for countries")
-		process.stat.distribution.aggregate(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-part", colors.label="States", object="absent MEPs", domains, dates, country, group, plot.formats, vote.mode="Turnout")
+		process.stat.distribution.aggregate(all.votes=part.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-part", colors.label="States", object="absences", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 		process.stat.distribution.aggregate(all.votes=abst.country.votes, doc.details, vote.values=COUNTRY.SHORTNAMES, file.prefix="country-abst",    colors.label="States", object="abstentions", domains, dates, country, group, plot.formats, vote.mode="Turnout")
 	}
 }
@@ -804,7 +843,7 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		# process vote (for, against...) stats
 		process.vote.distribution(group.votes, doc.details, domains, dates, country=NA, group, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
-		process.behavior.stats(group.behavior, doc.details, domains, dates, country=NA, group, plot.formats)
+		process.behavior.stats(group.behavior, doc.details, mep.details, domains, dates, country=NA, group, plot.formats)
 		# process turnout (vote vs. absence) stats
 		process.turnout(group.votes, doc.details, group.details, domains, dates, country=NA, group, plot.formats)
 	}
@@ -825,7 +864,7 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 		# process vote (for, against...) stats
 		process.vote.distribution(country.votes, doc.details, domains, dates, country, group=NA, plot.formats)
 		# process behavior (loyalty vs. rebel) stats
-		process.behavior.stats(country.behavior, doc.details, domains, dates, country, group=NA, plot.formats)
+		process.behavior.stats(country.behavior, doc.details, mep.details, domains, dates, country, group=NA, plot.formats)
 		# process turnout (vote vs. absence) stats
 		process.turnout(country.votes, doc.details, country.details, domains, dates, country, group=NA, plot.formats)
 	}
@@ -834,8 +873,7 @@ process.stats <- function(all.votes, behavior.values, doc.details, mep.details, 
 	if(everything)
 	{	tlog("..Process stats for all data")
 		process.vote.distribution(all.votes, doc.details, domains, dates, country=NA, group=NA, plot.formats)
-		process.behavior.stats(behavior.values, doc.details, domains, dates, country=NA, group=NA, plot.formats)
+		process.behavior.stats(behavior.values, doc.details, mep.details, domains, dates, country=NA, group=NA, plot.formats)
 		process.turnout(all.votes, doc.details, mep.details, domains, dates, country=NA, group=NA, plot.formats)
 	}
 }
-
