@@ -104,7 +104,7 @@ plot.formats <- c(
 #if(!is.na(cl))
 #	cl <- makeCluster(cn)		# automatically use all the available processors
 #else
-	cl <- makeCluster(4)		# manually set the number of processors to use
+	cl <- makeCluster(8)		# manually set the number of processors to use
 registerDoParallel(cl)
 
 
@@ -124,8 +124,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-		domains, dates, everything, countries, groups, plot.formats)
+#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 
@@ -147,8 +147,8 @@ process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.d
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-#partition.all.graphs(data$mep.details, thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
+partition.all.graphs(data$mep.details, thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
 
 
 #############################################################################################

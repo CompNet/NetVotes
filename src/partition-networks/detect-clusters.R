@@ -20,73 +20,96 @@ source("src/partition-networks/load-membership.R")
 # part.folder: folder in which to write the result (partition) files.
 # graph.folder: folder of the processed network (for external tools).
 # plot.formats: formats of the plot files.
+# force: indicates whether existing result files should be loaded and used vs. replaced by new ones.
 #
 # returns: membership vector, i.e. cluster/community number for each node.
 #############################################################################################
-apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder, plot.formats)
+apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder, plot.formats, force=TRUE)
 {	#tlog("n=",vcount(g), " m=",ecount(g), " d=",graph.density(g))
 	#tlog(" connected=", is.connected(g,mode="weak"))
 	
-	# apply the community detection algorithm
-	coms <- NA
-	mbrshp <- NA
-	if(algo.name==COMDET.ALGO.EDGEBETW | algo.name==comdet.algo.ncg.value(COMDET.ALGO.EDGEBETW))
-	{	# this implementation will use the weights and directions, if present
-		coms <- edge.betweenness.community(
-					graph=g, edge.betweenness=FALSE, merges=FALSE,
-					bridges=FALSE, modularity=TRUE, membership=TRUE) # modularity needed (bug in igraph v0.7)
-	}
-	else if(algo.name==COMDET.ALGO.INFOMAP | algo.name==comdet.algo.ncg.value(COMDET.ALGO.INFOMAP))
-	{	# this implementation will use the weights and directions, if present
-		coms <- infomap.community(
-					graph=g, modularity=FALSE)
-	}
-	else if(algo.name==COMDET.ALGO.LABELPROP | algo.name==comdet.algo.ncg.value(COMDET.ALGO.LABELPROP))
-	{	# this implementation will use the weights and directions, if present
-		coms <- label.propagation.community(
-					graph=g, 
-					initial=NULL, fixed=NULL)
-	}
-	else if(algo.name==COMDET.ALGO.LOUVAIN | algo.name==comdet.algo.ncg.value(COMDET.ALGO.LOUVAIN))
-	{	# this implementation will use the weights, if present, but cannot use directions
-		g2 <- as.undirected(g, mode="collapse")
-		coms <- multilevel.community(
-					graph=g, weights=NULL)
-	}
-	else if(algo.name==COMDET.ALGO.WALKTRAP | algo.name==comdet.algo.ncg.value(COMDET.ALGO.WALKTRAP))
-	{	# this implementation will use the weights, if present, and ignores directions
-		coms <- walktrap.community(
-					graph=g, steps=4, 
-					merges=TRUE, modularity=TRUE, membership=TRUE)
+	# init file names
+	table.file <- file.path(part.folder,paste(algo.name,"-membership.txt",sep=""))
+	idx <- regexpr(" -",g$name)[1]
+	g$name <- paste(PART.ALGO.NAMES[algo.name],substring(g$name,idx,nchar(g$name)),sep="")
+	plot.file <- file.path(part.folder,paste(algo.name,"-membership",sep=""))
+	
+	# check if all the files already exist
+	process <- !file.exists(table.file)
+	i <- 1
+	while(!process && i<length(plot.formats))
+	{	if(!is.na(plot.formats[i]))
+		{	filename <- paste(plot.file,".",plot.formats[i],sep="")
+			process <- file.exists(filename)
+		}
+		i <- i + 1
 	}
 	
-	# apply the correlation clustering algorithm
-	else if(algo.name==CORCLU.ALGO.PILS)
-	{	# get the path of the input file (graph)
-		net.file <- file.path(net.folder,SIGNED.FILE)
-		# external invocation (pILS is coded in C++)
-			# TODO add the external invocation of the application
-		# load the resulting partition file
-		part.file <- file.path(part.folder,"cc-result.txt") # TODO possibly necessary to fix the external file name
-		mbrshp <- load.external.partition(part.folder, algo.name)
+	# if that is the case, we just need to load the membership values 
+	if(!force && !process)
+	{	tlog("............All the files are already present for algorithm ",algo.name," on folder ",part.folder," so we just load the existing results")
+		mbrshp <- as.matrix(read.table(file=table.file, row.names=FALSE, col.names=FALSE))
 	}
-	
-	# record the result
-	if(all(is.na(coms)))
-		tlog("............WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder)
+		
+	# otherwise, we must apply the community detection algorithm
 	else
-	{	if(is.na(mbrshp))
-			mbrshp <- as.vector(membership(coms))
-		while(min(mbrshp)==0)
-			mbrshp <- mbrshp + 1
-		# record the membership vector
-		table.file <- file.path(part.folder,paste(algo.name,"-membership.txt",sep=""))
-		write.table(x=mbrshp, file=table.file, row.names=FALSE, col.names=FALSE)
-		# record a graphical representation of the detected partition
-		idx <- regexpr(" -",g$name)[1]
-		g$name <- paste(PART.ALGO.NAMES[algo.name],substring(g$name,idx,nchar(g$name)),sep="")
-		plot.file <- file.path(part.folder,paste(algo.name,"-membership",sep=""))
-		plot.network(g, membership=mbrshp, plot.file, format=plot.formats)
+	{	tlog("............Applying algorithm ",algo.name," on folder ",part.folder)
+		coms <- NA
+		mbrshp <- NA
+		if(algo.name==COMDET.ALGO.EDGEBETW | algo.name==comdet.algo.ncg.value(COMDET.ALGO.EDGEBETW))
+		{	# this implementation will use the weights and directions, if present
+			coms <- edge.betweenness.community(
+						graph=g, edge.betweenness=FALSE, merges=FALSE,
+						bridges=FALSE, modularity=TRUE, membership=TRUE) # modularity needed (bug in igraph v0.7)
+		}
+		else if(algo.name==COMDET.ALGO.INFOMAP | algo.name==comdet.algo.ncg.value(COMDET.ALGO.INFOMAP))
+		{	# this implementation will use the weights and directions, if present
+			coms <- infomap.community(
+						graph=g, modularity=FALSE)
+		}
+		else if(algo.name==COMDET.ALGO.LABELPROP | algo.name==comdet.algo.ncg.value(COMDET.ALGO.LABELPROP))
+		{	# this implementation will use the weights and directions, if present
+			coms <- label.propagation.community(
+						graph=g, 
+						initial=NULL, fixed=NULL)
+		}
+		else if(algo.name==COMDET.ALGO.LOUVAIN | algo.name==comdet.algo.ncg.value(COMDET.ALGO.LOUVAIN))
+		{	# this implementation will use the weights, if present, but cannot use directions
+			g2 <- as.undirected(g, mode="collapse")
+			coms <- multilevel.community(
+						graph=g, weights=NULL)
+		}
+		else if(algo.name==COMDET.ALGO.WALKTRAP | algo.name==comdet.algo.ncg.value(COMDET.ALGO.WALKTRAP))
+		{	# this implementation will use the weights, if present, and ignores directions
+			coms <- walktrap.community(
+						graph=g, steps=4, 
+						merges=TRUE, modularity=TRUE, membership=TRUE)
+		}
+		
+		# apply the correlation clustering algorithm
+		else if(algo.name==CORCLU.ALGO.PILS)
+		{	# get the path of the input file (graph)
+			net.file <- file.path(net.folder,SIGNED.FILE)
+			# external invocation (pILS is coded in C++)
+				# TODO add the external invocation of the application
+			# load the resulting partition file
+			part.file <- file.path(part.folder,"cc-result.txt") # TODO possibly necessary to fix the external file name
+			mbrshp <- load.external.partition(part.folder, algo.name)
+		}
+		
+		# record the result
+		if(all(is.na(coms)))
+			tlog("............WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder)
+		else
+		{	if(is.na(mbrshp))
+				mbrshp <- as.vector(membership(coms))
+			while(min(mbrshp)==0)
+				mbrshp <- mbrshp + 1
+			# record the membership vector
+			write.table(x=mbrshp, file=table.file, row.names=FALSE, col.names=FALSE)
+			# record a graphical representation of the detected partition
+			plot.network(g, membership=mbrshp, plot.file, format=plot.formats)
+		}
 	}
 	
 	return(mbrshp)
@@ -111,11 +134,29 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 # corclu.algos: correlation clustering algorithms to apply.
 # repetitions: number of times each algorithm must be applied.
 # plot.formats: formats of the plot files.
+# force: indicates whether existing result files should be loaded and used vs. replaced by new ones.
 #############################################################################################
-perform.partitioning <- function(thresh, score.file, domain, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
-{	# load the graphs
-	graphs <- retrieve.graphs(score=score.file, thresh, country, group, domain, period=date, comp=TRUE)
+perform.partitioning <- function(thresh, score.file, domain, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats, force=TRUE)
+{	# init graph files
 	graph.folder <- get.networks.path(score=score.file, thresh, country, group, domain, period=date)
+	part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=,date, repetition=NA)
+	graph.file.neg <- file.path(part.folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
+	graph.file.pos <- file.path(part.folder,paste(POSITIVE.FILE,".graphml",sep=""))
+	graph.file <- file.path(part.folder,paste(SIGNED.FILE,".graphml",sep=""))
+	
+	# if the new graph files were already created, load them
+	if(!force && file.exists(graph.file.neg) && file.exists(graph.file.pos) && file.exists(graph.file))
+	{	tlog("........Enhanced graph files already exist: loading them\n")
+		g <- suppressWarnings(read.graph(file=graph.file, format="graphml"))
+		g.pos <- suppressWarnings(read.graph(file=graph.file.pos, format="graphml"))
+		g.neg <- suppressWarnings(read.graph(file=graph.file.neg, format="graphml"))
+		graphs <- list(neg=g.neg, pos=g.pos, signed=g)
+	}
+	# otherwise, load the existing ones
+	else
+	{	tlog("........No enhanced graph files (or forced processing): loading the raw graph files\n")
+		graphs <- retrieve.graphs(score=score.file, thresh, country, group, domain, period=date, comp=TRUE)
+	}
 	
 	# the process might be repeated several times
 	for(r in 1:repetitions)
@@ -147,7 +188,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			# complementary negative graph
 			if(!all(is.na(graphs$neg)))
 			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph")
-				memb <- apply.partitioning.algorithm(graphs$neg, neg.algo.name, part.folder, graph.folder, plot.formats)
+				memb <- apply.partitioning.algorithm(graphs$neg, neg.algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=neg.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=neg.att.name, value=memb)
 				graphs$signed <- set.vertex.attribute(graph=graphs$signed, name=neg.att.name, value=memb)
@@ -156,7 +197,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			# positive graph
 			if(!all(is.na(graphs$pos)))
 			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph")
-				memb <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder, graph.folder, plot.formats)
+				memb <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=pos.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=pos.att.name, value=memb)
 				graphs$signed <- set.vertex.attribute(graph=graphs$signed, name=pos.att.name, value=memb)
@@ -167,7 +208,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 		for(algo.name in corclu.algos)
 		{	if(!all(is.na(graphs$signed)))
 			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the signed graph")
-				memb <- apply.partitioning.algorithm(graphs$signed, algo.name, part.folder, graph.folder, plot.formats)
+				memb <- apply.partitioning.algorithm(graphs$signed, algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=att.name, value=memb)
 				graphs$signed <- set.vertex.attribute(graph=graphs$signed, name=att.name, value=memb)
@@ -176,19 +217,12 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 	}
 
 	# record graphs (Graphml only) with detected communities, in the partition folder (not the network one)
-	part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=,date, repetition=NA)
 	if(!all(is.na(graphs$neg)))
-	{	graph.file.neg <- file.path(part.folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
 		write.graph(graph=graphs$neg, file=graph.file.neg, format="graphml")
-	}
 	if(!all(is.na(graphs$pos)))
-	{	graph.file.pos <- file.path(part.folder,paste(POSITIVE.FILE,".graphml",sep=""))
 		write.graph(graph=graphs$pos, file=graph.file.pos, format="graphml")
-	}
 	if(!all(is.na(graphs$signed)))
-	{	graph.file <- file.path(part.folder,paste(SIGNED.FILE,".graphml",sep=""))
 		write.graph(graph=graphs$signed, file=graph.file, format="graphml")
-	}
 }
 
 
@@ -208,8 +242,9 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 # corclu.algos: correlation clustering algorithms to apply.
 # repetitions: number of times each algorithm must be applied.
 # plot.formats: formats of the plot files.
+# force: indicates whether existing result files should be loaded and used vs. replaced by new ones.
 #############################################################################################
-partition.graphs <- function(thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+partition.graphs <- function(thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, repetitions, plot.formats, force=TRUE)
 {	# consider each domain individually (including all domains at once)
 #	for(dom in domains)
 	foreach(dom=domains) %dopar%
@@ -225,7 +260,7 @@ partition.graphs <- function(thresh=NA, score.file, domains, dates, country, gro
 			#		"/",dom,"/",DATE.STR.T7[date],"/",sep="")
 			
 			# perform community detection
-			perform.partitioning(thresh, score.file, dom, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+			perform.partitioning(thresh, score.file, dom, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats, force)
 		}
 	}
 }
@@ -246,8 +281,9 @@ partition.graphs <- function(thresh=NA, score.file, domains, dates, country, gro
 # corclu.algos: correlation clustering algorithms to apply.
 # repetitions: number of times each algorithm must be applied (to assess the stability of the results).
 # plot.formats: formats of the plot files.
+# force: indicates whether existing result files should be loaded and used vs. replaced by new ones.
 #############################################################################################
-partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats)
+partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, dates, everything, countries, groups, comdet.algos, corclu.algos, repetitions, plot.formats, force=TRUE)
 {	tlog("***************************************************")
 	tlog("****** PARTITIONING NETWORKS")
 	tlog("***************************************************")
@@ -263,7 +299,7 @@ partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, da
 		grp.meps <- mep.details[idx,]
 		
 		# extract networks
-		partition.graphs(thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats)
+		partition.graphs(thresh, score.file, domains, dates, country=NA, group, comdet.algos, corclu.algos, repetitions, plot.formats, force)
 	}
 	
 	# networks by home country
@@ -277,12 +313,12 @@ partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, da
 		cntr.meps <- mep.details[idx,]
 		
 		# extract networks
-		partition.graphs(thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+		partition.graphs(thresh, score.file, domains, dates, country, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats, force)
 	}
 
 	# extract networks for all data
 	if(everything)
 	{	tlog("..Detect communities for all data")
-		partition.graphs(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats)
+		partition.graphs(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats, force)
 	}
 }
