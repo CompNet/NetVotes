@@ -40,7 +40,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 	while(!process && i<length(plot.formats))
 	{	if(!is.na(plot.formats[i]))
 		{	filename <- paste(plot.file,".",plot.formats[i],sep="")
-			process <- file.exists(filename)
+			process <- !file.exists(filename)
 		}
 		i <- i + 1
 	}
@@ -48,7 +48,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 	# if that is the case, we just need to load the membership values 
 	if(!force && !process)
 	{	tlog("............All the files are already present for algorithm ",algo.name," on folder ",part.folder," so we just load the existing results")
-		mbrshp <- as.matrix(read.table(file=table.file, row.names=FALSE, col.names=FALSE))
+		mbrshp <- as.numeric(as.matrix(read.table(file=table.file, header=FALSE)))
 	}
 		
 	# otherwise, we must apply the community detection algorithm
@@ -146,7 +146,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 	
 	# if the new graph files were already created, load them
 	if(!force && file.exists(graph.file.neg) && file.exists(graph.file.pos) && file.exists(graph.file))
-	{	tlog("........Enhanced graph files already exist: loading them\n")
+	{	tlog("........Enhanced graph files already exist: loading them")
 		g <- suppressWarnings(read.graph(file=graph.file, format="graphml"))
 		g.pos <- suppressWarnings(read.graph(file=graph.file.pos, format="graphml"))
 		g.neg <- suppressWarnings(read.graph(file=graph.file.neg, format="graphml"))
@@ -154,7 +154,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 	}
 	# otherwise, load the existing ones
 	else
-	{	tlog("........No enhanced graph files (or forced processing): loading the raw graph files\n")
+	{	tlog("........No enhanced graph files (or forced processing): loading the raw graph files")
 		graphs <- retrieve.graphs(score=score.file, thresh, country, group, domain, period=date, comp=TRUE)
 	}
 	
