@@ -7,7 +7,7 @@ NetVotes v.2
 NetVotes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation. For source availability and license information see `licence.txt`
 
 * Lab site: http://lia.univ-avignon.fr/
-* GitHub repo: https://github.com/CompNet/nerwip
+* GitHub repo: https://github.com/CompNet/NetVotes
 * Contact: Vincent Labatut <vincent.labatut@univ-avignon.fr> and Rosa Figueiredo <rosa.figueiredo@univ-avignon.fr>
 
 **Note:** this is a development version. Please, use the last available release instead.
