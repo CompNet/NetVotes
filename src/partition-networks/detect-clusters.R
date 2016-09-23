@@ -9,7 +9,7 @@ source("src/define-constants.R")
 source("src/partition-networks/networks-common.R")
 source("src/partition-networks/load-membership.R")
 
-				
+
 
 #############################################################################################
 # Partitions the specified network, using the specified algorithm, and record the result
@@ -45,7 +45,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 		i <- i + 1
 	}
 	
-	# if that is the case, we just need to load the membership values 
+	# if that is the case, we just need to load the membership values
 	if(!force && !process)
 	{	tlog("............All the files are already present for algorithm ",algo.name," on folder ",part.folder," so we just load the existing results")
 		mbrshp <- as.numeric(as.matrix(read.table(file=table.file, header=FALSE)))

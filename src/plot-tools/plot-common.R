@@ -11,7 +11,6 @@ library("scales")
 
 # enables/disables PDF compression
 # (compression causes problems on some multicore machines)
-# (but without compression, files are 10 times larger)
 COMPRESS <- FALSE
 
 

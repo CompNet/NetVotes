@@ -524,22 +524,22 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 		temp.counts <- counts
 	# possibly remove a y-limit if all values are above/below
 	if(!is.na(y.lim[1]))
-	{	temp <- sapply(temp.counts, max)
-		temp2 <- sapply(temp.counts, sum)
+	{	temp <- sapply(temp.counts, function(x) max(x,na.rm=T))
+		temp2 <- sapply(temp.counts, function(x) sum(x,na.rm=T))
 		if((proportions & all(temp/temp2<y.lim[1]))
 			| (!proportions & all(temp<y.lim[1])))
 			y.lim[1] <- NA
 	}
 	if(!is.na(y.lim[2]))
-	{	temp <- sapply(temp.counts, min)
-		temp2 <- sapply(temp.counts, sum)
+	{	temp <- sapply(temp.counts, function(x) min(x,na.rm=T))
+		temp2 <- sapply(temp.counts, function(x) sum(x,na.rm=T))
 		if((proportions & all(temp/temp2>y.lim[2]))
 			| (!proportions & all(temp>y.lim[2])))
 			y.lim[2] <- NA
 	}
 	# possibly complete one missing y limit
 	if(is.na(y.lim[1]))
-	{	temp <- sapply(temp.counts, min)
+	{	temp <- sapply(temp.counts, function(x) min(x,na.rm=T))
 		idx <- which.min(temp)
 		if(proportions)
 			y.lim[1] <- temp[idx] / sapply(temp.counts, sum)[idx]
@@ -547,7 +547,7 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 			y.lim[1] <- temp[idx] 
 	}
 	if(is.na(y.lim[2]))
-	{	temp <- sapply(temp.counts, max)
+	{	temp <- sapply(temp.counts, function(x) max(x,na.rm=T))
 		idx <- which.max(temp)
 		if(proportions)
 			y.lim[2] <- temp[idx] / sapply(temp.counts, sum)[idx]
@@ -601,14 +601,15 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 	if(proportions)
 		col.label <- sprintf("%.2f", round(col.label*100)/100)
 	else
-	{	if(!all(col.label-as.integer(col.label)==0))
-			col.label <- sprintf("%.2f", round(col.label*100)/100)
+	{	idx <- which(!is.na(col.label))
+		if(!all(col.label[idx]-as.integer(col.label[idx])==0))
+			col.label[idx] <- sprintf("%.2f", round(col.label[idx]*100)/100)
 	}
 #	col.label[col.label==0] <- NA
 	if(!is.na(y.lim[1])) # TODO might be usefull elsewhere
-		col.label[col.counts<y.lim[1]] <- NA
+		col.label[is.na(col.counts) | col.counts<y.lim[1]] <- NA
 	if(!is.na(y.lim[2]))
-		col.label[col.counts>y.lim[2]] <- NA
+		col.label[is.na(col.counts) | col.counts>y.lim[2]] <- NA
 	temp <- data.frame(grps=factor(col.groups,levels=group.names), counts=col.counts, bars=factor(col.bars,levels=bar.names), lbl=col.label)
 	if(length(dispersion)>0 && !is.na(dispersion))
 	{	temp[["upper"]] <- col.up.dispersion

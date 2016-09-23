@@ -289,6 +289,8 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 # algo.name: correlation clustering algorithm to treat.
 # perf.table: table containing all the performances, to be updated.
 # plot.formats: formats of the plot files.
+#
+# returns: the updated performance table
 #############################################################################################
 evaluate.corclu.method <- function(graphs, part.folder, algo.name, perf.table, plot.formats)
 {	# process all measures
@@ -307,6 +309,8 @@ evaluate.corclu.method <- function(graphs, part.folder, algo.name, perf.table, p
 		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, partition, algo.name, perf.table)
 		perf.table <- process.corclu.measures(graphs$signed, partition, algo.name, perf.table)
 	}
+
+	return(perf.table)
 }
 
 
@@ -320,6 +324,8 @@ evaluate.corclu.method <- function(graphs, part.folder, algo.name, perf.table, p
 # algo.name: community detection algorithm to treat.
 # perf.table: table containing all the performances, to be updated.
 # plot.formats: formats of the plot files.
+#
+# returns: the updated performance table
 #############################################################################################
 evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, plot.formats)
 {	# partition obtained on the complementary negative subgraph
@@ -354,6 +360,8 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 		perf.table <- process.comdet.measures(graphs$neg, graphs$pos, pos.partition, algo.name, perf.table)
 		perf.table <- process.corclu.measures(graphs$signed, pos.partition, algo.name, perf.table)
 	}
+
+	return(perf.table)
 }
 
 
@@ -436,6 +444,8 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 				# record iteration table
 				table.file <- file.path(part.folder,"performances.csv")
 				temp.table <- perf.table
+#print(temp.table)
+#print(PART.MEAS.NAMES[colnames(perf.table)])
 				colnames(temp.table) <- PART.MEAS.NAMES[colnames(perf.table)]
 				write.csv2(temp.table, file=table.file, 
 					row.names=c(CORCLU.ALGO.NAMES[corclu.algos],COMDET.ALGO.NAMES[comdet.algos],COMDET.ALGO.NAMES[comdet.algo.ncg.value(comdet.algos)]))
@@ -459,19 +469,27 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 				temp.table <- avg.vals$stdev
 				colnames(temp.table) <- PART.MEAS.NAMES[colnames(avg.vals$stdev)]
 				write.csv2(temp.table, file=table.file, row.names=TRUE)
-				
+
+#print(perf.list)
+#print(avg.vals)
 				# plot all of this
-				plot.partition.perf(graphs$signed, perf.list, avg.vals, folder=part.folder, plot.formats)
+				if(all(is.nan(avg.vals$avg)))
+					tlog("........WARNING: cannot plot performance for domain ",dom," and period ",DATE.STR.T7[date]," for there is no data to process")
+				else
+					plot.partition.perf(graphs$signed, perf.list, avg.vals, folder=part.folder, plot.formats)
 				
+				avg.vals$avg[which(is.nan(avg.vals$avg))] <- NA
 				date.perf.list[[d]] <- avg.vals
 			}
 			else
-				date.perf.list[[d]] <- perf.list[[1]]
+				date.perf.list[[d]] <- perf.list[[1]] #TODO there might be a problem with this case: perf.list is not init when there's a single repetition
+				#TODO also, should test if the unique repetition led to uniformly NA results
 		}
 		
 		# generate overall tables and plots for each measure independently
 		for(measure in PART.MEAS.VALUES)
 		{	# build tables representing how each algorithm behaved on each considered period
+#print(measure)
 			data.m <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(dates))
 			rownames(data.m) <- c(corclu.algos,comdet.algos,comdet.algo.ncg.value(comdet.algos))
 			colnames(data.m) <- dates
@@ -505,31 +523,37 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 				colnames(temp.table) <- DATE.STR.T7[colnames(data.m)]
 				write.csv2(temp.table, file=table.file, row.names=TRUE)
 			}
+#print(data.m)
 			
 			# plot the table(s) as barplots whose bars represent periods and bar groups correspond to algorithms
 			# (i.e. something quite similar to Israel's plot from the ENIC paper)
 #			bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g)) # TODO should actually process the actual bounds and use "y.lim=c(min(bounds),max(bounds))" later when calling the plot function
 			algos <- rownames(data.m)
-			if(repetitions>1)
-			{	dm <- lapply(algos, function(a) data.m[a,])
-				dsd <- lapply(algos, function(a) data.sd[a,])
-				plot.file <- file.path(part.folder,paste(measure,"-mean-performances",sep=""))
-				plot.unif.grouped.count.bars(plot.file, group.names=algos, bar.names=DATE.STR.T7[dates],
-					counts=dm, dispersion=dsd, proportions=FALSE,
-					y.lim=PART.MEAS.BOUNDS[[measure]](NA),
-					x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
-					plot.title=paste("Average ", PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
-					x.rotate=TRUE, format=plot.formats)
-			}
+			if(all(is.na(data.m)))
+				tlog("........WARNING: cannot plot performance for measure ",measure," for there is no data to process")
 			else
-			{	dm <- lapply(algos, function(a) data.m[a,])
-				plot.file <- file.path(part.folder,paste(measure,"-single-performances",sep=""))
-				plot.unif.grouped.count.bars(plot.file, group.names=algos, bar.names=DATE.STR.T7[dates],
-					counts=dm, dispersion=NA, proportions=FALSE,
-					y.lim=PART.MEAS.BOUNDS[[measure]](NA),
-					x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
-					plot.title=paste(PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
-					x.rotate=TRUE, format=plot.formats)
+			{	if(repetitions>1)
+				{	dm <- lapply(algos, function(a) data.m[a,])
+#print(dm)
+					dsd <- lapply(algos, function(a) data.sd[a,])
+						plot.file <- file.path(part.folder,paste(measure,"-mean-performances",sep=""))
+					plot.unif.grouped.count.bars(plot.file, group.names=algos, bar.names=DATE.STR.T7[dates],
+						counts=dm, dispersion=dsd, proportions=FALSE,
+						y.lim=PART.MEAS.BOUNDS[[measure]](NA),
+						x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
+						plot.title=paste("Average ", PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
+						x.rotate=TRUE, format=plot.formats)
+				}
+				else
+				{	dm <- lapply(algos, function(a) data.m[a,])
+					plot.file <- file.path(part.folder,paste(measure,"-single-performances",sep=""))
+					plot.unif.grouped.count.bars(plot.file, group.names=algos, bar.names=DATE.STR.T7[dates],
+						counts=dm, dispersion=NA, proportions=FALSE,
+						y.lim=PART.MEAS.BOUNDS[[measure]](NA),
+						x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
+						plot.title=paste(PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
+						x.rotate=TRUE, format=plot.formats)
+				}
 			}
 		}
 	}

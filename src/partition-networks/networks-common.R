@@ -68,7 +68,7 @@ retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
 # 
 # l: list of same-sized matrices.
 #
-# returns: a list containing an "avg" and an "stdev" matrices, corresponding to the average
+# returns: a list containing an "avg" and a "stdev" matrices, corresponding to the average
 #          and standard deviation of each list of matrix elements, respectively.
 #############################################################################################
 average.matrix.list <- function(l)
