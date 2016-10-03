@@ -80,7 +80,14 @@ score.file <- "m3"					# see folder in/score
 thresh <- NA						# both thresholds automatically estimated (through k-means)
 
 ##################### partitioning algorithms
-comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
+#comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
+comdet.algos <- c(
+#	COMDET.ALGO.EDGEBETW,
+	COMDET.ALGO.INFOMAP,
+	COMDET.ALGO.LABELPROP,
+	COMDET.ALGO.LOUVAIN,
+	COMDET.ALGO.WALKTRAP
+)
 #corclst.algos <- CORCLST.ALGO.VALUES	# correlation clustering algorithms
 corclst.algos <- c()
 repetitions <- 5						# number of times each algorithm must be applied
@@ -147,8 +154,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-partition.all.graphs(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
+#partition.all.graphs(data$mep.details, thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
 
 
 #############################################################################################
@@ -161,8 +168,8 @@ partition.all.graphs(data$mep.details, thresh, score.file,
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
-#compare.all.partitions(data$mep.details, thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
+compare.all.partitions(data$mep.details, thresh, score.file,
+		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 
 
@@ -171,7 +178,7 @@ partition.all.graphs(data$mep.details, thresh, score.file,
 stopCluster(cl)
 
 
-
+tlog("Done!")
 #############################################################################################
 #############################################################################################
 #############################################################################################
@@ -196,3 +203,6 @@ stopCluster(cl)
 # Stats sur données brutes
 # - on pourrait aussi voir le comportement individuel: nombre de votes de chaque type pour une personne.
 #   ça peut être complet, agrégé par année, par législature... 
+
+
+# nohup R --vanilla < src/main.R > terminal.output.txt &

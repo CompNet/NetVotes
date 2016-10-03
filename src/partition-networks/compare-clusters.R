@@ -94,43 +94,46 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 				partitions[[neg.algo.name]] <- as.matrix(read.table(partition.file))
 		}
 		
-		# init iteration matrices
-		mats <- list() 
-		for(meas in measures)
-		{	m <- matrix(NA, nrow=length(partitions), ncol=length(partitions))
-			rownames(m) <- names(partitions)
-			colnames(m) <- names(partitions)
-			mats[[meas]] <- m
-		}
+		# check that we have at least two partitions to compare
+		if(length(partitions)>1)
+		{	# init iteration matrices
+			mats <- list() 
+			for(meas in measures)
+			{	m <- matrix(NA, nrow=length(partitions), ncol=length(partitions))
+				rownames(m) <- names(partitions)
+				colnames(m) <- names(partitions)
+				mats[[meas]] <- m
+			}
 		
-		# compare partitions
-		for(i in 1:(length(partitions)-1))
-		{	#print(i);print(length(partitions))
-			partition1 <- partitions[[i]]
-			for(j in (i+1):length(partitions))
-			{	tlog("........Processing ",names(partitions)[i]," vs ",names(partitions)[j])
-				partition2 <- partitions[[j]]
-				vals <- compare.partition.pair(partition1, partition2, measures)
-				#print(vals)
-				if(any(is.nan(vals)))
-					tlog("..........WARNING: some measures returned NaN, which will appear as NA in the recorded file")
-				for(meas in measures)
-				{	mats[[meas]][i,j] <- vals[meas]
-					mats[[meas]][j,i] <- vals[meas]
+			# compare partitions
+			for(i in 1:(length(partitions)-1))
+			{	#print(i);print(length(partitions))
+				partition1 <- partitions[[i]]
+				for(j in (i+1):length(partitions))
+				{	tlog("........Processing ",names(partitions)[i]," vs ",names(partitions)[j])
+					partition2 <- partitions[[j]]
+					vals <- compare.partition.pair(partition1, partition2, measures)
+					#print(vals)
+					if(any(is.nan(vals)))
+						tlog("..........WARNING: some measures returned NaN, which will appear as NA in the recorded file")
+					for(meas in measures)
+					{	mats[[meas]][i,j] <- vals[meas]
+						mats[[meas]][j,i] <- vals[meas]
+					}
 				}
 			}
-		}
 		
-		# record iteration matrices
-		for(meas in measures)
-		{	table.file <- file.path(part.folder,paste("comparison-",meas,".csv",sep=""))
-			write.csv2(mats[[meas]], file=table.file, row.names=TRUE)
-		}
+			# record iteration matrices
+			for(meas in measures)
+			{	table.file <- file.path(part.folder,paste("comparison-",meas,".csv",sep=""))
+				write.csv2(mats[[meas]], file=table.file, row.names=TRUE)
+			}
 		
-		# update the list used to average
-		if(repetitions>1)
-		{	for(meas in measures)
-				avg.list[[meas]][[r]] <- mats[[meas]]
+			# update the list used to average
+			if(repetitions>1)
+			{	for(meas in measures)
+					avg.list[[meas]][[r]] <- mats[[meas]]
+			}
 		}
 	}
 	
@@ -138,11 +141,13 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 	if(repetitions>1)
 	{	part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=date, repetition=NA)
 		for(meas in measures)
-		{	tmp <- average.matrix.list(avg.list[[meas]])
-			table.file <- file.path(part.folder,paste("comparison-mean-",meas,".csv",sep=""))
-			write.csv2(tmp$avg, file=table.file, row.names=TRUE)
-			table.file <- file.path(part.folder,paste("comparison-stdev-",meas,".csv",sep=""))
-			write.csv2(tmp$stdev, file=table.file, row.names=TRUE)
+		{	if(length(avg.list[[meas]])>0)
+			{	tmp <- average.matrix.list(avg.list[[meas]])
+				table.file <- file.path(part.folder,paste("comparison-mean-",meas,".csv",sep=""))
+				write.csv2(tmp$avg, file=table.file, row.names=TRUE)
+				table.file <- file.path(part.folder,paste("comparison-stdev-",meas,".csv",sep=""))
+				write.csv2(tmp$stdev, file=table.file, row.names=TRUE)
+			}
 		}
 	}
 }
@@ -182,7 +187,7 @@ compare.partitions <- function(thresh=NA, score.file, domains, dates, country, g
 			#		"/",sep="")
 			
 			# compare algorithm performances
-					tlog("......Compare partitioning algorithm performances")
+			tlog("......Compare partitioning algorithm performances")
 			compare.partitions.measures(thresh, score.file, domain=dom, date, country, group, comdet.algos, corclu.algos, measures, repetitions)
 		}
 	}
