@@ -115,7 +115,7 @@ filter.docs.by.date.and.domain <- function(doc.details, start.date, end.date, do
 # mep.details: table containing the details of the MEPs.
 # countries: a vector of countries, or NA to use all keep countries.
 #
-# returns: a vector of MEP ids, corresponding to the those matching the countries.
+# returns: a vector of MEP ids, corresponding to those matching the countries.
 #############################################################################################
 filter.meps.by.country <- function(mep.details, countries)
 {	# possibly add all countries

@@ -111,7 +111,7 @@ plot.formats <- c(
 #if(!is.na(cl))
 #	cl <- makeCluster(cn)		# automatically use all the available processors
 #else
-	cl <- makeCluster(8)		# manually set the number of processors to use
+	cl <- makeCluster(4)		# manually set the number of processors to use
 registerDoParallel(cl)
 
 
@@ -147,8 +147,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Extract all the networks (just a bit faster)
 #############################################################################################
-#extract.all.networks(data$mep.details, thresh, score.file,
-#		domains, dates, everything, countries, groups, plot.formats)
+extract.all.networks(data$mep.details, thresh, score.file,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 #############################################################################################
@@ -168,8 +168,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
-compare.all.partitions(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
+#compare.all.partitions(data$mep.details, thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 
 

@@ -155,7 +155,7 @@ V(result)$Lastname <- lastnames
 		t <- cbind(t,E(result)$weight)		# add weights as the third column
 		graph.file <- paste(graph.base,".G",sep="")
 		write.table(data.frame(nrow(mep.details),nrow(t)), file=graph.file, append=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)	# write header
-		write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)								# write proper graph
+		write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)										# write proper graph
 		
 		# process network stats
 		tlog("........Processing network stats...")
@@ -221,8 +221,10 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 			else
 			{	# retrieve agreement
 				agreement <- as.matrix(read.csv2(file=table.file, row.names=1))
+				mep.ids <- as.integer(rownames(agreement))
+				idx <- match(mep.ids,mep.details[,COL.MEPID])
 				# build and record network
-				extract.network(agreement, mep.details, thresh, folder, graph.name, plot.formats)
+				extract.network(agreement, mep.details[idx,], thresh, folder, graph.name, plot.formats)
 			}
 		}
 	}
