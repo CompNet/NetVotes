@@ -10,6 +10,8 @@
 #############################################################################################
 # Folders
 #############################################################################################
+# external libraries folder
+LIB.FOLDER <- "lib"
 # general input folder
 IN.FOLDER <- "in"
 	# folder containing the score matrices
@@ -478,44 +480,3 @@ PART.MEAS.NAMES <- c(PART.MEAS.NAMES,COMDET.MEAS.NAMES)
 PART.MEAS.BOUNDS <- c(PART.MEAS.BOUNDS,COMDET.MEAS.BOUNDS)
 
 
-#############################################################################################
-# Unsigned networks partitioning algorithms info
-#############################################################################################
-COMDET.ALGO.VALUES <- c()
-COMDET.ALGO.NAMES <- c()
-COMDET.ALGO.EDGEBETW <- "EB"
-	# this implementation will use the weights and directions, if present
-	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.EDGEBETW)
-	COMDET.ALGO.NAMES[COMDET.ALGO.EDGEBETW] <- "EdgeBetweenness"
-COMDET.ALGO.INFOMAP <- "IM"
-	# this implementation will use the weights and directions, if present
-	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.INFOMAP)
-	COMDET.ALGO.NAMES[COMDET.ALGO.INFOMAP] <- "InfoMap"
-COMDET.ALGO.LABELPROP <- "LP"
-	# this implementation will use the weights and directions, if present
-	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.LABELPROP)
-	COMDET.ALGO.NAMES[COMDET.ALGO.LABELPROP] <- "LabelPropagation"
-COMDET.ALGO.LOUVAIN <- "LV"
-	# this implementation will use the weights, if present, but cannot use directions
-	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.LOUVAIN)
-	COMDET.ALGO.NAMES[COMDET.ALGO.LOUVAIN] <- "Louvain"
-COMDET.ALGO.WALKTRAP <- "WT"
-	# this implementation will use the weights, if present, and simply ignores directions
-	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.WALKTRAP)
-	COMDET.ALGO.NAMES[COMDET.ALGO.WALKTRAP] <- "WalkTrap"
-comdet.algo.ncg.value <- function(value) paste("NCG",value,sep="-")	# returns the negative complementary value (i.e. short code) associated to the specified (positive) value
-for(value in COMDET.ALGO.VALUES) COMDET.ALGO.NAMES[comdet.algo.ncg.value(value)] <- paste("NCG",COMDET.ALGO.NAMES[value])
-PART.ALGO.VALUES <- c(COMDET.ALGO.VALUES)
-PART.ALGO.NAMES <- c(COMDET.ALGO.NAMES)
-
-
-#############################################################################################
-# Signed networks partitioning algorithms info
-#############################################################################################
-CORCLU.ALGO.VALUES <- c()
-CORCLU.ALGO.NAMES <- c()
-CORCLU.ALGO.PILS <- "PI"
-	CORCLU.ALGO.VALUES <- c(CORCLU.ALGO.VALUES, CORCLU.ALGO.PILS)
-	CORCLU.ALGO.NAMES[CORCLU.ALGO.PILS] <- "pILS"
-PART.ALGO.VALUES <- c(PART.ALGO.VALUES,CORCLU.ALGO.VALUES)
-PART.ALGO.NAMES <- c(PART.ALGO.NAMES,CORCLU.ALGO.NAMES)

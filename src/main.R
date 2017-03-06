@@ -75,9 +75,9 @@ groups <- GROUP.VALUES							# which group to process individually
 
 ##################### score matrix used to process agreement
 score.file <- "m3"					# see folder in/score
-#thresh <- c(0,0)					# no thresholding at all
+thresh <- c(0,0)					# no thresholding at all
 #thresh <- c(-0.34,+0.34)			# thresholds applied to agreement index values during network extraction (use c(0,0) for no filtering)
-thresh <- NA						# both thresholds automatically estimated (through k-means)
+#thresh <- NA						# both thresholds automatically estimated (through k-means)
 
 ##################### partitioning algorithms
 #comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
@@ -88,8 +88,13 @@ comdet.algos <- c(
 	COMDET.ALGO.LOUVAIN,
 	COMDET.ALGO.WALKTRAP
 )
-#corclst.algos <- CORCLST.ALGO.VALUES	# correlation clustering algorithms
-corclst.algos <- c()
+corclst.algos <- c()					# correlation clustering algorithms
+#corclst.algos <- c(
+#	get.grasp.code(rcc=FALSE, l=1, k=7, alpha=1.0, gain=0),
+#	get.grasp.code(rcc=TRUE, l=1, k=7, alpha=1.0, gain=0),
+#	get.ils.code(rcc=FALSE, l=1, k=7, alpha=1.0, gain=0),
+#	get.ils.code(rcc=TRUE, l=1, k=7, alpha=1.0, gain=0)
+#)
 repetitions <- 5						# number of times each algorithm must be applied
 
 ##################### measures used to compare partitions

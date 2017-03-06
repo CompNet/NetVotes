@@ -31,7 +31,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 	# init file names
 	table.file <- file.path(part.folder,paste(algo.name,"-membership.txt",sep=""))
 	idx <- regexpr(" -",g$name)[1]
-	g$name <- paste(PART.ALGO.NAMES[algo.name],substring(g$name,idx,nchar(g$name)),sep="")
+	g$name <- paste(get.algo.names(algo.name),substring(g$name,idx,nchar(g$name)),sep="")
 	plot.file <- file.path(part.folder,paste(algo.name,"-membership",sep=""))
 	
 	# check if all the files already exist
@@ -187,7 +187,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# complementary negative graph
 			if(!all(is.na(graphs$neg)))
-			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the complementary negative graph")
+			{	tlog("..........Applying ",get.algo.names(algo.name)," to the complementary negative graph")
 				memb <- apply.partitioning.algorithm(graphs$neg, neg.algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=neg.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=neg.att.name, value=memb)
@@ -196,7 +196,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# positive graph
 			if(!all(is.na(graphs$pos)))
-			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the positive graph")
+			{	tlog("..........Applying ",get.algo.names(algo.name)," to the positive graph")
 				memb <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=pos.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=pos.att.name, value=memb)
@@ -207,7 +207,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 		# apply all correlation clustering algorithms
 		for(algo.name in corclu.algos)
 		{	if(!all(is.na(graphs$signed)))
-			{	tlog("..........Applying ",COMDET.ALGO.NAMES[algo.name]," to the signed graph")
+			{	tlog("..........Applying ",get.algo.names(algo.name)," to the signed graph")
 				memb <- apply.partitioning.algorithm(graphs$signed, algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=att.name, value=memb)

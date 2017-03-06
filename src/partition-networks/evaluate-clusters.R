@@ -33,7 +33,7 @@ record.partition.stats <- function(algo.name, partition, folder, plot.formats)
 		counts=sort(comsz,decreasing=TRUE), dispersion=NA, proportions=FALSE, areas=FALSE, 
 		y.lim=c(0,NA), 
 		x.label="Community", y.label="Count", 
-		plot.title=paste("Community sizes for ",PART.ALGO.NAMES[algo.name],sep=""), 
+		plot.title=paste("Community sizes for ",get.algo.names(algo.name),sep=""), 
 		x.rotate=FALSE, format=plot.formats)
 }
 
@@ -221,13 +221,13 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 					counts=data, dispersion=NA, proportions=FALSE, areas=FALSE, 
 					y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 					x.label="Repetition", y.label=PART.MEAS.NAMES[measure], 
-					plot.title=paste(PART.MEAS.NAMES[measure]," for each repetition of ",PART.ALGO.NAMES[algo],sep=""), 
+					plot.title=paste(PART.MEAS.NAMES[measure]," for each repetition of ",get.algo.names(algo),sep=""), 
 					x.rotate=FALSE, format=plot.formats)
 			}
 			
 			# generate the average perf plot (one bar for each algo)
 			plot.file <- file.path(folder,paste(measure,"-mean-performances",sep=""))
-			plot.unif.indiv.count.bars(plot.file, bar.names=PART.ALGO.NAMES[algos], 
+			plot.unif.indiv.count.bars(plot.file, bar.names=get.algo.names(algos), 
 				counts=avg.vals[[1]][,measure], dispersion=avg.vals[[2]][,measure], proportions=FALSE, areas=FALSE, 
 				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 				x.label="Algorithm", y.label=PART.MEAS.NAMES[measure], 
@@ -238,7 +238,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 		# if there was only a single repetition
 		else
 		{ 	plot.file <- file.path(folder,paste(measure,"-single-performances",sep=""))
-			plot.unif.indiv.count.bars(plot.file, bar.names=PART.ALGO.NAMES[algos], 
+			plot.unif.indiv.count.bars(plot.file, bar.names=get.algo.names(algos), 
 				counts=perf.list[[1]][,measure], dispersion=NA, proportions=FALSE, areas=FALSE, 
 				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 				x.label="Algorithm", y.label=PART.MEAS.NAMES[measure], 
@@ -448,7 +448,7 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 #print(PART.MEAS.NAMES[colnames(perf.table)])
 				colnames(temp.table) <- PART.MEAS.NAMES[colnames(perf.table)]
 				write.csv2(temp.table, file=table.file, 
-					row.names=c(CORCLU.ALGO.NAMES[corclu.algos],COMDET.ALGO.NAMES[comdet.algos],COMDET.ALGO.NAMES[comdet.algo.ncg.value(comdet.algos)]))
+					row.names=c(CORCLU.ALGO.NAMES[corclu.algos],get.algo.names(comdet.algos),get.algo.names(comdet.algo.ncg.value(comdet.algos))))
 				
 				# update the list used to process average and plots
 				if(repetitions>1)

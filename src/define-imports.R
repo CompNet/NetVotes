@@ -5,6 +5,7 @@
 # 05/2016 Vincent Labatut
 #############################################################################################
 source("src/define-constants.R")
+source("src/define-algos.R")
 source("src/define-functions.R")
 source("src/define-paths.R")
 
