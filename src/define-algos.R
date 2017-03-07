@@ -255,9 +255,9 @@ get.algo.commands <- function(algo.names, ...)
 {	result <- c()
 	
 	for(algo.name in algo.names)
-	{	if(startsWith(algo.name,"ILS"))
+	{	if(startsWith(algo.name,COMDET.ALGO.ILS))
 			result <- c(result, get.ils.command(algo.name, ...))
-		else if(startsWith(algo.name,"Grasp"))
+		else if(startsWith(algo.name,COMDET.ALGO.GRASP))
 			result <- c(result, get.grasp.command(algo.name, ...))
 	}
 	

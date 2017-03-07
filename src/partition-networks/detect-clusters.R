@@ -47,13 +47,13 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 	
 	# if that is the case, we just need to load the membership values
 	if(!force && !process)
-	{	tlog("............All the files are already present for algorithm ",algo.name," on folder ",part.folder," so we just load the existing results")
+	{	tlog(12,"All the files are already present for algorithm ",algo.name," on folder ",part.folder," so we just load the existing results")
 		mbrshp <- as.numeric(as.matrix(read.table(file=table.file, header=FALSE)))
 	}
 		
 	# otherwise, we must apply the community detection algorithm
 	else
-	{	tlog("............Applying algorithm ",algo.name," on folder ",part.folder)
+	{	tlog(12,"Applying algorithm ",algo.name," on folder ",part.folder)
 		coms <- NA
 		mbrshp <- NA
 		if(algo.name==COMDET.ALGO.EDGEBETW | algo.name==comdet.algo.ncg.value(COMDET.ALGO.EDGEBETW))
@@ -89,17 +89,18 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 		# apply the correlation clustering algorithm (which are external programs)
 		else
 		{	# set the external command and invoke it
-			cmd <- get.algo.commands(algo.names, input.folder=net.folder, output.folder=part.folder)
+			cmd <- get.algo.commands(algo.names=algo.name, input.folder=graph.folder, output.folder=part.folder)
+			tlog(14,"Command: ",cmd)
 			system(command=cmd)
 			# load the resulting partition file
-			mbrshp <- load.external.partition(part.folder, algo.name, keep.tmp=TRUE)
+			mbrshp <- load.external.partition(part.folder, algo.name, keep.tmp=FALSE)
 		}
 		
 		# record the result
-		if(all(is.na(coms)))
-			tlog("............WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder)
+		if(all(is.na(coms)) && all(is.na(mbrshp)))
+			tlog(12,"WARNING: Problem while applying partitioning algorithm ",algo.name," on folder ",part.folder)
 		else
-		{	if(is.na(mbrshp))
+		{	if(all(is.na(mbrshp)))
 				mbrshp <- as.vector(membership(coms))
 			while(min(mbrshp)==0)
 				mbrshp <- mbrshp + 1
@@ -108,7 +109,6 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 			# record a graphical representation of the detected partition
 			plot.network(g, membership=mbrshp, plot.file, format=plot.formats)
 		}
-stop("END TEST")		
 	}
 	
 	return(mbrshp)
@@ -145,7 +145,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 	
 	# if the new graph files were already created, load them
 	if(!force && file.exists(graph.file.neg) && file.exists(graph.file.pos) && file.exists(graph.file))
-	{	tlog("........Enhanced graph files already exist: loading them")
+	{	tlog(8,"Enhanced graph files already exist: loading them")
 		g <- suppressWarnings(read.graph(file=graph.file, format="graphml"))
 		g.pos <- suppressWarnings(read.graph(file=graph.file.pos, format="graphml"))
 		g.neg <- suppressWarnings(read.graph(file=graph.file.neg, format="graphml"))
@@ -153,13 +153,13 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 	}
 	# otherwise, load the existing ones
 	else
-	{	tlog("........No enhanced graph files (or forced processing): loading the raw graph files")
+	{	tlog(8,"No enhanced graph files (or forced processing): loading the raw graph files")
 		graphs <- retrieve.graphs(score=score.file, thresh, country, group, domain, period=date, comp=TRUE)
 	}
 	
 	# the process might be repeated several times
 	for(r in 1:repetitions)
-	{	tlog("........Processing iteration ",r,"/",repetitions)
+	{	tlog(8,"Processing iteration ",r,"/",repetitions)
 		# setup iteration folder
 		#folder <- paste(PARTITIONS.FOLDER,"/",subfolder,sep="")
 		#r.folder <- paste(folder,r,"/",sep="")
@@ -186,7 +186,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# complementary negative graph
 			if(!all(is.na(graphs$neg)))
-			{	tlog("..........Applying ",get.algo.names(algo.name)," to the complementary negative graph")
+			{	tlog(10,"Applying ",get.algo.names(algo.name)," to the complementary negative graph")
 				memb <- apply.partitioning.algorithm(graphs$neg, neg.algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=neg.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=neg.att.name, value=memb)
@@ -195,7 +195,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# positive graph
 			if(!all(is.na(graphs$pos)))
-			{	tlog("..........Applying ",get.algo.names(algo.name)," to the positive graph")
+			{	tlog(10,"Applying ",get.algo.names(algo.name)," to the positive graph")
 				memb <- apply.partitioning.algorithm(graphs$pos, algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=pos.att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=pos.att.name, value=memb)
@@ -205,8 +205,14 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 		
 		# apply all correlation clustering algorithms
 		for(algo.name in corclu.algos)
-		{	if(!all(is.na(graphs$signed)))
-			{	tlog("..........Applying ",get.algo.names(algo.name)," to the signed graph")
+		{	# setup attribute name
+			if(repetitions>1)
+				att.name <- paste(algo.name,'-',r,sep="")
+			else
+				att.name <- algo.name
+			
+			if(!all(is.na(graphs$signed)))
+			{	tlog(10,"Applying ",get.algo.names(algo.name)," to the signed graph")
 				memb <- apply.partitioning.algorithm(graphs$signed, algo.name, part.folder, graph.folder, plot.formats, force)
 				graphs$neg <- set.vertex.attribute(graph=graphs$neg, name=att.name, value=memb)
 				graphs$pos <- set.vertex.attribute(graph=graphs$pos, name=att.name, value=memb)
@@ -245,13 +251,13 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 #############################################################################################
 partition.graphs <- function(thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, repetitions, plot.formats, force=TRUE)
 {	# consider each domain individually (including all domains at once)
-#	for(dom in domains)
-	foreach(dom=domains) %dopar%
+	for(dom in domains)
+#	foreach(dom=domains) %dopar%
 	{	source("src/define-imports.R")
 		
 		# consider each time period (each individual year as well as the whole term)
 		for(date in dates)
-		{	tlog("......Detect communities for domain ",dom," and period ",DATE.STR.T7[date])
+		{	tlog(6,"Detect communities for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# setup graph subfolder
 			#folder <- paste(subfolder,"/",score.file,
@@ -288,7 +294,7 @@ partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, da
 	tlog("***************************************************")
 	
 	# networks by political group
-	tlog("..Detect communities by group")
+	tlog(2,"Detect communities by group")
 	for(group in groups)
 	{	tlog("....Detect communities for group ",group)
 		
@@ -302,9 +308,9 @@ partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, da
 	}
 	
 	# networks by home country
-	tlog("..Detect communities by country")
+	tlog(2,"Detect communities by country")
 	for(country in countries)
-	{	tlog("....Detect communities for country ",country)
+	{	tlog(4,"Detect communities for country ",country)
 		
 		# select data
 		filtered.mep.ids <- filter.meps.by.country(mep.details,country)
@@ -317,7 +323,7 @@ partition.all.graphs <- function(mep.details, thresh=NA, score.file, domains, da
 
 	# extract networks for all data
 	if(everything)
-	{	tlog("..Detect communities for all data")
+	{	tlog(2,"Detect communities for all data")
 		partition.graphs(thresh, score.file, domains, dates, country=NA, group=NA, comdet.algos, corclu.algos, repetitions, plot.formats, force)
 	}
 }

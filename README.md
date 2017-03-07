@@ -51,6 +51,7 @@ Here are the folders composing the project:
    * [`msm`](https://cran.r-project.org/web/packages/msm/index.html)
    * [`foreach`](https://cran.r-project.org/web/packages/foreach/index.html)
    * [`doParallel`](https://cran.r-project.org/web/packages/doParallel/index.html)
+   * [`XML`](https://cran.r-project.org/web/packages/XML/index.html)
 3. Download this project from GitHub.
 
 In order to reproduce the process from the papers, you also need to retrieve the data from Figshare. Just download and unzip the archive so that its folders match the project root. You will then have both the input raw data and the outputs resulting from the process. Apply the scripts again should therefore lead to the same results.
@@ -95,9 +96,11 @@ For different data sources, you may have to adapt the functions used to load the
 
 
 # Dependencies
-* [`igraph`](http://igraph.org/r/) package: used to build and handle graphs.
+* [`igraph`](http://igraph.org/r/) package: build and handle graphs.
 * [`plotrix`](https://cran.r-project.org/web/packages/plotrix/index.html) and [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) packages: plot generation.
 * [`foreach`](https://cran.r-project.org/web/packages/foreach/index.html) and [`doParallel`](https://cran.r-project.org/web/packages/doParallel/index.html) packages: parallel processing.
+* [`msm`](https://cran.r-project.org/web/packages/msm/index.html): used when generating random data for testing.
+* [`XML`](https://cran.r-project.org/web/packages/XML/index.html): parsing XML documents (when extracting data from certain Web databases).
 
 
 # To-do List
@@ -105,6 +108,5 @@ For different data sources, you may have to adapt the functions used to load the
 
 
 # References
-* **[MFLM'15]** Mendonça, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015.
-http://arxiv.org/abs/1507.04215
+* **[MFLM'15]** Mendonça, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015. [arXiv](http://arxiv.org/abs/1507.04215) -- [IEEE Xplore Digital Library](http://ieeexplore.ieee.org/document/7321245/) -- Doi: [10.1109/ENIC.2015.25](https://doi.org/10.1109/ENIC.2015.25)
 
