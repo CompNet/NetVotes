@@ -36,6 +36,14 @@ for(value in COMDET.ALGO.VALUES) COMDET.ALGO.NAMES[comdet.algo.ncg.value(value)]
 
 
 #############################################################################################
+# Signed networks partitioning algorithms info
+#############################################################################################
+COMDET.ALGO.ILS <- "ILS"
+COMDET.ALGO.GRASP <- "GRASP"
+
+
+
+#############################################################################################
 # Returns the code (short name) for the Iterated Local Search (ILS) partioning method. See 
 # the algorithm documentation for more details.
 #
@@ -54,7 +62,7 @@ for(value in COMDET.ALGO.VALUES) COMDET.ALGO.NAMES[comdet.algo.ncg.value(value)]
 # returns: the short name corresponding to the ILS method with the specified parameters.
 #############################################################################################
 get.ils.code <- function(l, k, alpha, rcc, gain, perturbation)
-{	result <- "ILS"
+{	result <- COMDET.ALGO.ILS
 	
 	if(rcc)
 		result <- paste0(result,"-RCC")
@@ -76,26 +84,28 @@ get.ils.code <- function(l, k, alpha, rcc, gain, perturbation)
 # the algorithm documentation for more details.
 #
 # algo.name: short code associated to the algorithm.
-# input.file: complete path to the targeted graph file.
-# output.folder: complete path to the folder in which the produced files will be placed.
+# input.folder: folder containing targeted graph file.
+# out.folder: folder in which the produced files will be placed.
 # time.limit: maximum duration of the processing.
 # iter.nbr: maximum number of iterations of the processing.
 #
 # returns: the command allowing to invoke the program externally.
 #############################################################################################
-get.ils.command <- function(algo.name, input.file, output.folder, time.limit=1800, iter.nbr=500)
+get.ils.command <- function(algo.name, input.folder, out.folder, time.limit=1800, iter.nbr=500)
 {	# init
-	command.folder <- file.path(LIB.FOLDER,"mestrado","grasp","build")
+	input.file <- file.path(getwd(), input.folder, paste0(SIGNED.FILE,".G"))
+	output.folder <- file.path(getwd(), out.folder, algo.name)
+	command.folder <- file.path(getwd(),LIB.FOLDER,"mestrado","grasp","build")
 	result <- file.path(command.folder, "graspcc")
-	params <- c()
+	result <- paste0("mpirun -n 1 ",result)
 	
 	# break down the specified code (short name)
 	tmp <- strsplit(x=algo.name, split="_", fixed=TRUE)[[1]]
-	params <- sapply(tmp[2:length(tmp)], function(s) 
-		{	res <- as.numeric(substr(s,2,nchar(s)))
-			names(res) <- substr(s,1,1)
-			return(res)
-		})
+	params <- c()
+	for(s in tmp[2:length(tmp)])
+	{	params <- c(params,substr(s,2,nchar(s)))
+		names(params)[length(params)] <- substr(s,1,1)
+	}
 			
 	# rcc flag
 	rcc.flag <- strsplit(x=tmp[1], split="-", fixed=TRUE)[[1]][2]
@@ -105,17 +115,17 @@ get.ils.command <- function(algo.name, input.file, output.folder, time.limit=180
 		params["rcc"] <- 0
 	
 	# build command
-	result <- paste0("--alpha ",params["a"])
-	result <- paste0("--iterations ",iter.nbr)
-	result <- paste0("--neighborhood_size ",params["l"])
-	result <- paste0("--rcc ",params["rcc"])
-	result <- paste0("-k ",params["k"])
-	result <- paste0("--time-limit ",time.limit)
-	result <- paste0("--input-file",input.file)
-	result <- paste0("--output-folder",output.folder)
-	result <- paste0("--gain-function-type ",params["g"])
-	result <- paste0("--strategy ","ILS") 
-	result <- paste0("--perturbationLevelMax ",params["p"])
+	result <- paste0(result, " --alpha ",params["a"])
+	result <- paste0(result, " --iterations ",iter.nbr)
+	result <- paste0(result, " --neighborhood_size ",params["l"])
+	result <- paste0(result, " --rcc ",params["rcc"])
+	result <- paste0(result, " --k ",params["k"])
+	result <- paste0(result, " --time-limit ",time.limit)
+	result <- paste0(result, " --input-file ",input.file)
+	result <- paste0(result, " --output-folder ",output.folder)
+	result <- paste0(result, " --gain-function-type ",params["g"])
+	result <- paste0(result, " --strategy ","ILS") 
+	result <- paste0(result, " --perturbationLevelMax ",params["p"])
 		
 	return(result)
 }
@@ -140,7 +150,7 @@ get.ils.command <- function(algo.name, input.file, output.folder, time.limit=180
 # returns: the short name corresponding to the Grasp method with the specified parameters.
 #############################################################################################
 get.grasp.code <- function(rcc, l, k, alpha, gain, perturbation)
-{	result <- "Grasp"
+{	result <- COMDET.ALGO.GRASP
 	
 	if(rcc)
 		result <- paste0(result,"-RCC")
@@ -162,26 +172,27 @@ get.grasp.code <- function(rcc, l, k, alpha, gain, perturbation)
 # method. See the algorithm documentation for more details.
 #
 # algo.name: short code associated to the algorithm.
-# input.file: complete path to the targeted graph file.
+# input.folder: complete path to the folder containing targeted graph file.
 # output.folder: complete path to the folder in which the produced files will be placed.
 # time.limit: maximum duration of the processing.
 # iter.nbr: maximum number of iterations of the processing.
 #
 # returns: the command allowing to invoke the program externally.
 #############################################################################################
-get.grasp.command <- function(algo.name, input.file, output.folder, time.limit=1800, iter.nbr=500)
+get.grasp.command <- function(algo.name, input.folder, output.folder, time.limit=1800, iter.nbr=500)
 {	# init
-	command.folder <- file.path(LIB.FOLDER,"mestrado","grasp","build")
+	input.file <- file.path(getwd(), input.folder, paste0(SIGNED.FILE,".G"))
+	command.folder <- file.path(getwd(),LIB.FOLDER,"mestrado","grasp","build")
 	result <- file.path(command.folder, "graspcc")
-	params <- c()
+	result <- paste0("mpirun -n 1 ",result)
 	
 	# break down the specified code (short name)
 	tmp <- strsplit(x=algo.name, split="_", fixed=TRUE)[[1]]
-	params <- sapply(tmp[2:length(tmp)], function(s) 
-			{	res <- as.numeric(substr(s,2,nchar(s)))
-				names(res) <- substr(s,1,1)
-				return(res)
-			})
+	params <- c()
+	for(s in tmp[2:length(tmp)])
+	{	params <- c(params,substr(s,2,nchar(s)))
+		names(params)[length(params)] <- substr(s,1,1)
+	}
 	
 	# rcc flag
 	rcc.flag <- strsplit(x=tmp[1], split="-", fixed=TRUE)[[1]][2]
@@ -191,22 +202,20 @@ get.grasp.command <- function(algo.name, input.file, output.folder, time.limit=1
 		params["rcc"] <- 0
 	
 	# build command
-	result <- paste0("--alpha ",params["a"])
-	result <- paste0("--iterations ",iter.nbr)
-	result <- paste0("--neighborhood_size ",params["l"])
-	result <- paste0("--rcc ",params["rcc"])
-	result <- paste0("-k ",params["k"])
-	result <- paste0("--time-limit ",time.limit)
-	result <- paste0("--input-file",input.file)
-	result <- paste0("--output-folder",output.folder)
-	result <- paste0("--gain-function-type ",params["g"])
-	result <- paste0("--strategy ","GRASP") 
-	result <- paste0("--perturbationLevelMax ",params["p"])
+	result <- paste0(result, " --alpha ",params["a"])
+	result <- paste0(result, " --iterations ",iter.nbr)
+	result <- paste0(result, " --neighborhood_size ",params["l"])
+	result <- paste0(result, " --rcc ",params["rcc"])
+	result <- paste0(result, " --k ",params["k"])
+	result <- paste0(result, " --time-limit ",time.limit)
+	result <- paste0(result, " --input-file ",input.file)
+	result <- paste0(result, " --output-folder ",output.folder)
+	result <- paste0(result, " --gain-function-type ",params["g"])
+	result <- paste0(result, " --strategy ","GRASP") 
+	result <- paste0(result, " --perturbationLevelMax ",params["p"])
 	
 	return(result)
 }
-
-#TODO pILS ?
 
 
 #############################################################################################

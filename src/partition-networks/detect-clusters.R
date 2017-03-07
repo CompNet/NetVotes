@@ -86,15 +86,13 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 						merges=TRUE, modularity=TRUE, membership=TRUE)
 		}
 		
-		# apply the correlation clustering algorithm
-		else if(algo.name==CORCLU.ALGO.PILS)
-		{	# get the path of the input file (graph)
-			net.file <- file.path(net.folder,SIGNED.FILE)
-			# external invocation (pILS is coded in C++)
-				# TODO add the external invocation of the application
+		# apply the correlation clustering algorithm (which are external programs)
+		else
+		{	# set the external command and invoke it
+			cmd <- get.algo.commands(algo.names, input.folder=net.folder, output.folder=part.folder)
+			system(command=cmd)
 			# load the resulting partition file
-			part.file <- file.path(part.folder,"cc-result.txt") # TODO possibly necessary to fix the external file name
-			mbrshp <- load.external.partition(part.folder, algo.name)
+			mbrshp <- load.external.partition(part.folder, algo.name, keep.tmp=TRUE)
 		}
 		
 		# record the result
@@ -110,6 +108,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 			# record a graphical representation of the detected partition
 			plot.network(g, membership=mbrshp, plot.file, format=plot.formats)
 		}
+stop("END TEST")		
 	}
 	
 	return(mbrshp)
