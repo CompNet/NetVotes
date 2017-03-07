@@ -24,7 +24,7 @@ source("src/prepare-data/filter-data.R")
 #############################################################################################
 load.score.table <- function(file.name)
 {	# load the file content
-	file.name <- paste(file.name,".txt",sep="")
+	file.name <- paste0(file.name,".txt")
 	file <- file.path(SCORE.FOLDER, file.name)
 	df <- read.table(file, header=FALSE, as.is=TRUE, check.names=FALSE)
 	# possibly replace NA by equivalent strings
@@ -155,16 +155,16 @@ process.agreement.index <- function(votes, score.table)
 #############################################################################################
 process.agreement.stats <- function(all.votes, doc.details, score.file, domains, dates, country, group, plot.formats)
 {	object <- "Agreement index"
-	x.label <- paste("Agreement index - score=",score.file,sep="")
+	x.label <- paste0("Agreement index - score=",score.file)
 			
 	# setup title prefix
 	if(is.na(country))
 		if(is.na(group))
 			plot.prefix <- ""
 		else
-			plot.prefix <- paste("[",group,"] ",sep="")
+			plot.prefix <- paste0("[",group,"] ")
 	else
-		plot.prefix <- paste("[",country,"] ",sep="")
+		plot.prefix <- paste0("[",country,"] ")
 	
 	# load the agreement scores
 	score.table <- load.score.table(score.file)
@@ -175,7 +175,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 	{	source("src/define-imports.R")
 		
 		# setup folder
-		#folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
+		#folder <- paste0(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/")
 		folder <- get.agreement.path(score=score.file, country, group, domain=dom)
 		dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 		
@@ -204,7 +204,7 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 					# record raw agreement index values
 					colnames(agreement) <- all.votes[active.idx,COL.MEPID]
 					rownames(agreement) <- all.votes[active.idx,COL.MEPID]
-					table.file <- file.path(folder,paste(DATE.STR.T7[date],"-agreement.csv",sep=""))
+					table.file <- file.path(folder,paste0(DATE.STR.T7[date],"-agreement.csv"))
 					write.csv2(agreement,file=table.file, row.names=TRUE)
 					
 					# keep only the triangular part of the matrix (w/o the diagonal)
@@ -216,27 +216,27 @@ process.agreement.stats <- function(all.votes, doc.details, score.file, domains,
 						tlog("........WARNING: All agreement values are NAs >> not processing these data")
 					else
 					{	# plot absolute counts as bars
-						title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
-						plot.file <- file.path(folder,paste(DATE.STR.T7[date],"-counts",sep=""))
+						title <- paste0(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date])
+						plot.file <- file.path(folder,paste0(DATE.STR.T7[date],"-counts"))
 						data <- plot.histo(plot.file, values=agr.vals,
 							x.label, 
 							proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA,
 							plot.title=title, format=plot.formats)
 						# record as a table
 						data <- data[,c("y","xmin","xmax")]
-						table.file <- paste(plot.file,".csv",sep="")
+						table.file <- paste0(plot.file,".csv")
 						write.csv2(data,file=table.file, row.names=FALSE)
 						
 						# plot proportions as bars
-						title <- paste(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date],sep="")
-						plot.file <- file.path(folder,paste(DATE.STR.T7[date],"-proportions",sep=""))
+						title <- paste0(plot.prefix,"Distribution of ",object," - domain=",dom,", - period=",DATE.STR.T7[date])
+						plot.file <- file.path(folder,paste0(DATE.STR.T7[date],"-proportions"))
 						data <- plot.histo(plot.file, values=agr.vals,
 							x.label, 
 							proportions=TRUE, x.lim=c(-1,1), y.max=0.5, break.nbr=NA, 
 							plot.title=title, format=plot.formats)
 						# record as a table
 						data <- data[,c("y","xmin","xmax")]
-						table.file <- paste(plot.file,".csv",sep="")
+						table.file <- paste0(plot.file,".csv")
 						write.csv2(data,file=table.file, row.names=FALSE)
 					}
 				}

@@ -79,7 +79,7 @@ plot.lines <- function(plot.file, series, axes=list(), plot.title, with.lines=TR
 	# process each specified file format
 	for(frmt in format)
 	{	# set plot file
-		plot.filename <- paste(plot.file,".",frmt,sep="")
+		plot.filename <- paste0(plot.file,".",frmt)
 		# create the file
 		if(!is.na(frmt))
 		{	if(frmt=="PNG")
@@ -281,9 +281,9 @@ determine.legend.position <- function(series, axes)
 		result <- "top"
 	x.sep <- mean(range(x))
 	if(pos[1]<x.sep)
-		result <- paste(result,"left",sep="")
+		result <- paste0(result,"left")
 	else
-		result <- paste(result,"right",sep="")
+		result <- paste0(result,"right")
 	
 	return(result)
 }

@@ -58,12 +58,12 @@ iyp.download.meps <- function()
 {	for(i in 1:length(IYP.MEP.IDS))
 	{	mep.id <- IYP.MEP.IDS[i]
 		tlog("..Retrieving XML file for MEP id ",mep.id," (",i,"/",length(IYP.MEP.IDS),")")
-		url <- paste(IYP.URL.MEP,IYP.URL.ID,mep.id,sep="")
+		url <- paste0(IYP.URL.MEP,IYP.URL.ID,mep.id)
 		page <- readLines(url)
 		if(length(page)==2 && page[1]=="<br>" && substr(page[2],1,9)=="Warning: ")
 			tlog("....WARNING: the page for MEP id ",mep.id," was empty (",url,")")
 		else
-		{	file <- file.path(IYP.MEPS.FOLDER,paste(mep.id,".xml",sep=""))
+		{	file <- file.path(IYP.MEPS.FOLDER,paste0(mep.id,".xml"))
 			writeLines(page,file)
 		}
 	}
@@ -95,12 +95,12 @@ ep.retrieve.domain <- function(title)
 			tlog("....number='",number,"'")
 			year <- substr(title,9,12)
 			tlog("....year='",year,"'")
-			reference <- paste(prefix,"-",year,"-",number,sep="")
+			reference <- paste0(prefix,"-",year,"-",number,sep="")
 			tlog("..reference='",reference,"'")
 			if(prefix=="A7")
-				ep.url <- paste(IYP.URL.REPORTS,reference,IYP.URL.LANG.SUFFIX,sep="")
+				ep.url <- paste0(IYP.URL.REPORTS,reference,IYP.URL.LANG.SUFFIX)
 			else if(prefix=="B7")
-				ep.url <- paste(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX,sep="")
+				ep.url <- paste0(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX)
 			tlog("..url='",ep.url,"'")
 		}
 		# build the appropriate request URL for RC-type ids
@@ -111,9 +111,9 @@ ep.retrieve.domain <- function(title)
 			tlog("....number='",number,"'")
 			year <- substr(title,12,15)
 			tlog("....year='",year,"'")
-			reference <- paste("P7","-",prefix,"-",year,"-",number,sep="")
+			reference <- paste0("P7","-",prefix,"-",year,"-",number)
 			tlog("..reference='",reference,"'")
-			ep.url <- paste(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX,sep="")
+			ep.url <- paste0(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX)
 			tlog("..url='",ep.url,"'")
 		}
 		# request the Europarl server
@@ -163,7 +163,7 @@ iyp.download.votes <- function()
 		tlog("..Retrieving XML file for vote id ",vote.id," (",i,"/",length(IYP.VOTE.IDS),")")
 		
 		# load the page
-		url <- paste(IYP.URL.VOTE,IYP.URL.ID,vote.id,sep="")
+		url <- paste0(IYP.URL.VOTE,IYP.URL.ID,vote.id)
 		tlog("....url=",url)
 		page <- readLines(url)
 		
@@ -192,7 +192,7 @@ iyp.download.votes <- function()
 			}
 			
 			# record the page
-			file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
+			file <- file.path(IYP.VOTES.FOLDER,paste0(vote.id,".xml"))
 			writeLines(page,file)
 		}
 	}
@@ -218,7 +218,7 @@ iyp.complete.votes <- function()
 		tlog("Processing the XML file for vote id ",vote.id," (",i,"/",length(vote.ids),")")
 		
 		# load the page
-		file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
+		file <- file.path(IYP.VOTES.FOLDER,paste0(vote.id,".xml"))
 		tlog("file=",file)
 		page <- readLines(file)
 		# parse the XML code
@@ -269,12 +269,12 @@ iyp.download.domains <- function()
 	for(i in 1:length(IYP.DOMAIN.IDS))
 	{	dom.id <- IYP.DOMAIN.IDS[i]
 		tlog("....Retrieving XML file for domain id ",dom.id," (",i,"/",length(IYP.DOMAIN.IDS),")")
-		url <- paste(IYP.URL.DOMAIN,IYP.URL.ID,dom.id,sep="")
+		url <- paste0(IYP.URL.DOMAIN,IYP.URL.ID,dom.id)
 		page <- readLines(url)
 		if(length(page)==1 && page=="<b>No votes found</b>")
 			tlog("....WARNING: the page for domain id ",dom.id," contains no vote (",url,") >> domain ignored")
 		else
-		{	file <- file.path(IYP.DOMAINS.FOLDER,paste(dom.id,".xml",sep=""))
+		{	file <- file.path(IYP.DOMAINS.FOLDER,paste0(dom.id,".xml"))
 			writeLines(page,file)
 		}
 	}
@@ -307,7 +307,7 @@ ep.retrieve.periods <- function()
 	{	tlog("....Processing MEP ",i,"/",nrow(ep.table))
 		# set up the Europarl URL 
 		name <- gsub(" ","_",toupper(ep.table[i,COL.FULLNAME]))
-		ep.url <- paste(IYP.URL.MEP,ep.table[i,COL.EP.ID],"/",name,IYP.URL.HIST.SUFFIX,sep="")
+		ep.url <- paste0(IYP.URL.MEP,ep.table[i,COL.EP.ID],"/",name,IYP.URL.HIST.SUFFIX)
 		ep.table[i,COL.EP.URL] <- ep.url
 		print(ep.url)
 		# test "http://www.europarl.europa.eu/meps/en/96933/MILAN_ZVER_history.html"

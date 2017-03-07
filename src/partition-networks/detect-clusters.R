@@ -29,17 +29,17 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 	#tlog(" connected=", is.connected(g,mode="weak"))
 	
 	# init file names
-	table.file <- file.path(part.folder,paste(algo.name,"-membership.txt",sep=""))
+	table.file <- file.path(part.folder,paste0(algo.name,"-membership.txt"))
 	idx <- regexpr(" -",g$name)[1]
-	g$name <- paste(get.algo.names(algo.name),substring(g$name,idx,nchar(g$name)),sep="")
-	plot.file <- file.path(part.folder,paste(algo.name,"-membership",sep=""))
+	g$name <- paste0(get.algo.names(algo.name),substring(g$name,idx,nchar(g$name)))
+	plot.file <- file.path(part.folder,paste0(algo.name,"-membership"))
 	
 	# check if all the files already exist
 	process <- !file.exists(table.file)
 	i <- 1
 	while(!process && i<length(plot.formats))
 	{	if(!is.na(plot.formats[i]))
-		{	filename <- paste(plot.file,".",plot.formats[i],sep="")
+		{	filename <- paste0(plot.file,".",plot.formats[i])
 			process <- !file.exists(filename)
 		}
 		i <- i + 1
@@ -139,9 +139,9 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 {	# init graph files
 	graph.folder <- get.networks.path(score=score.file, thresh, country, group, domain, period=date)
 	part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=,date, repetition=NA)
-	graph.file.neg <- file.path(part.folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
-	graph.file.pos <- file.path(part.folder,paste(POSITIVE.FILE,".graphml",sep=""))
-	graph.file <- file.path(part.folder,paste(SIGNED.FILE,".graphml",sep=""))
+	graph.file.neg <- file.path(part.folder,paste0(COMP.NEGATIVE.FILE,".graphml"))
+	graph.file.pos <- file.path(part.folder,paste0(POSITIVE.FILE,".graphml"))
+	graph.file <- file.path(part.folder,paste0(SIGNED.FILE,".graphml"))
 	
 	# if the new graph files were already created, load them
 	if(!force && file.exists(graph.file.neg) && file.exists(graph.file.pos) && file.exists(graph.file))
@@ -161,8 +161,8 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 	for(r in 1:repetitions)
 	{	tlog(8,"Processing iteration ",r,"/",repetitions)
 		# setup iteration folder
-		#folder <- paste(PARTITIONS.FOLDER,"/",subfolder,sep="")
-		#r.folder <- paste(folder,r,"/",sep="")
+		#folder <- paste0(PARTITIONS.FOLDER,"/",subfolder)
+		#r.folder <- paste0(folder,r,"/")
 		#dir.create(r.folder, recursive=TRUE, showWarnings=FALSE)
 		if(repetitions>1)
 			part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=,date, repetition=r)
@@ -176,8 +176,8 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 			
 			# setup attribute name
 			if(repetitions>1)
-			{	pos.att.name <- paste(algo.name,'-',r,sep="")
-				neg.att.name <- paste(neg.algo.name,'-',r,sep="")
+			{	pos.att.name <- paste0(algo.name,'-',r)
+				neg.att.name <- paste0(neg.algo.name,'-',r)
 			}
 			else
 			{	pos.att.name <- algo.name
@@ -207,7 +207,7 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 		for(algo.name in corclu.algos)
 		{	# setup attribute name
 			if(repetitions>1)
-				att.name <- paste(algo.name,'-',r,sep="")
+				att.name <- paste0(algo.name,'-',r)
 			else
 				att.name <- algo.name
 			
@@ -260,9 +260,9 @@ partition.graphs <- function(thresh=NA, score.file, domains, dates, country, gro
 		{	tlog(6,"Detect communities for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# setup graph subfolder
-			#folder <- paste(subfolder,"/",score.file,
+			#folder <- paste0(subfolder,"/",score.file,
 			#		"/","negtr=",thresh[1],"-postr=",thresh[2],
-			#		"/",dom,"/",DATE.STR.T7[date],"/",sep="")
+			#		"/",dom,"/",DATE.STR.T7[date],"/")
 			
 			# perform community detection
 			perform.partitioning(thresh, score.file, dom, date, country, group, comdet.algos, corclu.algos, repetitions, plot.formats, force)

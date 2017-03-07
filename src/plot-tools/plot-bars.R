@@ -159,7 +159,7 @@ plot.unif.indiv.count.bars <- function(plot.file, bar.names, counts, dispersion=
 	# process each specified format
 	for(frmt in format)
 	{	# set plot file name
-		plot.filename <- paste(plot.file,".",frmt,sep="")
+		plot.filename <- paste0(plot.file,".",frmt)
 		# create the file
 		if(!is.na(frmt))
 		{	if(frmt=="PNG")
@@ -369,7 +369,7 @@ plot.stacked.indiv.count.bars <- function(plot.file, bar.names, color.names, cou
 	# process each specified format
 	for(frmt in format)
 	{	# set plot file name
-		plot.filename <- paste(plot.file,".",frmt,sep="")
+		plot.filename <- paste0(plot.file,".",frmt)
 		# create the file
 		if(!is.na(frmt))
 		{	if(frmt=="PNG")
@@ -621,7 +621,7 @@ plot.unif.grouped.count.bars  <- function(plot.file, group.names, bar.names, cou
 	# process each specified format
 	for(frmt in format)
 	{	# set plot file name
-		plot.filename <- paste(plot.file,".",frmt,sep="")
+		plot.filename <- paste0(plot.file,".",frmt)
 		# create the file
 		if(!is.na(frmt))
 		{	if(frmt=="PNG")
@@ -841,7 +841,7 @@ plot.stacked.grouped.count.bars <- function(plot.file, group.names, bar.names, c
 	# process each specified format
 	for(frmt in format)
 	{	# set plot file name
-		plot.filename <- paste(plot.file,".",frmt,sep="")
+		plot.filename <- paste0(plot.file,".",frmt)
 		# create the file
 		if(!is.na(frmt))
 		{	if(frmt=="PNG")

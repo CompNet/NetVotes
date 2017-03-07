@@ -26,7 +26,7 @@ retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
 {	folder <- get.networks.path(score, thresh, country, group, domain, period)
 	
 	# load the original graph
-	graph.file <- file.path(folder,paste(SIGNED.FILE,".graphml",sep=""))
+	graph.file <- file.path(folder,paste0(SIGNED.FILE,".graphml"))
 	g <- NA
 	if(!file.exists(graph.file))
 		tlog("........WARNING: Graph file ",graph.file," not found")
@@ -34,7 +34,7 @@ retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
 		g <- suppressWarnings(read.graph(file=graph.file, format="graphml"))
 	
 	# load the positive graph
-	graph.file.pos <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
+	graph.file.pos <- file.path(folder,paste0(POSITIVE.FILE,".graphml"))
 	g.pos <- NA
 	if(!file.exists(graph.file.pos))
 		tlog("........WARNING: Graph file ",graph.file.pos," not found")
@@ -43,7 +43,7 @@ retrieve.graphs <- function(score, thresh, country, group, domain, period, comp)
 	
 	if(comp)
 	{	# load the complementary negative graph
-		graph.file.neg <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
+		graph.file.neg <- file.path(folder,paste0(COMP.NEGATIVE.FILE,".graphml"))
 		g.neg <- NA
 		if(!file.exists(graph.file.neg))
 			tlog("........WARNING: Graph file ",graph.file.neg," not found")

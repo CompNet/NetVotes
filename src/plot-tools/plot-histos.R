@@ -41,7 +41,7 @@ plot.histo <- function(plot.file, values, x.label, proportions=TRUE, x.lim=c(NA,
 	# process each specified format
 	for(frmt in format)
 	{	# set plot file name
-		plot.filename <- paste(plot.file,".",frmt,sep="")
+		plot.filename <- paste0(plot.file,".",frmt)
 		# create the file
 		if(!is.na(frmt))
 		{	if(frmt=="PNG")

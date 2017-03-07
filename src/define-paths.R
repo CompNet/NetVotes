@@ -99,7 +99,7 @@ get.networks.path <- function(score, thresh=NA, country=NA, group=NA, domain, pe
 	result <- file.path(result,score)
 	
 	# positive and negative thresholds (can be NA if no threhsold)
-	result <- file.path(result,paste("negtr=",thresh[1],"_postr=",thresh[2],sep=""))
+	result <- file.path(result,paste0("negtr=",thresh[1],"_postr=",thresh[2]))
 	
 	# country, group or everything (mutuall exclusive)
 	if(!is.na(country))
@@ -141,7 +141,7 @@ get.partitions.path <- function(score, thresh=NA, country=NA, group=NA, domain, 
 	result <- file.path(result,score)
 	
 	# positive and negative thresholds (can be NA if no threhsold)
-	result <- file.path(result,paste("negtr=",thresh[1],"_postr=",thresh[2],sep=""))
+	result <- file.path(result,paste0("negtr=",thresh[1],"_postr=",thresh[2]))
 	
 	# country, group or everything (mutuall exclusive)
 	if(!is.na(country))

@@ -92,7 +92,7 @@ extract.network <- function(agreement, mep.details, thresh=NA, folder, graph.nam
 	data <- plot.histo(plot.file, values=agr.vals,
 		x.label="Agreement index", 
 		proportions=FALSE, x.lim=c(-1,1), y.max=NA, break.nbr=NA,
-		plot.title=paste("Agreement after filtering [",thresh[1],";",thresh[2],"]",sep=""), format=plot.formats)
+		plot.title=paste0("Agreement after filtering [",thresh[1],";",thresh[2],"]"), format=plot.formats)
 	
 	# build network using igraph
 	result <- graph.adjacency(adjmatrix=agreement, 		# use the agreement as the adjacency matrix
@@ -122,7 +122,7 @@ V(result)$Lastname <- lastnames
 		result <- plot.network(g=result, plot.file=graph.base, format=plot.formats)
 		
 		# export the graph under the graphml format
-		graph.file <- paste(graph.base,".graphml",sep="")
+		graph.file <- paste0(graph.base,".graphml")
 		write.graph(graph=result, file=graph.file, format="graphml")
 		
 		# also export the positive graph as an unsigned graph
@@ -130,7 +130,7 @@ V(result)$Lastname <- lastnames
 		if(ecount(gp)==0)
 			tlog("........WARNING: the positive graph does not contain any link >> not recorded")
 		else
-		{	graph.file <- file.path(folder,paste(POSITIVE.FILE,".graphml",sep=""))
+		{	graph.file <- file.path(folder,paste0(POSITIVE.FILE,".graphml"))
 			write.graph(graph=gp, file=graph.file, format="graphml")
 		}
 		
@@ -147,13 +147,13 @@ V(result)$Lastname <- lastnames
 				gn[from=m[,1],to=m[,2],att="weight"] <- w
 			if(any(E(gn)$weight==0))
 				gn <- delete.edges(graph=gn,edges=which(E(gn)$weight==0))
-		graph.file <- file.path(folder,paste(COMP.NEGATIVE.FILE,".graphml",sep=""))
+		graph.file <- file.path(folder,paste0(COMP.NEGATIVE.FILE,".graphml"))
 		write.graph(graph=gn, file=graph.file, format="graphml")
 		
 		# export using a format compatible with pILS
 		t <- get.edgelist(graph=result) - 1	# start numbering nodes at zero
 		t <- cbind(t,E(result)$weight)		# add weights as the third column
-		graph.file <- paste(graph.base,".G",sep="")
+		graph.file <- paste0(graph.base,".G")
 		write.table(data.frame(nrow(mep.details),nrow(t)), file=graph.file, append=FALSE, sep="\t", row.names=FALSE, col.names=FALSE)	# write header
 		write.table(t, file=graph.file, append=TRUE, sep="\t", row.names=FALSE, col.names=FALSE)										# write proper graph
 		
@@ -186,10 +186,10 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 		if(is.na(group))
 			mode.str <- ""
 		else
-			mode.str <- paste(" - group=",group,sep="")
+			mode.str <- paste0(" - group=",group)
 	else
-		mode.str <- paste(" - country=",country,sep="")
-	base.graph.name <- paste("MEP agreement - score=",score.file,mode.str,sep="")
+		mode.str <- paste0(" - country=",country)
+	base.graph.name <- paste0("MEP agreement - score=",score.file,mode.str)
 	
 	# consider each domain individually (including all domains at once)
 #	for(dom in domains)
@@ -197,7 +197,7 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 	{	source("src/define-imports.R")
 		
 		# setup agreement folder
-		#agr.folder <- paste(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/",sep="")
+		#agr.folder <- paste0(AGREEMENT.FOLDER,"/",subfolder,"/",score.file,"/",dom,"/")
 		agr.folder <- get.agreement.path(score=score.file,country,group,domain=dom)
 		
 		# consider each time period (each individual year as well as the whole term)
@@ -205,17 +205,17 @@ extract.networks <- function(mep.details, thresh=NA, score.file, domains, dates,
 		{	tlog("....Extracting network for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# setup graph title
-			graph.name <- paste(base.graph.name," - domain=",dom," - period=",DATE.STR.T7[date],
-					" - neg.tresh=",thresh[1]," - pos.tresh=",thresh[2],sep="")
+			graph.name <- paste0(base.graph.name," - domain=",dom," - period=",DATE.STR.T7[date],
+					" - neg.tresh=",thresh[1]," - pos.tresh=",thresh[2])
 			# setup graph folder
-			#folder <- paste(NETWORKS.FOLDER,"/",subfolder,"/",score.file,
+			#folder <- paste0(NETWORKS.FOLDER,"/",subfolder,"/",score.file,
 			#		"/","negtr=",thresh[1],"-postr=",thresh[2],
-			#		"/",dom,"/",DATE.STR.T7[date],"/",sep="")
+			#		"/",dom,"/",DATE.STR.T7[date],"/")
 			folder <- get.networks.path(score=score.file,thresh,country,group,domain=dom,period=date)
 			dir.create(folder, recursive=TRUE, showWarnings=FALSE)
 			
 			# load agreement index file
-			table.file <- file.path(agr.folder,paste(DATE.STR.T7[date],"-agreement.csv",sep=""))
+			table.file <- file.path(agr.folder,paste0(DATE.STR.T7[date],"-agreement.csv"))
 			if(!file.exists(table.file))
 				tlog("......WARNING: Agreement file ",table.file," not found >> not necessarily an error: maybe not enough data to process agreement")
 			else

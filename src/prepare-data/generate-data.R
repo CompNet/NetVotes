@@ -126,7 +126,7 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 		
 		# create the document vote table
 		vote.df <- data.frame(
-			"Name"=paste("Firstname",sprintf("%03d",1:mep.nbr)," LASTNAME",sprintf("%03d",1:mep.nbr),sep=""),
+			"Name"=paste0("Firstname",sprintf("%03d",1:mep.nbr)," LASTNAME",sprintf("%03d",1:mep.nbr)),
 			"Member State"=member.states,
 			"Loyal / Rebel to political group"=rebellion,
 			"Vote"=votes,
@@ -134,7 +134,7 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 		check.names=FALSE,stringsAsFactors=FALSE)
 
 		# record the table
-		table.file <- file.path(raw.folder,paste(i,".csv",sep=""))
+		table.file <- file.path(raw.folder,paste0(i,".csv"))
 		write.csv(vote.df,file=table.file,row.names=FALSE)
 	}
 	
@@ -142,7 +142,7 @@ generate.raw.data <- function(mep.nbr, doc.nbr, folder)
 	doc.df <- data.frame(
 		"Doc Id"=1:doc.nbr,
 		"Date"=format(generate.dates(doc.nbr,TEST.DATES[1],TEST.DATES[2]),"%d/%m/%Y"),
-		"Name of document"=paste("Document",sprintf("%03d",1:doc.nbr),sep=""),
+		"Name of document"=paste0("Document",sprintf("%03d",1:doc.nbr)),
 		"Result of vote"=doc.votes,
 		"Parliament or council"=rep("EP",doc.nbr),
 		"Policy area"=sample(x=TEST.DOMAINS,size=doc.nbr,replace=TRUE),

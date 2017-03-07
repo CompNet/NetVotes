@@ -60,7 +60,7 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 	{	tlog("......Processing iteration ",r,"/",repetitions)
 		# setup iteration folder
 		if(repetitions>1)
-			#r.folder <- paste(folder,r,"/",sep="")
+			#r.folder <- paste0(folder,r,"/")
 			part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain, period=date, repetition=r)
 		else
 			#r.folder <- folder
@@ -70,7 +70,7 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 		partitions <- list()
 		for(corclu.name in corclu.algos)
 		{	tlog("........Loading partition files for algorithm ",corclu.name)
-			partition.file <- file.path(part.folder,paste(corclu.name,"-membership.txt",sep=""))
+			partition.file <- file.path(part.folder,paste0(corclu.name,"-membership.txt"))
 			if(!file.exists(partition.file))
 				tlog("........Partition file ",partition.file," not found")
 			else
@@ -78,7 +78,7 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 		}
 		for(comdet.name in comdet.algos)
 		{	tlog("........Loading partition files for algorithm ",comdet.name)
-			partition.file <- file.path(part.folder,paste(comdet.name,"-membership.txt",sep=""))
+			partition.file <- file.path(part.folder,paste0(comdet.name,"-membership.txt"))
 			if(!file.exists(partition.file))
 				tlog("........Partition file ",partition.file," not found")
 			else
@@ -87,7 +87,7 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 		for(comdet.name in comdet.algos)
 		{	neg.algo.name <- comdet.algo.ncg.value(comdet.name)
 			tlog("........Loading partition files for algorithm ",neg.algo.name)
-			partition.file <- file.path(part.folder,paste(neg.algo.name,"-membership.txt",sep=""))
+			partition.file <- file.path(part.folder,paste0(neg.algo.name,"-membership.txt"))
 			if(!file.exists(partition.file))
 				tlog("........Partition file ",partition.file," not found")
 			else
@@ -125,7 +125,7 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 		
 			# record iteration matrices
 			for(meas in measures)
-			{	table.file <- file.path(part.folder,paste("comparison-",meas,".csv",sep=""))
+			{	table.file <- file.path(part.folder,paste0("comparison-",meas,".csv"))
 				write.csv2(mats[[meas]], file=table.file, row.names=TRUE)
 			}
 		
@@ -143,9 +143,9 @@ compare.partitions.measures <- function(thresh=NA, score.file, domain, date, cou
 		for(meas in measures)
 		{	if(length(avg.list[[meas]])>0)
 			{	tmp <- average.matrix.list(avg.list[[meas]])
-				table.file <- file.path(part.folder,paste("comparison-mean-",meas,".csv",sep=""))
+				table.file <- file.path(part.folder,paste0("comparison-mean-",meas,".csv"))
 				write.csv2(tmp$avg, file=table.file, row.names=TRUE)
-				table.file <- file.path(part.folder,paste("comparison-stdev-",meas,".csv",sep=""))
+				table.file <- file.path(part.folder,paste0("comparison-stdev-",meas,".csv"))
 				write.csv2(tmp$stdev, file=table.file, row.names=TRUE)
 			}
 		}
@@ -181,10 +181,10 @@ compare.partitions <- function(thresh=NA, score.file, domains, dates, country, g
 			#tlog("......Process performance measures for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# setup graph folder
-			#filtered.folder <- paste(folder,"/",score.file,
+			#filtered.folder <- paste0(folder,"/",score.file,
 			#		"/","negtr=",thresh[1],"-postr=",thresh[2],
 			#		"/",dom,"/",DATE.STR.T7[date],
-			#		"/",sep="")
+			#		"/")
 			
 			# compare algorithm performances
 			tlog("......Compare partitioning algorithm performances")

@@ -181,7 +181,7 @@ iyp.extract.mep.details <- function(mep.id)
 	result <- c()
 	
 	# retrieve XML document
-	file <- file.path(IYP.MEPS.FOLDER,paste(mep.id,".xml",sep=""))
+	file <- file.path(IYP.MEPS.FOLDER,paste0(mep.id,".xml"))
 	doc <- readLines(file)
 	xml.data <- xmlParse(doc)
 	xml <- xmlToList(xml.data)
@@ -364,7 +364,7 @@ iyp.extract.domain <- function(domain.id)
 {	tlog("....Processing domain ",domain.id)
 	
 	# retrieve XML document
-	file <- file.path(IYP.DOMAINS.FOLDER,paste(domain.id,".xml",sep=""))
+	file <- file.path(IYP.DOMAINS.FOLDER,paste0(domain.id,".xml"))
 	doc <- readLines(file)
 	xml.data <- xmlParse(doc)
 	xml <- xmlToList(xml.data)
@@ -466,7 +466,7 @@ iyp.extract.domains <- function()
 #############################################################################################
 iyp.extract.vote <- function(vote.id, duplicate.meps)
 {	# retrieve XML document
-	file <- file.path(IYP.VOTES.FOLDER,paste(vote.id,".xml",sep=""))
+	file <- file.path(IYP.VOTES.FOLDER,paste0(vote.id,".xml"))
 	doc <- readLines(file)
 	xml.data <- xmlParse(doc)
 	xml <- xmlToList(xml.data)

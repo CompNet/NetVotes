@@ -24,16 +24,16 @@ record.partition.stats <- function(algo.name, partition, folder, plot.formats)
 	comsz <- table(partition)
 	coms <- rownames(comsz)
 	comsz <- as.vector(comsz)
-	table.file <- paste(folder,"-comsizes.txt",sep="")
+	table.file <- paste0(folder,"-comsizes.txt")
 	write.table(x=comsz, file=table.file, row.names=FALSE, col.names=FALSE)
 	
 	# plot them
-	plot.file <- paste(folder,"-comsizes",sep="")
+	plot.file <- paste0(folder,"-comsizes")
 	plot.unif.indiv.count.bars(plot.file, bar.names=coms[order(comsz,decreasing=TRUE)], 
 		counts=sort(comsz,decreasing=TRUE), dispersion=NA, proportions=FALSE, areas=FALSE, 
 		y.lim=c(0,NA), 
 		x.label="Community", y.label="Count", 
-		plot.title=paste("Community sizes for ",get.algo.names(algo.name),sep=""), 
+		plot.title=paste0("Community sizes for ",get.algo.names(algo.name)), 
 		x.rotate=FALSE, format=plot.formats)
 }
 
@@ -216,33 +216,33 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 		{	# generate the algo-specific perf plots (one bar for each repetition)
 			for(algo in algos)
 			{	data <- sapply(perf.list, function(m) m[algo,measure])
-				plot.file <- file.path(folder,paste(measure,"-",algo,"-performances",sep=""))
+				plot.file <- file.path(folder,paste0(measure,"-",algo,"-performances"))
 				plot.unif.indiv.count.bars(plot.file, bar.names=1:length(perf.list), 
 					counts=data, dispersion=NA, proportions=FALSE, areas=FALSE, 
 					y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 					x.label="Repetition", y.label=PART.MEAS.NAMES[measure], 
-					plot.title=paste(PART.MEAS.NAMES[measure]," for each repetition of ",get.algo.names(algo),sep=""), 
+					plot.title=paste0(PART.MEAS.NAMES[measure]," for each repetition of ",get.algo.names(algo)), 
 					x.rotate=FALSE, format=plot.formats)
 			}
 			
 			# generate the average perf plot (one bar for each algo)
-			plot.file <- file.path(folder,paste(measure,"-mean-performances",sep=""))
+			plot.file <- file.path(folder,paste0(measure,"-mean-performances"))
 			plot.unif.indiv.count.bars(plot.file, bar.names=get.algo.names(algos), 
 				counts=avg.vals[[1]][,measure], dispersion=avg.vals[[2]][,measure], proportions=FALSE, areas=FALSE, 
 				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 				x.label="Algorithm", y.label=PART.MEAS.NAMES[measure], 
-				plot.title=paste("Average ",PART.MEAS.NAMES[measure]," value by partitioning algorithm",sep=""), 
+				plot.title=paste0("Average ",PART.MEAS.NAMES[measure]," value by partitioning algorithm"), 
 				x.rotate=TRUE, format=plot.formats)
 		}
 		
 		# if there was only a single repetition
 		else
-		{ 	plot.file <- file.path(folder,paste(measure,"-single-performances",sep=""))
+		{ 	plot.file <- file.path(folder,paste0(measure,"-single-performances"))
 			plot.unif.indiv.count.bars(plot.file, bar.names=get.algo.names(algos), 
 				counts=perf.list[[1]][,measure], dispersion=NA, proportions=FALSE, areas=FALSE, 
 				y.lim=PART.MEAS.BOUNDS[[measure]](g), 
 				x.label="Algorithm", y.label=PART.MEAS.NAMES[measure], 
-				plot.title=paste(PART.MEAS.NAMES[measure]," value by partitioning algorithm",sep=""), 
+				plot.title=paste0(PART.MEAS.NAMES[measure]," value by partitioning algorithm"), 
 				x.rotate=TRUE, format=plot.formats)
 		}
 	}
@@ -253,7 +253,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 		bounds <- sapply(measures, function(measure) PART.MEAS.BOUNDS[[measure]](g))
 		#print(bounds)		
 		#print(c(min(bounds),max(bounds)))
-		plot.file <- file.path(folder,paste("grouped-",measure.group,"-performances",sep=""))
+		plot.file <- file.path(folder,paste0("grouped-",measure.group,"-performances"))
 		if(length(perf.list)>1)
 		{	data.m <- lapply(algos, function(a) avg.vals[[1]][a,measures])
 			data.sd <- lapply(algos, function(a) avg.vals[[2]][a,measures])
@@ -261,7 +261,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 				counts=data.m, dispersion=data.sd, proportions=FALSE,
 				y.lim=c(min(bounds),max(bounds)),
 				x.label="Algorithm", y.label="Performance", 
-				plot.title=paste("Average ", GROUP.MEAS.NAMES[measure.group]," values for all algorithms",sep=""), 
+				plot.title=paste0("Average ", GROUP.MEAS.NAMES[measure.group]," values for all algorithms"), 
 				x.rotate=TRUE, format=plot.formats)
 		}
 		else
@@ -270,7 +270,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 				counts=data, dispersion=NA, proportions=FALSE,
 				y.lim=c(min(bounds),max(bounds)),
 				x.label="Algorithm", y.label="Performance", 
-				plot.title=paste(GROUP.MEAS.NAMES[measure.group]," values for all algorithms",sep=""), 
+				plot.title=paste0(GROUP.MEAS.NAMES[measure.group]," values for all algorithms"),
 				x.rotate=TRUE, format=plot.formats)
 		}
 	}
@@ -295,7 +295,7 @@ plot.partition.perf <- function(g, perf.list, avg.vals, folder, plot.formats)
 evaluate.corclu.method <- function(graphs, part.folder, algo.name, perf.table, plot.formats)
 {	# process all measures
 	base.name <- file.path(part.folder,algo.name)
-	partition.file <- paste(base.name,"-membership.txt",sep="")
+	partition.file <- paste0(base.name,"-membership.txt")
 	if(!file.exists(partition.file))
 		tlog("..........WARNING: Partition file '",partition.file,"' not found")
 	else
@@ -331,7 +331,7 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 {	# partition obtained on the complementary negative subgraph
 	neg.algo.name <- comdet.algo.ncg.value(algo.name)
 	neg.base.name <- file.path(part.folder,neg.algo.name)
-	neg.partition.file <- paste(neg.base.name,"-membership.txt",sep="")
+	neg.partition.file <- paste0(neg.base.name,"-membership.txt")
 	if(!file.exists(neg.partition.file))
 		tlog("............WARNING: Partition file '",neg.partition.file,"' not found")
 	else
@@ -347,7 +347,7 @@ evaluate.comdet.method <- function(graphs, part.folder, algo.name, perf.table, p
 	
 	# partition obtained on the positive subgraph
 	pos.base.name <- file.path(part.folder,algo.name)
-	pos.partition.file <- paste(pos.base.name,"-membership.txt",sep="")
+	pos.partition.file <- paste0(pos.base.name,"-membership.txt")
 	if(!file.exists(pos.partition.file))
 		tlog("............WARNING: Partition file '",pos.partition.file,"' not found")
 	else
@@ -388,9 +388,9 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 	foreach(dom=domains) %dopar%
 	{	source("src/define-imports.R")
 		
-		#dom.folder <- paste(subfolder,"/",score.file,"/",
+		#dom.folder <- paste0(subfolder,"/",score.file,"/",
 		#		"negtr=",thresh[1],"-postr=",thresh[2],"/",
-		#		dom,"/",sep="")
+		#		dom,"/")
 		date.perf.list <- list()
 		
 		# consider each time period (each individual year as well as the whole term)
@@ -399,7 +399,7 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 			tlog("......Process performance measures for domain ",dom," and period ",DATE.STR.T7[date])
 			
 			# setup graph subfolder
-			#date.folder <- paste(dom.folder,"/",DATE.STR.T7[date],"/",sep="")
+			#date.folder <- paste0(dom.folder,"/",DATE.STR.T7[date],"/")
 			#
 			# load all three versions of the graph (but: negative graph, not complementary negative)
 					tlog("......Load all three versions of the graph")
@@ -417,7 +417,7 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 			{	tlog("........Processing iteration ",r,"/",repetitions)
 				# setup iteration folder
 				if(repetitions>1)
-					#r.subfolder <- paste(date.folder,r,"/",sep="")
+					#r.subfolder <- paste0(date.folder,r,"/")
 					part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain=dom, period=date, repetition=r)
 				else
 					#r.subfolder <- date.folder
@@ -508,17 +508,17 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 			# record these table(s)
 			part.folder <- get.partitions.path(score=score.file, thresh, country, group, domain=dom, period=NA, repetition=NA)
 			if(repetitions>1)
-			{	table.file <- file.path(part.folder,paste(measure,"-mean-performances.csv",sep=""))
+			{	table.file <- file.path(part.folder,paste0(measure,"-mean-performances.csv"))
 				temp.table <- data.m
 				colnames(temp.table) <- DATE.STR.T7[colnames(data.m)]
 				write.csv2(temp.table, file=table.file, row.names=TRUE)
-				table.file <- file.path(part.folder,paste(measure,"-stdev-performances.csv",sep=""))
+				table.file <- file.path(part.folder,paste0(measure,"-stdev-performances.csv"))
 				temp.table <- data.sd
 				colnames(temp.table) <- DATE.STR.T7[colnames(data.m)]
 				write.csv2(temp.table, file=table.file, row.names=TRUE)
 			}
 			else
-			{	table.file <- file.path(part.folder,paste(measure,"-single-performances.csv",sep=""))
+			{	table.file <- file.path(part.folder,paste0(measure,"-single-performances.csv"))
 				temp.table <- data.m
 				colnames(temp.table) <- DATE.STR.T7[colnames(data.m)]
 				write.csv2(temp.table, file=table.file, row.names=TRUE)
@@ -536,22 +536,22 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 				{	dm <- lapply(algos, function(a) data.m[a,])
 #print(dm)
 					dsd <- lapply(algos, function(a) data.sd[a,])
-						plot.file <- file.path(part.folder,paste(measure,"-mean-performances",sep=""))
+						plot.file <- file.path(part.folder,paste0(measure,"-mean-performances"))
 					plot.unif.grouped.count.bars(plot.file, group.names=algos, bar.names=DATE.STR.T7[dates],
 						counts=dm, dispersion=dsd, proportions=FALSE,
 						y.lim=PART.MEAS.BOUNDS[[measure]](NA),
-						x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
-						plot.title=paste("Average ", PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
+						x.label=paste0("Algorithm and time period"), y.label=PART.MEAS.NAMES[measure],
+						plot.title=paste0("Average ", PART.MEAS.NAMES[measure]," values for all algorithms and time periods"),
 						x.rotate=TRUE, format=plot.formats)
 				}
 				else
 				{	dm <- lapply(algos, function(a) data.m[a,])
-					plot.file <- file.path(part.folder,paste(measure,"-single-performances",sep=""))
+					plot.file <- file.path(part.folder,paste0(measure,"-single-performances"))
 					plot.unif.grouped.count.bars(plot.file, group.names=algos, bar.names=DATE.STR.T7[dates],
 						counts=dm, dispersion=NA, proportions=FALSE,
 						y.lim=PART.MEAS.BOUNDS[[measure]](NA),
-						x.label=paste("Algorithm and time period",sep=""), y.label=PART.MEAS.NAMES[measure],
-						plot.title=paste(PART.MEAS.NAMES[measure]," values for all algorithms and time periods",sep=""),
+						x.label=paste0("Algorithm and time period"), y.label=PART.MEAS.NAMES[measure],
+						plot.title=paste0(PART.MEAS.NAMES[measure]," values for all algorithms and time periods"),
 						x.rotate=TRUE, format=plot.formats)
 				}
 			}
