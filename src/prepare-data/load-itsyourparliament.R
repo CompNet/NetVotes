@@ -31,6 +31,8 @@ IYP.FOLDER <- file.path(IN.FOLDER,"itsyourparliament")
 IYP.DOMAIN.LIST.FILE <- file.path(IYP.DOMAINS.FOLDER,"_domains.xml")
 # Activity periods associated to the MEPs
 IYP.MEP.PERIODS.FILE <- file.path(IYP.MEPS.FOLDER,"_mep-periods.csv")
+# Genders  of the MEPs
+IYP.MEP.GENDERS.FILE <- file.path(IYP.MEPS.FOLDER,"_mep-genders.csv")
 # Duplicate MEPs (IYT contains certain MEPs twice, we need to merge them)
 IYP.MEP.DUPLICATES.FILE <- file.path(IYP.MEPS.FOLDER,"_duplicates.csv")
 
@@ -342,6 +344,15 @@ iyp.extract.meps.details <- function(duplicate.meps)
 		#print(cbind(result[,COL.EP.ID],ep.table[idx,COL.EP.ID],result[,COL.EP.ID]==ep.table[idx,COL.EP.ID]))
 		result[,COL.EP.ID] <- ep.table[idx,COL.EP.ID]
 		result[,COL.PERIODS] <- ep.table[idx,COL.PERIODS]
+		
+		# retrieve the MEPs gender (manually added, based on firstnames and pictures available on the Europarl website)
+		#TODO not tested (directly added manually in the current out/_overall file)
+		ep.table <- as.matrix(read.csv2(IYP.MEP.GENDERS.FILE,check.names=FALSE))
+		ep.table[,COL.EP.ID] <- as.integer(ep.table[,COL.EP.ID])
+		Encoding(ep.table[,COL.LASTNAME]) <- "UTF-8"
+		# for each MEP in the IYP table, add the gender from the second table
+		idx  <- match(result[,COL.EP.ID],ep.table[,COL.EP.ID])
+		result[,COL.GENDER] <- ep.table[idx,COL.GENDER]
 		
 		# record matrix
 		write.csv2(result,file=MEP.DETAILS.FILE,row.names=FALSE)
