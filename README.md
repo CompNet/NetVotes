@@ -104,6 +104,9 @@ For different data sources, you may have to adapt the functions used to load the
 
 
 # To-do List
+* Take advantage of the new 'gender' field.
+* Represent categories as shapes in graph plots, whenever possible.
+* Output the participation of nodes/links to the total imbalance of the graph and partition.
 * Use `ggplot also for the line plots.
 
 

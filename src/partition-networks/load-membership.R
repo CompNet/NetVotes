@@ -42,8 +42,10 @@ load.external.partition <- function(f.name, algo.name, keep.tmp)
 load.mestrado.partition <- function(part.folder, algo.name, keep.tmp=TRUE)
 {	# identify the latest folder
 	net.fname <- paste0(SIGNED.FILE,".G")
-	temp.folder <- file.path(part.folder, net.fname)
+	temp.folder <- file.path(part.folder, algo.name, net.fname)
 	details <- file.info(list.dirs(temp.folder))
+	if(nrow(details)==0)
+		stop("load.mestrado.partition: No subfolder was found in folder \"", temp.folder ,"\", cannot load the partition.")
 	details <- details[with(details, order(as.POSIXct(mtime))), ]
 	temp.folders <- rownames(details)
 	folder.name <- file.path(temp.folders[length(temp.folders)])
@@ -57,6 +59,7 @@ load.mestrado.partition <- function(part.folder, algo.name, keep.tmp=TRUE)
 		file.name <- file.path(folder.name, "cc-result.txt")
 	
 	# open and read the file
+	tlog(14,"Trying to load file: \"",file.name,"\"")
 	con <- file(file.name, "r")
 	lines <- readLines(con)
 	close(con)

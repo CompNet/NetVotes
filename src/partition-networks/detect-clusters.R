@@ -89,7 +89,7 @@ apply.partitioning.algorithm <- function(g, algo.name, part.folder, graph.folder
 		# apply the correlation clustering algorithm (which are external programs)
 		else
 		{	# set the external command and invoke it
-			cmd <- get.algo.commands(algo.names=algo.name, input.folder=graph.folder, output.folder=part.folder)
+			cmd <- get.algo.commands(algo.names=algo.name, input.folder=graph.folder, out.folder=part.folder)
 			tlog(14,"Command: ",cmd)
 			system(command=cmd)
 			# load the resulting partition file
@@ -251,8 +251,8 @@ perform.partitioning <- function(thresh, score.file, domain, date, country, grou
 #############################################################################################
 partition.graphs <- function(thresh=NA, score.file, domains, dates, country, group, comdet.algos, corclu.algos, repetitions, plot.formats, force=TRUE)
 {	# consider each domain individually (including all domains at once)
-	for(dom in domains)
-#	foreach(dom=domains) %dopar%
+#	for(dom in domains)
+	foreach(dom=domains) %dopar%
 	{	source("src/define-imports.R")
 		
 		# consider each time period (each individual year as well as the whole term)
