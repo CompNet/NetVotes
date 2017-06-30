@@ -88,6 +88,7 @@ COL.EP.REF		<- "EP reference"
 COL.REPORTER.ID	<- "Reporter ID"
 COL.EP.URL		<- "EP URL"
 COL.PERIODS		<- "Periods"
+COL.RET.TITLE	<- "Retrieved title"
 
 
 
@@ -258,10 +259,10 @@ GROUP.EPP <- "EPP"
 	GROUP.FULLNAMES[GROUP.EPP] <- "European People's Party"
 GROUP.GREENS <- "Greens"
 	GROUP.VALUES <- c(GROUP.VALUES, GROUP.GREENS)
-	GROUP.FULLNAMES[GROUP.GREENS] <- "The Greens�European Free Alliance"
+	GROUP.FULLNAMES[GROUP.GREENS] <- "The Greens-European Free Alliance"
 GROUP.GUENGL <- "GUENGL"
 	GROUP.VALUES <- c(GROUP.VALUES, GROUP.GUENGL)
-	GROUP.FULLNAMES[GROUP.GUENGL] <- "European United Left�Nordic Green Left"
+	GROUP.FULLNAMES[GROUP.GUENGL] <- "European United Left-Nordic Green Left"
 GROUP.NI <- "NI"
 	GROUP.VALUES <- c(GROUP.VALUES, GROUP.NI)
 	GROUP.FULLNAMES[GROUP.NI] <- "Non-Inscrits"

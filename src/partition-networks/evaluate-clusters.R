@@ -425,6 +425,10 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 				
 				# init the iteration performance table
 				perf.table <- matrix(NA,nrow=2*length(comdet.algos)+length(corclu.algos),ncol=length(PART.MEAS.VALUES))
+#print(dim(perf.table))
+#print(length(c(corclu.algos,comdet.algos,comdet.algo.ncg.value(comdet.algos))))
+#print(corclu.algos)
+#print(comdet.algos)
 				rownames(perf.table) <- c(corclu.algos,comdet.algos,comdet.algo.ncg.value(comdet.algos))
 				colnames(perf.table) <- PART.MEAS.VALUES
 				
@@ -448,7 +452,7 @@ evaluate.partitions <- function(thresh=NA, score.file, domains, dates, country, 
 #print(PART.MEAS.NAMES[colnames(perf.table)])
 				colnames(temp.table) <- PART.MEAS.NAMES[colnames(perf.table)]
 				write.csv2(temp.table, file=table.file, 
-					row.names=c(CORCLU.ALGO.NAMES[corclu.algos],get.algo.names(comdet.algos),get.algo.names(comdet.algo.ncg.value(comdet.algos))))
+					row.names=c(get.algo.names(corclu.algos),get.algo.names(comdet.algos),get.algo.names(comdet.algo.ncg.value(comdet.algos))))
 				
 				# update the list used to process average and plots
 				if(repetitions>1)

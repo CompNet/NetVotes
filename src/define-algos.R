@@ -30,7 +30,13 @@ COMDET.ALGO.WALKTRAP <- "WT"
 	# this implementation uses the weights, if present, and simply ignores directions
 	COMDET.ALGO.VALUES <- c(COMDET.ALGO.VALUES, COMDET.ALGO.WALKTRAP)
 	COMDET.ALGO.NAMES[COMDET.ALGO.WALKTRAP] <- "WalkTrap"
-comdet.algo.ncg.value <- function(value) paste("NCG",value,sep="-")	# returns the negative complementary value (i.e. short code) associated to the specified (positive) value
+comdet.algo.ncg.value <- function(value) # returns the negative complementary value (i.e. short code) associated to the specified (positive) value
+	{	if(length(value)==0)
+			res <- c()
+		else
+			res <- paste("NCG",value,sep="-")
+		return(res)
+	}
 for(value in COMDET.ALGO.VALUES) COMDET.ALGO.NAMES[comdet.algo.ncg.value(value)] <- paste("NCG",COMDET.ALGO.NAMES[value])
 #TODO maybe we should allow parameters there too? (ie for regular community detection methods)
 
@@ -84,8 +90,8 @@ get.ils.code <- function(l, k, alpha, rcc, gain, perturbation)
 # the algorithm documentation for more details.
 #
 # algo.name: short code associated to the algorithm.
-# input.folder: folder containing targeted graph file.
-# out.folder: folder in which the produced files will be placed.
+# input.folder: relative path to the folder containing targeted graph file.
+# out.folder: relative path to the folder in which the produced files will be placed.
 # time.limit: maximum duration of the processing.
 # iter.nbr: maximum number of iterations of the processing.
 #
@@ -121,8 +127,8 @@ get.ils.command <- function(algo.name, input.folder, out.folder, time.limit=1800
 	result <- paste0(result, " --rcc ",params["rcc"])
 	result <- paste0(result, " --k ",params["k"])
 	result <- paste0(result, " --time-limit ",time.limit)
-	result <- paste0(result, " --input-file ",input.file)
-	result <- paste0(result, " --output-folder ",output.folder)
+	result <- paste0(result, " --input-file \"",input.file,"\"")
+	result <- paste0(result, " --output-folder \"",output.folder,"\"")
 	result <- paste0(result, " --gain-function-type ",params["g"])
 	result <- paste0(result, " --strategy ","ILS") 
 	result <- paste0(result, " --perturbationLevelMax ",params["p"])
@@ -172,16 +178,17 @@ get.grasp.code <- function(rcc, l, k, alpha, gain, perturbation)
 # method. See the algorithm documentation for more details.
 #
 # algo.name: short code associated to the algorithm.
-# input.folder: complete path to the folder containing targeted graph file.
-# output.folder: complete path to the folder in which the produced files will be placed.
+# input.folder: relative path to the folder containing targeted graph file.
+# out.folder: relative path to the folder in which the produced files will be placed.
 # time.limit: maximum duration of the processing.
 # iter.nbr: maximum number of iterations of the processing.
 #
 # returns: the command allowing to invoke the program externally.
 #############################################################################################
-get.grasp.command <- function(algo.name, input.folder, output.folder, time.limit=1800, iter.nbr=500)
+get.grasp.command <- function(algo.name, input.folder, out.folder, time.limit=1800, iter.nbr=500)
 {	# init
 	input.file <- file.path(getwd(), input.folder, paste0(SIGNED.FILE,".G"))
+	output.folder <- file.path(getwd(), out.folder, algo.name)
 	command.folder <- file.path(getwd(),LIB.FOLDER,"mestrado","grasp","build")
 	result <- file.path(command.folder, "graspcc")
 	result <- paste0("mpirun -n 1 ",result)
@@ -208,8 +215,8 @@ get.grasp.command <- function(algo.name, input.folder, output.folder, time.limit
 	result <- paste0(result, " --rcc ",params["rcc"])
 	result <- paste0(result, " --k ",params["k"])
 	result <- paste0(result, " --time-limit ",time.limit)
-	result <- paste0(result, " --input-file ",input.file)
-	result <- paste0(result, " --output-folder ",output.folder)
+	result <- paste0(result, " --input-file \"",input.file,"\"")
+	result <- paste0(result, " --output-folder \"",output.folder,"\"")
 	result <- paste0(result, " --gain-function-type ",params["g"])
 	result <- paste0(result, " --strategy ","GRASP") 
 	result <- paste0(result, " --perturbationLevelMax ",params["p"])

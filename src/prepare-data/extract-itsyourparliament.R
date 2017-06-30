@@ -30,9 +30,9 @@ IYP.DOMAIN.IDS	<- 26:58#[-c(32,45,49,50,52)]
 	# ID parameter
 	IYP.URL.ID		<- "?id="
 	# offical europarl URL for reports
-	IYP.URL.REPORTS	<- "http://www.europarl.europa.eu/sides/getDoc.do?type=REPORT&reference="
+	IYP.URL.REPORTS	<- "http://www.europarl.europa.eu/sides/getDoc.do?type=REPORT&mode=XML&reference="
 	# offical europarl URL for motions
-	IYP.URL.MOTIONS	<- "http://www.europarl.europa.eu/sides/getDoc.do?type=MOTION&reference="
+	IYP.URL.MOTIONS	<- "http://www.europarl.europa.eu/sides/getDoc.do?type=MOTION&mode=XML&reference="
 	# language suffix for the official europarl website
 	IYP.URL.LANG.SUFFIX	<- "&language=EN"
 	# offical europarl URL for MEP individual pages
@@ -152,6 +152,141 @@ ep.retrieve.domain <- function(title)
 	return(domain)
 }
 
+
+#############################################################################################
+# Retrieves the full title of a document (it is sometimes missing or imprecise in the IYP
+# data) thanks to the Europarl website (official website of the European Parliament).
+#
+# title: IYP title of the document (which includes its Europarl ID).
+#
+# returns: the title retrieved from the Europarl website, or NA if none could be found.
+#############################################################################################
+ep.retrieve.fulltitle <- function(title)
+{	fulltitle <- NA
+	
+	# extract the document Europarl ID from the title
+	tlog("..title='",title,"'")
+	# possibly clean the beginning of the title
+	if(!startsWith(title,"A7") && !startsWith(title,"B7") && !startsWith(title,"RC"))
+	{	idx <- str_locate(title,fixed("A7"))[1]
+		if(is.na(idx))
+			idx <- str_locate(title,fixed("B7"))[1]
+		if(is.na(idx))
+			idx <- str_locate(title,fixed("RC"))[1]
+		if(!is.na(idx))
+			title <- substr(title,idx,nchar(title))
+	}
+	prefix <- substr(title,1,2)
+	tlog("....prefix='",prefix,"'")
+	# known Europarl ID
+	if(prefix %in% c("A7","B7","RC"))
+	{	title <- gsub(" - ", "-", title)
+		# build the appropriate request URL for A7- or B7-type ids
+		if(prefix=="A7" | prefix=="B7") # A7-0144/2014
+		{	while(substr(title,9,9)=="/")	# sometimes, too many digits in the doc number
+				title <- paste0(substr(title,1,7),substr(title,9,nchar(title)))
+			number <- substr(title,4,7)
+			tlog("....number='",number,"'")
+			year <- substr(title,9,12)
+			tlog("....year='",year,"'")
+			reference <- paste0(prefix,"-",year,"-",number,sep="")
+			tlog("..reference='",reference,"'")
+			if(prefix=="A7")
+				ep.url <- paste0(IYP.URL.REPORTS,reference,IYP.URL.LANG.SUFFIX)
+			else if(prefix=="B7")
+				ep.url <- paste0(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX)
+			tlog("..url='",ep.url,"'")
+		}
+		# build the appropriate request URL for RC-type ids
+		else #if(prefix=="RC") # RC-B7-0693/2011
+		{	if(startsWith(title,"RC7"))
+				title <- gsub("RC7-", "RC-", title)
+			prefix2 <- substr(title,4,5)
+			tlog("....prefix2='",prefix2,"'")
+			number <- substr(title,7,10)
+			tlog("....number='",number,"'")
+			year <- substr(title,12,15)
+			tlog("....year='",year,"'")
+			reference <- paste0("P7","-",prefix,"-",year,"-",number)
+			tlog("..reference='",reference,"'")
+			ep.url <- paste0(IYP.URL.MOTIONS,reference,IYP.URL.LANG.SUFFIX)
+			tlog("..url='",ep.url,"'")
+		}
+		# request the Europarl server
+		ep.page <- readLines(ep.url)
+		# identify the full title
+		
+		idx <- which(startsWith(ep.page,"<title>"))
+		fulltitle <- substr(ep.page[idx],8,nchar(ep.page[idx])-8)
+		
+#		idx <- str_locate(ep.page, fixed("doc_subtitle_level1"))[1]
+#print(ep.page[1:100])		
+#		idx2 <- which(apply(idx,1,function(v) !all(is.na(v))))
+#print(ep.page[idx2:(idx2+10)])		
+#		# a title could be found
+#		if(length(idx2)>0)
+#		{	# retrieve the title
+#			start.idx <- idx2 + 1
+#			fulltitle <- ep.page[start.idx]
+#			if(startsWith(fulltitle,"<"))
+#			{	d <- str_locate(fulltitle,fixed(">"))[1] + 1
+#				fulltitle <- substr(fulltitle,start=d,stop=nchar(fulltitle))
+#				f <- str_locate(fulltitle,fixed("</"))[1] - 1
+#				fulltitle <- substr(fulltitle,start=1,stop=f)
+#			}
+#			temp.idx <- start.idx + 1
+#			temp <- ep.page[temp.idx]
+#			while(!startsWith(temp,"</td>"))
+#			{	if(startsWith(temp,"<"))
+#				{	d <- str_locate(temp,fixed(">"))[1] + 1
+#					temp <- substr(temp,start=d,stop=nchar(temp))
+#					f <- str_locate(temp,fixed("</"))[1] - 1
+#					temp <- substr(temp,start=1,stop=f)
+#				}
+#				if(!is.na(temp) && nchar(temp)>0)
+#					fulltitle <- paste(fulltitle,temp)
+#				temp.idx <- temp.idx + 1
+#				temp <- ep.page[temp.idx]
+#			}
+#			tlog("..title'",fulltitle,"'")
+#		}
+#		# no title found
+#		else
+#			tlog("..WARNING: could not find the full title")
+		tlog("..title=",fulltitle)
+	}
+	# unknown Europarl ID
+	else
+	{	tlog("..WARNING: prefix not recognized, skipping this one")
+	}
+	
+	return(fulltitle)
+}
+
+
+#############################################################################################
+# Retrieves the full title of each document and adds it to the existing table. This function is
+# meant to be applied *after* the original retrieval. The table must exist!
+#############################################################################################
+ep.complete.table.fulltitle <- function()
+{	# load the table containing the document details
+	data <- as.matrix(read.csv2(DOC.DETAILS.FILE,check.names=FALSE))
+	data[,COL.DOCID] <- as.integer(data[,COL.DOCID])
+	
+	# add a new column for the complete title
+	data <- cbind(data,rep(NA,nrow(data)))
+	colnames(data)[ncol(data)] <- COL.RET.TITLE
+	
+	# process each document and set the title
+	for(i in 1:nrow(data))
+	{	tlog("Processing document ",i,"/",nrow(data)," '",data[i,COL.TITLE],"'")
+		data[i,COL.RET.TITLE] <- ep.retrieve.fulltitle(data[i,COL.TITLE])
+	}
+	
+	# record table
+	write.csv2(data,file=paste0(DOC.DETAILS.FILE,"2"),row.names=FALSE)
+}
+	
 
 #############################################################################################
 # Retrieves the list of all votes from the website from www.itsyourparliament.eu, and record

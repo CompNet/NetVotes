@@ -65,7 +65,7 @@ countries <- COUNTRY.VALUES						# which country to process individually
 #		COUNTRY.PT,COUNTRY.RO,COUNTRY.SK,COUNTRY.SI,COUNTRY.ES,COUNTRY.SE,COUNTRY.UK
 #)
 ##################### groups
-groups <- GROUP.VALUES							# which group to process individually
+ORDERED_GROUPS <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
 #groups <- GROUP.VW2SYMB[TEST.GROUPS]
 #groups <- c(
@@ -75,12 +75,13 @@ groups <- GROUP.VALUES							# which group to process individually
 
 ##################### score matrix used to process agreement
 score.file <- "m3"					# see folder in/score
-thresh <- c(0,0)					# no thresholding at all
+#thresh <- c(0,0)					# no thresholding at all
 #thresh <- c(-0.34,+0.34)			# thresholds applied to agreement index values during network extraction (use c(0,0) for no filtering)
-#thresh <- NA						# both thresholds automatically estimated (through k-means)
+thresh <- NA						# both thresholds automatically estimated (through k-means)
 
 ##################### partitioning algorithms
-#comdet.algos <- COMDET.ALGO.VALUES		# community detection algorithms
+### community detection algorithms
+#comdet.algos <- COMDET.ALGO.VALUES
 comdet.algos <- c(
 #	COMDET.ALGO.EDGEBETW,
 	COMDET.ALGO.INFOMAP,
@@ -88,12 +89,14 @@ comdet.algos <- c(
 	COMDET.ALGO.LOUVAIN,
 	COMDET.ALGO.WALKTRAP
 )
-corclst.algos <- c()					# correlation clustering algorithms
+#comdet.algos <- c()
+### correlation clustering algorithms (see define-algos.R for the parameter description)
+corclst.algos <- c()
 #corclst.algos <- c(
-#	get.grasp.code(rcc=FALSE, l=1, k=7, alpha=1.0, gain=0),
-#	get.grasp.code(rcc=TRUE, l=1, k=7, alpha=1.0, gain=0),
-#	get.ils.code(rcc=FALSE, l=1, k=7, alpha=1.0, gain=0),
-#	get.ils.code(rcc=TRUE, l=1, k=7, alpha=1.0, gain=0)
+#	get.grasp.code(rcc=FALSE, l=1, k=7, alpha=1.0, gain=0, perturbation=30)
+#	get.grasp.code(rcc=TRUE, l=1, k=7, alpha=1.0, gain=0, perturbation=30),
+#	get.ils.code(rcc=FALSE, l=1, k=7, alpha=1.0, gain=0, perturbation=30),
+#	get.ils.code(rcc=TRUE, l=1, k=7, alpha=1.0, gain=0, perturbation=30)
 #)
 repetitions <- 5						# number of times each algorithm must be applied
 
@@ -106,8 +109,8 @@ comp.measures <- c(
 
 ##################### formats of the generated plot (NA for screen -- mainly for debug)
 plot.formats <- c(
-	"PDF", 
-	"PNG"
+	"PDF" 
+#	"PNG"
 #	NA
 )
 
@@ -152,29 +155,29 @@ if(dataset.name=="VW")
 #############################################################################################
 # Extract all the networks (just a bit faster)
 #############################################################################################
-extract.all.networks(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, groups, plot.formats)
+#extract.all.networks(data$mep.details, thresh, score.file,
+#		domains, dates, everything, countries, groups, plot.formats)
 
 
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-#partition.all.graphs(data$mep.details, thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
+partition.all.graphs(data$mep.details, thresh, score.file,
+		domains, dates, everything, countries, ORDERED_GROUPS, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
 
 
 #############################################################################################
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
-#evaluate.all.partitions(data$mep.details, thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
+evaluate.all.partitions(data$mep.details, thresh, score.file,
+		domains, dates, everything, countries, ORDERED_GROUPS, comdet.algos, corclst.algos, repetitions, plot.formats)
 
 
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
-#compare.all.partitions(data$mep.details, thresh, score.file,
-#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
+compare.all.partitions(data$mep.details, thresh, score.file,
+		domains, dates, everything, countries, ORDERED_GROUPS, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 
 
