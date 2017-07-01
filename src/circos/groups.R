@@ -45,8 +45,8 @@ colnames(md)[ncol(md)] <- "NODE_ID"
 
 # set up political groups
 ngrp <- length(unique(md[,COL.GROUP]))
-ORDERED_GROUPS <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP, GROUP.ECR, GROUP.EFD, GROUP.NI)
-md <- cbind(md,match(md[,COL.GROUP],ORDERED_GROUPS))
+GROUPS_ORDERED <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP, GROUP.ECR, GROUP.EFD, GROUP.NI)
+md <- cbind(md,match(md[,COL.GROUP],GROUPS_ORDERED))
 colnames(md)[ncol(md)] <- "GROUP_ID"
 CIRCOS_GROUP_COLORS <- c()	# traditional colors of the political parties
 CIRCOS_GROUP_COLORS[GROUP.GUENGL] <- "198,0,0"
@@ -162,7 +162,7 @@ chr <- rep("chr",ngrp)
 hyphen <- rep("-",ngrp)
 grp.cds <- as.numeric(sort(unique(md[,"GROUP_ID"])))
 grp.ids <- paste0("group",grp.cds)
-grp.names <- ORDERED_GROUPS[grp.cds]
+grp.names <- GROUPS_ORDERED[grp.cds]
 grp.min <- rep(0,ngrp)
 grp.max <- sapply(grp.cds, function(code) max(as.numeric(end.pos[which(md[,"GROUP_ID"]==code)])))
 col <- CIRCOS_GROUP_COLORS[grp.cds]

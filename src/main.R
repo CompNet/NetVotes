@@ -65,7 +65,7 @@ countries <- COUNTRY.VALUES						# which country to process individually
 #		COUNTRY.PT,COUNTRY.RO,COUNTRY.SK,COUNTRY.SI,COUNTRY.ES,COUNTRY.SE,COUNTRY.UK
 #)
 ##################### groups
-ORDERED_GROUPS <- GROUP.VALUES							# which group to process individually
+GROUPS_ORDERED <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
 #groups <- GROUP.VW2SYMB[TEST.GROUPS]
 #groups <- c(
@@ -163,21 +163,21 @@ if(dataset.name=="VW")
 # Detect communities for all the networks
 #############################################################################################
 partition.all.graphs(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, ORDERED_GROUPS, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
+		domains, dates, everything, countries, GROUPS_ORDERED, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
 
 
 #############################################################################################
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
 evaluate.all.partitions(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, ORDERED_GROUPS, comdet.algos, corclst.algos, repetitions, plot.formats)
+		domains, dates, everything, countries, GROUPS_ORDERED, comdet.algos, corclst.algos, repetitions, plot.formats)
 
 
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
 compare.all.partitions(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, ORDERED_GROUPS, comdet.algos, corclst.algos, comp.measures, repetitions)
+		domains, dates, everything, countries, GROUPS_ORDERED, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 
 

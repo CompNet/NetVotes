@@ -13,13 +13,13 @@ source("src/define-imports.R")
 # GENERAL CONSTANTS
 #############################################################################################
 # location and name of the Circos command in the Circos folder 
-CIRCOS_CMD <- "/home/vlabatut/Downloads/circos-0.69-5/bin/circos"
+CIRCOS_CMD <- "/home/vlabatut/Downloads/circos-0.69-5/bin/circos"	# TODO this should be changed according to your installation
 # location of the temp Circos file in the project
 CIRCOS_RES <- "res/circos"
 # extension of the Circos configuration files
 CIRCOS_CONFIG_FILE <- "circos.conf"
 # name of the file containing the histogram data
-CIRCOS_HISTO_FILE <- "circos.conf"
+CIRCOS_HISTO_FILE <- "hist.txt"
 # name of the file describing the links
 CIRCOS_LINKS_FILE <- "links.txt"
 # name of the file describing the nodes
@@ -43,6 +43,8 @@ CIRCOS_CLUSTER_COLORS <- c(
 	"fill_color=(247,129,191)",
 	"fill_color=(153,153,153)"
 )
+# color used for isolates
+CIRCOS_CLUSTER_WHITE <- "fill_color=(255,255,255)"
 
 # colors traditionally associated to the political groups
 CIRCOS_GROUP_COLORS <- c()
@@ -56,7 +58,18 @@ CIRCOS_GROUP_COLORS[GROUP.EFD] <- "104,39,216"
 CIRCOS_GROUP_COLORS[GROUP.NI] <- "119,65,29"
 
 # groups in political order, from far-left to far-right
-ORDERED_GROUPS <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP, GROUP.ECR, GROUP.EFD, GROUP.NI)
+GROUPS_ORDERED <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP, GROUP.ECR, GROUP.EFD, GROUP.NI)
+
+# formated names of the groups
+GROUPS_FULLNAMES <- c()
+GROUPS_FULLNAMES[GROUP.GUENGL] <- "European United Left-Nordic Green Left (GUE-NGL)"
+GROUPS_FULLNAMES[GROUP.GREENS] <- "Greens-European Free Alliance (G-EFA)"
+GROUPS_FULLNAMES[GROUP.SD] <- "Progressive Alliance of Socialists and Democrats (S&D)"
+GROUPS_FULLNAMES[GROUP.ALDE] <- "Alliance of Liberals and Democrats for Europe (ALDE)"
+GROUPS_FULLNAMES[GROUP.EPP] <- "European People's Party (EPP)"
+GROUPS_FULLNAMES[GROUP.ECR] <- "European Conservatives and Reformists (ECR)"
+GROUPS_FULLNAMES[GROUP.EFD] <- "Europe of Freedom and Democracy (EFD)"
+GROUPS_FULLNAMES[GROUP.NI] <- "Non-Inscrits (NI)"
 
 
 
@@ -67,7 +80,7 @@ ORDERED_GROUPS <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP,
 # ideogram part (general plot configuration)
 CIRCOS_CONFIGURATION_IDEOGRAM <- 
 "# override column delimitor
-file_delim* = \t
+file_delim* = \\t
 
 # node file
 karyotype = nodes.txt
@@ -98,7 +111,7 @@ karyotype = nodes.txt
 </ideogram>
 
 #<<include tracks/link.conf>>
-#<<include etc/circos/tracks/link.conf>>\n\n"
+#<<include /etc/circos/tracks/link.conf>>\n\n"
 
 # part concerning the graph links
 CIRCOS_CONFIGURATION_LINKS <- 
@@ -134,7 +147,7 @@ CIRCOS_CONFIGURATION_PLOTS_CLUSTER <-
 		type = highlight
 		file = clusters.txt
 		r0 = <<<clusinside>>>r
-		r1 = <<<clusinside>>>r
+		r1 = <<<clusoutside>>>r
 	</plot>\n"
 
 # part concerning the node histograms
@@ -144,7 +157,7 @@ CIRCOS_CONFIGURATION_PLOTS_HISTO <-
 		type = histogram
 		file = hist.txt
 		r0 = <<<histinside>>>r
-		r1 = <<<histinside>>>r
+		r1 = <<<histoutside>>>r
 		fill_color= green,red
 		orientation = out
 	</plot>\n"
@@ -178,22 +191,25 @@ CIRCOS_CONFIGURATION_IMAGE <-
 # g: signed graph that will be plotted.
 # partition: integer vector indicating the cluster for each node in the graph.
 # mep.details: table representing all the MEPs and their information (not only those from the graph).
+# show.names: if TRUE, the MEP names are included in the plot.
 # show.histos: if TRUE, the imbalance participation of each node is shown as a histogram.
+# show.clusters: if TRUE, displays the cluster as a colored strip.
 # out.folder: where to write all the circos files.
+# clean.files: remove the files generated for Circos, which are not needed anymore.
 #############################################################################################
-produce.circos.plot <- function(g, partition, mep.details, show.histos, out.folder)
+produce.circos.plot <- function(g, partition, mep.details, show.names=TRUE, show.histos=FALSE, show.clusters=TRUE, out.folder, clean.files=TRUE)
 {	# set up the MEP data table
 	md <- circos.setup.mepdata(g, partition, mep.details)
 	
 	# plot the full graph
-	circos.convert.data(g, md, show.names=TRUE, show.histos, show.clusters, group=NA, cluster=NA, out.folder)
-	circos.generate.plot(md, show.names, group=NA, cluster=NA, out.folder)
+	circos.convert.data(g, md, show.names, show.histos, show.clusters, group=NA, cluster=NA, out.folder)
+	circos.generate.plot(md, show.names, show.histos, show.clusters, group=NA, cluster=NA, out.folder, clean.files)
 	
 	# plot the group-related graphs
-	for(group in ORDERED_GROUPS)
+	for(group in GROUPS_ORDERED)
 	{	if(any(md[,COL.GROUP]==group))
 		{	circos.convert.data(g, md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder)
-			circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder)
+			circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder, clean.files)
 		}
 	}
 
@@ -201,10 +217,8 @@ produce.circos.plot <- function(g, partition, mep.details, show.histos, out.fold
 	clusters <- sort(unique(partition))
 	for(cluster in clusters)
 	{	circos.convert.data(g, md, show.names=FALSE, show.histos=FALSE, show.clusters=TRUE, group=NA, cluster, out.folder)
-		circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=TRUE, group=NA, cluster, out.folder)
+		circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=TRUE, group=NA, cluster, out.folder, clean.files)
 	}
-	
-	#TODO dédoubler histos + supprimer prénoms qd possible
 }
 
 
@@ -221,7 +235,7 @@ produce.circos.plot <- function(g, partition, mep.details, show.histos, out.fold
 #############################################################################################
 circos.setup.mepdata <- function(g, partition, mep.details)
 {	# keep only the MEPs present in the graph, in the MEP data table
-	idx <- match(V(graph)$MEPid,mep.details[,COL.MEPID])
+	idx <- match(V(g)$MEPid,mep.details[,COL.MEPID])
 	md <- mep.details[idx,]
 	
 	# add the partition
@@ -233,8 +247,7 @@ circos.setup.mepdata <- function(g, partition, mep.details)
 	colnames(md)[ncol(md)] <- "NODE_ID"
 	
 	# add the political ids
-	ngrp <- length(unique(md[,COL.GROUP]))
-	md <- cbind(md,match(md[,COL.GROUP],ORDERED_GROUPS))
+	md <- cbind(md,match(md[,COL.GROUP],GROUPS_ORDERED))
 	colnames(md)[ncol(md)] <- "GROUP_ID"
 	
 	# add the group-related node id
@@ -320,7 +333,7 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 		vals <- paste(npos.imbalance,nneg.imbalance,sep=",")
 		nh <- cbind(grp,beg.pos,end.pos,vals)
 		nh <- nh[order(nh[,1],as.numeric(nh[,2])),]
-		write.table(nh, file.path(our.folder,CIRCOS_HISTO_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
+		write.table(nh, file.path(out.folder,CIRCOS_HISTO_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
 	}
 	
 	# links
@@ -355,14 +368,16 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 	sl <- cbind(grp1,beg.pos1,end.pos1, grp2,beg.pos2,end.pos2, col) 			# group1	0	1	group1	2	3	color=red
 #	sl <- sl[order(sl[,1],as.numeric(sl[,2]),sl[,4],as.numeric(sl[,5])),]		# order by node
 	sl <- sl[order(E(g)$weight[idx],decreasing=TRUE),]							# order by weight
-	write.table(sl, file.path(our.folder,CIRCOS_LINKS_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
+	write.table(sl, file.path(out.folder,CIRCOS_LINKS_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
 	
 	# create the file describing the nodes
+	ngrp <- length(unique(md[,COL.GROUP]))
 	chr <- rep("chr",ngrp)
 	hyphen <- rep("-",ngrp)
 	grp.cds <- as.numeric(sort(unique(md[,"GROUP_ID"])))
 	grp.ids <- paste0("group",grp.cds)
-	grp.names <- ORDERED_GROUPS[grp.cds]
+#	grp.names <- GROUPS_FULLNAMES[grp.cds] # full names are too long
+	grp.names <- GROUPS_ORDERED[grp.cds]
 	grp.min <- rep(0,ngrp)
 	grp.max <- sapply(grp.cds, function(code) max(as.numeric(end.pos[which(md[,"GROUP_ID"]==code)])))
 	col <- CIRCOS_GROUP_COLORS[grp.cds]
@@ -377,21 +392,22 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 	}
 	else
 		as <- cs
-	write.table(as, file.path(our.folder,CIRCOS_NODES_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)        
+	write.table(as, file.path(out.folder,CIRCOS_NODES_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)        
 	
 	# create the file containing the clusters
 	if(show.clusters)
-	{	col <- cluster.cols[as.numeric(md[,"CLUSTER_ID"])]
+	{	col <- CIRCOS_CLUSTER_COLORS[as.numeric(md[,"CLUSTER_ID"])]
+		col[degree(g)==0] <- CIRCOS_CLUSTER_WHITE	# set isolates to white
 		cl <- cbind(grp, beg.pos, end.pos, col)
 		cl <- cl[order(cl[,1],as.numeric(cl[,2])),]								# group1	0	1	fill_color=red
-		write.table(cl, file.path(our.folder,CIRCOS_CLUSTERS_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
+		write.table(cl, file.path(out.folder,CIRCOS_CLUSTERS_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
 	}
 	
 	# create the file containing the node names
 	if(show.names)
 	{	nn <- cbind(grp,beg.pos,end.pos,node.names) 
 		nn <- nn[order(nn[,1],as.numeric(nn[,2])),]								# group1	0	1	Mep1
-		write.table(nn, file.path(our.folder,CIRCOS_NAMES_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
+		write.table(nn, file.path(out.folder,CIRCOS_NAMES_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
 	}
 }
 
@@ -412,63 +428,68 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 #		   If both group and cluster are NA, then the whole network is plotted.
 # out.folder: where to write all the circos files.
 #############################################################################################
-circos.generate.plot  <- function(md, show.names, show.histos, show.clusters, group, cluster, out.folder)
-{	# compute the relative sizes of the plot elements, depending on the show.xxx options
+circos.generate.plot  <- function(md, show.names, show.histos, show.clusters, group, cluster, out.folder, clean.files)
+{	names.height <- 0.19
+	cluster.height <- 0.05
+	hist.height <- 0.08
+	margin <- 0.01
+	
+	# compute the relative sizes of the plot elements, depending on the show.xxx options
 	if(!show.names & !show.histos & !show.clusters)
 	{	link.radius <- 0.99
 		bez.radius <- 0.25
 	}
 	else if(!show.names & !show.histos & show.clusters)
-	{	link.radius <- 0.89
+	{	clus.radius.outside <- 0.99
+		clus.radius.inside <- clus.radius.outside-cluster.height
+		link.radius <- clus.radius.inside-margin
 		bez.radius <- 0.25
-		clus.radius.inside <- 0.90
-		clus.radius.outside <- 0.99
 	}
 	else if(!show.names & show.histos & !show.clusters)
-	{	link.radius <- 0.89
+	{	hist.radius.outside <- 0.99
+		hist.radius.inside <- hist.radius.outside-hist.height
+		link.radius <- hist.radius.inside-margin		
 		bez.radius <- 0.25
-		hist.radius.inside <- 0.90
-		hist.radius.outside <- 0.99
 	}
 	else if(!show.names & show.histos & show.clusters)
-	{	link.radius <- 0.79
+	{	clus.radius.outside <- 0.99
+		clus.radius.inside <- clus.radius.outside-cluster.height
+		hist.radius.outside <- clus.radius.inside-margin
+		hist.radius.inside <- hist.radius.outside-hist.height
+		link.radius <- hist.radius.inside-margin
 		bez.radius <- 0.25
-		hist.radius.inside <- 0.80
-		hist.radius.outside <- 0.89
-		clus.radius.inside <- 0.90
-		clus.radius.outside <- 0.99
 	}
 	else if(show.names & !show.histos & !show.clusters)
-	{	link.radius <- 0.79
+	{	names.radius.outside <- 0.99
+		names.radius.inside <- names.radius.outside-names.height
+		link.radius <- names.radius.inside-margin
 		bez.radius <- 0.25
-		names.radius.inside <- 0.80
-		names.radius.outside <- 0.99
 	}
 	else if(show.names & !show.histos & show.clusters)
-	{	link.radius <- 0.69
+	{	names.radius.outside <- 0.99
+		names.radius.inside <- names.radius.outside-names.height
+		clus.radius.outside <- names.radius.inside-margin
+		clus.radius.inside <- clus.radius.outside-cluster.height
+		link.radius <- clus.radius.inside-margin
 		bez.radius <- 0.25
-		names.radius.inside <- 0.80
-		names.radius.outside <- 0.99
-		clus.radius.inside <- 0.70
-		clus.radius.outside <- 0.79
 	}
 	else if(show.names & show.histos & !show.clusters)
-	{	link.radius <- 0.69
+	{	names.radius.outside <- 0.99
+		names.radius.inside <- names.radius.outside-names.height
+		hist.radius.outside <- names.radius.inside-margin
+		hist.radius.inside <- hist.radius.outside-hist.height
+		link.radius <- hist.radius.inside-margin
 		bez.radius <- 0.25
-		names.radius.inside <- 0.80
-		names.radius.outside <- 0.99
-		hist.radius.inside <- 0.70
-		hist.radius.outside <- 0.79
 	}
 	else if(show.names & show.histos & show.clusters)
-	{	link.radius <- 0.59
-		bez.radius <- 0.25
-		names.radius.inside <- 0.80
-		names.radius.outside <- 0.99
-		hist.radius.inside <- 0.60
-		hist.radius.outside <- 0.69
-		clus.radius.inside <- 0.70
-		clus.radius.outside <- 0.79
+	{	names.radius.outside <- 0.99
+		names.radius.inside <- names.radius.outside-names.height
+		clus.radius.outside <- names.radius.inside-margin
+		clus.radius.inside <- clus.radius.outside-cluster.height
+		hist.radius.outside <- clus.radius.inside-margin
+		hist.radius.inside <- hist.radius.outside-hist.height
+		link.radius <- hist.radius.inside-margin
+		bez.radius <- 0.00
 	}
 	
 	# add the ideogram part
@@ -525,35 +546,50 @@ circos.generate.plot  <- function(md, show.names, show.histos, show.clusters, gr
 		out.file <- CIRCOS_OVERALL_NET
 	circos.cmd <- paste0(CIRCOS_CMD," -conf ",conf.file," -outputdir ",out.folder," -outputfile ",out.file)
 	system(command=circos.cmd)
+	
+	# possibly remove the Circos files
+	if(clean.files)
+	{	file.remove(file.path(out.folder,CIRCOS_CONFIG_FILE))
+		file.remove(file.path(out.folder,CIRCOS_LINKS_FILE))
+		file.remove(file.path(out.folder,CIRCOS_NODES_FILE))
+		if(show.clusters)
+		file.remove(file.path(out.folder,CIRCOS_CLUSTERS_FILE))
+		if(show.histos)
+			file.remove(file.path(out.folder,CIRCOS_HISTO_FILE))
+		if(show.names)
+			file.remove(file.path(out.folder,CIRCOS_NAMES_FILE))
+		file.remove(file.path(out.folder,out.file)) # also remove the PNG plot
+	}
 }
 
 
 
 
 #############################################################################################
-# load the graph
-in.folder <- "/home/vlabatut/eclipse/workspaces/Networks/NetVotes/out/partitions/m3/negtr=NA_postr=NA/bycountry/France/AGRI/2012-13"
-#in.folder <- "/home/vlabatut/eclipse/workspaces/Networks/NetVotes/out/partitions/m3/negtr=NA_postr=NA/bycountry/France/AGRI/Term"
-g <- read.graph(file.path(in.folder,"signed.graphml"),format="graphml")
-
-# load MEP meta-data
-data <- load.itsyourparliament.data()
-md <- data$mep.details
-
-# load the partition
-#p <- as.matrix(read.table(file.path(in.folder,"1/IM-membership.txt")))
-p <- as.matrix(read.table(file.path(in.folder,"1/GRASP-CC_l1_k7_a1_g0_p30-membership.txt")))
-
-# setup the output folder
-out.folder <- "/home/vlabatut/Downloads/circos-test/EP"
-
-# call the function that generates the plot(s)
-produce.circos.plot(g, partition=p, mep.details=md, show.names=TRUE, show.histos=TRUE, show.clusters=TRUE, focus=NA, out.folder)
-
-
+## load the graph
+#in.folder <- "/home/vlabatut/eclipse/workspaces/Networks/NetVotes/out/partitions/m3/negtr=NA_postr=NA/bycountry/France/AGRI/2012-13"
+##in.folder <- "/home/vlabatut/eclipse/workspaces/Networks/NetVotes/out/partitions/m3/negtr=NA_postr=NA/bycountry/France/AGRI/Term"
+#g <- read.graph(file.path(in.folder,"signed.graphml"),format="graphml")
+#
+## load MEP meta-data
+#data <- load.itsyourparliament.data()
+#mep.details <- data$mep.details
+#
+## load the partition
+##partition <- as.matrix(read.table(file.path(in.folder,"1/IM-membership.txt")))
+#partition <- as.matrix(read.table(file.path(in.folder,"1/GRASP-CC_l1_k7_a1_g0_p30-membership.txt")))
+#
+## setup the output folder
+#out.folder <- "/home/vlabatut/Downloads/circos-test/EP2"
+#
+## call the function that generates the plot(s)
+#produce.circos.plot(g, partition, mep.details, show.names=TRUE, show.histos=TRUE, show.clusters=TRUE, focus=NA, out.folder)
 
 
 
 
-# TODO this should be changed according to your installation
-# TODO option to remove circos files 
+
+
+# TODO dédoubler histos + supprimer prénoms qd possible
+# TODO when names are displayed, we could use the colors and therefore don't need the outer group names
+# TODO plot the cluster to cluster network and the group to group cluster, and try with the rubbon stuff (ribbon=yes)

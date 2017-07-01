@@ -44,18 +44,18 @@ colnames(md)[ncol(md)] <- "NODE_ID"
 
 # set up political groups
 ngrp <- length(unique(md[,COL.GROUP]))
-ORDERED_GROUPS <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP, GROUP.ECR, GROUP.EFD, GROUP.NI)
-md <- cbind(md,match(md[,COL.GROUP],ORDERED_GROUPS))
+ordered.groups <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP, GROUP.ECR, GROUP.EFD, GROUP.NI)
+md <- cbind(md,match(md[,COL.GROUP],ordered.groups))
 colnames(md)[ncol(md)] <- "GROUP_ID"
-CIRCOS_GROUP_COLORS <- c()	# traditional colors of the political parties
-CIRCOS_GROUP_COLORS[GROUP.GUENGL] <- "198,0,0"
-CIRCOS_GROUP_COLORS[GROUP.GREENS] <- "115,204,32"
-CIRCOS_GROUP_COLORS[GROUP.SD] <- "252,138,138"
-CIRCOS_GROUP_COLORS[GROUP.ALDE] <- "255,181,53"
-CIRCOS_GROUP_COLORS[GROUP.EPP] <- "127,146,255"
-CIRCOS_GROUP_COLORS[GROUP.ECR] <- "46,72,221"
-CIRCOS_GROUP_COLORS[GROUP.EFD] <- "104,39,216"
-CIRCOS_GROUP_COLORS[GROUP.NI] <- "119,65,29"
+group.colors <- c()	# traditional colors of the political parties
+group.colors[GROUP.GUENGL] <- "198,0,0"
+group.colors[GROUP.GREENS] <- "115,204,32"
+group.colors[GROUP.SD] <- "252,138,138"
+group.colors[GROUP.ALDE] <- "255,181,53"
+group.colors[GROUP.EPP] <- "127,146,255"
+group.colors[GROUP.ECR] <- "46,72,221"
+group.colors[GROUP.EFD] <- "104,39,216"
+group.colors[GROUP.NI] <- "119,65,29"
 
 # process group-related node id
 md <- md[order(as.numeric(md[,"GROUP_ID"]),md[,COL.LASTNAME]),]
@@ -161,10 +161,10 @@ chr <- rep("chr",ngrp)
 hyphen <- rep("-",ngrp)
 grp.cds <- as.numeric(sort(unique(md[,"GROUP_ID"])))
 grp.ids <- paste0("group",grp.cds)
-grp.names <- ORDERED_GROUPS[grp.cds]
+grp.names <- ordered.groups[grp.cds]
 grp.min <- rep(0,ngrp)
 grp.max <- sapply(grp.cds, function(code) max(as.numeric(end.pos[which(md[,"GROUP_ID"]==code)])))
-col <- CIRCOS_GROUP_COLORS[grp.cds]
+col <- group.colors[grp.cds]
 cs <- cbind(chr,hyphen,grp.ids,grp.names,grp.min,grp.max,col) # chr	-	group1	GUE-NGL	0	3	red     ,
 band <- rep("band",nrow(md))
 nid <- paste0("n",md[,"NODE_ID"])
