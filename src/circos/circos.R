@@ -58,7 +58,7 @@ CIRCOS_GROUP_COLORS[GROUP.EFD] <- "104,39,216"
 CIRCOS_GROUP_COLORS[GROUP.NI] <- "119,65,29"
 
 # groups in political order, from far-left to far-right
-GROUPS_ORDERED <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP, GROUP.ECR, GROUP.EFD, GROUP.NI)
+CIRCOS_GROUPS_ORDERED <- c(GROUP.GUENGL, GROUP.GREENS, GROUP.SD, GROUP.ALDE, GROUP.EPP, GROUP.ECR, GROUP.EFD, GROUP.NI)
 
 # formated names of the groups
 GROUPS_FULLNAMES <- c()
@@ -137,7 +137,7 @@ CIRCOS_CONFIGURATION_PLOTS_NAMES <-
 		r0 = <<<namesinside>>>r
 		r1 = <<<namesoutside>>>r
 		label_font = default
-		label_size = 25p
+		label_size = 23p #25p
 	</plot>\n"
 
 # part concerning the node clusters
@@ -158,7 +158,7 @@ CIRCOS_CONFIGURATION_PLOTS_HISTO <-
 		file = hist.txt
 		r0 = <<<histinside>>>r
 		r1 = <<<histoutside>>>r
-		fill_color= green,red
+#		fill_color= green,red
 		orientation = out
 	</plot>\n"
 
@@ -190,6 +190,7 @@ CIRCOS_CONFIGURATION_IMAGE <-
 # 
 # g: signed graph that will be plotted.
 # partition: integer vector indicating the cluster for each node in the graph.
+# absences: number of times the MEP was present for a vote.
 # mep.details: table representing all the MEPs and their information (not only those from the graph).
 # show.names: if TRUE, the MEP names are included in the plot.
 # show.histos: if TRUE, the imbalance participation of each node is shown as a histogram.
@@ -197,16 +198,16 @@ CIRCOS_CONFIGURATION_IMAGE <-
 # out.folder: where to write all the circos files.
 # clean.files: remove the files generated for Circos, which are not needed anymore.
 #############################################################################################
-produce.circos.plot <- function(g, partition, mep.details, show.names=TRUE, show.histos=FALSE, show.clusters=TRUE, out.folder, clean.files=TRUE)
+produce.circos.plot <- function(g, partition, absences=NA, mep.details, show.names=TRUE, show.histos=FALSE, show.clusters=TRUE, out.folder, clean.files=TRUE)
 {	# set up the MEP data table
-	md <- circos.setup.mepdata(g, partition, mep.details)
+	md <- circos.setup.mepdata(g, partition, absences, mep.details)
 	
 	# plot the full graph
 	circos.convert.data(g, md, show.names, show.histos, show.clusters, group=NA, cluster=NA, out.folder)
 	circos.generate.plot(md, show.names, show.histos, show.clusters, group=NA, cluster=NA, out.folder, clean.files)
 	
 	# plot the group-related graphs
-	for(group in GROUPS_ORDERED)
+	for(group in CIRCOS_GROUPS_ORDERED)
 	{	if(any(md[,COL.GROUP]==group))
 		{	circos.convert.data(g, md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder)
 			circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder, clean.files)
@@ -229,11 +230,12 @@ produce.circos.plot <- function(g, partition, mep.details, show.names=TRUE, show
 # 
 # g: signed graph that will be plot.
 # partition: integer vector indicating the cluster of each node in the graph.
+# absences: number of times the MEP was present for a vote.
 # mep.details: table representing all the MEPs and their information (not only those from the graph).
 #
 # returns: a filtered and completed table representing the necessary MEPs data.
 #############################################################################################
-circos.setup.mepdata <- function(g, partition, mep.details)
+circos.setup.mepdata <- function(g, partition, absences, mep.details)
 {	# keep only the MEPs present in the graph, in the MEP data table
 	idx <- match(V(g)$MEPid,mep.details[,COL.MEPID])
 	md <- mep.details[idx,]
@@ -242,12 +244,16 @@ circos.setup.mepdata <- function(g, partition, mep.details)
 	md <- cbind(md,partition)
 	colnames(md)[ncol(md)] <- "CLUSTER_ID"
 	
+	# add the absences counts
+	md <- cbind(md, absences)
+	colnames(md)[ncol(md)] <- "ABSENCES"
+	
 	# add the node ids
 	md <- cbind(md,1:vcount(g))
 	colnames(md)[ncol(md)] <- "NODE_ID"
 	
 	# add the political ids
-	md <- cbind(md,match(md[,COL.GROUP],GROUPS_ORDERED))
+	md <- cbind(md,match(md[,COL.GROUP],CIRCOS_GROUPS_ORDERED))
 	colnames(md)[ncol(md)] <- "GROUP_ID"
 	
 	# add the group-related node id
@@ -291,27 +297,45 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 	dir.create(path=out.folder, showWarnings=FALSE, recursive=FALSE)
 	
 	# init some common variables used several times later
+	hist.bar.nbr <- 3	# number of histogram bars
 	el <- get.edgelist(g)
 	grp <- paste0("group",md[,"GROUP_ID"])
-	beg.pos <- as.numeric(md[,"GNODE_ID"]) - 1
-	end.pos <- md[,"GNODE_ID"]
-	node.names <- md[,COL.FULLNAME]
-	node.names <- sapply(node.names, function(node.name) # possibly shorten firstnames
-			{	if(nchar(node.name)>1) #initially, that threshold was 20, but it's better to do it systematically
-				{	tmp <- strsplit(x=node.name, split=" ", fixed=TRUE)[[1]]
-					if(grepl("-",tmp[1]))
-					{	tmp2 <- strsplit(x=tmp[1], split="-", fixed=TRUE)[[1]]
-						tmp2 <- sapply(tmp2,function(s) toupper(paste0(substr(x=s, start=1, stop=1),".")))
-						tmp[1] <- paste(tmp2,collapse="-")
-					}
-					else
-						tmp[1] <- paste0(substr(x=tmp[1], start=1, stop=1),".")
-					result <- paste(tmp,collapse=" ")
-				}
-				else
-					result <- node.name
-				return(result)
-			})
+	beg.pos <- (as.numeric(md[,"GNODE_ID"]) - 1)*hist.bar.nbr
+	end.pos <- as.numeric(md[,"GNODE_ID"])*hist.bar.nbr
+#	node.names <- md[,COL.FULLNAME]
+#	node.names <- sapply(node.names, function(node.name) # possibly shorten firstnames
+#			{	if(nchar(node.name)>1) #initially, that threshold was 20, but it's better to do it systematically
+#				{	tmp <- strsplit(x=node.name, split=" ", fixed=TRUE)[[1]]
+#					if(grepl("-",tmp[1]))
+#					{	tmp2 <- strsplit(x=tmp[1], split="-", fixed=TRUE)[[1]]
+#						tmp2 <- sapply(tmp2,function(s) toupper(paste0(substr(x=s, start=1, stop=1),".")))
+#						tmp[1] <- paste(tmp2,collapse="-")
+#					}
+#					else
+#						tmp[1] <- paste0(substr(x=tmp[1], start=1, stop=1),".")
+#					result <- paste(tmp,collapse=" ")
+#				}
+#				else
+#					result <- node.name
+#				return(result)
+#			})
+	firstnames <- normalize.firstnames(md[,COL.FIRSTNAME])
+	lastnames <- normalize.lastnames(md[,COL.LASTNAME])
+	node.names <- paste(firstnames,lastnames)
+#	firstnames <- sapply(md[,COL.FIRSTNAME], function(firstname)
+#			{	tmp <- strsplit(x=firstname, split=" ", fixed=TRUE)[[1]]
+#				for(i in 1:length(tmp))
+#				{	if(grepl("-",tmp[i]))
+#					{	tmp2 <- strsplit(x=tmp[i], split="-", fixed=TRUE)[[1]]
+#						tmp2 <- sapply(tmp2,function(s) toupper(paste0(substr(x=s, start=1, stop=1),".")))
+#						tmp[i] <- paste(tmp2,collapse="-")
+#					}
+#					else
+#						tmp[i] <- paste0(substr(x=tmp[i], start=1, stop=1),".")
+#				}
+#				result <- paste(tmp,collapse=" ")
+#				return(result)
+#			})
 	
 	# create the file containing the histograms data (i.e. node participation to imbalance)
 	if(show.histos)
@@ -330,8 +354,14 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 					result <- sum(lneg.imbalance[idx])
 					return(result)
 				})
-		vals <- paste(npos.imbalance,nneg.imbalance,sep=",")
-		nh <- cbind(grp,beg.pos,end.pos,vals)
+		npos.imbalance <- npos.imbalance / max(c(npos.imbalance,nneg.imbalance))
+		nneg.imbalance <- nneg.imbalance / max(c(npos.imbalance,nneg.imbalance))
+		absences <- as.numeric(md[,"ABSENCES"])
+		absences <- absences / max(absences)
+		nhp <- cbind(grp,beg.pos  ,beg.pos+1,npos.imbalance,"fill_color=green")
+		nhn <- cbind(grp,beg.pos+1,beg.pos+2,nneg.imbalance,"fill_color=red")
+		nht <- cbind(grp,beg.pos+2,beg.pos+3,absences,"fill_color=yellow")
+		nh <- rbind(nhp,nhn,nht)
 		nh <- nh[order(nh[,1],as.numeric(nh[,2])),]
 		write.table(nh, file.path(out.folder,CIRCOS_HISTO_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
 	}
@@ -359,8 +389,14 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 #					"color=(0,255,0,1)" else "color=(255,0,0,0.8)"      -- last color value=transparency, 0-127 (does not work...)
 	) 													# green vs. red
 	set.seed(1)											# fix the random number generator
+	if(show.names & show.histos & show.clusters)
+		max.bezier <- 0.6
+	else if (show.names & show.histos)
+		max.bezier <- 0.7
+	else
+		max.bezier <- 0.8
 	col <- paste0(col,rep(",bezier_radius=",length(col)),
-			runif(n=length(col),min=0,max=0.8),			# random bezier
+			runif(n=length(col),min=0,max=max.bezier),	# random bezier
 #			seq(from=0,to=0.8,length.out=length(col)), 	# ordered bezier
 			rep("r",length(col))
 	)
@@ -377,7 +413,7 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 	grp.cds <- as.numeric(sort(unique(md[,"GROUP_ID"])))
 	grp.ids <- paste0("group",grp.cds)
 #	grp.names <- GROUPS_FULLNAMES[grp.cds] # full names are too long
-	grp.names <- GROUPS_ORDERED[grp.cds]
+	grp.names <- CIRCOS_GROUPS_ORDERED[grp.cds]
 	grp.min <- rep(0,ngrp)
 	grp.max <- sapply(grp.cds, function(code) max(as.numeric(end.pos[which(md[,"GROUP_ID"]==code)])))
 	col <- CIRCOS_GROUP_COLORS[grp.cds]
@@ -566,30 +602,124 @@ circos.generate.plot  <- function(md, show.names, show.histos, show.clusters, gr
 
 
 #############################################################################################
-## load the graph
+# Takes a list of firstnames and returns the corresponding list of initials.
+#
+# firstnames: list of firstnames
+# 
+# returns: list of initials.
+#############################################################################################
+normalize.firstnames <- function(firstnames)
+{	result <- sapply(firstnames, function(firstname)
+			{	tmp <- strsplit(x=firstname, split=" ", fixed=TRUE)[[1]]
+				for(i in 1:length(tmp))
+				{	if(grepl("-",tmp[i]))
+					{	tmp2 <- strsplit(x=tmp[i], split="-", fixed=TRUE)[[1]]
+						tmp2 <- sapply(tmp2,function(s) toupper(paste0(substr(x=s, start=1, stop=1),".")))
+						tmp[i] <- paste(tmp2,collapse="-")
+					}
+					else
+						tmp[i] <- paste0(substr(x=tmp[i], start=1, stop=1),".")
+				}
+				res <- paste(tmp,collapse="")
+				return(res)
+			})
+	return(result)
+}
+
+
+
+
+#############################################################################################
+# Takes a list of lastnames and tries to shorten them if they are too long, by keeping only
+# certain initials.
+#
+# firstnames: list of lastnames
+# 
+# returns: list of shortened lastnames.
+#############################################################################################
+normalize.lastnames <- function(lastnames)
+{	result <- sapply(lastnames, function(lastname)
+			{	tmp <- strsplit(x=lastname, split=" ", fixed=TRUE)[[1]]
+				if(length(tmp)>1)
+				{	for(i in 1:(length(tmp)-1))
+					{	if(grepl("-",tmp[i]))
+						{	tmp2 <- strsplit(x=tmp[i], split="-", fixed=TRUE)[[1]]
+							tmp2 <- sapply(tmp2,function(s) toupper(paste0(substr(x=s, start=1, stop=1),".")))
+							tmp[i] <- paste(tmp2,collapse="-")
+						}
+						else if(nchar(tmp[i])>4)
+							tmp[i] <- paste0(substr(x=tmp[i], start=1, stop=1),".")
+						else
+							tmp[i] <- paste0(tmp[i]," ")
+					}
+					res <- paste(tmp,collapse="")
+				}
+				else
+				{	if(grepl("-",lastname))
+					{	tmp2 <- strsplit(x=lastname, split="-", fixed=TRUE)[[1]]
+						tmp3 <- sapply(tmp2,function(s) toupper(paste0(substr(x=s, start=1, stop=1),".")))
+						tmp3[length(tmp3)] <- tmp2[length(tmp2)]
+						res <- paste(tmp3,collapse="-")
+					}
+					else
+						res <- lastname
+				}
+				return(res)
+			})
+	return(result)
+}
+
+
+
+
+#############################################################################################
+# targeted instance
+#score <- "m3"; thresh <- c(NA,NA); country <- COUNTRY.FR; group=NA; domain=DOMAIN.AGRI; period=DATE.T7.Y4; repetition=1
+score <- "m3"; thresh <- c(NA,NA); country <- COUNTRY.FR; group=NA; domain=DOMAIN.AGRI; period=DATE.T7.TERM; repetition=1
+
+# targeted algo
+algo <- "GRASP-CC_l1_k7_a1_g0_p30"
+algo <- "IM"
+	
+# load the graph
 #in.folder <- "/home/vlabatut/eclipse/workspaces/Networks/NetVotes/out/partitions/m3/negtr=NA_postr=NA/bycountry/France/AGRI/2012-13"
-##in.folder <- "/home/vlabatut/eclipse/workspaces/Networks/NetVotes/out/partitions/m3/negtr=NA_postr=NA/bycountry/France/AGRI/Term"
-#g <- read.graph(file.path(in.folder,"signed.graphml"),format="graphml")
-#
-## load MEP meta-data
-#data <- load.itsyourparliament.data()
-#mep.details <- data$mep.details
-#
-## load the partition
-##partition <- as.matrix(read.table(file.path(in.folder,"1/IM-membership.txt")))
-#partition <- as.matrix(read.table(file.path(in.folder,"1/GRASP-CC_l1_k7_a1_g0_p30-membership.txt")))
-#
-## setup the output folder
-#out.folder <- "/home/vlabatut/Downloads/circos-test/EP2"
-#
-## call the function that generates the plot(s)
-#produce.circos.plot(g, partition, mep.details, show.names=TRUE, show.histos=TRUE, show.clusters=TRUE, focus=NA, out.folder)
+#in.folder <- "/home/vlabatut/eclipse/workspaces/Networks/NetVotes/out/partitions/m3/negtr=NA_postr=NA/bycountry/France/AGRI/Term"
+graph.folder <- get.networks.path(score, thresh, country, group, domain, period)
+g <- read.graph(file.path(graph.folder,"signed.graphml"),format="graphml")
+
+# load MEP meta-data
+data <- load.itsyourparliament.data()
+mep.details <- data$mep.details
+
+# load the partition
+partition.folder <- get.partitions.path(score, thresh, country, group, domain, period, repetition)
+#partition <- as.matrix(read.table(file.path(graph.folder,"1/IM-membership.txt")))
+#partition <- as.matrix(read.table(file.path(graph.folder,"1/GRASP-CC_l1_k7_a1_g0_p30-membership.txt")))
+partition <- as.matrix(read.table(file.path(partition.folder,paste0(algo,"-membership.txt"))))
+
+# load the absence data
+turnout.folder <- get.votes.path(vote="Turnout", country, group, domain, period)
+expressions <- as.matrix(read.csv2(file.path(turnout.folder,"expr-indiv.csv"),check.names=FALSE))
+expressions <- expressions[,VOTE.EXPRESSED]
+tmp <- as.matrix(read.csv2(file.path(turnout.folder,"expr-counts.csv"),check.names=FALSE))
+total <- nrow(tmp) 
+absences <- total - expressions
+
+# setup the output folder
+out.folder <- "/home/vlabatut/Downloads/circos-test/EP2"
+
+# call the function that generates the plot(s)
+produce.circos.plot(g, partition, absences, mep.details, show.names=TRUE, show.histos=TRUE, show.clusters=TRUE, out.folder, clean.files=TRUE)
 
 
 
 
 
 
-# TODO dédoubler histos + supprimer prénoms qd possible
 # TODO when names are displayed, we could use the colors and therefore don't need the outer group names
-# TODO plot the cluster to cluster network and the group to group cluster, and try with the rubbon stuff (ribbon=yes)
+# TODO faire passer les histos derrière les noms?
+# TODO plot the cluster to cluster network and the group to group network, and try with the rubbon stuff (ribbon=yes)
+
+
+# TODO stats: faudrait virer les inactifs avant de traffiquer les NA dans les données
+# vérifier comment on fait quand on génère les graphes: ce filtrage est il lui aussi appliqué ?

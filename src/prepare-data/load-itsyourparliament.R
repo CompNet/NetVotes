@@ -41,7 +41,7 @@ IYP.MEP.DUPLICATES.FILE <- file.path(IYP.MEPS.FOLDER,"_duplicates.csv")
 # XML elements and attributes
 #############################################################################################
 # mep details
-	IYP.ELT.MEPID		<- "mepid"
+	IYP.ELT.MEPID		<- "mepid"		# IYP MEP id (internal to the DB, different from both the official ID and that of NetVotes)
 	IYP.ELT.MEPNAME		<- "mepname"
 	IYP.ELT.FULLNAME	<- "fullname"
 	IYP.ELT.COUNTRY		<- "country"
@@ -49,7 +49,7 @@ IYP.MEP.DUPLICATES.FILE <- file.path(IYP.MEPS.FOLDER,"_duplicates.csv")
 	IYP.ELT.PARTY		<- "party"
 	IYP.ELT.BIRTHDATE	<- "birth"
 	IYP.ELT.BIRTHPLACE	<- "birthplace"
-	IYP.ELT.EP_ID		<- "europarlid"
+	IYP.ELT.EP_ID		<- "europarlid"	# official EP id of the MEP
 	IYP.ELT.GROUP		<- "group"
 # vote details
 	IYP.ELT.VOTE.TITLE	<- "votetitle"

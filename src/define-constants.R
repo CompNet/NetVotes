@@ -68,14 +68,14 @@ COL.DATE		<- "Date"
 COL.DOCID		<- "Doc Id"
 COL.DOMAIN		<- "Domain"
 COL.DOMID		<- "Domain Id"
-COL.EP.ID 		<- "EP Id"
+COL.EP.ID 		<- "EP Id"			# official EP id of the MEP
 COL.FIRSTNAME	<- "Firstname"
 COL.FREQUENCY	<- "Frequency"
 COL.FULLNAME	<- "Full name"
 COL.GENDER		<- "Gender"
 COL.GROUP		<- "Group"
 COL.LASTNAME	<- "Lastname"
-COL.MEPID		<- "MEP Id"
+COL.MEPID		<- "MEP Id"			# EP id of the MEP, internal to NetVotes
 COL.PARTY 		<- "Party"
 COL.PERCENT		<- "Percent"
 COL.RESULT		<- "Vote result"
@@ -113,6 +113,7 @@ VOTE.DOCABSENT <- "DocAbsent"
 	VOTE.VALUES <- c(VOTE.VALUES, VOTE.DOCABSENT)
 VOTE.OTHER <- "Other"
 	VOTE.VALUES.SMPL <- c(VOTE.VALUES.SMPL,VOTE.OTHER)
+VOTE.EXPRESSED <- "For/Against" # this is used just when dealing with turnouts
 
 
 #############################################################################################

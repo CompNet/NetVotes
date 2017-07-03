@@ -55,17 +55,17 @@ dates <- c(DATE.T7.YEARS, DATE.T7.TERM)			# which time periods to process indivi
 everything <- TRUE								# whether or not to process all data without distinction of country or date
 #everything <- FALSE
 ##################### countries
-countries <- COUNTRY.VALUES						# which country to process individually
+#countries <- COUNTRY.VALUES						# which country to process individually
 #countries <- c(COUNTRY.HR)
 #countries <- TEST.COUNTRIES
-#countries <- c(
+countries <- c(COUNTRY.FR,COUNTRY.IT
 #		COUNTRY.AT,COUNTRY.BE,COUNTRY.BG,COUNTRY.HR,COUNTRY.CY,COUNTRY.CZ,COUNTRY.DK
 #		COUNTRY.EE,COUNTRY.FI,COUNTRY.FR,COUNTRY.DE,COUNTRY.GR,COUNTRY.HU,COUNTRY.IE
 #		COUNTRY.IT,COUNTRY.LV,COUNTRY.LT,COUNTRY.LU,COUNTRY.MT,COUNTRY.NL,COUNTRY.PL
 #		COUNTRY.PT,COUNTRY.RO,COUNTRY.SK,COUNTRY.SI,COUNTRY.ES,COUNTRY.SE,COUNTRY.UK
-#)
+)
 ##################### groups
-GROUPS_ORDERED <- GROUP.VALUES							# which group to process individually
+groups <- GROUP.VALUES							# which group to process individually
 #groups <- c(GROUP.SD)
 #groups <- GROUP.VW2SYMB[TEST.GROUPS]
 #groups <- c(
@@ -116,11 +116,11 @@ plot.formats <- c(
 
 ##################### configure parallel processing
 #cn <- detectCores(all.tests=TRUE)
-#if(!is.na(cl))
+#if(!is.na(cn))
 #	cl <- makeCluster(cn)		# automatically use all the available processors
 #else
-	cl <- makeCluster(4)		# manually set the number of processors to use
-registerDoParallel(cl)
+#	cl <- makeCluster(4)		# manually set the number of processors to use
+#registerDoParallel(cl)
 
 
 #############################################################################################
@@ -139,8 +139,8 @@ if(dataset.name=="VW")
 #############################################################################################
 # Process raw data stats (this might take a while)
 #############################################################################################
-#process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
-#		domains, dates, everything, countries, groups, plot.formats)
+process.stats(data$all.votes, data$behavior.values, data$doc.details, data$mep.details,
+		domains, dates, everything, countries, groups, plot.formats)
 
 
 
@@ -162,28 +162,28 @@ if(dataset.name=="VW")
 #############################################################################################
 # Detect communities for all the networks
 #############################################################################################
-partition.all.graphs(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, GROUPS_ORDERED, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
+#partition.all.graphs(data$mep.details, thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats, force=FALSE)
 
 
 #############################################################################################
 # Evaluate the detected partitions, for all the networks
 #############################################################################################
-evaluate.all.partitions(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, GROUPS_ORDERED, comdet.algos, corclst.algos, repetitions, plot.formats)
+#evaluate.all.partitions(data$mep.details, thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, repetitions, plot.formats)
 
 
 #############################################################################################
 # Compare the detected partitions, for all the networks
 #############################################################################################
-compare.all.partitions(data$mep.details, thresh, score.file,
-		domains, dates, everything, countries, GROUPS_ORDERED, comdet.algos, corclst.algos, comp.measures, repetitions)
+#compare.all.partitions(data$mep.details, thresh, score.file,
+#		domains, dates, everything, countries, groups, comdet.algos, corclst.algos, comp.measures, repetitions)
 
 
 
 
 ##################### stop parallel processing
-stopCluster(cl)
+#stopCluster(cl)
 
 
 tlog("Done!")

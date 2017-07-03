@@ -64,7 +64,7 @@ get.agreement.path <- function(score, country=NA, group=NA, domain)
 #	if(!is.na(score))
 	result <- file.path(result,score)
 	
-	# country, group or everything (mutuall exclusive)
+	# country, group or everything (mutually exclusive)
 	if(!is.na(country))
 		result <- file.path(result,"bycountry",country)
 	else if(!is.na(group))
@@ -101,7 +101,7 @@ get.networks.path <- function(score, thresh=NA, country=NA, group=NA, domain, pe
 	# positive and negative thresholds (can be NA if no threhsold)
 	result <- file.path(result,paste0("negtr=",thresh[1],"_postr=",thresh[2]))
 	
-	# country, group or everything (mutuall exclusive)
+	# country, group or everything (mutually exclusive)
 	if(!is.na(country))
 		result <- file.path(result,"bycountry",country)
 	else if(!is.na(group))
@@ -131,7 +131,7 @@ get.networks.path <- function(score, thresh=NA, country=NA, group=NA, domain, pe
 # period: considered time period (optional).
 # repetition: repetition number for the partitioning algorithm (NA for no repetition at all).
 #
-# returns: the appropriate path for a files in the "networks" folder.
+# returns: the appropriate path for a file in the "networks" folder.
 #############################################################################################
 get.partitions.path <- function(score, thresh=NA, country=NA, group=NA, domain, period=NA, repetition=NA)
 {	result <- PARTITIONS.FOLDER
@@ -143,7 +143,7 @@ get.partitions.path <- function(score, thresh=NA, country=NA, group=NA, domain, 
 	# positive and negative thresholds (can be NA if no threhsold)
 	result <- file.path(result,paste0("negtr=",thresh[1],"_postr=",thresh[2]))
 	
-	# country, group or everything (mutuall exclusive)
+	# country, group or everything (mutually exclusive)
 	if(!is.na(country))
 		result <- file.path(result,"bycountry",country)
 	else if(!is.na(group))
