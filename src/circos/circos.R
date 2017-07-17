@@ -121,6 +121,7 @@ CIRCOS_CONFIGURATION_LINKS <-
 		file = links.txt
 		radius = <<<linkradius>>>r
 		bezier_radius = <<<bezradius>>>r
+		ribbon = <<<ribbon>>>
 		thickness = 5
 	</link>
 </link>
@@ -206,20 +207,20 @@ produce.circos.plot <- function(g, partition, absences=NA, mep.details, show.nam
 	circos.convert.data(g, md, show.names, show.histos, show.clusters, group=NA, cluster=NA, out.folder)
 	circos.generate.plot(md, show.names, show.histos, show.clusters, group=NA, cluster=NA, out.folder, clean.files)
 	
-	# plot the group-related graphs
-	for(group in CIRCOS_GROUPS_ORDERED)
-	{	if(any(md[,COL.GROUP]==group))
-		{	circos.convert.data(g, md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder)
-			circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder, clean.files)
-		}
-	}
-
-	# plot the cluster-related graphs
-	clusters <- sort(unique(partition))
-	for(cluster in clusters)
-	{	circos.convert.data(g, md, show.names=FALSE, show.histos=FALSE, show.clusters=TRUE, group=NA, cluster, out.folder)
-		circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=TRUE, group=NA, cluster, out.folder, clean.files)
-	}
+#	# plot the group-related graphs
+#	for(group in CIRCOS_GROUPS_ORDERED)
+#	{	if(any(md[,COL.GROUP]==group))
+#		{	circos.convert.data(g, md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder)
+#			circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, group, cluster=NA, out.folder, clean.files)
+#		}
+#	}
+#
+#	# plot the cluster-related graphs
+#	clusters <- sort(unique(partition))
+#	for(cluster in clusters)
+#	{	circos.convert.data(g, md, show.names=FALSE, show.histos=FALSE, show.clusters=TRUE, group=NA, cluster, out.folder)
+#		circos.generate.plot(md, show.names=FALSE, show.histos=FALSE, show.clusters=TRUE, group=NA, cluster, out.folder, clean.files)
+#	}
 }
 
 
@@ -302,40 +303,9 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 	grp <- paste0("group",md[,"GROUP_ID"])
 	beg.pos <- (as.numeric(md[,"GNODE_ID"]) - 1)*hist.bar.nbr
 	end.pos <- as.numeric(md[,"GNODE_ID"])*hist.bar.nbr
-#	node.names <- md[,COL.FULLNAME]
-#	node.names <- sapply(node.names, function(node.name) # possibly shorten firstnames
-#			{	if(nchar(node.name)>1) #initially, that threshold was 20, but it's better to do it systematically
-#				{	tmp <- strsplit(x=node.name, split=" ", fixed=TRUE)[[1]]
-#					if(grepl("-",tmp[1]))
-#					{	tmp2 <- strsplit(x=tmp[1], split="-", fixed=TRUE)[[1]]
-#						tmp2 <- sapply(tmp2,function(s) toupper(paste0(substr(x=s, start=1, stop=1),".")))
-#						tmp[1] <- paste(tmp2,collapse="-")
-#					}
-#					else
-#						tmp[1] <- paste0(substr(x=tmp[1], start=1, stop=1),".")
-#					result <- paste(tmp,collapse=" ")
-#				}
-#				else
-#					result <- node.name
-#				return(result)
-#			})
 	firstnames <- normalize.firstnames(md[,COL.FIRSTNAME])
 	lastnames <- normalize.lastnames(md[,COL.LASTNAME])
 	node.names <- paste(firstnames,lastnames)
-#	firstnames <- sapply(md[,COL.FIRSTNAME], function(firstname)
-#			{	tmp <- strsplit(x=firstname, split=" ", fixed=TRUE)[[1]]
-#				for(i in 1:length(tmp))
-#				{	if(grepl("-",tmp[i]))
-#					{	tmp2 <- strsplit(x=tmp[i], split="-", fixed=TRUE)[[1]]
-#						tmp2 <- sapply(tmp2,function(s) toupper(paste0(substr(x=s, start=1, stop=1),".")))
-#						tmp[i] <- paste(tmp2,collapse="-")
-#					}
-#					else
-#						tmp[i] <- paste0(substr(x=tmp[i], start=1, stop=1),".")
-#				}
-#				result <- paste(tmp,collapse=" ")
-#				return(result)
-#			})
 	
 	# create the file containing the histograms data (i.e. node participation to imbalance)
 	if(show.histos)
@@ -358,9 +328,9 @@ circos.convert.data <- function(g, md, show.names, show.histos, show.clusters, g
 		nneg.imbalance <- nneg.imbalance / max(c(npos.imbalance,nneg.imbalance))
 		absences <- as.numeric(md[,"ABSENCES"])
 		absences <- absences / max(absences)
-		nhp <- cbind(grp,beg.pos  ,beg.pos+1,npos.imbalance,"fill_color=green")
+		nhp <- cbind(grp,beg.pos+2,beg.pos+3,npos.imbalance,"fill_color=green")
 		nhn <- cbind(grp,beg.pos+1,beg.pos+2,nneg.imbalance,"fill_color=red")
-		nht <- cbind(grp,beg.pos+2,beg.pos+3,absences,"fill_color=yellow")
+		nht <- cbind(grp,beg.pos  ,beg.pos+1,absences,"fill_color=yellow")
 		nh <- rbind(nhp,nhn,nht)
 		nh <- nh[order(nh[,1],as.numeric(nh[,2])),]
 		write.table(nh, file.path(out.folder,CIRCOS_HISTO_FILE), sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
@@ -540,6 +510,10 @@ circos.generate.plot  <- function(md, show.names, show.histos, show.clusters, gr
 	temp <- CIRCOS_CONFIGURATION_LINKS
 	temp <- gsub(pattern="<<<linkradius>>>",replacement=link.radius,x=temp,fixed=TRUE)
 	temp <- gsub(pattern="<<<bezradius>>>",replacement=bez.radius,x=temp,fixed=TRUE)
+	if(is.na(group) & is.na(cluster))
+		temp <- gsub(pattern="<<<ribbon>>>",replacement="no",x=temp,fixed=TRUE)
+	else
+		temp <- gsub(pattern="<<<ribbon>>>",replacement="yes",x=temp,fixed=TRUE)
 	config.content <- paste0(config.content, temp)
 	
 	# pssibly add the names part
@@ -674,12 +648,12 @@ normalize.lastnames <- function(lastnames)
 
 #############################################################################################
 # targeted instance
-#score <- "m3"; thresh <- c(NA,NA); country <- COUNTRY.FR; group=NA; domain=DOMAIN.AGRI; period=DATE.T7.Y4; repetition=1
-score <- "m3"; thresh <- c(NA,NA); country <- COUNTRY.FR; group=NA; domain=DOMAIN.AGRI; period=DATE.T7.TERM; repetition=1
+score <- "m3"; thresh <- c(NA,NA); country <- COUNTRY.IT; group=NA; domain=DOMAIN.FEMM; period=DATE.T7.Y1
+#score <- "m3"; thresh <- c(NA,NA); country <- COUNTRY.FR; group=NA; domain=DOMAIN.AGRI; period=DATE.T7.TERM
 
 # targeted algo
-algo <- "GRASP-CC_l1_k7_a1_g0_p30"
-algo <- "IM"
+#algo <- "GRASP-CC_l1_k7_a1_g0_p30"; repetition=1
+algo <- "IM"; repetition=1
 	
 # load the graph
 #in.folder <- "/home/vlabatut/eclipse/workspaces/Networks/NetVotes/out/partitions/m3/negtr=NA_postr=NA/bycountry/France/AGRI/2012-13"
@@ -697,29 +671,27 @@ partition.folder <- get.partitions.path(score, thresh, country, group, domain, p
 #partition <- as.matrix(read.table(file.path(graph.folder,"1/GRASP-CC_l1_k7_a1_g0_p30-membership.txt")))
 partition <- as.matrix(read.table(file.path(partition.folder,paste0(algo,"-membership.txt"))))
 
-# load the absence data
-turnout.folder <- get.votes.path(vote="Turnout", country, group, domain, period)
-expressions <- as.matrix(read.csv2(file.path(turnout.folder,"expr-indiv.csv"),check.names=FALSE))
-expressions <- expressions[,VOTE.EXPRESSED]
-tmp <- as.matrix(read.csv2(file.path(turnout.folder,"expr-counts.csv"),check.names=FALSE))
-total <- nrow(tmp) 
-absences <- total - expressions
+## load the absence data
+#turnout.folder <- get.votes.path(vote="Turnout", country, group, domain, period)
+#expressions <- as.matrix(read.csv2(file.path(turnout.folder,"expr-indiv.csv"),check.names=FALSE))
+#expressions <- expressions[,VOTE.EXPRESSED]
+#tmp <- as.matrix(read.csv2(file.path(turnout.folder,"expr-counts.csv"),check.names=FALSE))
+#total <- nrow(tmp) 
+#absences <- total - expressions
+absences <- NA
 
 # setup the output folder
-out.folder <- "/home/vlabatut/Downloads/circos-test/EP2"
+out.folder <- "/home/vlabatut/Downloads/circos-test/EP3"
 
 # call the function that generates the plot(s)
-produce.circos.plot(g, partition, absences, mep.details, show.names=TRUE, show.histos=TRUE, show.clusters=TRUE, out.folder, clean.files=TRUE)
+produce.circos.plot(g, partition, absences, mep.details, show.names=FALSE, show.histos=FALSE, show.clusters=FALSE, out.folder, clean.files=TRUE)
 
 
 
 
 
 
-# TODO when names are displayed, we could use the colors and therefore don't need the outer group names
-# TODO faire passer les histos derrière les noms?
-# TODO plot the cluster to cluster network and the group to group network, and try with the rubbon stuff (ribbon=yes)
-
-
-# TODO stats: faudrait virer les inactifs avant de traffiquer les NA dans les données
-# vérifier comment on fait quand on génère les graphes: ce filtrage est il lui aussi appliqué ?
+# TODO when names are displayed, we could use their background color to represent the political groups, and therefore hide the explicit group names
+# TODO draw the histograms behind the names?
+# TODO allow drawing several clusters on the same plot, as several rings?
+# TODO plot the cluster to cluster network (and the group to group one, too), and try with the rubbon stuff (ribbon=yes)

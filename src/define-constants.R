@@ -10,14 +10,17 @@
 #############################################################################################
 # Folders
 #############################################################################################
+# main folder
+#MAIN.FOLDER <- "."
+MAIN.FOLDER <- "/home/vlabatut/eclipse/remworkspaces/Networks/NetVotes"
 # external libraries folder
-LIB.FOLDER <- "lib"
+LIB.FOLDER <- file.path(MAIN.FOLDER,"lib")
 # general input folder
-IN.FOLDER <- "in"
+IN.FOLDER <- file.path(MAIN.FOLDER,"in")
 	# folder containing the score matrices
 	SCORE.FOLDER <- file.path(IN.FOLDER,"score")
 # general ouput folder
-OUT.FOLDER <- "out"
+OUT.FOLDER <- file.path(MAIN.FOLDER,"out")
 	# output folder for everything not network-related
 	OVERALL.FOLDER <- file.path(OUT.FOLDER,"_overall")
 	# output folder for the domain-related overall files
@@ -235,8 +238,8 @@ DATE.T7.Y5 <- "DATE.T7.Y5"
 	DATE.END.T7[[DATE.T7.Y5]] 		<- as.Date("01/05/2014","%d/%m/%Y")
 	DATE.STR.T7[DATE.T7.Y5] <- "2013-14"
 DATE.T7.TERM <- "DATE.T7.TERM"
-	DATE.START.T7[[DATE.T7.TERM]]	<- as.Date("01/07/2009","%d/%m/%Y")
-	DATE.END.T7[[DATE.T7.TERM]] 		<- as.Date("01/05/2014","%d/%m/%Y")
+	DATE.START.T7[[DATE.T7.TERM]]	<- DATE.START.T7[[DATE.T7.Y1]]
+	DATE.END.T7[[DATE.T7.TERM]] 	<- DATE.END.T7[[DATE.T7.Y5]]
 	DATE.STR.T7[DATE.T7.TERM] <- "Term"
 DATE.T7.YEARS <- c(DATE.T7.Y1,DATE.T7.Y2,DATE.T7.Y3,DATE.T7.Y4,DATE.T7.Y5)
 
