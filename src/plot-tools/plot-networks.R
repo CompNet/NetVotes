@@ -1,5 +1,5 @@
 #############################################################################################
-# Functions used to plot networks.
+# Functions used to plot signed networks, including their node partition if any.
 # 
 # 11/2015 Vincent Labatut
 #############################################################################################
@@ -12,7 +12,7 @@ library("igraph")
 #
 # g: signed graph to plot.
 # plot.file: base name (and path) of the generated files.
-# format: format(s) to handle.
+# format: format(s) to handle (among "PDF", "PNG", and NA for screen).
 #
 # returns: the same graph, with the spatial positions stored as nodal attributes x and y.
 #############################################################################################
