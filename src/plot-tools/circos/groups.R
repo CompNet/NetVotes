@@ -4,7 +4,7 @@
 # 
 # setwd("D:/Eclipse/workspaces/Networks/NetVotes")
 # setwd("~/eclipse/workspaces/Networks/NetVotes")
-# source("src/circos/groups.R")
+# source("src/plot-tools/circos/groups.R")
 #############################################################################################
 source("src/define-imports.R")
 
