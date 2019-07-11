@@ -1,0 +1,6 @@
+For	For	1
+Against	Against	1
+For	Against	-1
+Abstention	For	0
+Abstention	Abstention	0
+Abstention	Against	0
