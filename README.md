@@ -110,5 +110,5 @@ For different data sources, you may have to adapt the functions used to load the
 
 
 # References
-* **[MFL'15a]** I. Mendonça, R. Figueiredo, V. Labatut & P. Michelon. *Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament*, 2nd European Network Intelligence Conference (ENIC), 122-129, 2015. [doi: 10.1109/ENIC.2015.25](https://doi.org/10.1109/ENIC.2015.25) -- [⟨hal-01176090⟩](https://hal.archives-ouvertes.fr/hal-01176090)
+* **[MFL'15a]** I. Mendonça, R. Figueiredo, V. Labatut & P. Michelon. *Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament*, 2nd European Network Intelligence Conference (ENIC), 122-129, 2015. [doi: 10.1109/ENIC.2015.25](https://doi.org/10.1109/ENIC.2015.25) - [⟨hal-01176090⟩](https://hal.archives-ouvertes.fr/hal-01176090)
 * **[MFL'15b]** I. Mendonça, R. Figueiredo, V. Labatut & P. Michelon. *Informative Value of Negative Links for Graph Partitioning, with an application to European Parliament Votes*, Conférence sur les modèles et l’analyse de réseaux : approches mathématiques et informatiques (MARAMI), 2015. [⟨hal-02055158⟩](https://hal.archives-ouvertes.fr/hal-02055158)
