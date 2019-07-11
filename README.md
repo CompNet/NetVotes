@@ -2,20 +2,19 @@ NetVotes v.2
 =======
 *Extraction and analysis of vote-based networks*
 
-* Copyright 2015 Israel Mendonça (v1) & Vincent Labatut (v2). 
+* Copyright 2015 Israel Mendonça (v1)
+* Copyright 2016 Vincent Labatut (v2)
 
 NetVotes is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation. For source availability and license information see `licence.txt`
 
 * Lab site: http://lia.univ-avignon.fr/
 * GitHub repo: https://github.com/CompNet/NetVotes
-* Contact: Vincent Labatut <vincent.labatut@univ-avignon.fr> and Rosa Figueiredo <rosa.figueiredo@univ-avignon.fr>
-
-**Note:** this is a development version. Please, use the last available release instead.
+* Contact: Vincent Labatut <vincent.labatut@univ-avignon.fr>
 
 -----------------------------------------------------------------------
 
 # Description
-This set of R scripts was designed for three purposes:
+This set of `R` scripts was designed for three purposes:
 
 1. Generate a variety of plots and statistics based on some raw data describing the voting activity of a population.
 2. Extract so-called *vote networks* from these data.
@@ -23,7 +22,7 @@ This set of R scripts was designed for three purposes:
 
 
 # Data
-Our tool was applied to data representing the activity of the members of the European Parliament (MEPs) during the 7th term (from June 2009 to June 2014), as described in [MFLM'15]. The raw data describing this activity were first retrieved from the [VoteWatch](http://www.votewatch.eu/) website. However, these data were incomplete, so we later switched to another source: the [It's Your Parliament](http://www.itsyourparliament.eu/) website. There were also some minor issues with these data, which we had to correct: some MEPs were represented twice, some profiles were incomplete, the policy domains were not defined for all vote texts, etc. These cleaned data are available on [FigShare](to be completed...).
+Our tool was applied to data representing the activity of the members of the European Parliament (MEPs) during the 7th term (from June 2009 to June 2014), as described in [MFL'15a, MFL'15b]. The raw data describing this activity were first retrieved from the [VoteWatch](http://www.votewatch.eu/) website. However, these data were incomplete, so we later switched to another source: the [It's Your Parliament](http://www.itsyourparliament.eu/) website. There were also some minor issues with these data, which we had to correct: some MEPs were represented twice, some profiles were incomplete, the policy domains were not defined for all vote texts, etc. These cleaned data are available on [FigShare](https://doi.org/10.6084/m9.figshare.1545599).
 
 
 # Organization
@@ -107,9 +106,9 @@ For different data sources, you may have to adapt the functions used to load the
 * Take advantage of the new 'gender' field.
 * Represent categories as shapes in graph plots, whenever possible.
 * Output the participation of nodes/links to the total imbalance of the graph and partition.
-* Use `ggplot also for the line plots.
+* Use `ggplote` also for the line plots.
 
 
 # References
-* **[MFLM'15]** Mendonça, I.; Figueiredo, R.; Labatut, V. & Michelon, P. Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament, 2nd European Network Intelligence Conference (ENIC), 2015. [arXiv](http://arxiv.org/abs/1507.04215) -- [IEEE Xplore Digital Library](http://ieeexplore.ieee.org/document/7321245/) -- Doi: [10.1109/ENIC.2015.25](https://doi.org/10.1109/ENIC.2015.25)
-
+* **[MFL'15a]** I. Mendonça, R. Figueiredo, V. Labatut & P. Michelon. *Relevance of Negative Links in Graph Partitioning: A Case Study Using Votes From the European Parliament*, 2nd European Network Intelligence Conference (ENIC), 122-129, 2015. [doi: 10.1109/ENIC.2015.25](https://doi.org/10.1109/ENIC.2015.25) -- [⟨hal-01176090⟩](https://hal.archives-ouvertes.fr/hal-01176090)
+* **[MFL'15b]** I. Mendonça, R. Figueiredo, V. Labatut & P. Michelon. *Informative Value of Negative Links for Graph Partitioning, with an application to European Parliament Votes*, Conférence sur les modèles et l’analyse de réseaux : approches mathématiques et informatiques (MARAMI), 2015. [⟨hal-02055158⟩](https://hal.archives-ouvertes.fr/hal-02055158)
