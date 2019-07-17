@@ -8,7 +8,7 @@
 
 
 #############################################################################################
-# Logs the specified message on screen, adding current date and time, and possible some
+# Logs the specified message on screen, adding current date and time, and possibly some
 # offset (to represent the hierarchy of function calls).
 #
 # offset: number of "." used to represent the hierarchical level of the message.
