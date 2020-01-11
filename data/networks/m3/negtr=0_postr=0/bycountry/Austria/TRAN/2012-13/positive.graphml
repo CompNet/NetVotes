@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+<!-- Created by igraph -->
+  <key id="g_name" for="graph" attr.name="name" attr.type="string"/>
+  <key id="v_MEPid" for="node" attr.name="MEPid" attr.type="string"/>
+  <key id="v_Firstname" for="node" attr.name="Firstname" attr.type="string"/>
+  <key id="v_Lastname" for="node" attr.name="Lastname" attr.type="string"/>
+  <key id="v_Country" for="node" attr.name="Country" attr.type="string"/>
+  <key id="v_Group" for="node" attr.name="Group" attr.type="string"/>
+  <key id="v_x" for="node" attr.name="x" attr.type="double"/>
+  <key id="v_y" for="node" attr.name="y" attr.type="double"/>
+  <key id="e_weight" for="edge" attr.name="weight" attr.type="double"/>
+  <graph id="G" edgedefault="undirected">
+    <data key="g_name">MEP agreement - score=m3 - country=Austria - domain=TRAN - period=2012-13 - neg.tresh=0 - pos.tresh=0</data>
+    <node id="n0">
+      <data key="v_MEPid">21</data>
+      <data key="v_Firstname">Martin</data>
+      <data key="v_Lastname">Ehrenhauser</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">NI</data>
+      <data key="v_x">-0.235946379651707</data>
+      <data key="v_y">-0.100929282150602</data>
+    </node>
+    <node id="n1">
+      <data key="v_MEPid">22</data>
+      <data key="v_Firstname">Hans-Peter</data>
+      <data key="v_Lastname">Martin</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">NI</data>
+      <data key="v_x">-0.276658882973156</data>
+      <data key="v_y">-0.156998619520997</data>
+    </node>
+    <node id="n2">
+      <data key="v_MEPid">50</data>
+      <data key="v_Firstname">Karin</data>
+      <data key="v_Lastname">Kadenbach</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">SD</data>
+      <data key="v_x">-0.240529075945297</data>
+      <data key="v_y">-0.110518892220162</data>
+    </node>
+    <node id="n3">
+      <data key="v_MEPid">58</data>
+      <data key="v_Firstname">Jorg</data>
+      <data key="v_Lastname">Leichtfried</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">SD</data>
+      <data key="v_x">-0.240529075945297</data>
+      <data key="v_y">-0.110518892220162</data>
+    </node>
+    <node id="n4">
+      <data key="v_MEPid">89</data>
+      <data key="v_Firstname">Hannes</data>
+      <data key="v_Lastname">Swoboda</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">SD</data>
+      <data key="v_x">-0.232538223067296</data>
+      <data key="v_y">-0.0795722808477553</data>
+    </node>
+    <node id="n5">
+      <data key="v_MEPid">123</data>
+      <data key="v_Firstname">Eva</data>
+      <data key="v_Lastname">Lichtenberger</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">Greens</data>
+      <data key="v_x">-0.23645865158695</data>
+      <data key="v_y">-0.0797013880864065</data>
+    </node>
+    <node id="n6">
+      <data key="v_MEPid">124</data>
+      <data key="v_Firstname">Ulrike</data>
+      <data key="v_Lastname">Lunacek</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">Greens</data>
+      <data key="v_x">-0.23645865158695</data>
+      <data key="v_y">-0.0797013880864065</data>
+    </node>
+    <node id="n7">
+      <data key="v_MEPid">284</data>
+      <data key="v_Firstname">Othmar</data>
+      <data key="v_Lastname">Karas</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">EPP</data>
+      <data key="v_x">-0.24665616516109</data>
+      <data key="v_y">0.0165706570618236</data>
+    </node>
+    <node id="n8">
+      <data key="v_MEPid">292</data>
+      <data key="v_Firstname">Elisabeth</data>
+      <data key="v_Lastname">Kostinger</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">EPP</data>
+      <data key="v_x">-0.237492330270238</data>
+      <data key="v_y">-0.0319892401645266</data>
+    </node>
+    <node id="n9">
+      <data key="v_MEPid">351</data>
+      <data key="v_Firstname">Richard</data>
+      <data key="v_Lastname">Seeber</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">EPP</data>
+      <data key="v_x">-0.240064750997886</data>
+      <data key="v_y">0.0711730615782248</data>
+    </node>
+    <node id="n10">
+      <data key="v_MEPid">393</data>
+      <data key="v_Firstname">Angelika</data>
+      <data key="v_Lastname">Werthmann</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">NI</data>
+      <data key="v_x">-0.210033299886896</data>
+      <data key="v_y">0.0271390425011922</data>
+    </node>
+    <node id="n11">
+      <data key="v_MEPid">501</data>
+      <data key="v_Firstname">Paul</data>
+      <data key="v_Lastname">Rubig</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">EPP</data>
+      <data key="v_x">-0.239956902462442</data>
+      <data key="v_y">0.0155882624450528</data>
+    </node>
+    <node id="n12">
+      <data key="v_MEPid">583</data>
+      <data key="v_Firstname">Andreas</data>
+      <data key="v_Lastname">Molzer</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">NI</data>
+      <data key="v_x">-0.134905269266847</data>
+      <data key="v_y">0.668473345659295</data>
+    </node>
+    <node id="n13">
+      <data key="v_MEPid">585</data>
+      <data key="v_Firstname">Franz</data>
+      <data key="v_Lastname">Obermayr</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">NI</data>
+      <data key="v_x">-0.133979372033339</data>
+      <data key="v_y">0.665716105761233</data>
+    </node>
+    <node id="n14">
+      <data key="v_MEPid">700</data>
+      <data key="v_Firstname">Evelyn</data>
+      <data key="v_Lastname">Regner</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">SD</data>
+      <data key="v_x">-0.235871337961828</data>
+      <data key="v_y">-0.0874880363241591</data>
+    </node>
+    <node id="n15">
+      <data key="v_MEPid">754</data>
+      <data key="v_Firstname">Hubert</data>
+      <data key="v_Lastname">Pirker</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">EPP</data>
+      <data key="v_x">-0.230866728126224</data>
+      <data key="v_y">-0.0503515279417964</data>
+    </node>
+    <node id="n16">
+      <data key="v_MEPid">755</data>
+      <data key="v_Firstname">Heinz K.</data>
+      <data key="v_Lastname">Becker</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">EPP</data>
+      <data key="v_x">-0.227916282146725</data>
+      <data key="v_y">-0.0580056788977157</data>
+    </node>
+    <node id="n17">
+      <data key="v_MEPid">780</data>
+      <data key="v_Firstname">Josef</data>
+      <data key="v_Lastname">Weidenholzer</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">SD</data>
+      <data key="v_x">-0.256262095308361</data>
+      <data key="v_y">-0.0103842152357659</data>
+    </node>
+    <node id="n18">
+      <data key="v_MEPid">781</data>
+      <data key="v_Firstname">Ewald</data>
+      <data key="v_Lastname">Stadler</data>
+      <data key="v_Country">Austria</data>
+      <data key="v_Group">NI</data>
+      <data key="v_x">-0.216597077376734</data>
+      <data key="v_y">0.103247259912679</data>
+    </node>
+    <edge source="n0" target="n1">
+      <data key="e_weight">0.909090909090909</data>
+    </edge>
+    <edge source="n0" target="n2">
+      <data key="e_weight">0.571428571428571</data>
+    </edge>
+    <edge source="n0" target="n3">
+      <data key="e_weight">0.571428571428571</data>
+    </edge>
+    <edge source="n0" target="n4">
+      <data key="e_weight">0.538461538461538</data>
+    </edge>
+    <edge source="n0" target="n5">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n0" target="n6">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n0" target="n7">
+      <data key="e_weight">0.571428571428571</data>
+    </edge>
+    <edge source="n0" target="n8">
+      <data key="e_weight">0.5</data>
+    </edge>
+    <edge source="n0" target="n9">
+      <data key="e_weight">0.5</data>
+    </edge>
+    <edge source="n0" target="n10">
+      <data key="e_weight">0.464285714285714</data>
+    </edge>
+    <edge source="n0" target="n11">
+      <data key="e_weight">0.571428571428571</data>
+    </edge>
+    <edge source="n0" target="n14">
+      <data key="e_weight">0.571428571428571</data>
+    </edge>
+    <edge source="n0" target="n15">
+      <data key="e_weight">0.571428571428571</data>
+    </edge>
+    <edge source="n0" target="n16">
+      <data key="e_weight">0.555555555555556</data>
+    </edge>
+    <edge source="n0" target="n17">
+      <data key="e_weight">0.733333333333333</data>
+    </edge>
+    <edge source="n0" target="n18">
+      <data key="e_weight">0.185185185185185</data>
+    </edge>
+    <edge source="n1" target="n2">
+      <data key="e_weight">0.739130434782609</data>
+    </edge>
+    <edge source="n1" target="n3">
+      <data key="e_weight">0.739130434782609</data>
+    </edge>
+    <edge source="n1" target="n4">
+      <data key="e_weight">0.80952380952381</data>
+    </edge>
+    <edge source="n1" target="n5">
+      <data key="e_weight">0.909090909090909</data>
+    </edge>
+    <edge source="n1" target="n6">
+      <data key="e_weight">0.909090909090909</data>
+    </edge>
+    <edge source="n1" target="n7">
+      <data key="e_weight">0.739130434782609</data>
+    </edge>
+    <edge source="n1" target="n8">
+      <data key="e_weight">0.652173913043478</data>
+    </edge>
+    <edge source="n1" target="n9">
+      <data key="e_weight">0.739130434782609</data>
+    </edge>
+    <edge source="n1" target="n10">
+      <data key="e_weight">0.608695652173913</data>
+    </edge>
+    <edge source="n1" target="n11">
+      <data key="e_weight">0.739130434782609</data>
+    </edge>
+    <edge source="n1" target="n14">
+      <data key="e_weight">0.739130434782609</data>
+    </edge>
+    <edge source="n1" target="n15">
+      <data key="e_weight">0.739130434782609</data>
+    </edge>
+    <edge source="n1" target="n16">
+      <data key="e_weight">0.727272727272727</data>
+    </edge>
+    <edge source="n1" target="n17">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n1" target="n18">
+      <data key="e_weight">0.181818181818182</data>
+    </edge>
+    <edge source="n2" target="n3">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n2" target="n4">
+      <data key="e_weight">0.785714285714286</data>
+    </edge>
+    <edge source="n2" target="n5">
+      <data key="e_weight">0.586206896551724</data>
+    </edge>
+    <edge source="n2" target="n6">
+      <data key="e_weight">0.586206896551724</data>
+    </edge>
+    <edge source="n2" target="n7">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n2" target="n8">
+      <data key="e_weight">0.6</data>
+    </edge>
+    <edge source="n2" target="n9">
+      <data key="e_weight">0.6</data>
+    </edge>
+    <edge source="n2" target="n10">
+      <data key="e_weight">0.3</data>
+    </edge>
+    <edge source="n2" target="n11">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n2" target="n14">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n2" target="n15">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n2" target="n16">
+      <data key="e_weight">0.655172413793103</data>
+    </edge>
+    <edge source="n2" target="n17">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n2" target="n18">
+      <data key="e_weight">0.103448275862069</data>
+    </edge>
+    <edge source="n3" target="n4">
+      <data key="e_weight">0.785714285714286</data>
+    </edge>
+    <edge source="n3" target="n5">
+      <data key="e_weight">0.586206896551724</data>
+    </edge>
+    <edge source="n3" target="n6">
+      <data key="e_weight">0.586206896551724</data>
+    </edge>
+    <edge source="n3" target="n7">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n3" target="n8">
+      <data key="e_weight">0.6</data>
+    </edge>
+    <edge source="n3" target="n9">
+      <data key="e_weight">0.6</data>
+    </edge>
+    <edge source="n3" target="n10">
+      <data key="e_weight">0.3</data>
+    </edge>
+    <edge source="n3" target="n11">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n3" target="n14">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n3" target="n15">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n3" target="n16">
+      <data key="e_weight">0.655172413793103</data>
+    </edge>
+    <edge source="n3" target="n17">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n3" target="n18">
+      <data key="e_weight">0.103448275862069</data>
+    </edge>
+    <edge source="n4" target="n5">
+      <data key="e_weight">0.555555555555556</data>
+    </edge>
+    <edge source="n4" target="n6">
+      <data key="e_weight">0.555555555555556</data>
+    </edge>
+    <edge source="n4" target="n7">
+      <data key="e_weight">0.642857142857143</data>
+    </edge>
+    <edge source="n4" target="n8">
+      <data key="e_weight">0.714285714285714</data>
+    </edge>
+    <edge source="n4" target="n9">
+      <data key="e_weight">0.714285714285714</data>
+    </edge>
+    <edge source="n4" target="n10">
+      <data key="e_weight">0.464285714285714</data>
+    </edge>
+    <edge source="n4" target="n11">
+      <data key="e_weight">0.642857142857143</data>
+    </edge>
+    <edge source="n4" target="n14">
+      <data key="e_weight">0.785714285714286</data>
+    </edge>
+    <edge source="n4" target="n15">
+      <data key="e_weight">0.642857142857143</data>
+    </edge>
+    <edge source="n4" target="n16">
+      <data key="e_weight">0.642857142857143</data>
+    </edge>
+    <edge source="n4" target="n17">
+      <data key="e_weight">0.75</data>
+    </edge>
+    <edge source="n4" target="n18">
+      <data key="e_weight">0.037037037037037</data>
+    </edge>
+    <edge source="n5" target="n6">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n5" target="n7">
+      <data key="e_weight">0.517241379310345</data>
+    </edge>
+    <edge source="n5" target="n8">
+      <data key="e_weight">0.448275862068966</data>
+    </edge>
+    <edge source="n5" target="n9">
+      <data key="e_weight">0.448275862068966</data>
+    </edge>
+    <edge source="n5" target="n10">
+      <data key="e_weight">0.482758620689655</data>
+    </edge>
+    <edge source="n5" target="n11">
+      <data key="e_weight">0.517241379310345</data>
+    </edge>
+    <edge source="n5" target="n14">
+      <data key="e_weight">0.586206896551724</data>
+    </edge>
+    <edge source="n5" target="n15">
+      <data key="e_weight">0.517241379310345</data>
+    </edge>
+    <edge source="n5" target="n16">
+      <data key="e_weight">0.5</data>
+    </edge>
+    <edge source="n5" target="n17">
+      <data key="e_weight">0.75</data>
+    </edge>
+    <edge source="n5" target="n18">
+      <data key="e_weight">0.142857142857143</data>
+    </edge>
+    <edge source="n6" target="n7">
+      <data key="e_weight">0.517241379310345</data>
+    </edge>
+    <edge source="n6" target="n8">
+      <data key="e_weight">0.448275862068966</data>
+    </edge>
+    <edge source="n6" target="n9">
+      <data key="e_weight">0.448275862068966</data>
+    </edge>
+    <edge source="n6" target="n10">
+      <data key="e_weight">0.482758620689655</data>
+    </edge>
+    <edge source="n6" target="n11">
+      <data key="e_weight">0.517241379310345</data>
+    </edge>
+    <edge source="n6" target="n14">
+      <data key="e_weight">0.586206896551724</data>
+    </edge>
+    <edge source="n6" target="n15">
+      <data key="e_weight">0.517241379310345</data>
+    </edge>
+    <edge source="n6" target="n16">
+      <data key="e_weight">0.5</data>
+    </edge>
+    <edge source="n6" target="n17">
+      <data key="e_weight">0.75</data>
+    </edge>
+    <edge source="n6" target="n18">
+      <data key="e_weight">0.142857142857143</data>
+    </edge>
+    <edge source="n7" target="n8">
+      <data key="e_weight">0.933333333333333</data>
+    </edge>
+    <edge source="n7" target="n9">
+      <data key="e_weight">0.933333333333333</data>
+    </edge>
+    <edge source="n7" target="n10">
+      <data key="e_weight">0.233333333333333</data>
+    </edge>
+    <edge source="n7" target="n11">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n7" target="n12">
+      <data key="e_weight">0.103448275862069</data>
+    </edge>
+    <edge source="n7" target="n13">
+      <data key="e_weight">0.1</data>
+    </edge>
+    <edge source="n7" target="n14">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n7" target="n15">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n7" target="n16">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n7" target="n17">
+      <data key="e_weight">0.875</data>
+    </edge>
+    <edge source="n7" target="n18">
+      <data key="e_weight">0.0344827586206897</data>
+    </edge>
+    <edge source="n8" target="n9">
+      <data key="e_weight">0.866666666666667</data>
+    </edge>
+    <edge source="n8" target="n10">
+      <data key="e_weight">0.233333333333333</data>
+    </edge>
+    <edge source="n8" target="n11">
+      <data key="e_weight">0.933333333333333</data>
+    </edge>
+    <edge source="n8" target="n12">
+      <data key="e_weight">0.0344827586206897</data>
+    </edge>
+    <edge source="n8" target="n13">
+      <data key="e_weight">0.0333333333333333</data>
+    </edge>
+    <edge source="n8" target="n14">
+      <data key="e_weight">0.6</data>
+    </edge>
+    <edge source="n8" target="n15">
+      <data key="e_weight">0.933333333333333</data>
+    </edge>
+    <edge source="n8" target="n16">
+      <data key="e_weight">0.931034482758621</data>
+    </edge>
+    <edge source="n8" target="n17">
+      <data key="e_weight">0.75</data>
+    </edge>
+    <edge source="n8" target="n18">
+      <data key="e_weight">0.103448275862069</data>
+    </edge>
+    <edge source="n9" target="n10">
+      <data key="e_weight">0.3</data>
+    </edge>
+    <edge source="n9" target="n11">
+      <data key="e_weight">0.933333333333333</data>
+    </edge>
+    <edge source="n9" target="n12">
+      <data key="e_weight">0.172413793103448</data>
+    </edge>
+    <edge source="n9" target="n13">
+      <data key="e_weight">0.166666666666667</data>
+    </edge>
+    <edge source="n9" target="n14">
+      <data key="e_weight">0.6</data>
+    </edge>
+    <edge source="n9" target="n15">
+      <data key="e_weight">0.933333333333333</data>
+    </edge>
+    <edge source="n9" target="n16">
+      <data key="e_weight">0.931034482758621</data>
+    </edge>
+    <edge source="n9" target="n17">
+      <data key="e_weight">0.75</data>
+    </edge>
+    <edge source="n10" target="n11">
+      <data key="e_weight">0.233333333333333</data>
+    </edge>
+    <edge source="n10" target="n12">
+      <data key="e_weight">0.137931034482759</data>
+    </edge>
+    <edge source="n10" target="n13">
+      <data key="e_weight">0.133333333333333</data>
+    </edge>
+    <edge source="n10" target="n14">
+      <data key="e_weight">0.3</data>
+    </edge>
+    <edge source="n10" target="n15">
+      <data key="e_weight">0.233333333333333</data>
+    </edge>
+    <edge source="n10" target="n16">
+      <data key="e_weight">0.206896551724138</data>
+    </edge>
+    <edge source="n10" target="n17">
+      <data key="e_weight">0.1875</data>
+    </edge>
+    <edge source="n11" target="n12">
+      <data key="e_weight">0.103448275862069</data>
+    </edge>
+    <edge source="n11" target="n13">
+      <data key="e_weight">0.1</data>
+    </edge>
+    <edge source="n11" target="n14">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n11" target="n15">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n11" target="n16">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n11" target="n17">
+      <data key="e_weight">0.875</data>
+    </edge>
+    <edge source="n11" target="n18">
+      <data key="e_weight">0.0344827586206897</data>
+    </edge>
+    <edge source="n12" target="n13">
+      <data key="e_weight">0.862068965517241</data>
+    </edge>
+    <edge source="n12" target="n15">
+      <data key="e_weight">0.103448275862069</data>
+    </edge>
+    <edge source="n12" target="n16">
+      <data key="e_weight">0.0714285714285714</data>
+    </edge>
+    <edge source="n12" target="n17">
+      <data key="e_weight">0.333333333333333</data>
+    </edge>
+    <edge source="n12" target="n18">
+      <data key="e_weight">0.172413793103448</data>
+    </edge>
+    <edge source="n13" target="n15">
+      <data key="e_weight">0.1</data>
+    </edge>
+    <edge source="n13" target="n16">
+      <data key="e_weight">0.0689655172413793</data>
+    </edge>
+    <edge source="n13" target="n17">
+      <data key="e_weight">0.3125</data>
+    </edge>
+    <edge source="n13" target="n18">
+      <data key="e_weight">0.172413793103448</data>
+    </edge>
+    <edge source="n14" target="n15">
+      <data key="e_weight">0.666666666666667</data>
+    </edge>
+    <edge source="n14" target="n16">
+      <data key="e_weight">0.655172413793103</data>
+    </edge>
+    <edge source="n14" target="n17">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n14" target="n18">
+      <data key="e_weight">0.103448275862069</data>
+    </edge>
+    <edge source="n15" target="n16">
+      <data key="e_weight">1</data>
+    </edge>
+    <edge source="n15" target="n17">
+      <data key="e_weight">0.875</data>
+    </edge>
+    <edge source="n15" target="n18">
+      <data key="e_weight">0.0344827586206897</data>
+    </edge>
+    <edge source="n16" target="n17">
+      <data key="e_weight">0.875</data>
+    </edge>
+    <edge source="n17" target="n18">
+      <data key="e_weight">0.333333333333333</data>
+    </edge>
+  </graph>
+</graphml>

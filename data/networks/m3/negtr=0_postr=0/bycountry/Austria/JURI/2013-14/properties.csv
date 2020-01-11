@@ -1,0 +1,24 @@
+"";"Original";"Positive";"Negative"
+"Number of nodes";19;19;19
+"Number of isolates";0;0;0
+"Proportion of isolates";0;0;0
+"Number of links";171;123;48
+"Proportion of links";1;0,719298245614035;0,280701754385965
+"Density";1;0,719298245614035;0,280701754385965
+"Global transitivity";1;1;0
+"Average local transitivity";1;1;0
+"Number of components";1;2;1
+"Giant component size";19;16;19
+"Giant component proportion";1;0,842105263157895;1
+"Link-connectivity";NA;NA;NA
+"Node-connectivity";NA;NA;NA
+"Average degree";18;12,9473684210526;5,05263157894737
+"Degree stdev";0;4,87024622022481;4,87024622022481
+"Minimal degree";18;2;3
+"Maximal degree";18;15;16
+"Degree correlation";NA;1;-1
+"Average strength";6,76413300076401;8,35784952915563;-1,59371652839162
+"Strength stdev";4,88641795013122;3,4435554119983;1,63112873300359
+"Minimal strength";-5,21230279275994;1,11178532901834;-6,56407046952762
+"Maximal strength";10,1289512883952;11,158583616554;-0,359758745582844
+"Strength correlation";-0,0555555555555544;0,420325002521833;-0,840041602251436

@@ -1,23 +1,26 @@
-#############################################################################################
-# Just loads the scripts necessary to process the dataset. This script is needed when
-# using foreach (parallel processing), since each worker must load all these dependencies.
+# TODO: Add comment
 # 
-# 05/2016 Vincent Labatut
-#############################################################################################
-source("src/define-constants.R")
-source("src/define-algos.R")
-source("src/define-functions.R")
-source("src/define-paths.R")
+# Author: nejat
+###############################################################################
 
-source("src/build-networks/extract-networks.R")
-source("src/build-networks/process-agreement.R")
 
-source("src/partition-networks/compare-clusters.R")
-source("src/partition-networks/detect-clusters.R")
-source("src/partition-networks/evaluate-clusters.R")
+source("src/define-consts.R")
 
-source("src/prepare-data/generate-data.R")
-source("src/prepare-data/load-itsyourparliament.R")
-source("src/prepare-data/load-parltrack.R")
-source("src/prepare-data/load-votewatch.R")
-source("src/prepare-data/process-stats.R")
+source("utils/Utils.R")
+
+source("src/plot-network.R") # the new version
+source("src/plot-treemap.R")
+
+source("src/define-parameter-set.R")
+source("src/define-graph-operations.R")
+source("src/define-graphml-file-operations.R")
+
+source("src/define-plots.R")
+
+source("src/define-infomap.R")
+source("src/define-kmbs.R")
+source("src/define-ExCC.R")
+source("src/define-ils.R")
+
+source("src/circos/circos.R")
+
