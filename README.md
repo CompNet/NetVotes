@@ -33,7 +33,7 @@ If you use this software, please cite article [[MFL'15a](#references)]:
 ```
 
 ## Data
-Our tool was applied to data representing the activity of the members of the European Parliament (MEPs) during the 7th term (from June 2009 to June 2014), as described in [[MFL'15a](#references), [MFL'15b](#references)]. The raw data describing this activity were first retrieved from the [VoteWatch](http://www.votewatch.eu/) website. However, these data were incomplete, so we later switched to another source: the [It's Your Parliament](http://www.itsyourparliament.eu/) website. There were also some minor issues with these data, which we had to correct: some MEPs were represented twice, some profiles were incomplete, the policy domains were not defined for all vote texts, etc. These cleaned data are available on [Zenodo](https://doi.org/10.5281/zenodo.6815510).
+Our tool was applied to data representing the activity of the members of the European Parliament (MEPs) during the 7th term (from June 2009 to June 2014), as described in [[MFL'15a](#references), [MFL'15b](#references)]. The raw data describing this activity were first retrieved from the [VoteWatch](http://www.votewatch.eu/) website (now defunct). However, these data were incomplete, so we later switched to another source: the [It's Your Parliament](http://www.itsyourparliament.eu/) website. There were also some minor issues with these data, which we had to correct: some MEPs were represented twice, some profiles were incomplete, the policy domains were not defined for all vote texts, etc. These cleaned data are available on [Zenodo](https://doi.org/10.5281/zenodo.6815510).
 
 
 ## Organization
